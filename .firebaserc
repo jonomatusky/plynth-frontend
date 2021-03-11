@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "plynth-frontend",
+    "staging": "plynth-test"
+  }
+}
