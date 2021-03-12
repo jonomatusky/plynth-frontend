@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Container,
   Box,
@@ -12,11 +13,16 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
+import usePackStore from 'hooks/store/use-pack-store'
+
 import AdminNav from 'layouts/AdminNav'
 import { cardTypes } from 'components/CardCard'
 import CardCard from 'components/CardCard'
 
 const Home = () => {
+  const history = useHistory()
+  const { createPack } = usePackStore()
+
   const [newPack, setNewPack] = useState({ name: 'Testing' })
   const [selectedCards, setSelectedCards] = useState([])
 
@@ -33,21 +39,7 @@ const Home = () => {
   const ViewMyPacks = packs => {
     return (
       <Container maxWidth="xs">
-        <Grid container justify="center">
-          <Grid item xs={12}>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Button onClick={handleCancel} color="">
-                  Cancel X
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Box>
-              <Typography variant="h5">Name your new pack</Typography>
-            </Box>
-          </Grid>
+        <Grid container justify="center" spacing={3}>
           <Grid item xs={12}>
             <Box paddingBottom={3}>
               <Typography variant="h4" align="center">
@@ -168,10 +160,13 @@ const Home = () => {
       console.log(selectedCards)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
       const pack = newPack
       pack.cards = selectedCards
-      // createPack(pack)
+      const createdPack = await createPack(pack)
+      if (createdPack.id) {
+        history.push(`admin/packs/${createdPack.id}/edit`)
+      }
     }
 
     return (

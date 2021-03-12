@@ -26,12 +26,12 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth,
   },
   // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
+  // toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    paddingRight: theme.spacing(3),
-    paddingLeft: theme.spacing(3),
+    // paddingRight: theme.spacing(3),
+    // paddingLeft: theme.spacing(3),
   },
 }))
 
@@ -90,7 +90,7 @@ const AdminNav = ({ children }) => {
         }}
         anchor="left"
       >
-        <div className={classes.toolbar} />
+        {/* <div className={classes.toolbar} /> */}
         <Box height="100%"></Box>
         <Grid
           container
@@ -133,7 +133,7 @@ const AdminNav = ({ children }) => {
         </List> */}
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
+        {/* <div className={classes.toolbar} /> */}
         {children}
       </main>
     </div>

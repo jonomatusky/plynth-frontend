@@ -15,7 +15,8 @@ import { useAuth } from 'hooks/use-auth'
 import Home from 'pages/Home/Home'
 import Login from 'pages/Login/Login'
 import MyAccount from 'pages/MyAccount/MyAccount'
-import MyPacks from 'pages/MyPacks/MyPacks'
+import MyPacks from 'pages/Packs/Packs'
+import PackEdit from 'pages/EditCards/EditCards'
 
 import useUserStore from 'hooks/store/use-user-store'
 import Register from 'pages/Register/Register'
@@ -28,8 +29,6 @@ const App = () => {
   let routes
   const { authUser: firebaseUser, token, authStatus } = useAuth()
 
-  console.log(authStatus)
-
   const Route = ({
     component: Component,
     noNav,
@@ -41,11 +40,7 @@ const App = () => {
     useFetch()
     const location = useLocation()
 
-    console.log('rerendering: ' + location.pathname)
-
-    const { user, status } = useUserStore()
-    console.log(user.id)
-    console.log(status)
+    const { user } = useUserStore()
 
     // const {
     //   user,
@@ -125,6 +120,21 @@ const App = () => {
 
       <Route publicRoute component={Login} path="/login" exact />
       <Route component={MyPacks} path="/admin" exact />
+      <Route
+        component={PackEdit}
+        path="/admin/packs/:packId/edit/cards"
+        exact
+      />
+      <Route
+        component={PackEdit}
+        path="/admin/packs/:packId/edit/appearance"
+        exact
+      />
+      <Route
+        component={PackEdit}
+        path="/admin/packs/:packId/edit/access"
+        exact
+      />
       <Route component={MyAccount} path="/admin/account" exact />
       <Route component={Register} path="/admin/register" exact />
     </Switch>
