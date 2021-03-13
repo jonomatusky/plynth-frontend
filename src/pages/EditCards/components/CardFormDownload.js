@@ -10,7 +10,7 @@ const CardFormText = ({ card, onSubmit, isLoading }) => {
   const defaultValues = {
     title: card.title || '',
     text: card.text || '',
-    url: card.url || '',
+    url: card.embed || '',
   }
 
   const validationSchema = Yup.object({
@@ -69,8 +69,8 @@ const CardFormText = ({ card, onSubmit, isLoading }) => {
             label="Link to Video"
             placeholder="Add a link to your video"
             inputRef={register}
-            error={Boolean(errors.url)}
-            helperText={errors.url?.message}
+            error={Boolean(errors.embed)}
+            helperText={errors.embed?.message}
             autoComplete="off"
             InputLabelProps={{
               shrink: true,

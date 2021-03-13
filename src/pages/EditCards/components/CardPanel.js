@@ -3,6 +3,8 @@ import React from 'react'
 
 import { cardTypes } from 'components/CardCard'
 import CardFormText from './CardFormText'
+import CardFormVideo from './CardFormVideo'
+import CardFormDownload from './CardFormDownload'
 
 const CardPanel = ({ card, onSubmit, isLoading }) => {
   const type = card.type
@@ -23,6 +25,20 @@ const CardPanel = ({ card, onSubmit, isLoading }) => {
           <Grid item xs={12}>
             {type === 'text' && (
               <CardFormText
+                card={card}
+                onSubmit={onSubmit}
+                isLoading={isLoading}
+              />
+            )}
+            {type === 'video' && (
+              <CardFormVideo
+                card={card}
+                onSubmit={onSubmit}
+                isLoading={isLoading}
+              />
+            )}
+            {type === 'download' && (
+              <CardFormDownload
                 card={card}
                 onSubmit={onSubmit}
                 isLoading={isLoading}

@@ -8,7 +8,7 @@ import { ArrowForward, ArrowBack, Add } from '@material-ui/icons'
 
 import CardPanel from './components/CardPanel'
 import LivePreview from 'components/LivePreview'
-import CircleButton from 'components/CircleButton'
+import CircleButton from 'components/ButtonCircle'
 import EditBar from 'components/EditBar'
 import CardMenu from './components/CardMenu'
 
