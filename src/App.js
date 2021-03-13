@@ -15,7 +15,7 @@ import { useAuth } from 'hooks/use-auth'
 import Home from 'pages/Home/Home'
 import Login from 'pages/Login/Login'
 import MyAccount from 'pages/MyAccount/MyAccount'
-import MyPacks from 'pages/Packs/Packs'
+import MyPacks from 'pages/PacksView/PacksView'
 import PackEdit from 'pages/EditCards/EditCards'
 
 import useUserStore from 'hooks/store/use-user-store'

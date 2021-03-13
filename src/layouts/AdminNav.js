@@ -47,6 +47,11 @@ const UserAvatar = ({ user }) => {
     setAnchorEl(null)
   }
 
+  const handleLogout = async () => {
+    handleClose()
+    await logout()
+  }
+
   return (
     <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
       <Avatar />
@@ -63,7 +68,7 @@ const UserAvatar = ({ user }) => {
         {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <Divider />
-        <MenuItem onClick={logout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   )

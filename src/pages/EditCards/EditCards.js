@@ -41,8 +41,6 @@ const PackEdit = () => {
   const currentCard = (cards || [])[cardIndex]
   const cardType = (currentCard || {}).type
 
-  console.log(currentCard)
-
   const handleCardSubmit = values => {
     if (status !== 'loading') {
       let cards = [...pack.cards]
@@ -101,11 +99,12 @@ const PackEdit = () => {
               <Grid item xs={2}>
                 <Grid container justify="center">
                   <Box paddingTop={30}>
-                    {cardIndex < (cards || []).length - 1 ? (
+                    {cardIndex < (cards || []).length - 1 && (
                       <CircleButton onClick={() => setCardIndex(cardIndex + 1)}>
                         <ArrowForward />
                       </CircleButton>
-                    ) : (
+                    )}
+                    {cardIndex === (cards || []).length - 1 && (
                       <CircleButton
                         onClick={() => {
                           console.log('tapped')

@@ -21,9 +21,7 @@ import firebase from 'firebase/config'
 const Login = () => {
   var uiConfig = {
     // callbacks: {
-    //   signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-    //     return true
-    //   },
+    //   signInSuccessWithAuthResult: () => true,
     // },
     signInSuccessUrl: '/admin',
     signInOptions: [
