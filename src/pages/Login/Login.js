@@ -3,7 +3,7 @@ import { Container, Box, Grid, Typography } from '@material-ui/core'
 // import { makeStyles } from '@material-ui/core/styles'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
-import firebase from 'firebase/config'
+import firebase, { auth } from 'firebase/config'
 
 // const useStyles = makeStyles(theme => ({
 //   root: {
@@ -20,9 +20,10 @@ import firebase from 'firebase/config'
 
 const Login = () => {
   var uiConfig = {
-    // callbacks: {
-    //   signInSuccessWithAuthResult: () => true,
-    // },
+    callbacks: {
+      signInSuccessWithAuthResult: () => true,
+    },
+    // signInFlow: 'popup',
     signInSuccessUrl: '/admin',
     signInOptions: [
       {
@@ -40,10 +41,7 @@ const Login = () => {
             <Typography variant="h4" align="center">
               Login
             </Typography>
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
           </Grid>
         </Grid>
       </Box>

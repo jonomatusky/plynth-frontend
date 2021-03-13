@@ -29,6 +29,8 @@ const App = () => {
   let routes
   const { authUser: firebaseUser, token, authStatus } = useAuth()
 
+  console.log((firebaseUser || {}).email)
+
   const Route = ({
     component: Component,
     noNav,
