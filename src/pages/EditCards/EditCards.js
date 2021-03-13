@@ -4,12 +4,13 @@ import AdminNav from 'layouts/AdminNav'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import { Grid, Box, CircularProgress } from '@material-ui/core'
-import { ArrowForward, ArrowBack } from '@material-ui/icons'
+import { ArrowForward, ArrowBack, Add } from '@material-ui/icons'
 
-import CardPanelText from './components/CardPanelText'
+import CardPanel from './components/CardPanel'
 import LivePreview from 'components/LivePreview'
 import CircleButton from 'components/CircleButton'
 import EditBar from 'components/EditBar'
+import CardMenu from './components/CardMenu'
 
 // const useStyles = makeStyles(theme => ({
 //   barPadding: {
@@ -36,8 +37,11 @@ const PackEdit = () => {
   // },[packId,selectPack,status])
 
   const pack = selectPack(packId)
-  const currentCard = ((pack || {}).cards || [])[cardIndex]
+  const cards = (pack || {}).cards
+  const currentCard = (cards || [])[cardIndex]
   const cardType = (currentCard || {}).type
+
+  console.log(currentCard)
 
   const handleCardSubmit = values => {
     if (status !== 'loading') {
@@ -80,28 +84,37 @@ const PackEdit = () => {
               <Grid item xs={2}>
                 <Grid container justify="center">
                   <Box paddingTop={30}>
-                    <CircleButton>
-                      <ArrowBack onClick={() => setCardIndex(cardIndex - 1)} />
-                    </CircleButton>
+                    {cardIndex !== 0 && (
+                      <CircleButton onClick={() => setCardIndex(cardIndex - 1)}>
+                        <ArrowBack />
+                      </CircleButton>
+                    )}
                   </Box>
                 </Grid>
               </Grid>
               <Grid item xs={8}>
-                {cardType === 'text' && (
-                  <CardPanelText
-                    card={currentCard}
-                    onSubmit={handleCardSubmit}
-                  />
+                {!!currentCard && (
+                  <CardPanel card={currentCard} onSubmit={handleCardSubmit} />
                 )}
+                {!currentCard && <CardMenu packId={packId} />}
               </Grid>
               <Grid item xs={2}>
                 <Grid container justify="center">
                   <Box paddingTop={30}>
-                    <CircleButton>
-                      <ArrowForward
-                        onClick={() => setCardIndex(cardIndex + 1)}
-                      />
-                    </CircleButton>
+                    {cardIndex < (cards || []).length - 1 ? (
+                      <CircleButton onClick={() => setCardIndex(cardIndex + 1)}>
+                        <ArrowForward />
+                      </CircleButton>
+                    ) : (
+                      <CircleButton
+                        onClick={() => {
+                          console.log('tapped')
+                          setCardIndex(cardIndex + 1)
+                        }}
+                      >
+                        <Add />
+                      </CircleButton>
+                    )}
                   </Box>
                 </Grid>
               </Grid>
@@ -113,10 +126,7 @@ const PackEdit = () => {
               <Box minHeight="96px" />
               <Grid container justify="center">
                 <Grid item xs={12} container justify="center">
-                  <LivePreview
-                    pack={pack}
-                    isLoading={updateStatus === 'loading'}
-                  />
+                  <LivePreview pack={pack} cardIndex={cardIndex} />
                 </Grid>
                 <Grid item container xs={12} justify="center">
                   <Box paddingTop={4}>

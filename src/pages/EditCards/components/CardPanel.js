@@ -1,7 +1,15 @@
 import { Paper, Box, Grid, Typography } from '@material-ui/core'
 import React from 'react'
 
-const CardPanel = ({ title, description, children }) => {
+import { cardTypes } from 'components/CardCard'
+import CardFormText from './CardFormText'
+
+const CardPanel = ({ card, onSubmit, isLoading }) => {
+  const type = card.type
+  const { title, description } = cardTypes.find(
+    cardType => cardType.type === type
+  )
+
   return (
     <Paper>
       <Box p={3}>
@@ -13,7 +21,13 @@ const CardPanel = ({ title, description, children }) => {
             {description}
           </Grid>
           <Grid item xs={12}>
-            {children}
+            {type === 'text' && (
+              <CardFormText
+                card={card}
+                onSubmit={onSubmit}
+                isLoading={isLoading}
+              />
+            )}
           </Grid>
         </Grid>
       </Box>

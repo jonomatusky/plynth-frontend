@@ -61,6 +61,14 @@ export const usePackStore = () => {
     return (packs || []).find(pack => pack.id === packId)
   }
 
+  const addCard = ({ id: packId, type: cardType }) => {
+    const cards = (selectPack(packId) || {}).cards
+    console.log(cards)
+    const newCards = [...cards, { type: cardType }]
+    console.log(newCards)
+    _updatePack({ id: packId, cards: newCards })
+  }
+
   return {
     fetchPacks: _fetchPacks,
     createPack: _createPack,
@@ -68,6 +76,7 @@ export const usePackStore = () => {
     deletePack: _deletePack,
     setNewPackImage: _setPackImage,
     selectPack,
+    addCard,
     filter,
     packs,
     newPackImage,

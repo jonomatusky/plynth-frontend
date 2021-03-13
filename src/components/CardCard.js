@@ -16,10 +16,15 @@ export const cardTypes = [
     type: 'text',
     title: 'Text',
     icon: '📝',
-    description: 'Test test test test test test test test test test test test ',
+    description: 'Add a message.',
   },
-  { type: 'video', title: 'Video', icon: '🎥', description: 'Test test' },
-  { type: 'download', title: 'Download', icon: '⬇️', description: 'Test test' },
+  { type: 'video', title: 'Video', icon: '🎥', description: 'Share a video.' },
+  {
+    type: 'download',
+    title: 'Download',
+    icon: '⬇️',
+    description: 'Upload a file.',
+  },
 ]
 
 const useStyles = makeStyles({
