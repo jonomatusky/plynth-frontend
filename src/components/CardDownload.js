@@ -7,19 +7,21 @@ const CardDownload = ({ card }) => {
     <Container>
       <Grid container spacing={6} justify="center">
         <Grid item xs={12}>
-          <Box paddingTop={6}>
-            <Typography variant="h5" align="center">
-              {card.title}
-            </Typography>
+          <Box paddingTop={12}>
+            <Box minHeight={40}>
+              <Typography variant="h5" align="center">
+                {card.title}
+              </Typography>
+            </Box>
           </Box>
         </Grid>
-        <Grid item xs={12}>
-          <ButtonDownload href={card.url} disabled={!card.url} />
+        <Grid item xs={12} container justify="center">
+          <Grid item>
+            <ButtonDownload href={card.url} disabled={!card.url} />
+          </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6" align="center">
-            {card.text}
-          </Typography>
+          <Typography align="center">{card.text}</Typography>
         </Grid>
       </Grid>
     </Container>

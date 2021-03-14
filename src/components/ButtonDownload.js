@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Button, makeStyles } from '@material-ui/core'
+import { GetApp } from '@material-ui/icons'
 
 const useStyles = makeStyles({
   buttonRound: {
@@ -23,7 +24,7 @@ const ButtonDownload = ({ children, ...props }) => {
       variant="contained"
       color="primary"
     >
-      {children}
+      <GetApp fontSize="large" />
     </Button>
   )
 }
