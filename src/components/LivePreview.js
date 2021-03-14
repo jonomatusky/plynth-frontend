@@ -9,8 +9,6 @@ const LivePreview = ({ pack, cardIndex }) => {
   const card = (cards || [])[cardIndex]
   const type = (card || {}).type
 
-  console.log(card)
-
   return (
     <Box
       height="600px"

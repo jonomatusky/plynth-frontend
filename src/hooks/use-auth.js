@@ -11,8 +11,6 @@ export const useAuth = () => {
   const [authStatus, setAuthStatus] = useState(null)
   const [token, setToken] = useState(null)
 
-  console.log('auth status: ' + authStatus)
-
   const logout = useCallback(async () => {
     try {
       await auth.signOut()
