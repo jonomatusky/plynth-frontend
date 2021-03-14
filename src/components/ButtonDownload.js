@@ -8,12 +8,12 @@ const useStyles = makeStyles({
     minHeight: 0,
     minWidth: 0,
     borderRadius: '50%',
-    height: '50px',
-    width: '50px',
+    height: '100px',
+    width: '100px',
   },
 })
 
-const CircleButton = ({ children, ...props }) => {
+const ButtonDownload = ({ children, ...props }) => {
   const classes = useStyles()
 
   return (
@@ -28,4 +28,4 @@ const CircleButton = ({ children, ...props }) => {
   )
 }
 
-export default CircleButton
+export default ButtonDownload

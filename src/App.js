@@ -18,7 +18,6 @@ import MyAccount from 'pages/MyAccount/MyAccount'
 import MyPacks from 'pages/PacksView/PacksView'
 import PackEdit from 'pages/EditCards/EditCards'
 
-import useUserStore from 'hooks/store/use-user-store'
 import Register from 'pages/Register/Register'
 
 // import { useSelector, useDispatch } from 'react-redux'
@@ -39,8 +38,6 @@ const App = () => {
   }) => {
     useFetch()
     const location = useLocation()
-
-    const { user } = useUserStore()
 
     // const {
     //   user,

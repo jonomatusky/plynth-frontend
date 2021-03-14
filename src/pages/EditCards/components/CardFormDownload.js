@@ -66,8 +66,8 @@ const CardFormText = ({ card, onSubmit, isLoading }) => {
             variant="outlined"
             fullWidth
             name="url"
-            label="Link to Video"
-            placeholder="Add a link to your video"
+            label="Direct Download Link"
+            placeholder="Add a link to your download"
             inputRef={register}
             error={Boolean(errors.embed)}
             helperText={errors.embed?.message}

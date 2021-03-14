@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider'
 
 import { Grid, Box, Avatar, Menu, MenuItem } from '@material-ui/core'
 import { useAuth } from 'hooks/use-auth'
+import { useUserStore } from 'hooks/store/use-user-store'
 
 const drawerWidth = 70
 
@@ -35,7 +36,10 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const UserAvatar = ({ user }) => {
+const AdminNav = ({ children }) => {
+  const classes = useStyles()
+  const { user } = useUserStore()
+
   const [anchorEl, setAnchorEl] = useState(null)
   const { logout } = useAuth()
 
@@ -43,39 +47,13 @@ const UserAvatar = ({ user }) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = () => {
+  const handleClose = event => {
     setAnchorEl(null)
   }
 
   const handleLogout = async () => {
-    handleClose()
-    await logout()
+    logout()
   }
-
-  return (
-    <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
-      <Avatar />
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        transitionDuration={0}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorPosition={{ left: 0, top: -20 }}
-        onClose={handleClose}
-      >
-        {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <Divider />
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      </Menu>
-    </div>
-  )
-}
-
-const AdminNav = ({ children }) => {
-  const classes = useStyles()
 
   return (
     <div className={classes.root}>
@@ -108,7 +86,22 @@ const AdminNav = ({ children }) => {
             <Grid container>
               <Grid item>
                 <Box paddingBottom={2}>
-                  <UserAvatar />
+                  <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
+                    <Avatar src={user.avatarLink || null} />
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      open={Boolean(anchorEl)}
+                      transitionDuration={0}
+                      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                      anchorPosition={{ left: 0, top: -20 }}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <Divider />
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
+                  </div>
                 </Box>
               </Grid>
             </Grid>

@@ -27,7 +27,7 @@ import Emoji from 'components/Emoji'
 
 const PacksView = () => {
   const history = useHistory()
-  const { packs, createPack } = usePackStore()
+  const { packs, status, createPack } = usePackStore()
 
   const [newPack, setNewPack] = useState(null)
   const [selectedCards, setSelectedCards] = useState([])
@@ -51,7 +51,7 @@ const PacksView = () => {
               </Typography>
             </Box>
           </Grid>
-          {(packs || []).length === 0 && (
+          {status === 'succeeded' && (packs || []).length === 0 && (
             <Grid item xs={12}>
               <Typography align="center">
                 You don't have any packs yet! Create a new one to get started.

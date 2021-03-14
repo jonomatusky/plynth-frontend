@@ -2,6 +2,7 @@ import React from 'react'
 import { Box } from '@material-ui/core'
 import CardText from './CardText'
 import CardVideo from './CardVideo'
+import CardDownload from './CardDownload'
 
 const LivePreview = ({ pack, cardIndex }) => {
   const cards = (pack || {}).cards
@@ -20,6 +21,7 @@ const LivePreview = ({ pack, cardIndex }) => {
     >
       {type === 'text' && <CardText card={card} />}
       {type === 'video' && <CardVideo card={card} />}
+      {type === 'download' && <CardDownload card={card} />}
     </Box>
   )
 }
