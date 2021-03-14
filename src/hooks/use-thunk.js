@@ -30,7 +30,7 @@ export const useThunk = () => {
         //       err.message || 'An unknown error occured. Please try again.',
         //   })
         // )
-        throw err
+        // throw err
       }
     },
     [dispatch, auth.token]

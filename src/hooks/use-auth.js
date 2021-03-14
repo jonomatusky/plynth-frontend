@@ -11,6 +11,8 @@ export const useAuth = () => {
   const [authStatus, setAuthStatus] = useState(null)
   const [token, setToken] = useState(null)
 
+  console.log('auth status: ' + authStatus)
+
   const logout = useCallback(async () => {
     try {
       await auth.signOut()
@@ -23,8 +25,8 @@ export const useAuth = () => {
   useEffect(() => {
     const getToken = async () => {
       firebaseApp.auth().onAuthStateChanged(user => {
-        setAuthUser(user)
         if (!!user) {
+          setAuthUser(user)
           setAuthStatus('authenticated')
           user.getIdToken().then(token => setToken(token))
         } else {

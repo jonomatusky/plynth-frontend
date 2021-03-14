@@ -1,34 +1,24 @@
 import React from 'react'
 import { Container, Box, Grid, Typography } from '@material-ui/core'
-// import { makeStyles } from '@material-ui/core/styles'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
 import firebase, { auth } from 'firebase/config'
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1,
-//     overflow: 'hidden',
-//     padding: theme.spacing(0, 3),
-//   },
-//   paper: {
-//     maxWidth: 400,
-//     margin: `${theme.spacing(1)}px auto`,
-//     padding: theme.spacing(2),
-//   },
-// }))
-
 const Login = () => {
   var uiConfig = {
     callbacks: {
-      signInSuccessWithAuthResult: () => true,
+      signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+        console.log(authResult)
+        return true
+      },
+
+      signInFailure: function (error) {
+        console.log(error)
+      },
     },
-    // signInFlow: 'popup',
     signInSuccessUrl: '/admin',
     signInOptions: [
-      {
-        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      },
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     ],
   }

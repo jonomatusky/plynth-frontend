@@ -29,8 +29,6 @@ const App = () => {
   let routes
   const { authUser: firebaseUser, token, authStatus } = useAuth()
 
-  console.log((firebaseUser || {}).email)
-
   const Route = ({
     component: Component,
     noNav,
@@ -83,29 +81,8 @@ const App = () => {
                 }}
               />
             )}
-            {/* Private Route - Authenticated - No User: Redirect to registration */}
-            {!publicRoute &&
-              authStatus === 'authenticated' &&
-              user.status === 'unregistered' &&
-              location.pathname !== '/admin/register' && (
-                <Redirect
-                  to={{
-                    pathname: '/admin/register',
-                    state: { referrer: '/' },
-                  }}
-                />
-              )}
-            {/* Private Route - Authenticated - No User: On registration */}
-            {!publicRoute &&
-              authStatus === 'authenticated' &&
-              user.status === 'unregistered' &&
-              location.pathname === '/admin/register' && (
-                <main>
-                  <Component {...props} />
-                </main>
-              )}
             {/* Private Route - Authenticated - User: Show Component */}
-            {!publicRoute && authStatus === 'authenticated' && user.id && (
+            {!publicRoute && authStatus === 'authenticated' && (
               <main>
                 <Component {...props} />
               </main>
@@ -120,7 +97,7 @@ const App = () => {
     <Switch>
       <Route publicRoute component={Home} path="/" exact />
 
-      <Route publicRoute component={Login} path="/login" exact />
+      <DomRoute component={Login} path="/login" exact />
       <Route component={MyPacks} path="/admin" exact />
       <Route
         component={PackEdit}

@@ -8,12 +8,12 @@ import useUserStore from 'hooks/store/use-user-store'
 
 const Register = () => {
   const history = useHistory()
-  const { user: firebaseUser } = useContext(AuthContext)
+  const { authUser } = useContext(AuthContext)
   const { createUser, user } = useUserStore()
 
   const handleSubmit = values => {
-    values.email = firebaseUser.email
-    values.fid = firebaseUser.uid
+    values.email = authUser.email
+    values.fid = authUser.uid
 
     console.log(values)
 
