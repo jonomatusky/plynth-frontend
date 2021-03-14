@@ -94,7 +94,16 @@ const PackEdit = () => {
                 {!!currentCard && (
                   <CardPanel card={currentCard} onSubmit={handleCardSubmit} />
                 )}
-                {!currentCard && <CardMenu packId={packId} />}
+                {!currentCard && status === 'succeeded' && (
+                  <CardMenu packId={packId} />
+                )}
+                {status === 'loading' && (
+                  <Grid container justify="center">
+                    <Grid item>
+                      <CircularProgress color="secondary" />
+                    </Grid>
+                  </Grid>
+                )}
               </Grid>
               <Grid item xs={2}>
                 <Grid container justify="center">

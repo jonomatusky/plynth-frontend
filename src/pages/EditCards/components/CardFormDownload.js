@@ -1,5 +1,7 @@
 import React from 'react'
-import { TextField, Grid } from '@material-ui/core'
+import { TextField, Grid, Box, Button as MuiButton } from '@material-ui/core'
+import { DeleteOutline } from '@material-ui/icons'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -28,56 +30,69 @@ const CardFormText = ({ card, onSubmit, isLoading }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container justify="flex-end" spacing={3}>
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            fullWidth
-            name="title"
-            label="Title"
-            placeholder="Thanks for the support!"
-            inputRef={register}
-            error={Boolean(errors.title)}
-            helperText={errors.title?.message}
-            autoComplete="off"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+      <Box minHeight="300px">
+        <Grid container justify="flex-end" spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="title"
+              label="Title"
+              placeholder="Thanks for the support!"
+              inputRef={register}
+              error={Boolean(errors.title)}
+              helperText={errors.title?.message}
+              autoComplete="off"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="text"
+              label="Subtitle"
+              placeholder="Get a sneak peak at our latest video..."
+              inputRef={register}
+              error={Boolean(errors.text)}
+              helperText={errors.text?.message}
+              autoComplete="off"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="url"
+              label="Direct Download Link"
+              placeholder="Add a link to your download"
+              inputRef={register}
+              error={Boolean(errors.embed)}
+              helperText={errors.embed?.message}
+              autoComplete="off"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            fullWidth
-            name="text"
-            label="Subtitle"
-            placeholder="Get a sneak peak at our latest video..."
-            inputRef={register}
-            error={Boolean(errors.text)}
-            helperText={errors.text?.message}
-            autoComplete="off"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            fullWidth
-            name="url"
-            label="Direct Download Link"
-            placeholder="Add a link to your download"
-            inputRef={register}
-            error={Boolean(errors.embed)}
-            helperText={errors.embed?.message}
-            autoComplete="off"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} container justify="flex-end">
+      </Box>
+      <Box>
+        <Grid container justify="space-between" alignItems="flex-end">
+          <Grid item>
+            <MuiButton
+              endIcon={<DeleteOutline fontSize="small" />}
+              color="primary"
+              size="small"
+            >
+              Remove
+            </MuiButton>
+          </Grid>
           <Grid item>
             <Button
               type="submit"
@@ -86,11 +101,11 @@ const CardFormText = ({ card, onSubmit, isLoading }) => {
               isLoading={isLoading}
               size="large"
             >
-              {`Update`}
+              Save Card
             </Button>
           </Grid>
         </Grid>
-      </Grid>
+      </Box>
     </form>
   )
 }
