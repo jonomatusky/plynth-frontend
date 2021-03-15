@@ -6,7 +6,7 @@ import CardFormText from './CardFormText'
 import CardFormVideo from './CardFormVideo'
 import CardFormDownload from './CardFormDownload'
 
-const CardPanel = ({ card, onSubmit, isLoading }) => {
+const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
   const type = card.type
   const { title, description } = cardTypes.find(
     cardType => cardType.type === type
@@ -28,6 +28,7 @@ const CardPanel = ({ card, onSubmit, isLoading }) => {
                 card={card}
                 onSubmit={onSubmit}
                 isLoading={isLoading}
+                onRemove={onRemove}
               />
             )}
             {type === 'video' && (
@@ -35,6 +36,7 @@ const CardPanel = ({ card, onSubmit, isLoading }) => {
                 card={card}
                 onSubmit={onSubmit}
                 isLoading={isLoading}
+                onRemove={onRemove}
               />
             )}
             {type === 'download' && (
@@ -42,6 +44,7 @@ const CardPanel = ({ card, onSubmit, isLoading }) => {
                 card={card}
                 onSubmit={onSubmit}
                 isLoading={isLoading}
+                onRemove={onRemove}
               />
             )}
           </Grid>

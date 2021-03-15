@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {
@@ -8,10 +8,9 @@ import {
   CardActionArea,
   CardContent,
   Box,
+  Button as MuiButton,
 } from '@material-ui/core'
-import { MoreHoriz } from '@material-ui/icons'
-
-import usePackStore from 'hooks/store/use-pack-store'
+import { MoreHoriz, Add } from '@material-ui/icons'
 
 import Emoji from 'components/Emoji'
 import { cardTypes } from 'components/CardCard'
@@ -22,33 +21,21 @@ import { cardTypes } from 'components/CardCard'
 //   },
 // }))
 
-const CardNav = ({
-  cards,
-  cardIndex,
-  setCardIndex,
-  setCardIndexIsUpdating,
-}) => {
+const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
   const { packId } = useParams()
-  const { updatePack } = usePackStore()
-  const [cardsToDrag, setCardsToDrag] = useState(cards)
+  // const [cardsToDrag, setCardsToDrag] = useState(cards)
 
-  useEffect(() => {
-    const setCards = () => {
-      setCardsToDrag(cards)
-    }
-    if ((cards || []).length > 0) {
-      setCards(cards)
-    }
-  }, [cards])
-
-  const handleBeforeCapture = result => {
-    'handling capture'
-    setCardIndexIsUpdating(true)
-  }
+  // useEffect(() => {
+  //   const setCards = () => {
+  //     setCardsToDrag(cards)
+  //   }
+  //   if ((cards || []).length > 0) {
+  //     setCards(cards)
+  //   }
+  // }, [cards])
 
   const handleDragEnd = result => {
     if (!result.destination) {
-      setCardIndexIsUpdating(false)
       return
     }
 
@@ -66,15 +53,14 @@ const CardNav = ({
       setCardIndex(cardIndex + 1)
     }
 
-    const newCards = Array.from(cardsToDrag)
+    const newCards = Array.from(cards)
     const [removed] = newCards.splice(startIndex, 1)
     newCards.splice(endIndex, 0, removed)
 
-    setCardsToDrag(newCards)
+    // setCardsToDrag(newCards)
 
     let updatedPack = { id: packId, cards: newCards }
     updatePack(updatedPack)
-    setCardIndexIsUpdating(false)
   }
 
   const grid = 8
@@ -83,89 +69,107 @@ const CardNav = ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
     margin: `0 ${grid}px 0 0`,
-    borderBottom: index === cardIndex && !isDragging ? `3px solid gray` : `0px`,
+
+    borderBottom:
+      index === cardIndex && !isDragging
+        ? `3px solid rgba(0, 0, 0, 0.26)`
+        : `3px solid rgba(0, 0, 0, 0)`,
     // styles we need to apply on draggsables
     ...draggableStyle,
   })
 
   const getListStyle = isDraggingOver => ({
     display: 'flex',
-    overflow: 'scroll',
+    // overflow: 'scroll',
   })
 
   return (
-    <DragDropContext
-      onDragEnd={handleDragEnd}
-      onBeforeCapture={handleBeforeCapture}
-    >
-      <Droppable droppableId="droppable" direction="horizontal">
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            style={getListStyle(snapshot.isDraggingOver)}
-            {...provided.droppableProps}
-          >
-            {cardsToDrag &&
-              cardsToDrag.length > 0 &&
-              cardsToDrag.map((card, index) => (
-                <Draggable
-                  key={`navcard` + card.id}
-                  draggableId={card.id}
-                  index={index}
+    <Grid container alignItems="center">
+      <Grid item xs={1}>
+        <Typography variant="body2">Current Cards:</Typography>
+      </Grid>
+      <Grid item xs={11}>
+        <Box display="flex" alignContent="center" overflow="scroll">
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="droppable" direction="horizontal">
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  style={getListStyle(snapshot.isDraggingOver)}
+                  {...provided.droppableProps}
                 >
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style,
-                        index
-                      )}
-                    >
-                      <Box paddingBottom={1} paddingTop={1}>
-                        <Card>
-                          <Grid container>
-                            <Grid item xs={12}>
-                              <CardActionArea
-                                onClick={() => setCardIndex(index)}
-                              >
-                                <CardContent>
-                                  <Typography variant="h4" align="center">
-                                    <Emoji
-                                      label={card.type}
-                                      symbol={
-                                        cardTypes.find(
-                                          cardType =>
-                                            cardType.type === card.type
-                                        ).icon
-                                      }
-                                    />
-                                  </Typography>
-                                </CardContent>
-                              </CardActionArea>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={12}
-                              container
-                              justify="center"
-                              {...provided.dragHandleProps}
-                            >
-                              <MoreHoriz />
-                            </Grid>
-                          </Grid>
-                        </Card>
-                      </Box>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+                  {cards &&
+                    cards.length > 0 &&
+                    cards.map((card, index) => (
+                      <Draggable
+                        key={`navcard` + card.id}
+                        draggableId={card.id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            style={getItemStyle(
+                              snapshot.isDragging,
+                              provided.draggableProps.style,
+                              index
+                            )}
+                          >
+                            <Box paddingBottom={1} paddingTop={1}>
+                              <Card>
+                                <Grid container>
+                                  <Grid item xs={12}>
+                                    <CardActionArea
+                                      onClick={() => setCardIndex(index)}
+                                    >
+                                      <CardContent padding={1}>
+                                        <Typography variant="h5" align="center">
+                                          <Emoji
+                                            label={card.type}
+                                            symbol={
+                                              cardTypes.find(
+                                                cardType =>
+                                                  cardType.type === card.type
+                                              ).icon
+                                            }
+                                          />
+                                        </Typography>
+                                      </CardContent>
+                                    </CardActionArea>
+                                  </Grid>
+                                  <Grid
+                                    item
+                                    xs={12}
+                                    container
+                                    justify="center"
+                                    {...provided.dragHandleProps}
+                                  >
+                                    <MoreHoriz color="disabled" />
+                                  </Grid>
+                                </Grid>
+                              </Card>
+                            </Box>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          <MuiButton
+            onClick={() => setCardIndex((cards || []).length)}
+            size="small"
+            style={{ minWidth: '30px' }}
+          >
+            <Add />
+          </MuiButton>
+        </Box>
+      </Grid>
+      <Grid item xs={1}></Grid>
+    </Grid>
   )
 }
 

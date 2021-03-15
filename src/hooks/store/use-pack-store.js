@@ -28,7 +28,6 @@ export const usePackStore = () => {
 
   const _updatePack = useCallback(
     async ({ id, ...pack }) => {
-      console.log('updating pack')
       await dispatchThunk(updatePack, { id, ...pack })
     },
     [dispatchThunk]

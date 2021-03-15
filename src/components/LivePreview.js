@@ -4,10 +4,22 @@ import CardText from './CardText'
 import CardVideo from './CardVideo'
 import CardDownload from './CardDownload'
 
-const LivePreview = ({ pack, cardIndex }) => {
+const LivePreview = ({ pack, cardIndex, isLoading }) => {
+  // const [index, setIndex] = useState(0)
+
   const cards = (pack || {}).cards
   const card = (cards || [])[cardIndex]
   const type = (card || {}).type
+
+  // this ensures that in the case of a reorder, the index isn't updated prematurely
+  // useEffect(() => {
+  //   const set = () => {
+  //     setIndex(cardIndex)
+  //   }
+  //   if (!isLoading) {
+  //     set()
+  //   }
+  // }, [cardIndex, isLoading])
 
   return (
     <Box

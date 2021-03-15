@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TextField, Grid, Box, Button as MuiButton } from '@material-ui/core'
 import { DeleteOutline } from '@material-ui/icons'
 
@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 
 import Button from 'components/Button'
 
-const CardFormText = ({ card, onSubmit, isLoading }) => {
+const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
   const defaultValues = {
     title: card.title || '',
     text: card.text || '',
@@ -21,12 +21,16 @@ const CardFormText = ({ card, onSubmit, isLoading }) => {
     url: Yup.string().url(`Must be a valid URL. Include http:// or https://`),
   })
 
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(validationSchema),
     defaultValues,
     shouldUnregister: false,
   })
+
+  useEffect(() => {
+    reset({ title: card.title, text: card.text })
+  }, [card, reset])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -89,6 +93,7 @@ const CardFormText = ({ card, onSubmit, isLoading }) => {
               endIcon={<DeleteOutline fontSize="small" />}
               color="primary"
               size="small"
+              onClick={onRemove}
             >
               Remove
             </MuiButton>
