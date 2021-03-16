@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextField, Grid, Box, Button as MuiButton } from '@material-ui/core'
 import { DeleteOutline } from '@material-ui/icons'
 
@@ -9,10 +9,12 @@ import * as Yup from 'yup'
 import Button from 'components/Button'
 
 const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
+  const [prevCardId, setPrevCardId] = useState(null)
+
   const defaultValues = {
     title: card.title || '',
     text: card.text || '',
-    url: card.embed || '',
+    url: card.url || '',
   }
 
   const validationSchema = Yup.object({
@@ -28,9 +30,17 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
     shouldUnregister: false,
   })
 
+  //ensures the form is rerendered when the index is changed
   useEffect(() => {
-    reset({ title: card.title, text: card.text })
-  }, [card, reset])
+    const setReset = () => {
+      console.log('loading')
+      setPrevCardId(card.id)
+      reset({ title: card.title, text: card.text })
+    }
+    if (card.id && prevCardId !== card.id) {
+      setReset()
+    }
+  })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -76,8 +86,8 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
               label="Direct Download Link"
               placeholder="Add a link to your download"
               inputRef={register}
-              error={Boolean(errors.embed)}
-              helperText={errors.embed?.message}
+              error={Boolean(errors.url)}
+              helperText={errors.url?.message}
               autoComplete="off"
               InputLabelProps={{
                 shrink: true,

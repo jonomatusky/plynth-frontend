@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TextField, Grid, Box, Button as MuiButton } from '@material-ui/core'
 import { DeleteOutline } from '@material-ui/icons'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -8,6 +8,8 @@ import * as Yup from 'yup'
 import Button from 'components/Button'
 
 const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
+  const [prevCardId, setPrevCardId] = useState(null)
+
   const defaultValues = {
     title: card.title || '',
     text: card.text || '',
@@ -24,9 +26,17 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
     defaultValues,
   })
 
+  //ensures the form is rerendered when the index is changed
   useEffect(() => {
-    reset({ title: card.title, text: card.text })
-  }, [card, reset])
+    const setReset = () => {
+      console.log('loading')
+      setPrevCardId(card.id)
+      reset({ title: card.title, text: card.text })
+    }
+    if (card.id && prevCardId !== card.id) {
+      setReset()
+    }
+  })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

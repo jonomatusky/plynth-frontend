@@ -9,6 +9,8 @@ import {
   DialogContent,
   DialogActions,
   Button as MuiButton,
+  Typography,
+  Hidden,
 } from '@material-ui/core'
 import { ArrowForward, ArrowBack, Add } from '@material-ui/icons'
 
@@ -137,7 +139,7 @@ const EditCards = () => {
             alignItems="stretch"
             style={{ height: `100vh` }}
           >
-            <Grid item xs={8}>
+            <Grid item sm={12} md={8}>
               <Box minHeight="48px" />
               {cards && (
                 <Box
@@ -225,32 +227,41 @@ const EditCards = () => {
                 </Grid>
               </Grid>
             </Grid>
-
-            <Grid item xs={4}>
-              <Box borderLeft={1} borderColor="divider" height="100%">
-                <Box minHeight="96px" />
-                <Grid container justify="center">
-                  <Grid item xs={12} container justify="center">
-                    <LivePreview
-                      pack={pack}
-                      cardIndex={cardIndex}
-                      isLoading={updateStatus === 'loading'}
-                    />
+            <Hidden smDown>
+              <Grid item md={4}>
+                <Box borderLeft={1} borderColor="divider" height="100%">
+                  <Box minHeight="96px" />
+                  <Grid container justify="center">
+                    <Grid item xs={12}>
+                      <Box paddingBottom={2}>
+                        <Typography align="center" color="textSecondary">
+                          LIVE PREVIEW
+                        </Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} container justify="center">
+                      <LivePreview
+                        pack={pack}
+                        cardIndex={cardIndex}
+                        isLoading={updateStatus === 'loading'}
+                        setIndex={setCardIndex}
+                      />
+                    </Grid>
+                    <Grid item container xs={12} justify="center">
+                      <Box paddingTop={4}>
+                        {isSpinning && (
+                          <CircularProgress
+                            size="1.25rem"
+                            color="inherit"
+                            thickness={6}
+                          />
+                        )}
+                      </Box>
+                    </Grid>
                   </Grid>
-                  <Grid item container xs={12} justify="center">
-                    <Box paddingTop={4}>
-                      {isSpinning && (
-                        <CircularProgress
-                          size="1.25rem"
-                          color="inherit"
-                          thickness={6}
-                        />
-                      )}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
+                </Box>
+              </Grid>
+            </Hidden>
           </Grid>
         </Box>
       </AdminNav>
