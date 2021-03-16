@@ -14,11 +14,12 @@ import { useAuth } from 'hooks/use-auth'
 
 import Home from 'pages/Home/Home'
 import Login from 'pages/Login/Login'
-import MyAccount from 'pages/MyAccount/MyAccount'
-import MyPacks from 'pages/PacksView/PacksView'
-import PackEdit from 'pages/EditCards/EditCards'
-
 import Register from 'pages/Register/Register'
+import MyAccount from 'pages/MyAccount/MyAccount'
+import MyPacks from 'pages/Packs/PacksView'
+
+import EditCards from 'pages/EditCards/EditCards'
+import EditAppearance from 'pages/EditAppearance/EditAppearance'
 
 // import { useSelector, useDispatch } from 'react-redux'
 
@@ -97,17 +98,17 @@ const App = () => {
       <DomRoute component={Login} path="/login" exact />
       <Route component={MyPacks} path="/admin" exact />
       <Route
-        component={PackEdit}
+        component={EditCards}
         path="/admin/packs/:packId/edit/cards"
         exact
       />
       <Route
-        component={PackEdit}
+        component={EditAppearance}
         path="/admin/packs/:packId/edit/appearance"
         exact
       />
       <Route
-        component={PackEdit}
+        component={EditCards}
         path="/admin/packs/:packId/edit/access"
         exact
       />
