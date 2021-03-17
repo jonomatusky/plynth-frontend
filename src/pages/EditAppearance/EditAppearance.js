@@ -8,6 +8,7 @@ import {
   Button as MuiButton,
   Typography,
   Hidden,
+  makeStyles,
 } from '@material-ui/core'
 import { ArrowForward, ArrowBack, Add } from '@material-ui/icons'
 
@@ -18,8 +19,17 @@ import CircleButton from 'components/ButtonCircle'
 import EditBar from 'components/EditBar'
 import ColorButton from 'components/ButtonColor'
 
+const drawerWidth = 70
+
+const useStyles = makeStyles({
+  content: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+  },
+})
+
 const EditAppearance = () => {
-  // const classes = useStyles()
+  const classes = useStyles()
   const { packId } = useParams()
   const {
     selectPack,
@@ -89,8 +99,7 @@ const EditAppearance = () => {
   }, [updateStatus, isSpinning])
 
   return (
-    <AdminNav>
-      <EditBar />
+    <div className={classes.content}>
       <Box height="100vh">
         <Grid
           container
@@ -165,7 +174,7 @@ const EditAppearance = () => {
           </Hidden>
         </Grid>
       </Box>
-    </AdminNav>
+    </div>
   )
 }
 

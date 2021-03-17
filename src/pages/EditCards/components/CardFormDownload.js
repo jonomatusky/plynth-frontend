@@ -33,7 +33,6 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
   //ensures the form is rerendered when the index is changed
   useEffect(() => {
     const setReset = () => {
-      console.log('loading')
       setPrevCardId(card.id)
       reset({ title: card.title, text: card.text })
     }

@@ -20,6 +20,8 @@ import MyPacks from 'pages/Packs/PacksView'
 
 import EditCards from 'pages/EditCards/EditCards'
 import EditAppearance from 'pages/EditAppearance/EditAppearance'
+import EditBar from 'components/EditBar'
+import AdminNav from 'layouts/AdminNav'
 
 // import { useSelector, useDispatch } from 'react-redux'
 
@@ -92,29 +94,33 @@ const App = () => {
   }
 
   routes = (
-    <Switch>
-      <Route publicRoute component={Home} path="/" exact />
+    <>
+      <DomRoute component={AdminNav} path="/admin" />
+      <DomRoute component={EditBar} path="/admin/packs/:packId/edit" />
+      <Switch>
+        <Route publicRoute component={Home} path="/" exact />
 
-      <DomRoute component={Login} path="/login" exact />
-      <Route component={MyPacks} path="/admin" exact />
-      <Route
-        component={EditCards}
-        path="/admin/packs/:packId/edit/cards"
-        exact
-      />
-      <Route
-        component={EditAppearance}
-        path="/admin/packs/:packId/edit/appearance"
-        exact
-      />
-      <Route
-        component={EditCards}
-        path="/admin/packs/:packId/edit/access"
-        exact
-      />
-      <Route component={MyAccount} path="/admin/account" exact />
-      <Route component={Register} path="/admin/register" exact />
-    </Switch>
+        <DomRoute component={Login} path="/login" exact />
+        <Route component={MyPacks} path="/admin" exact />
+        <Route
+          component={EditCards}
+          path="/admin/packs/:packId/edit/cards"
+          exact
+        />
+        <Route
+          component={EditAppearance}
+          path="/admin/packs/:packId/edit/appearance"
+          exact
+        />
+        <Route
+          component={EditCards}
+          path="/admin/packs/:packId/edit/access"
+          exact
+        />
+        <Route component={MyAccount} path="/admin/account" exact />
+        <Route component={Register} path="/admin/register" exact />
+      </Switch>
+    </>
   )
 
   return (

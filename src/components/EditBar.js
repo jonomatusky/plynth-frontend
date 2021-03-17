@@ -9,7 +9,7 @@ import {
   Box,
   Button as MuiButton,
 } from '@material-ui/core'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom'
 import { Public } from '@material-ui/icons'
 
 import theme from 'theme'
@@ -35,67 +35,60 @@ const EditBar = () => {
 
   return (
     <AppBar position="fixed" className={classes.appBar} elevation={0}>
-      <Grid container justify="space-between" alignItems="center">
-        <Grid item>
-          <Tabs
-            value={value}
-            indicatorColor="primary"
-            textColor="primary"
-            // onChange={handleChange}
-            aria-label="disabled tabs example"
-          >
-            <Tab
-              label="Cards"
-              component={RouterLink}
-              to="cards"
-              value="cards"
-              disableRipple
-            />
-            <Tab
-              label="Appearance"
-              component={RouterLink}
-              to="appearance"
-              value="appearance"
-              disableRipple
-            />
-            <Tab
-              label="Access"
-              component={RouterLink}
-              to="access"
-              value="access"
-              disableRipple
-            />
-          </Tabs>
-        </Grid>
-        <Grid item>
-          <Grid container spacing={2}>
-            <Grid item>
-              <MuiButton
-                size="small"
-                color="default"
+      <div style={{ width: '100%' }}>
+        <Box display="flex" flexDirection="row" alignItems="center">
+          <Box flexGrow={1}>
+            <Tabs
+              value={value}
+              indicatorColor="primary"
+              textColor="primary"
+              // onChange={handleChange}
+              variant="fullWidth"
+            >
+              <Tab
+                label="Cards"
                 component={RouterLink}
-                to={'/admin'}
-              >
-                Save as Draft
-              </MuiButton>
-            </Grid>
-            <Grid item>
-              <Box paddingRight={2}>
-                <Button
-                  size="small"
-                  endIcon={<Public />}
-                  component={RouterLink}
-                  to={'/admin'}
-                >
-                  <Box paddingLeft={0.5} paddingRight={0.5}>
-                    <b>Publish</b>
-                  </Box>
-                </Button>
+                to="cards"
+                value="cards"
+              />
+              <Tab
+                label="Appearance"
+                component={RouterLink}
+                to="appearance"
+                value="appearance"
+              />
+              <Tab
+                label="Access"
+                component={RouterLink}
+                to="access"
+                value="access"
+              />
+            </Tabs>
+          </Box>
+          <Box padding={1}>
+            <MuiButton
+              size="small"
+              color="default"
+              component={RouterLink}
+              to={'/admin'}
+            >
+              Save Draft
+            </MuiButton>
+          </Box>
+          <Box padding={1}>
+            <Button
+              size="small"
+              endIcon={<Public />}
+              component={RouterLink}
+              to={'/admin'}
+            >
+              <Box paddingLeft={0.5} paddingRight={0.5}>
+                <b>Publish</b>
               </Box>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+            </Button>
+          </Box>
+        </Box>
+      </div>
 
       <Divider />
     </AppBar>
