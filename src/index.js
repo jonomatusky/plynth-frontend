@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
-import './index.css'
+import 'index.css'
 import reportWebVitals from './reportWebVitals'
 import { ThemeProvider } from '@material-ui/core/styles'
 

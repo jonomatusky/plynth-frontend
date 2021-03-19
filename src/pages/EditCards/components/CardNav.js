@@ -6,11 +6,10 @@ import {
   Typography,
   Card,
   CardActionArea,
-  CardContent,
   Box,
   Button as MuiButton,
 } from '@material-ui/core'
-import { MoreHoriz, Add } from '@material-ui/icons'
+import { Add, DragIndicator } from '@material-ui/icons'
 
 import Emoji from 'components/Emoji'
 import { cardTypes } from 'components/CardCard'
@@ -118,12 +117,12 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
                           >
                             <Box paddingBottom={1} paddingTop={1}>
                               <Card>
-                                <Grid container>
-                                  <Grid item xs={12}>
+                                <Grid container alignItems="center">
+                                  <Grid item>
                                     <CardActionArea
                                       onClick={() => setCardIndex(index)}
                                     >
-                                      <CardContent padding={1}>
+                                      <Box p={2} pr={1}>
                                         <Typography variant="h5" align="center">
                                           <Emoji
                                             label={card.type}
@@ -135,17 +134,14 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
                                             }
                                           />
                                         </Typography>
-                                      </CardContent>
+                                      </Box>
                                     </CardActionArea>
                                   </Grid>
-                                  <Grid
-                                    item
-                                    xs={12}
-                                    container
-                                    justify="center"
-                                    {...provided.dragHandleProps}
-                                  >
-                                    <MoreHoriz color="disabled" />
+                                  <Grid item {...provided.dragHandleProps}>
+                                    <DragIndicator
+                                      color="disabled"
+                                      fontSize="small"
+                                    />
                                   </Grid>
                                 </Grid>
                               </Card>

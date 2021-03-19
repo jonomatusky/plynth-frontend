@@ -1,9 +1,17 @@
 import React from 'react'
-import { Box, Hidden } from '@material-ui/core'
+import { Box, Hidden, makeStyles } from '@material-ui/core'
 import CardText from './CardText'
 import CardVideo from './CardVideo'
 import CardDownload from './CardDownload'
 import ButtonPage from './ButtonPage'
+
+const useStyles = makeStyles({
+  phone: {
+    background: props => props.backgroundColor || '#ffffff',
+    color: props => props.fontColor || '#000000',
+    borderColor: '#000000',
+  },
+})
 
 const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
   // const [index, setIndex] = useState(0)
@@ -12,17 +20,30 @@ const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
   const card = (cards || [])[cardIndex]
   const type = (card || {}).type
 
+  const style = (pack || {}).style
+  const { fontColor } = style || {}
+
+  const classes = useStyles(style)
+
   const Content = () => {
     return (
       <>
-        {type === 'text' && <CardText card={card} />}
-        {type === 'video' && <CardVideo card={card} />}
-        {type === 'download' && <CardDownload card={card} />}
+        {type === 'text' && <CardText card={card} style={style} />}
+        {type === 'video' && <CardVideo card={card} style={style} />}
+        {type === 'download' && <CardDownload card={card} style={style} />}
         {cardIndex !== 0 && (
-          <ButtonPage isLeft onClick={() => setIndex(cardIndex - 1)} />
+          <ButtonPage
+            isLeft
+            onClick={() => setIndex(cardIndex - 1)}
+            color={fontColor}
+          />
         )}
         {cardIndex < (cards || []).length - 1 && (
-          <ButtonPage isLeft={false} onClick={() => setIndex(cardIndex + 1)} />
+          <ButtonPage
+            isLeft={false}
+            onClick={() => setIndex(cardIndex + 1)}
+            color={fontColor}
+          />
         )}
       </>
     )
@@ -36,8 +57,8 @@ const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
           height="600px"
           border={15}
           borderRadius={40}
-          bgcolor="divider"
           position="relative"
+          className={classes.phone}
         >
           <Content />
         </Box>
@@ -48,8 +69,8 @@ const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
           height="475px"
           border={12}
           borderRadius={35}
-          bgcolor="divider"
           position="relative"
+          className={classes.phone}
         >
           <Content />
         </Box>

@@ -1,15 +1,23 @@
 import React from 'react'
-import { Grid, Box, Typography, Container } from '@material-ui/core'
+import { Grid, Box, Typography, Container, makeStyles } from '@material-ui/core'
 import ButtonDownload from './ButtonDownload'
 
-const CardDownload = ({ card }) => {
+const useStyles = makeStyles({
+  type: {
+    fontFamily: props => props.font,
+  },
+})
+
+const CardDownload = ({ card, style }) => {
+  const classes = useStyles(style)
+
   return (
     <Container>
       <Grid container spacing={6} justify="center">
         <Grid item xs={12}>
           <Box paddingTop={12}>
             <Box minHeight={40}>
-              <Typography variant="h5" align="center">
+              <Typography variant="h5" align="center" className={classes.type}>
                 {card.title}
               </Typography>
             </Box>
@@ -21,7 +29,9 @@ const CardDownload = ({ card }) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography align="center">{card.text}</Typography>
+          <Typography align="center" className={classes.type}>
+            {card.text}
+          </Typography>
         </Grid>
       </Grid>
     </Container>

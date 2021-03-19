@@ -1,28 +1,27 @@
 import React from 'react'
-import { Button, makeStyles } from '@material-ui/core'
+import { Box, Button, makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles({
   root: {
-    background: props => props.color,
+    backgroundColor: props => props.color,
+    '&:hover': {
+      backgroundColor: props => props.color,
+    },
   },
 })
 
-const ColorButton = ({ color, setColor }) => {
+const ButtonColor = ({ color, setColor }) => {
   const classes = useStyles({ color })
-
-  const handleClick = () => {
-    setColor(color)
-  }
 
   return (
     <Button
-      onClick={handleClick}
+      onClick={() => setColor(color)}
       variant="contained"
       classes={{ root: classes.root }}
     >
-      {' '}
+      <Box height="25px"></Box>
     </Button>
   )
 }
 
-export default ColorButton
+export default ButtonColor

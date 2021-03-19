@@ -16,7 +16,7 @@ import Home from 'pages/Home/Home'
 import Login from 'pages/Login/Login'
 import Register from 'pages/Register/Register'
 import MyAccount from 'pages/MyAccount/MyAccount'
-import MyPacks from 'pages/Packs/PacksView'
+import MyPacks from 'pages/PacksView/PacksView'
 
 import EditCards from 'pages/EditCards/EditCards'
 import EditAppearance from 'pages/EditAppearance/EditAppearance'

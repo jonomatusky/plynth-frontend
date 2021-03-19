@@ -16,11 +16,9 @@ import {
 import { ArrowForward, ArrowBack, Add } from '@material-ui/icons'
 
 import usePackStore from 'hooks/store/use-pack-store'
-import AdminNav from 'layouts/AdminNav'
 import CardPanel from './components/CardPanel'
 import LivePreview from 'components/LivePreview'
 import CircleButton from 'components/ButtonCircle'
-import EditBar from 'components/EditBar'
 import CardNav from './components/CardNav'
 import CardMenu from './components/CardMenu'
 

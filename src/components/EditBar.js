@@ -5,12 +5,12 @@ import {
   Divider,
   Tabs,
   Tab,
-  Grid,
   Box,
   Button as MuiButton,
+  Typography,
 } from '@material-ui/core'
-import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom'
-import { Public } from '@material-ui/icons'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { Public, Save } from '@material-ui/icons'
 
 import theme from 'theme'
 import Button from 'components/Button'
@@ -23,6 +23,9 @@ const useStyles = makeStyles({
     marginLeft: drawerWidth,
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.secondary,
+  },
+  tabRoot: {
+    minWidth: 120,
   },
 })
 
@@ -43,39 +46,42 @@ const EditBar = () => {
               indicatorColor="primary"
               textColor="primary"
               // onChange={handleChange}
-              variant="fullWidth"
             >
               <Tab
                 label="Cards"
                 component={RouterLink}
                 to="cards"
                 value="cards"
+                classes={{ root: classes.tabRoot }}
               />
               <Tab
                 label="Appearance"
                 component={RouterLink}
                 to="appearance"
                 value="appearance"
+                classes={{ root: classes.tabRoot }}
               />
               <Tab
                 label="Access"
                 component={RouterLink}
                 to="access"
                 value="access"
+                classes={{ root: classes.tabRoot }}
               />
             </Tabs>
           </Box>
-          <Box padding={1}>
+          <Box paddingRight="5px">
             <MuiButton
               size="small"
               color="default"
               component={RouterLink}
               to={'/admin'}
+              endIcon={<Save />}
             >
-              Save Draft
+              <Typography variant="body2">Save</Typography>
             </MuiButton>
           </Box>
-          <Box padding={1}>
+          <Box paddingRight={1}>
             <Button
               size="small"
               endIcon={<Public />}

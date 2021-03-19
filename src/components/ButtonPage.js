@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     minWidth: 0,
     borderRadius: '50%',
     border: '2px solid',
+    color: props => props.color,
     height: '40px',
     width: '40px',
     position: 'absolute',
@@ -20,17 +21,12 @@ const useStyles = makeStyles({
   },
 })
 
-const ButtonPage = ({ children, isLeft, ...props }) => {
-  const classes = useStyles({ isLeft })
+const ButtonPage = ({ children, isLeft, color, ...props }) => {
+  const classes = useStyles({ isLeft, color })
 
   return (
     <>
-      <Button
-        {...props}
-        className={classes.buttonRound}
-        variant="outlined"
-        color="default"
-      >
+      <Button {...props} className={classes.buttonRound} variant="outlined">
         {isLeft && <ArrowBack />}
         {!isLeft && <ArrowForward />}
       </Button>

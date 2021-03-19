@@ -21,8 +21,8 @@ const ButtonDownload = ({ children, ...props }) => {
     <Button
       {...props}
       className={classes.buttonRound}
-      variant="contained"
-      color="primary"
+      variant="outlined"
+      color="inherit"
     >
       <GetApp fontSize="large" />
     </Button>
