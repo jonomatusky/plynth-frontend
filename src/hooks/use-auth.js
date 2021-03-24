@@ -21,18 +21,27 @@ export const useAuth = () => {
   }, [dispatch])
 
   useEffect(() => {
-    const getToken = async () => {
-      firebaseApp.auth().onAuthStateChanged(user => {
-        if (!!user) {
-          setAuthUser(user)
-          setAuthStatus('authenticated')
-          user.getIdToken().then(token => setToken(token))
-        } else {
-          setAuthStatus('unauthenticated')
-        }
-      })
-    }
-    getToken()
+    firebaseApp.auth().onAuthStateChanged(user => {
+      if (!!user) {
+        setAuthUser(user)
+        setAuthStatus('authenticated')
+        user.getIdToken().then(token => setToken(token))
+      } else {
+        setAuthStatus('unauthenticated')
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    firebaseApp.auth().onIdTokenChanged(user => {
+      if (!!user) {
+        setAuthUser(user)
+        setAuthStatus('authenticated')
+        user.getIdToken().then(token => setToken(token))
+      } else {
+        setAuthStatus('unauthenticated')
+      }
+    })
   }, [])
 
   return { authUser, token, authStatus, logout }

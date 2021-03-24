@@ -26,7 +26,12 @@ const ButtonPage = ({ children, isLeft, color, ...props }) => {
 
   return (
     <>
-      <Button {...props} className={classes.buttonRound} variant="outlined">
+      <Button
+        color="secondary"
+        {...props}
+        className={classes.buttonRound}
+        variant="outlined"
+      >
         {isLeft && <ArrowBack />}
         {!isLeft && <ArrowForward />}
       </Button>

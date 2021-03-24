@@ -15,7 +15,6 @@ import LivePreview from 'components/LivePreview'
 import ButtonColor from 'components/ButtonColor'
 import ButtonColorPicker from 'components/ButtonColorPicker'
 import ButtonFont from 'components/ButtonFont'
-import Button from 'components/Button'
 
 const drawerWidth = 70
 
@@ -143,7 +142,7 @@ const EditAppearance = () => {
       <Box height="100vh">
         <Grid
           container
-          justify="center"
+          justifyContent="center"
           alignItems="stretch"
           style={{ height: `100vh` }}
         >
@@ -151,7 +150,7 @@ const EditAppearance = () => {
             <Box minHeight="48px" />
 
             <Box minHeight="48px" />
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
               <Grid item xs={12} sm={9}>
                 <Paper>
                   <Box padding={3}>
@@ -275,11 +274,11 @@ const EditAppearance = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Hidden smDown>
+          <Hidden mdDown>
             <Grid item md={4}>
               <Box borderLeft={1} borderColor="divider" height="100%">
                 <Box minHeight="96px" />
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                   <Grid item xs={12}>
                     <Box paddingBottom={2}>
                       <Typography align="center" color="textSecondary">
@@ -287,7 +286,7 @@ const EditAppearance = () => {
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} container justify="center">
+                  <Grid item xs={12} container justifyContent="center">
                     <LivePreview
                       pack={pack}
                       cardIndex={cardIndex}
@@ -295,7 +294,7 @@ const EditAppearance = () => {
                       setIndex={setCardIndex}
                     />
                   </Grid>
-                  <Grid item container xs={12} justify="center">
+                  <Grid item container xs={12} justifyContent="center">
                     <Box paddingTop={4}>
                       {isSpinning && (
                         <CircularProgress

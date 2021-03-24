@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <Container maxWidth="xs">
       <Box pt={10}>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid item xs={12}>
             <Typography align="center">
               <Link to="/admin">Close</Link>

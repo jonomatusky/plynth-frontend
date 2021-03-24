@@ -15,7 +15,7 @@ const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
   return (
     <Paper>
       <Box p={3}>
-        <Grid container justify="flex-start" spacing={2}>
+        <Grid container justifyContent="flex-start" spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h4">{title}</Typography>
           </Grid>

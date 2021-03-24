@@ -30,8 +30,8 @@ const ButtonColorPicker = ({ color, onChange }) => {
         />
       </Popover>
       <Button onClick={openPicker} variant="contained">
-        <Box height="20px">
-          <Brush fontSize="small" />
+        <Box height="25px">
+          <Brush />
         </Box>
       </Button>
     </>

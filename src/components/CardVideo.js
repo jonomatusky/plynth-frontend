@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player'
 const CardText = ({ card }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} container justify="center">
+      <Grid item xs={12} container justifyContent="center">
         <Grid item xs={10}>
           <Box paddingTop={12}>
             <Typography variant="h6">{card.title}</Typography>
@@ -23,7 +23,7 @@ const CardText = ({ card }) => {
           />
         </div>
       </Grid>
-      <Grid item xs={12} container justify="center">
+      <Grid item xs={12} container justifyContent="center">
         <Grid item xs={10}>
           <Typography>{card.text}</Typography>
         </Grid>

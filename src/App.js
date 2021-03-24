@@ -22,6 +22,7 @@ import EditCards from 'pages/EditCards/EditCards'
 import EditAppearance from 'pages/EditAppearance/EditAppearance'
 import EditBar from 'components/EditBar'
 import AdminNav from 'layouts/AdminNav'
+import EditAccess from 'pages/EditAccess.js/EditAccess'
 
 // import { useSelector, useDispatch } from 'react-redux'
 
@@ -102,6 +103,7 @@ const App = () => {
 
         <DomRoute component={Login} path="/login" exact />
         <Route component={MyPacks} path="/admin" exact />
+        <Redirect path="/admin/packs" to="/admin" exact />
         <Route
           component={EditCards}
           path="/admin/packs/:packId/edit/cards"
@@ -113,7 +115,7 @@ const App = () => {
           exact
         />
         <Route
-          component={EditCards}
+          component={EditAccess}
           path="/admin/packs/:packId/edit/access"
           exact
         />

@@ -61,7 +61,7 @@ const PieceForm = ({ user, onSubmit, isLoading, submitLabel }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={4}>
         {/* <Grid item xs={12}>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Grid item>
               <ImageBox>
                 {avatarLink && (

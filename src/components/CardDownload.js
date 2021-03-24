@@ -13,7 +13,7 @@ const CardDownload = ({ card, style }) => {
 
   return (
     <Container>
-      <Grid container spacing={6} justify="center">
+      <Grid container spacing={6} justifyContent="center">
         <Grid item xs={12}>
           <Box paddingTop={12}>
             <Box minHeight={40}>
@@ -23,7 +23,7 @@ const CardDownload = ({ card, style }) => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} container justify="center">
+        <Grid item xs={12} container justifyContent="center">
           <Grid item>
             <ButtonDownload href={card.url} disabled={!card.url} />
           </Grid>

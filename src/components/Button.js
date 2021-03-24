@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button as MuiButton, makeStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
+import LoadingButton from '@material-ui/lab/LoadingButton'
 
 const useStyles = makeStyles({
   button: {
@@ -7,21 +8,19 @@ const useStyles = makeStyles({
   },
 })
 
-const Button = ({ children, isLoading, color, variant, ...props }) => {
+const Button = ({ children, isLoading, color, variant, onClick, ...props }) => {
   const classes = useStyles()
   return (
-    <MuiButton
-      color={'primary' || color}
-      variant={'contained' || variant}
+    <LoadingButton
+      pending={isLoading}
+      color={color || 'primary'}
+      variant={variant || 'contained'}
       className={classes.button}
+      onClick={!isLoading ? onClick : null}
       {...props}
     >
-      {/* {isLoading ? (
-        <CircularProgress size="1.25rem" color="inherit" thickness={6} />
-      ) : ( */}
       {children}
-      {/* )} */}
-    </MuiButton>
+    </LoadingButton>
   )
 }
 

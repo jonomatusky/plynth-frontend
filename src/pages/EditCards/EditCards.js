@@ -141,7 +141,7 @@ const EditCards = () => {
       <Box height="100vh">
         <Grid
           container
-          justify="center"
+          justifyContent="center"
           alignItems="stretch"
           style={{ height: `100vh` }}
         >
@@ -165,7 +165,7 @@ const EditCards = () => {
                   updatePack={updatePack}
                 />
                 {/* TO ADD */}
-                {/* <Grid item xs={1} container justify="center">
+                {/* <Grid item xs={1} container justifyContent="center">
                   <Grid item>
                     <IconButton>
                       <ChevronRight />
@@ -176,9 +176,9 @@ const EditCards = () => {
             )}
 
             <Box minHeight="48px" />
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
               <Grid item xs={2}>
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                   <Box paddingTop={30}>
                     {cardIndex !== 0 && (
                       <CircleButton onClick={() => setCardIndex(cardIndex - 1)}>
@@ -200,7 +200,7 @@ const EditCards = () => {
                   <CardMenu packId={packId} />
                 )}
                 {(status === 'loading' || status === 'idle') && (
-                  <Grid container justify="center">
+                  <Grid container justifyContent="center">
                     <Grid item>
                       <CircularProgress color="secondary" />
                     </Grid>
@@ -208,7 +208,7 @@ const EditCards = () => {
                 )}
               </Grid>
               <Grid item xs={2}>
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                   <Box paddingTop={30}>
                     {cardIndex < (cards || []).length - 1 && (
                       <CircleButton onClick={() => setCardIndex(cardIndex + 1)}>
@@ -229,11 +229,11 @@ const EditCards = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Hidden smDown>
+          <Hidden mdDown>
             <Grid item md={4}>
               <Box borderLeft={1} borderColor="divider" height="100%">
                 <Box minHeight="96px" />
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                   <Grid item xs={12}>
                     <Box paddingBottom={2}>
                       <Typography align="center" color="textSecondary">
@@ -241,7 +241,7 @@ const EditCards = () => {
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={12} container justify="center">
+                  <Grid item xs={12} container justifyContent="center">
                     <LivePreview
                       pack={pack}
                       cardIndex={cardIndex}
@@ -249,7 +249,7 @@ const EditCards = () => {
                       setIndex={setCardIndex}
                     />
                   </Grid>
-                  <Grid item container xs={12} justify="center">
+                  <Grid item container xs={12} justifyContent="center">
                     <Box paddingTop={4}>
                       {isSpinning && (
                         <CircularProgress

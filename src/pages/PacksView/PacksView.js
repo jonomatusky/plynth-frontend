@@ -43,7 +43,7 @@ const PacksView = () => {
   const ViewMyPacks = () => {
     return (
       <Container maxWidth="sm">
-        <Grid container justify="center" spacing={3}>
+        <Grid container justifyContent="center" spacing={3}>
           <Grid item xs={12}>
             <Box paddingTop={6}>
               <Typography variant="h4" align="center">
@@ -72,7 +72,13 @@ const PacksView = () => {
             </Typography>
           </Grid>
           {(packs || []).length > 0 && (
-            <Grid item xs={12} container spacing={2} justify="flex-start">
+            <Grid
+              item
+              xs={12}
+              container
+              spacing={2}
+              justifyContent="flex-start"
+            >
               {packs.map(pack => {
                 return (
                   <Grid item xs={6} key={pack.id}>
@@ -147,7 +153,7 @@ const PacksView = () => {
     return (
       <Container maxWidth="sm">
         <Box paddingTop={12} />
-        <Grid container justify="center" spacing={2}>
+        <Grid container justifyContent="center" spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h5">Name your new pack</Typography>
           </Grid>
@@ -177,7 +183,11 @@ const PacksView = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Grid container justify="space-between" alignItems="center">
+                  <Grid
+                    container
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
                     <Grid item>
                       <Grid item>
                         <MuiButton
@@ -238,7 +248,7 @@ const PacksView = () => {
     return (
       <Container maxWidth="sm">
         <Box paddingTop={12} />
-        <Grid container justify="center" spacing={4}>
+        <Grid container justifyContent="center" spacing={4}>
           <Grid item xs={12}>
             <Box paddingBottom={2}>
               <Typography variant="h5" align="center">
@@ -247,7 +257,7 @@ const PacksView = () => {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify="flex-start" spacing={2}>
+            <Grid container justifyContent="flex-start" spacing={2}>
               {cardTypes.map((cardType, index) => {
                 return (
                   <Grid item xs={6} md={4} key={index}>
@@ -258,7 +268,7 @@ const PacksView = () => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify="space-between" alignItems="center">
+            <Grid container justifyContent="space-between" alignItems="center">
               <Grid item>
                 <Grid item>
                   <MuiButton

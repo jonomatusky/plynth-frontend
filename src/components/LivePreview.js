@@ -51,12 +51,12 @@ const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
 
   return (
     <>
-      <Hidden mdDown>
+      <Hidden lgDown>
         <Box
           width="300px"
           height="600px"
           border={15}
-          borderRadius={40}
+          borderRadius="40px"
           position="relative"
           className={classes.phone}
         >
@@ -68,7 +68,7 @@ const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
           width="250px"
           height="475px"
           border={12}
-          borderRadius={35}
+          borderRadius="35px"
           position="relative"
           className={classes.phone}
         >

@@ -34,7 +34,7 @@ export const usePackStore = () => {
   )
 
   const _deletePack = useCallback(
-    async ({ id }) => {
+    async id => {
       await dispatchThunk(deletePack, { id })
     },
     [dispatchThunk]

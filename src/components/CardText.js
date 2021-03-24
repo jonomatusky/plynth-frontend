@@ -10,8 +10,6 @@ const useStyles = makeStyles({
 const CardText = ({ card, style }) => {
   const classes = useStyles(style)
 
-  console.log(style)
-
   return (
     <Container>
       <Grid container spacing={6}>

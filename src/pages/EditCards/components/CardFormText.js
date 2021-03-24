@@ -41,7 +41,7 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box minHeight="300px">
-        <Grid container justify="flex-end" spacing={3}>
+        <Grid container justifyContent="flex-end" spacing={3}>
           <Grid item xs={12}>
             <TextField
               variant="outlined"
@@ -79,7 +79,7 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
         </Grid>
       </Box>
       <Box>
-        <Grid container justify="space-between" alignItems="flex-end">
+        <Grid container justifyContent="space-between" alignItems="flex-end">
           <Grid item>
             <MuiButton
               endIcon={<DeleteOutline fontSize="small" />}

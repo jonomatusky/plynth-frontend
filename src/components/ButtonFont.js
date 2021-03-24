@@ -22,6 +22,7 @@ const ButtonFont = ({ font, setFont }) => {
       onClick={() => setFont(font)}
       variant="outlined"
       classes={{ root: classes.root, label: classes.label }}
+      color="secondary"
     >
       <Box display="flex" height="25px" alignItems="center">
         <Typography variant="h6" className={classes.type}>

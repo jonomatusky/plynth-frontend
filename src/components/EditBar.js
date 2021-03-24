@@ -73,7 +73,6 @@ const EditBar = () => {
           <Box paddingRight="5px">
             <MuiButton
               size="small"
-              color="default"
               component={RouterLink}
               to={'/admin'}
               endIcon={<Save />}

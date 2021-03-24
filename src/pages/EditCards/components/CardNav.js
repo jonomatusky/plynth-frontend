@@ -115,7 +115,11 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
                               index
                             )}
                           >
-                            <Box paddingBottom={1} paddingTop={1}>
+                            <Box
+                              paddingBottom={1}
+                              paddingTop={1}
+                              minWidth="72px"
+                            >
                               <Card>
                                 <Grid container alignItems="center">
                                   <Grid item>
@@ -138,10 +142,16 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
                                     </CardActionArea>
                                   </Grid>
                                   <Grid item {...provided.dragHandleProps}>
-                                    <DragIndicator
-                                      color="disabled"
-                                      fontSize="small"
-                                    />
+                                    <Box
+                                      display="flex"
+                                      height="100%"
+                                      alignItems="center"
+                                    >
+                                      <DragIndicator
+                                        color="disabled"
+                                        fontSize="small"
+                                      />
+                                    </Box>
                                   </Grid>
                                 </Grid>
                               </Card>

@@ -12,7 +12,7 @@ const CardMenu = ({ packId }) => {
   }
 
   return (
-    <Grid container justify="flex-start" spacing={2}>
+    <Grid container justifyContent="flex-start" spacing={2}>
       <Grid item xs={12}>
         <Box paddingBottom={1}>
           <Typography variant="h5">Add another card </Typography>
