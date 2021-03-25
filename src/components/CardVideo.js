@@ -1,15 +1,27 @@
 import React from 'react'
-import { Grid, Box, Typography } from '@material-ui/core'
+import { Grid, Box, Typography, makeStyles } from '@material-ui/core'
 import ReactPlayer from 'react-player'
 
-const CardText = ({ card }) => {
+const useStyles = makeStyles({
+  type: {
+    fontFamily: props => props.font,
+  },
+})
+
+const CardText = ({ card, style }) => {
+  const classes = useStyles(style)
+
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} container justifyContent="center">
-        <Grid item xs={10}>
-          <Box paddingTop={12}>
-            <Typography variant="h6">{card.title}</Typography>
-          </Box>
+    <Grid container spacing={3} justifyContent="flex-start">
+      <Grid item xs={12}>
+        <Grid container justifyContent="center">
+          <Grid item xs={10}>
+            <Box paddingTop={12} width="100%">
+              <Typography variant="h4" className={classes.type}>
+                {card.title}
+              </Typography>
+            </Box>
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12}>
@@ -25,7 +37,9 @@ const CardText = ({ card }) => {
       </Grid>
       <Grid item xs={12} container justifyContent="center">
         <Grid item xs={10}>
-          <Typography>{card.text}</Typography>
+          <Typography variant="h5" className={classes.type}>
+            {card.text}
+          </Typography>
         </Grid>
       </Grid>
     </Grid>

@@ -1,81 +1,79 @@
 import React from 'react'
-import { Box, Hidden, makeStyles } from '@material-ui/core'
-import CardText from './CardText'
-import CardVideo from './CardVideo'
-import CardDownload from './CardDownload'
-import ButtonPage from './ButtonPage'
+import { Box, makeStyles } from '@material-ui/core'
+import PackContent from './PackContent'
+import theme from 'theme'
+import PackButtonsMobile from './PackButtonsMobile'
+
+// const { REACT_APP_PUBLIC_URL } = process.env
 
 const useStyles = makeStyles({
+  phoneContainer: {
+    [theme.breakpoints.up('lg')]: {
+      maxHeight: '600px',
+    },
+    [theme.breakpoints.down('lg')]: {
+      maxHeight: '520px',
+    },
+  },
   phone: {
     background: props => props.backgroundColor || '#ffffff',
     color: props => props.fontColor || '#000000',
     borderColor: '#000000',
+    [theme.breakpoints.up('lg')]: {
+      transform: 'scale(0.75)',
+    },
+    [theme.breakpoints.down('lg')]: {
+      transform: 'scale(0.65)',
+    },
+    transformOrigin: 'top center',
   },
 })
 
 const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
-  // const [index, setIndex] = useState(0)
-
-  const cards = (pack || {}).cards
-  const card = (cards || [])[cardIndex]
-  const type = (card || {}).type
-
-  const style = (pack || {}).style
-  const { fontColor } = style || {}
+  const { cards, style } = pack || {}
 
   const classes = useStyles(style)
 
-  const Content = () => {
-    return (
-      <>
-        {type === 'text' && <CardText card={card} style={style} />}
-        {type === 'video' && <CardVideo card={card} style={style} />}
-        {type === 'download' && <CardDownload card={card} style={style} />}
-        {cardIndex !== 0 && (
-          <ButtonPage
-            isLeft
-            onClick={() => setIndex(cardIndex - 1)}
-            color={fontColor}
-          />
-        )}
-        {cardIndex < (cards || []).length - 1 && (
-          <ButtonPage
-            isLeft={false}
-            onClick={() => setIndex(cardIndex + 1)}
-            color={fontColor}
-          />
-        )}
-      </>
-    )
-  }
+  // const Frame = ({ pack }) => {
+  //   return (
+  //     <>
+  //       {pack && (
+  //         <iframe
+  //           src={`${REACT_APP_PUBLIC_URL}/p/${pack.id}`}
+  //           title="live-preview"
+  //           height="100%"
+  //           width="100%"
+  //         />
+  //       )}
+  //     </>
+  //   )
+  // }
 
   return (
-    <>
-      <Hidden lgDown>
-        <Box
-          width="300px"
-          height="600px"
-          border={15}
-          borderRadius="40px"
-          position="relative"
-          className={classes.phone}
-        >
-          <Content />
-        </Box>
-      </Hidden>
-      <Hidden lgUp>
-        <Box
-          width="250px"
-          height="475px"
-          border={12}
-          borderRadius="35px"
-          position="relative"
-          className={classes.phone}
-        >
-          <Content />
-        </Box>
-      </Hidden>
-    </>
+    <Box className={classes.phoneContainer}>
+      <Box
+        width="400px"
+        height="800px"
+        border={20}
+        borderRadius="40px"
+        position="relative"
+        className={classes.phone}
+      >
+        {/* <Frame pack={pack} /> */}
+        <PackContent
+          preview={true}
+          pack={pack}
+          index={cardIndex}
+          setIndex={setIndex}
+        />
+        <PackButtonsMobile
+          index={cardIndex}
+          setIndex={setIndex}
+          lastIndex={(cards || []).length}
+          fontColor={(style || {}).fontColor}
+        />
+      </Box>
+    </Box>
   )
 }
 

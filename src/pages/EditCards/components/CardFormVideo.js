@@ -35,7 +35,7 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
     const setReset = () => {
       console.log('loading')
       setPrevCardId(card.id)
-      reset({ title: card.title, text: card.text })
+      reset({ title: card.title, text: card.text, url: card.url })
     }
     if (card.id && prevCardId !== card.id) {
       setReset()

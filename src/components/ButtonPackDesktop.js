@@ -12,16 +12,19 @@ const useStyles = makeStyles({
     borderRadius: '50%',
     border: '2px solid',
     color: props => props.color,
-    height: '40px',
-    width: '40px',
+    height: '60px',
+    width: '60px',
     position: 'absolute',
-    bottom: theme.spacing(6),
+    bottom: theme.spacing(8),
+    '&:hover': {
+      border: '2px solid',
+    },
     right: props => !props.isLeft && theme.spacing(1),
     left: props => props.isLeft && theme.spacing(1),
   },
 })
 
-const ButtonPage = ({ children, isLeft, color, ...props }) => {
+const ButtonPackMobile = ({ children, isLeft, color, ...props }) => {
   const classes = useStyles({ isLeft, color })
 
   return (
@@ -32,11 +35,11 @@ const ButtonPage = ({ children, isLeft, color, ...props }) => {
         className={classes.buttonRound}
         variant="outlined"
       >
-        {isLeft && <ArrowBack />}
-        {!isLeft && <ArrowForward />}
+        {isLeft && <ArrowBack fontSize="large" />}
+        {!isLeft && <ArrowForward fontSize="large" />}
       </Button>
     </>
   )
 }
 
-export default ButtonPage
+export default ButtonPackMobile

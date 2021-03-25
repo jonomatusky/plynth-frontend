@@ -6,6 +6,7 @@ import 'index.css'
 import reportWebVitals from './reportWebVitals'
 import { ThemeProvider } from '@material-ui/core/styles'
 import StyledEngineProvider from '@material-ui/core/StyledEngineProvider'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 import App from './App'
 import store from './redux/store'
@@ -16,6 +17,7 @@ ReactDOM.render(
     <StyledEngineProvider injectFirst>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <App />
         </ThemeProvider>
       </Provider>

@@ -29,6 +29,8 @@ import { DeleteOutline } from '@material-ui/icons'
 
 const drawerWidth = 70
 
+const { REACT_APP_PUBLIC_URL } = process.env
+
 const useStyles = makeStyles({
   content: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -50,7 +52,7 @@ const EditAccess = () => {
 
   const pack = selectPack(packId)
   const [cardIndex, setCardIndex] = useState(0)
-  const packLink = `http://plynth.com/p/${packId}`
+  const packLink = `${REACT_APP_PUBLIC_URL}/p/${packId}`
 
   const classes = useStyles()
 
