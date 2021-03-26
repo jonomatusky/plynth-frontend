@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { Container, Grid, Box, Hidden } from '@material-ui/core'
+import { Container, Hidden } from '@material-ui/core'
 
 import { useRequest } from 'hooks/use-request'
 import PackContent from 'components/PackContent'
 import PackButtonsMobile from 'components/PackButtonsMobile'
+import PackButtonsDesktop from 'components/PackButtonsDesktop'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -40,12 +41,22 @@ const ViewPack = () => {
   return (
     <Container disableGutters style={{ minHeight: '100vh' }}>
       <PackContent pack={pack} index={index} setIndex={setIndex} />
-      <PackButtonsMobile
-        index={index}
-        lastIndex={(cards || []).length - 1}
-        setIndex={setIndex}
-        fontColor={fontColor}
-      />
+      <Hidden smUp>
+        <PackButtonsMobile
+          index={index}
+          lastIndex={(cards || []).length - 1}
+          setIndex={setIndex}
+          fontColor={fontColor}
+        />
+      </Hidden>
+      <Hidden smDown>
+        <PackButtonsDesktop
+          index={index}
+          lastIndex={(cards || []).length - 1}
+          setIndex={setIndex}
+          fontColor={fontColor}
+        />
+      </Hidden>
     </Container>
   )
 }

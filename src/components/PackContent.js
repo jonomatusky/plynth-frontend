@@ -4,7 +4,7 @@ import SwipeableViews from 'react-swipeable-views'
 import CardText from './CardText'
 import CardVideo from './CardVideo'
 import CardDownload from './CardDownload'
-import { Grid } from '@material-ui/core'
+import { Grid, Hidden, Box } from '@material-ui/core'
 
 const PackContent = ({ preview, pack, index, setIndex }) => {
   const cards = (pack || {}).cards
@@ -13,10 +13,11 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
   const style = (pack || {}).style
 
   const gridProps = preview ? { xs: 12 } : { xs: 12, sm: 8, md: 6 }
+  const swipeProps = preview ? {} : { enableMouseEvents: true }
 
   return (
     <SwipeableViews
-      enableMouseEvents
+      {...swipeProps}
       index={index}
       onChangeIndex={setIndex}
       containerStyle={{ minHeight: '100vh' }}
@@ -31,6 +32,11 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
           >
             <Grid container justifyContent="center">
               <Grid item {...gridProps}>
+                {!preview && (
+                  <Hidden mdDown>
+                    <Box height="5vh" />
+                  </Hidden>
+                )}
                 {type === 'text' && <CardText card={card} style={style} />}
                 {type === 'video' && <CardVideo card={card} style={style} />}
                 {type === 'download' && (

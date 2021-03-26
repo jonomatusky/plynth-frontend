@@ -1,18 +1,18 @@
 import React from 'react'
-import ButtonPackMobile from 'components/ButtonPackMobile'
+import ButtonPackDesktop from 'components/ButtonPackDesktop'
 
-const PackButtonsMobile = ({ fontColor, index, setIndex, lastIndex }) => {
+const PackButtonsDesktop = ({ fontColor, index, setIndex, lastIndex }) => {
   return (
     <>
       {index !== 0 && (
-        <ButtonPackMobile
+        <ButtonPackDesktop
           isLeft
           onClick={() => setIndex(index - 1)}
           color={fontColor}
         />
       )}
       {index <= lastIndex && (
-        <ButtonPackMobile
+        <ButtonPackDesktop
           isLeft={false}
           onClick={() => setIndex(index + 1)}
           color={fontColor}
@@ -22,4 +22,4 @@ const PackButtonsMobile = ({ fontColor, index, setIndex, lastIndex }) => {
   )
 }
 
-export default PackButtonsMobile
+export default PackButtonsDesktop
