@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider'
 import { Grid, Box, Menu, MenuItem } from '@material-ui/core'
 import { Person } from '@material-ui/icons'
 import { AuthContext } from 'contexts/auth-context'
+import { Link } from 'react-router-dom'
 
 const drawerWidth = 70
 
@@ -87,7 +88,9 @@ const AdminNav = ({ children }) => {
                       anchorPosition={{ left: 0, top: -20 }}
                       onClose={handleClose}
                     >
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem component={Link} to="/admin/account">
+                        My account
+                      </MenuItem>
                       <Divider />
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>

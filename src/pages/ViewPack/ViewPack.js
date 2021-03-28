@@ -7,6 +7,7 @@ import PackContent from 'components/PackContent'
 import PackButtonsMobile from 'components/PackButtonsMobile'
 import PackButtonsDesktop from 'components/PackButtonsDesktop'
 import PaginationDots from 'components/PaginationDots'
+import LogoBar from 'components/LogoBar'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -63,6 +64,7 @@ const ViewPack = () => {
           fontColor={fontColor}
         />
       </Hidden>
+      <LogoBar color={fontColor} />
     </Container>
   )
 }

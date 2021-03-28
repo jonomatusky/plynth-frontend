@@ -4,6 +4,7 @@ import PackContent from './PackContent'
 import theme from 'theme'
 import PackButtonsMobile from './PackButtonsMobile'
 import PaginationDots from './PaginationDots'
+import LogoBar from './LogoBar'
 
 // const { REACT_APP_PUBLIC_URL } = process.env
 
@@ -88,6 +89,7 @@ const LivePreview = ({
           lastIndex={(cards || []).length}
           fontColor={(style || {}).fontColor}
         />
+        <LogoBar color={(style || {}).fontColor} />
       </Box>
     </Box>
   )

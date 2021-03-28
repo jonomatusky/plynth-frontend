@@ -12,7 +12,7 @@ import { AuthContext } from 'contexts/auth-context'
 import { useFetch } from 'hooks/use-fetch'
 import { useAuth } from 'hooks/use-auth'
 
-import Home from 'pages/Home/Home'
+import Signup from 'pages/SignUp/SignUp'
 import Login from 'pages/Login/Login'
 import Register from 'pages/Register/Register'
 import MyAccount from 'pages/MyAccount/MyAccount'
@@ -21,9 +21,10 @@ import MyPacks from 'pages/PacksView/PacksView'
 import EditCards from 'pages/EditCards/EditCards'
 import EditAppearance from 'pages/EditAppearance/EditAppearance'
 import EditBar from 'components/EditBar'
-import AdminNav from 'layouts/AdminNav'
+import AdminNav from 'components/AdminNav'
 import EditAccess from 'pages/EditAccess.js/EditAccess'
 import ViewPack from 'pages/ViewPack/ViewPack'
+import AlertBar from 'components/AlertBar'
 
 // import { useSelector, useDispatch } from 'react-redux'
 
@@ -78,7 +79,7 @@ const App = () => {
             {!publicRoute && authStatus === 'unauthenticated' && (
               <Redirect
                 to={{
-                  pathname: '/login',
+                  pathname: '/',
                   state: { referrer: '/' },
                 }}
               />
@@ -101,8 +102,6 @@ const App = () => {
       <DomRoute component={EditBar} path="/admin/packs/:packId/edit" />
       <Switch>
         <DomRoute component={ViewPack} path="/p/:packId" />
-
-        <DomRoute component={Login} path="/login" />
         <Route
           component={EditCards}
           path="/admin/packs/:packId/edit/cards"
@@ -124,7 +123,10 @@ const App = () => {
         <Redirect path="/admin/packs" to="/admin" />
 
         <Route component={MyPacks} path="/admin" />
-        <Route publicRoute component={Home} path="/" />
+
+        <DomRoute component={Signup} path="/signup" />
+        <DomRoute component={Login} path="/login" />
+        <Route publicRoute component={Login} path="/" />
       </Switch>
     </>
   )
@@ -138,7 +140,10 @@ const App = () => {
         logout: logout,
       }}
     >
-      <Router>{routes}</Router>
+      <Router>
+        <AlertBar />
+        {routes}
+      </Router>
     </AuthContext.Provider>
   )
 }

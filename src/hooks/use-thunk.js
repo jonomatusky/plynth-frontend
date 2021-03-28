@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { unwrapResult } from '@reduxjs/toolkit'
 
 import { AuthContext } from 'contexts/auth-context'
-// import { setError } from 'redux/alertSlice'
+import { setError } from 'redux/alertSlice'
 
 export const useThunk = () => {
   const auth = useContext(AuthContext)
@@ -24,13 +24,13 @@ export const useThunk = () => {
 
         return result
       } catch (err) {
-        // dispatch(
-        //   setError({
-        //     message:
-        //       err.message || 'An unknown error occured. Please try again.',
-        //   })
-        // )
-        // throw err
+        dispatch(
+          setError({
+            message:
+              err.message || 'An unknown error occured. Please try again.',
+          })
+        )
+        throw err
       }
     },
     [dispatch, auth.token]

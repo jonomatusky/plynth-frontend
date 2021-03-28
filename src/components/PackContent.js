@@ -28,7 +28,12 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
         return (
           <div
             key={card.id}
-            style={{ height: '100%', width: '100%', flexGrow: 1 }}
+            style={{
+              height: '100%',
+              width: '100%',
+              flexGrow: 1,
+              color: (style || {}).fontColor,
+            }}
           >
             <Grid container justifyContent="center">
               <Grid item {...gridProps}>

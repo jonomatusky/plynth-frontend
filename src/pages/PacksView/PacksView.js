@@ -17,11 +17,12 @@ import * as Yup from 'yup'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
-import AdminNav from 'layouts/AdminNav'
+import AdminNav from 'components/AdminNav'
 import { cardTypes } from 'components/CardCard'
 import CardCard from 'components/CardCard'
 import Button from 'components/Button'
 import PackListItem from './components/PackListItem'
+import Emoji from 'components/Emoji'
 
 const PacksView = () => {
   const history = useHistory()
@@ -48,7 +49,7 @@ const PacksView = () => {
   const ViewMyPacks = () => {
     return (
       <Container disableGutters maxWidth={false}>
-        <Grid container>
+        <Grid container justifyContent="center">
           <Grid
             item
             xs={12}
@@ -67,7 +68,7 @@ const PacksView = () => {
             >
               <Grid item>
                 <Typography variant="h4" align="center">
-                  My Packs
+                  <b>My Packs</b>
                 </Typography>
               </Grid>
               <Grid item>
@@ -85,7 +86,8 @@ const PacksView = () => {
             {status === 'succeeded' && (packs || []).length === 0 && (
               <Grid item xs={10}>
                 <Typography align="center">
-                  You don't have any packs yet! Create a new one to get started.
+                  You don't have any packs yet! Create a new one to get started{' '}
+                  <Emoji symbol="👆" label="up" />
                 </Typography>
               </Grid>
             )}
@@ -126,20 +128,24 @@ const PacksView = () => {
               </Grid>
             )}
           </Grid>
-          <Hidden mdDown>
-            <Grid item md={5}>
-              <Box borderLeft={1} borderColor="divider" height="100%">
-                <Box minHeight="96px" />
-                <Grid container justifyContent="center">
-                  <Grid item xs={12} container justifyContent="center">
-                    <Box position="fixed">
-                      {!!selectedPack.id && <LivePreview pack={selectedPack} />}
-                    </Box>
+          {packs && packs.length > 0 && (
+            <Hidden mdDown>
+              <Grid item md={5}>
+                <Box borderLeft={1} borderColor="divider" height="100%">
+                  <Box minHeight="96px" />
+                  <Grid container justifyContent="center">
+                    <Grid item xs={12} container justifyContent="center">
+                      <Box position="fixed">
+                        {!!selectedPack.id && (
+                          <LivePreview pack={selectedPack} />
+                        )}
+                      </Box>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-          </Hidden>
+                </Box>
+              </Grid>
+            </Hidden>
+          )}
         </Grid>
       </Container>
     )

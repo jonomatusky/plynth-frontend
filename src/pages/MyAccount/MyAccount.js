@@ -3,10 +3,10 @@ import UserForm from 'components/UserForm'
 import useUserStore from 'hooks/store/use-user-store'
 
 const Home = () => {
-  const { user, updateUser } = useUserStore()
+  const { user, status, updateUser } = useUserStore()
 
   const handleSubmit = values => {
-    updateUser({ id: user.id, ...values })
+    updateUser({ ...values })
   }
 
   return (
@@ -16,22 +16,27 @@ const Home = () => {
           <Grid item xs={12}>
             <Box pb={4}>
               <Typography variant="h5" align="center">
-                Create Your Account
+                Edit Your Account
               </Typography>
             </Box>
-
-            <Paper>
-              <Box p={3}>
-                <Grid container justifyContent="center">
-                  <Grid item xs={12}>
-                    <UserForm
-                      onSubmit={handleSubmit}
-                      submitLabel="Create Account"
-                    />
+            {status === 'succeeded' && (
+              <Paper>
+                <Box p={3}>
+                  <Grid container justifyContent="center" spacing={3}>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">Profile Info</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <UserForm
+                        user={user}
+                        onSubmit={handleSubmit}
+                        submitLabel="Update"
+                      />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </Paper>
+                </Box>
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </Box>

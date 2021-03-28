@@ -3,22 +3,20 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
-import { Grid, Button, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@material-ui/core'
+
+import Button from 'components/Button'
 
 // import { Image, ImageBox } from './FormElements'
 
 // const ASSET_URL = process.env.REACT_APP_ASSET_URL
 
-const PieceForm = ({ user, onSubmit, isLoading, submitLabel }) => {
-  const { displayName, bio, links, avatar, username } = user || {}
-  //avatarLink
+const UserForm = ({ user, onSubmit, isLoading, submitLabel }) => {
+  const { displayName, username } = user || {}
 
   const defaultValues = {
     username: username || '',
     displayName: displayName || '',
-    bio: bio || '',
-    avatar: avatar || '',
-    links,
   }
 
   const validationSchema = Yup.object({
@@ -38,16 +36,16 @@ const PieceForm = ({ user, onSubmit, isLoading, submitLabel }) => {
     displayName: Yup.string()
       .max(30, 'Enter a name under 30 characters')
       .required('Required'),
-    avatar: Yup.string(),
-    bio: Yup.string(),
-    links: Yup.array().of(
-      Yup.object({
-        name: Yup.string()
-          .max(32, 'Must be 32 characters or less')
-          .required('Required'),
-        url: Yup.string().url('Must be a valid URL').required('Required'),
-      })
-    ),
+    // avatar: Yup.string(),
+    // bio: Yup.string(),
+    // links: Yup.array().of(
+    //   Yup.object({
+    //     name: Yup.string()
+    //       .max(32, 'Must be 32 characters or less')
+    //       .required('Required'),
+    //     url: Yup.string().url('Must be a valid URL').required('Required'),
+    //   })
+    // ),
   })
 
   const { register, handleSubmit, errors } = useForm({
@@ -59,7 +57,7 @@ const PieceForm = ({ user, onSubmit, isLoading, submitLabel }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={4}>
+      <Grid container spacing={3}>
         {/* <Grid item xs={12}>
           <Grid container justifyContent="center">
             <Grid item>
@@ -110,10 +108,7 @@ const PieceForm = ({ user, onSubmit, isLoading, submitLabel }) => {
           <Button
             fullWidth
             type="submit"
-            variant="contained"
-            color="primary"
             size="large"
-            // onClick={onSubmit}
             // loading={isLoading}
           >
             {submitLabel || `Save & Close`}
@@ -124,4 +119,4 @@ const PieceForm = ({ user, onSubmit, isLoading, submitLabel }) => {
   )
 }
 
-export default PieceForm
+export default UserForm

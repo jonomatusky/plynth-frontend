@@ -21,10 +21,12 @@ const Login = () => {
     signInOptions: [
       {
         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        fullLabel: 'Sign up with email',
         buttonColor: '#CD0A64',
       },
       {
         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        fullLabel: 'Sign up with Google',
       },
     ],
   }
@@ -35,12 +37,12 @@ const Login = () => {
         <Grid container justifyContent="center" spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h5" align="center">
-              <b>Sign In</b>
+              <b>Create Account</b>
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography textAlign="center" variant="body2">
-              Don't have an account yet? <Link to="/signup">Sign Up</Link>
+              Already have an account? <Link to="/">Sign In</Link>
             </Typography>
           </Grid>
           <Grid item xs={12}>
