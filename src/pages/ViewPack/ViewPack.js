@@ -6,6 +6,7 @@ import { useRequest } from 'hooks/use-request'
 import PackContent from 'components/PackContent'
 import PackButtonsMobile from 'components/PackButtonsMobile'
 import PackButtonsDesktop from 'components/PackButtonsDesktop'
+import PaginationDots from 'components/PaginationDots'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -40,6 +41,11 @@ const ViewPack = () => {
 
   return (
     <Container disableGutters style={{ minHeight: '100vh' }}>
+      <PaginationDots
+        count={(cards || []).length}
+        index={index}
+        color={fontColor}
+      />
       <PackContent pack={pack} index={index} setIndex={setIndex} />
       <Hidden smUp>
         <PackButtonsMobile

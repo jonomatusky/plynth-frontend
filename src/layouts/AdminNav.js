@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
-import CssBaseline from '@material-ui/core/CssBaseline'
 
 import Divider from '@material-ui/core/Divider'
 
-import { Grid, Box, Avatar, Menu, MenuItem } from '@material-ui/core'
-import { useAuth } from 'hooks/use-auth'
-import { useUserStore } from 'hooks/store/use-user-store'
+import { Grid, Box, Menu, MenuItem } from '@material-ui/core'
+import { Person } from '@material-ui/icons'
+import { AuthContext } from 'contexts/auth-context'
 
 const drawerWidth = 70
 
@@ -38,10 +37,9 @@ const useStyles = makeStyles(theme => ({
 
 const AdminNav = ({ children }) => {
   const classes = useStyles()
-  const { user } = useUserStore()
 
   const [anchorEl, setAnchorEl] = useState(null)
-  const { logout } = useAuth()
+  const auth = useContext(AuthContext)
 
   const handleOpen = event => {
     setAnchorEl(event.currentTarget)
@@ -52,19 +50,11 @@ const AdminNav = ({ children }) => {
   }
 
   const handleLogout = async () => {
-    logout()
+    auth.logout()
   }
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      {/* <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Permanent drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -87,7 +77,7 @@ const AdminNav = ({ children }) => {
               <Grid item>
                 <Box paddingBottom={2}>
                   <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
-                    <Avatar src={user.avatarLink || null} />
+                    <Person />
                     <Menu
                       id="simple-menu"
                       anchorEl={anchorEl}
@@ -107,28 +97,6 @@ const AdminNav = ({ children }) => {
             </Grid>
           </Grid>
         </Grid>
-
-        {/* <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
       </Drawer>
       <main className={classes.content}>
         {/* <div className={classes.toolbar} /> */}

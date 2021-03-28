@@ -147,7 +147,7 @@ const EditCards = () => {
         >
           <Grid item sm={12} md={8}>
             <Box minHeight="48px" />
-            {cards && (
+            {cards && cards.length > 0 && (
               <Box
                 // minHeight="72px"
                 border={1}

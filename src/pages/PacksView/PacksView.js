@@ -6,31 +6,32 @@ import {
   Grid,
   Typography,
   TextField,
-  Card,
   Button as MuiButton,
-  CardActionArea,
-  CardContent,
+  Hidden,
 } from '@material-ui/core'
-import { ArrowForward, Close } from '@material-ui/icons'
+import { Add, ArrowForward, ArrowForwardIos, Close } from '@material-ui/icons'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
 import usePackStore from 'hooks/store/use-pack-store'
-
+import LivePreview from 'components/LivePreview'
 import AdminNav from 'layouts/AdminNav'
 import { cardTypes } from 'components/CardCard'
 import CardCard from 'components/CardCard'
 import Button from 'components/Button'
-import Emoji from 'components/Emoji'
+import PackListItem from './components/PackListItem'
 
 const PacksView = () => {
   const history = useHistory()
   const { packs, status, createPack } = usePackStore()
 
+  const [selectedPackIndex, setSelectedPackIndex] = useState(0)
   const [newPack, setNewPack] = useState(null)
   const [selectedCards, setSelectedCards] = useState([])
+
+  const selectedPack = packs[selectedPackIndex] || {}
 
   const handleClick = () => {
     setNewPack({})
@@ -40,89 +41,105 @@ const PacksView = () => {
     setNewPack(null)
   }
 
+  const handleSelectPack = clickedPackIndex => {
+    setSelectedPackIndex(clickedPackIndex)
+  }
+
   const ViewMyPacks = () => {
     return (
-      <Container maxWidth="sm">
-        <Grid container justifyContent="center" spacing={3}>
-          <Grid item xs={12}>
-            <Box paddingTop={6}>
-              <Typography variant="h4" align="center">
-                My Packs
-              </Typography>
-            </Box>
-          </Grid>
-          {status === 'succeeded' && (packs || []).length === 0 && (
-            <Grid item xs={12}>
-              <Typography align="center">
-                You don't have any packs yet! Create a new one to get started.
-              </Typography>
-            </Grid>
-          )}
-          <Grid item xs={8}>
-            <Typography align="center">
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={handleClick}
-              >
-                <b>Create New Pack</b>
-              </Button>
-            </Typography>
-          </Grid>
-          {(packs || []).length > 0 && (
+      <Container disableGutters maxWidth={false}>
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            md={7}
+            container
+            justifyContent="center"
+            spacing={3}
+          >
             <Grid
               item
-              xs={12}
               container
+              justifyContent="space-between"
+              xs={10}
               spacing={2}
-              justifyContent="flex-start"
+              style={{ marginTop: '30px' }}
             >
-              {packs.map(pack => {
-                return (
-                  <Grid item xs={6} key={pack.id}>
-                    <Card>
-                      <CardActionArea
-                        onClick={() =>
-                          history.push(`/admin/packs/${pack.id}/edit/cards`)
-                        }
-                      >
-                        <CardContent>
-                          <Grid container spacing={1}>
-                            <Grid item xs={12}>
-                              <Typography variant="h5">{pack.name}</Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Box minHeight="25px">
-                                <Grid container spacing={1} alignItems="center">
-                                  {(pack.cards || []).map((card, index) => {
-                                    const type = card.type
-                                    const cardInfo = cardTypes.find(
-                                      cardType => cardType.type === type
-                                    )
-
-                                    return (
-                                      <Grid item key={card.id || index}>
-                                        <Emoji
-                                          label={type}
-                                          symbol={cardInfo.icon}
-                                        />
-                                      </Grid>
-                                    )
-                                  })}
-                                </Grid>
-                              </Box>
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </Grid>
-                )
-              })}
+              <Grid item>
+                <Typography variant="h4" align="center">
+                  My Packs
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={handleClick}
+                  endIcon={<Add />}
+                >
+                  <b>Create New Pack</b>
+                </Button>
+              </Grid>
             </Grid>
-          )}
+            {status === 'succeeded' && (packs || []).length === 0 && (
+              <Grid item xs={10}>
+                <Typography align="center">
+                  You don't have any packs yet! Create a new one to get started.
+                </Typography>
+              </Grid>
+            )}
+            {(packs || []).length > 0 && (
+              <Grid item xs={12} container spacing={1} justifyContent="center">
+                <>
+                  {packs.map((pack, index) => {
+                    return (
+                      <Grid
+                        item
+                        xs={12}
+                        container
+                        justifyContent="flex-end"
+                        alignItems="center"
+                        key={pack.id}
+                      >
+                        <Grid item xs={10}>
+                          <PackListItem
+                            pack={pack}
+                            isSelected={index === selectedPackIndex}
+                            onSelectPack={() => handleSelectPack(index)}
+                          />
+                        </Grid>
+                        <Grid item xs={1}>
+                          <Box textAlign="center">
+                            {index === selectedPackIndex && (
+                              <ArrowForwardIos color="disabled" />
+                            )}
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    )
+                  })}
+                  <Grid item xs={12}>
+                    <Box height="20px" />
+                  </Grid>
+                </>
+              </Grid>
+            )}
+          </Grid>
+          <Hidden mdDown>
+            <Grid item md={5}>
+              <Box borderLeft={1} borderColor="divider" height="100%">
+                <Box minHeight="96px" />
+                <Grid container justifyContent="center">
+                  <Grid item xs={12} container justifyContent="center">
+                    <Box position="fixed">
+                      {!!selectedPack.id && <LivePreview pack={selectedPack} />}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          </Hidden>
         </Grid>
       </Container>
     )

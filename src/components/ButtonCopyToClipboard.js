@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Tooltip, Typography } from '@material-ui/core'
+import { Button, Tooltip, Typography, Box } from '@material-ui/core'
 import { FilterNone } from '@material-ui/icons'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
@@ -21,16 +21,18 @@ const ButtonCopyToClipboard = ({ children, textToCopy }) => {
         leaveDelay={1500}
         onClose={handleTooltipClose}
         title="Copied to clipboard!"
+        color="secondary"
         placement="right"
       >
         <Button
           endIcon={<FilterNone fontSize="small" />}
           size="small"
           style={{ textTransform: 'none' }}
-          color="secondary"
           disableElevation
         >
-          <Typography>{children}</Typography>
+          <Box color="text.primary">
+            <Typography variant="body2">{children}</Typography>
+          </Box>
         </Button>
       </Tooltip>
     </CopyToClipboard>

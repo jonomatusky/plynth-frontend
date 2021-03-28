@@ -60,8 +60,6 @@ const EditAccess = () => {
   const [pieces, setPieces] = useState([])
   const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false)
 
-  console.log(pieces)
-
   useEffect(() => {
     const setSpinning = () => {
       setIsSpinning(true)

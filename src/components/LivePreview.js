@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, makeStyles } from '@material-ui/core'
 import PackContent from './PackContent'
 import theme from 'theme'
 import PackButtonsMobile from './PackButtonsMobile'
+import PaginationDots from './PaginationDots'
 
 // const { REACT_APP_PUBLIC_URL } = process.env
 
@@ -29,10 +30,20 @@ const useStyles = makeStyles({
   },
 })
 
-const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
+const LivePreview = ({
+  pack,
+  cardIndex,
+  isLoading,
+  setIndex: setCardIndex,
+}) => {
   const { cards, style } = pack || {}
+  const [i, setI] = useState(0)
 
   const classes = useStyles(style)
+
+  const index = cardIndex || i
+
+  const setIndex = setCardIndex || setI
 
   // const Frame = ({ pack }) => {
   //   return (
@@ -60,14 +71,19 @@ const LivePreview = ({ pack, cardIndex, isLoading, setIndex }) => {
         className={classes.phone}
       >
         {/* <Frame pack={pack} /> */}
+        <PaginationDots
+          index={index}
+          color={(style || {}).fontColor}
+          count={(cards || []).length}
+        />
         <PackContent
           preview={true}
           pack={pack}
-          index={cardIndex}
+          index={index}
           setIndex={setIndex}
         />
         <PackButtonsMobile
-          index={cardIndex}
+          index={index}
           setIndex={setIndex}
           lastIndex={(cards || []).length}
           fontColor={(style || {}).fontColor}

@@ -15,10 +15,10 @@ const CardMenu = ({ packId }) => {
     <Grid container justifyContent="flex-start" spacing={2}>
       <Grid item xs={12}>
         <Box paddingBottom={1}>
-          <Typography variant="h5">Add another card </Typography>
+          <Typography variant="h5">Add a card </Typography>
         </Box>
         <Box paddingBottom={2}>
-          <Typography>What kind of card would you like to add?</Typography>
+          <Typography>What kind of content would you like to add?</Typography>
         </Box>
       </Grid>
       {cardTypes.map((cardType, index) => {

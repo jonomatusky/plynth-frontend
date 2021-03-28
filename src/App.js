@@ -31,7 +31,7 @@ const App = () => {
   firebase.app()
 
   let routes
-  const { authUser: firebaseUser, token, authStatus } = useAuth()
+  const { authUser: firebaseUser, token, authStatus, logout } = useAuth()
 
   const Route = ({
     component: Component,
@@ -135,6 +135,7 @@ const App = () => {
         authUser: firebaseUser,
         authStatus: authStatus,
         token: token,
+        logout: logout,
       }}
     >
       <Router>{routes}</Router>

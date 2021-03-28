@@ -1,16 +1,7 @@
 import React from 'react'
-import {
-  AppBar,
-  makeStyles,
-  Divider,
-  Tabs,
-  Tab,
-  Box,
-  Button as MuiButton,
-  Typography,
-} from '@material-ui/core'
+import { AppBar, makeStyles, Divider, Tabs, Tab, Box } from '@material-ui/core'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
-import { Public, Save } from '@material-ui/icons'
+import { Save } from '@material-ui/icons'
 
 import theme from 'theme'
 import Button from 'components/Button'
@@ -70,25 +61,16 @@ const EditBar = () => {
               />
             </Tabs>
           </Box>
-          <Box paddingRight="5px">
-            <MuiButton
-              size="small"
-              component={RouterLink}
-              to={'/admin'}
-              endIcon={<Save />}
-            >
-              <Typography variant="body2">Save</Typography>
-            </MuiButton>
-          </Box>
           <Box paddingRight={1}>
             <Button
               size="small"
-              endIcon={<Public />}
+              endIcon={<Save />}
               component={RouterLink}
               to={'/admin'}
+              disableElevation
             >
-              <Box paddingLeft={0.5} paddingRight={0.5}>
-                <b>Publish</b>
+              <Box paddingLeft={0.5}>
+                <b>{`Save & Close`}</b>
               </Box>
             </Button>
           </Box>
