@@ -11,7 +11,6 @@ import {
   Button as MuiButton,
   Typography,
   Hidden,
-  makeStyles,
 } from '@material-ui/core'
 import { ArrowForward, ArrowBack, Add } from '@material-ui/icons'
 
@@ -21,18 +20,10 @@ import LivePreview from 'components/LivePreview'
 import CircleButton from 'components/ButtonCircle'
 import CardNav from './components/CardNav'
 import CardMenu from './components/CardMenu'
-
-const drawerWidth = 70
-
-const useStyles = makeStyles({
-  content: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-  },
-})
+import AdminNav from 'components/AdminNav'
+import EditBar from 'components/EditBar'
 
 const EditCards = () => {
-  const classes = useStyles()
   const { packId } = useParams()
   const {
     selectPack,
@@ -40,19 +31,9 @@ const EditCards = () => {
     status,
     updateStatus,
   } = usePackStore()
-  // const [pack, setPack] = useState({})
   const [pack, setPack] = useState(null)
   const [cardIndex, setCardIndex] = useState(0)
   const [removeDialogIsOpen, setRemoveDialogIsOpen] = useState(false)
-
-  // useEffect(() => {
-  //   const getPack = () => {
-  //     setPack()
-  //   }
-  //   if (status === 'succeeded') {
-  //     getPack()
-  //   }
-  // },[packId,selectPack,status])
 
   const cards = (pack || {}).cards
   const currentCard = (cards || [])[cardIndex]
@@ -123,7 +104,8 @@ const EditCards = () => {
   }
 
   return (
-    <div className={classes.content}>
+    <AdminNav>
+      <EditBar />
       <Dialog
         onClose={handleRemoveClose}
         aria-labelledby="remove-dialog-title"
@@ -266,7 +248,7 @@ const EditCards = () => {
           </Hidden>
         </Grid>
       </Box>
-    </div>
+    </AdminNav>
   )
 }
 

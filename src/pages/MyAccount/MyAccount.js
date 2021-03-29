@@ -1,7 +1,16 @@
-import { Container, Box, Grid, Paper, Typography } from '@material-ui/core'
+import {
+  Container,
+  Box,
+  Grid,
+  Paper,
+  Typography,
+  IconButton,
+} from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import { ArrowBackIos } from '@material-ui/icons'
 import UserForm from 'components/UserForm'
 import useUserStore from 'hooks/store/use-user-store'
+import AdminNav from 'components/AdminNav'
 
 const Home = () => {
   const { user, status, updateUser } = useUserStore()
@@ -11,14 +20,18 @@ const Home = () => {
   }
 
   return (
-    <>
+    <AdminNav>
       <Grid container>
         <Grid item>
-          <ArrowBackIos />
+          <Box margin={2}>
+            <IconButton component={Link} to="/admin" color="secondary">
+              <ArrowBackIos />
+            </IconButton>
+          </Box>
         </Grid>
       </Grid>
       <Container maxWidth="xs">
-        <Box pt={10}>
+        <Box pt={7}>
           <Grid container justifyContent="center">
             <Grid item xs={12}>
               <Box pb={4}>
@@ -48,7 +61,7 @@ const Home = () => {
           </Grid>
         </Box>
       </Container>
-    </>
+    </AdminNav>
   )
 }
 

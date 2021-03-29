@@ -30,8 +30,6 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
     // paddingRight: theme.spacing(3),
     // paddingLeft: theme.spacing(3),
   },
@@ -104,10 +102,7 @@ const AdminNav = ({ children }) => {
           </Grid>
         </Grid>
       </Drawer>
-      <main className={classes.content}>
-        {/* <div className={classes.toolbar} /> */}
-        {children}
-      </main>
+      <main className={classes.content}>{children}</main>
     </div>
   )
 }

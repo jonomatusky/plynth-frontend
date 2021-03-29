@@ -17,8 +17,6 @@ import MyPacks from 'pages/PacksView/PacksView'
 
 import EditCards from 'pages/EditCards/EditCards'
 import EditAppearance from 'pages/EditAppearance/EditAppearance'
-import EditBar from 'components/EditBar'
-import AdminNav from 'components/AdminNav'
 import EditAccess from 'pages/EditAccess.js/EditAccess'
 import ViewPack from 'pages/ViewPack/ViewPack'
 import AlertBar from 'components/AlertBar'
@@ -50,50 +48,42 @@ const App = () => {
   }
 
   routes = (
-    <>
+    <Switch>
+      <Route path="/p/:packId">
+        <ViewPack />
+      </Route>
+      <PrivateRoute path="/admin/packs/:packId/edit/cards" exact>
+        <EditCards />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/packs/:packId/edit/appearance" exact>
+        <EditAppearance />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/packs/:packId/edit/access" exact>
+        <EditAccess />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/account">
+        <MyAccount />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/register">
+        <Register />
+      </PrivateRoute>
+
+      <Redirect path="/admin/packs" to="/admin" />
+
       <PrivateRoute path="/admin">
-        <AdminNav />
+        <MyPacks />
       </PrivateRoute>
-      <PrivateRoute path="/admin/packs/:packId/edit">
-        <EditBar />
-      </PrivateRoute>
-      <Switch>
-        <Route path="/p/:packId">
-          <ViewPack />
-        </Route>
-        <PrivateRoute path="/admin/packs/:packId/edit/cards" exact>
-          <EditCards />
-        </PrivateRoute>
-        <PrivateRoute path="/admin/packs/:packId/edit/appearance" exact>
-          <EditAppearance />
-        </PrivateRoute>
-        <PrivateRoute path="/admin/packs/:packId/edit/access" exact>
-          <EditAccess />
-        </PrivateRoute>
-        <PrivateRoute path="/admin/account">
-          <MyAccount />
-        </PrivateRoute>
-        <PrivateRoute path="/admin/register">
-          <Register />
-        </PrivateRoute>
 
-        <Redirect path="/admin/packs" to="/admin" />
-
-        <PrivateRoute path="/admin">
-          <MyPacks />
-        </PrivateRoute>
-
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/">
-          <Login />
-        </Route>
-      </Switch>
-    </>
+      <Route path="/signup">
+        <Signup />
+      </Route>
+      <Route path="/login">
+        <Login />
+      </Route>
+      <Route path="/">
+        <Login />
+      </Route>
+    </Switch>
   )
 
   return (

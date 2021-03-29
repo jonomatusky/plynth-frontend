@@ -7,7 +7,6 @@ import {
   Paper,
   Typography,
   Hidden,
-  makeStyles,
 } from '@material-ui/core'
 
 import usePackStore from 'hooks/store/use-pack-store'
@@ -15,18 +14,10 @@ import LivePreview from 'components/LivePreview'
 import ButtonColor from 'components/ButtonColor'
 import ButtonColorPicker from 'components/ButtonColorPicker'
 import ButtonFont from 'components/ButtonFont'
-
-const drawerWidth = 70
-
-const useStyles = makeStyles({
-  content: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-  },
-})
+import AdminNav from 'components/AdminNav'
+import EditBar from 'components/EditBar'
 
 const EditAppearance = () => {
-  const classes = useStyles()
   const { packId } = useParams()
   const { selectPack, updatePack, updateStatus } = usePackStore()
 
@@ -138,7 +129,8 @@ const EditAppearance = () => {
   }, [updateStatus, isSpinning])
 
   return (
-    <div className={classes.content}>
+    <AdminNav>
+      <EditBar />
       <Box height="100vh">
         <Grid
           container
@@ -311,7 +303,7 @@ const EditAppearance = () => {
           </Hidden>
         </Grid>
       </Box>
-    </div>
+    </AdminNav>
   )
 }
 
