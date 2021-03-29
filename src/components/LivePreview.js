@@ -12,9 +12,11 @@ const useStyles = makeStyles({
   phoneContainer: {
     [theme.breakpoints.up('lg')]: {
       maxHeight: '600px',
+      maxWidth: '300px',
     },
     [theme.breakpoints.down('lg')]: {
       maxHeight: '520px',
+      maxWidth: '260px',
     },
   },
   phone: {
@@ -27,7 +29,7 @@ const useStyles = makeStyles({
     [theme.breakpoints.down('lg')]: {
       transform: 'scale(0.65)',
     },
-    transformOrigin: 'top center',
+    transformOrigin: 'top left',
   },
 })
 
