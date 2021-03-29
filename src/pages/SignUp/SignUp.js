@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Box, Grid, Typography } from '@material-ui/core'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
-import firebase, { auth } from 'firebase/config'
+import firebase from 'config/firebase'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
@@ -46,7 +46,10 @@ const Login = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
+            <StyledFirebaseAuth
+              uiConfig={uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
           </Grid>
         </Grid>
       </Box>

@@ -1,48 +1,37 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { firebaseApp } from '../firebase/config'
-import { auth } from 'firebase/config'
+// import firebase from 'firebase/app'
+// import 'firebase/auth'
+import firebase from 'config/firebase'
 import { clearUser } from 'redux/userSlice'
 
 export const useAuth = () => {
   const dispatch = useDispatch()
 
-  const [authUser, setAuthUser] = useState(null)
-  const [authStatus, setAuthStatus] = useState(null)
-  const [token, setToken] = useState(null)
+  const [state, setState] = useState(() => {
+    const user = firebase.auth().currentUser
+    return {
+      initializing: !user,
+      user,
+    }
+  })
 
   const logout = useCallback(async () => {
     try {
-      await auth.signOut()
-      setToken(null)
-      setAuthStatus('unauthenticated')
-      dispatch(clearUser())
+      await firebase.auth().signOut()
+      await dispatch(clearUser())
     } catch (err) {}
   }, [dispatch])
 
   useEffect(() => {
-    firebaseApp.auth().onAuthStateChanged(user => {
-      if (!!user) {
-        setAuthUser(user)
-        setAuthStatus('authenticated')
-        user.getIdToken().then(token => setToken(token))
-      } else {
-        setAuthStatus('unauthenticated')
-      }
+    // listen for auth state changes
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      setState({ initializing: false, user })
     })
+
+    // unsubscribe to the listener when unmounting
+    return () => unsubscribe()
   }, [])
 
-  useEffect(() => {
-    firebaseApp.auth().onIdTokenChanged(user => {
-      if (!!user) {
-        setAuthUser(user)
-        setAuthStatus('authenticated')
-        user.getIdToken().then(token => setToken(token))
-      } else {
-        setAuthStatus('unauthenticated')
-      }
-    })
-  }, [])
-
-  return { authUser, token, authStatus, logout }
+  return { ...state, logout }
 }

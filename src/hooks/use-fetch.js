@@ -1,16 +1,16 @@
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 
-import { AuthContext } from 'contexts/auth-context'
 import { useUserStore } from './store/use-user-store'
 import { usePackStore } from './store/use-pack-store'
+import { useSession } from './use-session'
 
 export const useFetch = () => {
-  const auth = useContext(AuthContext)
+  const { user } = useSession()
   const history = useHistory()
 
-  const { fetchUser, status } = useUserStore()
-  const { fetchPacks } = usePackStore()
+  const { fetchUser, status: fetchUserStatus } = useUserStore()
+  const { fetchPacks, status: fetchPacksStatus } = usePackStore()
 
   useEffect(() => {
     const fetch = async () => {
@@ -23,19 +23,19 @@ export const useFetch = () => {
         }
       }
     }
-    if (auth.token) {
+    if (!!user && fetchUserStatus === 'idle') {
       fetch()
     }
-  }, [auth.token, fetchUser, history])
+  }, [user, history, fetchUser, fetchUserStatus])
 
   useEffect(() => {
     const fetch = async () => {
       await fetchPacks()
     }
-    if (status === 'succeeded') {
+    if (fetchUserStatus === 'succeeded' && fetchPacksStatus === 'idle') {
       fetch()
     }
-  }, [status, fetchPacks])
+  }, [fetchUserStatus, fetchPacksStatus, fetchPacks])
 
   return
 }

@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import * as firebaseui from 'firebaseui'
+import 'firebase/auth'
 import 'firebase/analytics'
 
 var firebaseConfig = {
@@ -11,10 +11,6 @@ var firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 }
 
-export const firebaseApp = firebase.initializeApp(firebaseConfig)
-
-export const authUi = new firebaseui.auth.AuthUI(firebase.auth())
-
-export const auth = firebase.auth()
+firebase.initializeApp(firebaseConfig)
 
 export default firebase

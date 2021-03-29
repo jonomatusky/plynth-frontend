@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
-
-import Divider from '@material-ui/core/Divider'
-
-import { Grid, Box, Menu, MenuItem } from '@material-ui/core'
-import { Person } from '@material-ui/icons'
-import { AuthContext } from 'contexts/auth-context'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import { makeStyles } from '@material-ui/core/styles'
+import { Grid, Box, Menu, MenuItem, Drawer, Divider } from '@material-ui/core'
+import { Person } from '@material-ui/icons'
+
+import { useFetch } from 'hooks/use-fetch'
+import { useSession } from 'hooks/use-session'
 
 const drawerWidth = 70
 
@@ -31,16 +30,20 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
     // paddingRight: theme.spacing(3),
     // paddingLeft: theme.spacing(3),
   },
 }))
 
 const AdminNav = ({ children }) => {
+  useFetch()
+
+  const { logout } = useSession()
   const classes = useStyles()
 
   const [anchorEl, setAnchorEl] = useState(null)
-  const auth = useContext(AuthContext)
 
   const handleOpen = event => {
     setAnchorEl(event.currentTarget)
@@ -51,7 +54,7 @@ const AdminNav = ({ children }) => {
   }
 
   const handleLogout = async () => {
-    auth.logout()
+    logout()
   }
 
   return (

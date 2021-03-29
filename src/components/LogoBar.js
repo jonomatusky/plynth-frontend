@@ -16,7 +16,7 @@ const LogoBar = ({ link, color }) => {
       left="0"
       right="0"
     >
-      <Link to={link}>
+      <Link to={link || '/'}>
         <Box
           sx={{
             opacity: '0.5',

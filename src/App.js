@@ -1,15 +1,12 @@
 import React from 'react'
 import {
   BrowserRouter as Router,
-  Route as DomRoute,
+  Route,
   Switch,
   Redirect,
-  useLocation,
 } from 'react-router-dom'
 
-import firebase from './firebase/config'
-import { AuthContext } from 'contexts/auth-context'
-import { useFetch } from 'hooks/use-fetch'
+import { UserContext } from 'contexts/user-context'
 import { useAuth } from 'hooks/use-auth'
 
 import Signup from 'pages/SignUp/SignUp'
@@ -29,122 +26,83 @@ import AlertBar from 'components/AlertBar'
 // import { useSelector, useDispatch } from 'react-redux'
 
 const App = () => {
-  firebase.app()
+  const { user, logout, initializing } = useAuth()
 
   let routes
-  const { authUser: firebaseUser, token, authStatus, logout } = useAuth()
 
-  const Route = ({
-    component: Component,
-    noNav,
-    publicRoute,
-    superadmin,
-    restricted,
-    ...rest
-  }) => {
-    useFetch()
-    const location = useLocation()
+  console.log(initializing)
 
-    // const {
-    //   user,
-    //   status,
-    // } = useSelector(state => state.user)
-
-    // useEffect(() => {
-    //   posthog.capture('$pageview')
-    // }, [location])
-
+  const PrivateRoute = ({ children, ...rest }) => {
     return (
-      <DomRoute
+      <Route
         {...rest}
-        render={props => (
-          <>
-            {/* Public Route - Unrestricted - User: Show component */}
-            {publicRoute && !restricted && (
-              <main>
-                <Component {...props} />
-              </main>
-            )}
-            {/* Public Route - Restricted - Unauthenticated: Show Componenet */}
-            {publicRoute && restricted && authStatus === 'unauthenticated' && (
-              <main>
-                <Component {...props} />
-              </main>
-            )}
-            {/* Public Route - Restricted - Authenticated: Redirect to admin */}
-            {publicRoute && restricted && authStatus === 'authenticated' && (
-              <Redirect to={(location.state || {}).referrer || '/admin'} />
-            )}
-            {/* Private Route - Unathenticated: Redirect to login */}
-            {!publicRoute && authStatus === 'unauthenticated' && (
-              <Redirect
-                to={{
-                  pathname: '/',
-                  state: { referrer: '/' },
-                }}
-              />
-            )}
-            {/* Private Route - Authenticated - User: Show Component */}
-            {!publicRoute && authStatus === 'authenticated' && (
-              <main>
-                <Component {...props} />
-              </main>
-            )}
-          </>
-        )}
+        render={({ location }) =>
+          initializing ? (
+            <></>
+          ) : user ? (
+            children
+          ) : (
+            <Redirect to={{ pathname: '/login', state: { from: location } }} />
+          )
+        }
       />
     )
   }
 
   routes = (
     <>
-      <DomRoute component={AdminNav} path="/admin" />
-      <DomRoute component={EditBar} path="/admin/packs/:packId/edit" />
+      <PrivateRoute path="/admin">
+        <AdminNav />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/packs/:packId/edit">
+        <EditBar />
+      </PrivateRoute>
       <Switch>
-        <DomRoute component={ViewPack} path="/p/:packId" />
-        <Route
-          component={EditCards}
-          path="/admin/packs/:packId/edit/cards"
-          exact
-        />
-        <Route
-          component={EditAppearance}
-          path="/admin/packs/:packId/edit/appearance"
-          exact
-        />
-        <Route
-          component={EditAccess}
-          path="/admin/packs/:packId/edit/access"
-          exact
-        />
-        <Route component={MyAccount} path="/admin/account" />
-        <Route component={Register} path="/admin/register" />
+        <Route path="/p/:packId">
+          <ViewPack />
+        </Route>
+        <PrivateRoute path="/admin/packs/:packId/edit/cards" exact>
+          <EditCards />
+        </PrivateRoute>
+        <PrivateRoute path="/admin/packs/:packId/edit/appearance" exact>
+          <EditAppearance />
+        </PrivateRoute>
+        <PrivateRoute path="/admin/packs/:packId/edit/access" exact>
+          <EditAccess />
+        </PrivateRoute>
+        <PrivateRoute path="/admin/account">
+          <MyAccount />
+        </PrivateRoute>
+        <PrivateRoute path="/admin/register">
+          <Register />
+        </PrivateRoute>
 
         <Redirect path="/admin/packs" to="/admin" />
 
-        <Route component={MyPacks} path="/admin" />
+        <PrivateRoute path="/admin">
+          <MyPacks />
+        </PrivateRoute>
 
-        <DomRoute component={Signup} path="/signup" />
-        <DomRoute component={Login} path="/login" />
-        <Route publicRoute component={Login} path="/" />
+        <Route path="/signup">
+          <Signup />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/">
+          <Login />
+        </Route>
       </Switch>
     </>
   )
 
   return (
-    <AuthContext.Provider
-      value={{
-        authUser: firebaseUser,
-        authStatus: authStatus,
-        token: token,
-        logout: logout,
-      }}
-    >
+    <UserContext.Provider value={{ user: user, logout: logout }}>
       <Router>
         <AlertBar />
         {routes}
       </Router>
-    </AuthContext.Provider>
+    </UserContext.Provider>
   )
 }
 
