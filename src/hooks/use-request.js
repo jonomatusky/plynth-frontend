@@ -1,13 +1,14 @@
-import { useState, useEffect, useCallback, useRef, useContext } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 // import { useDispatch } from 'react-redux'
 import axios from 'axios'
 
-import { AuthContext } from 'contexts/auth-context'
 import * as client from 'util/client'
+import { useSession } from './use-session'
 // import { setError } from 'redux/alertSlice'
 
 export const useRequest = () => {
-  const auth = useContext(AuthContext)
+  const { user } = useSession()
+
   // const dispatch = useDispatch()
   const [status, setStatus] = useState('idle')
 
@@ -19,6 +20,12 @@ export const useRequest = () => {
 
       const { quiet, ...rest } = config
 
+      let token
+
+      if (user) {
+        token = await user.getIdToken()
+      }
+
       try {
         const CancelToken = axios.CancelToken
         const source = CancelToken.source()
@@ -26,8 +33,8 @@ export const useRequest = () => {
 
         const headers = {}
 
-        if (auth.token) {
-          headers.Authorization = 'Bearer ' + auth.token
+        if (token) {
+          headers.Authorization = 'Bearer ' + token
         }
 
         let response = await client.request({
@@ -55,7 +62,7 @@ export const useRequest = () => {
         throw err
       }
     },
-    [auth.token]
+    [user]
   )
 
   useEffect(() => {
