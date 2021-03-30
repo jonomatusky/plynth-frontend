@@ -7,6 +7,7 @@ import { Person } from '@material-ui/icons'
 
 import { useFetch } from 'hooks/use-fetch'
 import { useSession } from 'hooks/use-session'
+import logo from 'images/Plynth-Loading-Final.png'
 
 const drawerWidth = 70
 
@@ -66,14 +67,20 @@ const AdminNav = ({ children }) => {
         anchor="left"
       >
         {/* <div className={classes.toolbar} /> */}
-        <Box height="100%"></Box>
         <Grid
           container
           direction="column"
           justifyContent="space-between"
           alignItems="center"
+          style={{ height: '100%' }}
         >
-          <Grid item></Grid>
+          <Grid item>
+            <Box width={30} pt={2}>
+              <Link to="/admin">
+                <img src={logo} alt="logo" style={{ maxWidth: '100%' }} />
+              </Link>
+            </Box>
+          </Grid>
           <Grid item>
             <Grid container>
               <Grid item>

@@ -19,6 +19,7 @@ const ButtonDownload = ({ children, ...props }) => {
 
   return (
     <Button
+      target="_blank"
       {...props}
       className={classes.buttonRound}
       variant="outlined"

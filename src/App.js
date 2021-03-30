@@ -20,6 +20,7 @@ import EditAppearance from 'pages/EditAppearance/EditAppearance'
 import EditAccess from 'pages/EditAccess.js/EditAccess'
 import ViewPack from 'pages/ViewPack/ViewPack'
 import AlertBar from 'components/AlertBar'
+import NotFound from 'components/NotFound'
 
 // import { useSelector, useDispatch } from 'react-redux'
 
@@ -80,8 +81,11 @@ const App = () => {
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/">
+      <Route path="/" exact>
         <Login />
+      </Route>
+      <Route>
+        <NotFound />
       </Route>
     </Switch>
   )

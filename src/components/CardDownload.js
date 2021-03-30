@@ -14,7 +14,7 @@ const CardDownload = ({ card, style }) => {
   return (
     <Grid container spacing={6} justifyContent="center">
       <Grid item xs={12}>
-        <Box paddingTop={12}>
+        <Box paddingTop={16}>
           <Box minHeight={40}>
             <Typography variant="h4" align="center" className={classes.type}>
               {card.title}

@@ -8,12 +8,13 @@ import PackButtonsMobile from 'components/PackButtonsMobile'
 import PackButtonsDesktop from 'components/PackButtonsDesktop'
 import PaginationDots from 'components/PaginationDots'
 import LogoBar from 'components/LogoBar'
+import NotFound from 'components/NotFound'
 
 const ViewPack = () => {
   const { packId } = useParams()
   const { request, status } = useRequest()
   const [index, setIndex] = useState(0)
-  const [pack, setPack] = useState({})
+  const [pack, setPack] = useState(null)
 
   const { style, cards } = pack || {}
   const { fontColor } = style || {}
@@ -40,7 +41,7 @@ const ViewPack = () => {
     }
   }, [packId, request, status])
 
-  return (
+  return pack && pack.isPublic ? (
     <Container disableGutters style={{ minHeight: '100vh' }}>
       <PaginationDots
         count={(cards || []).length}
@@ -66,6 +67,11 @@ const ViewPack = () => {
       </Hidden>
       <LogoBar color={fontColor} />
     </Container>
+  ) : (
+    <>
+      {pack && !pack.isPublic && <NotFound />}
+      {!pack && <></>}
+    </>
   )
 }
 
