@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useDispatch } from 'react-redux'
-// import firebase from 'firebase/app'
-// import 'firebase/auth'
 import firebase from 'config/firebase'
-import { clearUser } from 'redux/userSlice'
+import posthog from 'posthog-js'
+import useUserStore from 'hooks/store/use-user-store'
+import usePackStore from 'hooks/store/use-pack-store'
 
 export const useAuth = () => {
-  const dispatch = useDispatch()
+  const clearUser = useUserStore()
+  const clearPacks = usePackStore()
 
   const [state, setState] = useState(() => {
     const user = firebase.auth().currentUser
@@ -19,14 +19,19 @@ export const useAuth = () => {
   const logout = useCallback(async () => {
     try {
       await firebase.auth().signOut()
-      await dispatch(clearUser())
+      await clearUser()
+      await clearPacks()
+      posthog.reset()
     } catch (err) {}
-  }, [dispatch])
+  }, [clearPacks, clearUser])
 
   useEffect(() => {
     // listen for auth state changes
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       setState({ initializing: false, user })
+      if (!!user) {
+        posthog.identify(user.uid, { email: user.email })
+      }
     })
 
     // unsubscribe to the listener when unmounting

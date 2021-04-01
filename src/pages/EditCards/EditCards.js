@@ -20,7 +20,7 @@ import LivePreview from 'components/LivePreview'
 import CircleButton from 'components/ButtonCircle'
 import CardNav from './components/CardNav'
 import CardMenu from './components/CardMenu'
-import AdminNav from 'components/AdminNav'
+import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 
 const EditCards = () => {

@@ -88,7 +88,7 @@ const LivePreview = ({
         <PackButtonsMobile
           index={index}
           setIndex={setIndex}
-          lastIndex={(cards || []).length}
+          lastIndex={(cards || []).length - 1}
           fontColor={(style || {}).fontColor}
         />
         <LogoBar color={(style || {}).fontColor} />

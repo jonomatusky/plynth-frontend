@@ -25,7 +25,7 @@ import ButtonCopyToClipboard from 'components/ButtonCopyToClipboard'
 import { useRequest } from 'hooks/use-request'
 import PieceImage from './components/PieceImage'
 import { DeleteOutline } from '@material-ui/icons'
-import AdminNav from 'components/AdminNav'
+import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 
 const { REACT_APP_PUBLIC_URL } = process.env

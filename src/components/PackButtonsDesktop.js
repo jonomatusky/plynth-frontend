@@ -11,7 +11,7 @@ const PackButtonsDesktop = ({ fontColor, index, setIndex, lastIndex }) => {
           color={fontColor}
         />
       )}
-      {index <= lastIndex && (
+      {index < lastIndex && (
         <ButtonPackDesktop
           isLeft={false}
           onClick={() => setIndex(index + 1)}

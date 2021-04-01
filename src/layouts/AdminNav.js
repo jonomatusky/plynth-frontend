@@ -8,6 +8,7 @@ import { Person } from '@material-ui/icons'
 import { useFetch } from 'hooks/use-fetch'
 import { useSession } from 'hooks/use-session'
 import logo from 'images/Plynth-Loading-Final.png'
+import usePageTrack from 'hooks/usePageTrack'
 
 const drawerWidth = 70
 
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 const AdminNav = ({ children }) => {
   useFetch()
+  usePageTrack()
 
   const { logout } = useSession()
   const classes = useStyles()

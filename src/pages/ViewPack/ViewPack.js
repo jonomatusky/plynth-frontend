@@ -9,6 +9,7 @@ import PackButtonsDesktop from 'components/PackButtonsDesktop'
 import PaginationDots from 'components/PaginationDots'
 import LogoBar from 'components/LogoBar'
 import NotFound from 'components/NotFound'
+import PublicNav from 'layouts/PublicNav'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -42,36 +43,38 @@ const ViewPack = () => {
   }, [packId, request, status])
 
   return pack && pack.isPublic ? (
-    <Container disableGutters style={{ minHeight: '100vh' }}>
-      <PaginationDots
-        count={(cards || []).length}
-        index={index}
-        color={fontColor}
-      />
-      <PackContent pack={pack} index={index} setIndex={setIndex} />
-      <Hidden smUp>
-        <PackButtonsMobile
+    <PublicNav>
+      <Container disableGutters style={{ minHeight: '100vh' }}>
+        <PaginationDots
+          count={(cards || []).length}
           index={index}
-          lastIndex={(cards || []).length - 1}
-          setIndex={setIndex}
-          fontColor={fontColor}
+          color={fontColor}
         />
-      </Hidden>
-      <Hidden smDown>
-        <PackButtonsDesktop
-          index={index}
-          lastIndex={(cards || []).length - 1}
-          setIndex={setIndex}
-          fontColor={fontColor}
-        />
-      </Hidden>
-      <LogoBar color={fontColor} />
-    </Container>
+        <PackContent pack={pack} index={index} setIndex={setIndex} />
+        <Hidden smUp>
+          <PackButtonsMobile
+            index={index}
+            lastIndex={(cards || []).length - 1}
+            setIndex={setIndex}
+            fontColor={fontColor}
+          />
+        </Hidden>
+        <Hidden smDown>
+          <PackButtonsDesktop
+            index={index}
+            lastIndex={(cards || []).length - 1}
+            setIndex={setIndex}
+            fontColor={fontColor}
+          />
+        </Hidden>
+        <LogoBar color={fontColor} />
+      </Container>
+    </PublicNav>
   ) : (
-    <>
+    <PublicNav>
       {pack && !pack.isPublic && <NotFound />}
       {!pack && <></>}
-    </>
+    </PublicNav>
   )
 }
 

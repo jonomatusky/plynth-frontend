@@ -5,9 +5,10 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
-
 import { UserContext } from 'contexts/user-context'
 import { useAuth } from 'hooks/use-auth'
+import firebase from 'config/firebase'
+import posthog from 'posthog-js'
 
 import Signup from 'pages/SignUp/SignUp'
 import Login from 'pages/Login/Login'
@@ -22,14 +23,18 @@ import ViewPack from 'pages/ViewPack/ViewPack'
 import AlertBar from 'components/AlertBar'
 import NotFound from 'components/NotFound'
 
-// import { useSelector, useDispatch } from 'react-redux'
+const { REACT_APP_POSTHOG_KEY } = process.env
 
 const App = () => {
   const { user, logout, initializing } = useAuth()
 
-  let routes
+  posthog.init(REACT_APP_POSTHOG_KEY, {
+    api_host: 'https://app.posthog.com',
+  })
 
-  console.log(initializing)
+  firebase.analytics()
+
+  let routes
 
   const PrivateRoute = ({ children, ...rest }) => {
     return (

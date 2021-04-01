@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import { ArrowBackIos } from '@material-ui/icons'
 import UserForm from 'components/UserForm'
 import useUserStore from 'hooks/store/use-user-store'
-import AdminNav from 'components/AdminNav'
+import AdminNav from 'layouts/AdminNav'
 
 const Home = () => {
   const { user, status, updateUser } = useUserStore()

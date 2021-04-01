@@ -4,6 +4,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
 import firebase from 'config/firebase'
 import { Link } from 'react-router-dom'
+import PublicNav from 'layouts/PublicNav'
 
 const Login = () => {
   var uiConfig = {
@@ -31,28 +32,30 @@ const Login = () => {
   }
 
   return (
-    <Container maxWidth="xs">
-      <Box pt={20}>
-        <Grid container justifyContent="center" spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h5" align="center">
-              <b>Sign In</b>
-            </Typography>
+    <PublicNav>
+      <Container maxWidth="xs">
+        <Box pt={20}>
+          <Grid container justifyContent="center" spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h5" align="center">
+                <b>Sign In</b>
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography textAlign="center" variant="body2">
+                Don't have an account yet? <Link to="/signup">Sign Up</Link>
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <StyledFirebaseAuth
+                uiConfig={uiConfig}
+                firebaseAuth={firebase.auth()}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography textAlign="center" variant="body2">
-              Don't have an account yet? <Link to="/signup">Sign Up</Link>
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+    </PublicNav>
   )
 }
 

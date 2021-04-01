@@ -30,13 +30,6 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
               <Typography variant="h5">{pack.name}</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Box ml="-5px">
-                <ButtonCopyToClipboard textToCopy={packLink}>
-                  Copy Link
-                </ButtonCopyToClipboard>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
               <Box minHeight="25px">
                 <Grid container spacing={1} alignItems="center">
                   {(pack.cards || []).map((card, index) => {
@@ -53,8 +46,15 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                   })}
                 </Grid>
               </Box>
-
-              {/* <Grid item xs={12}>
+            </Grid>
+            <Grid item xs={12}>
+              <Box ml="-5px">
+                <ButtonCopyToClipboard textToCopy={packLink}>
+                  Copy Link
+                </ButtonCopyToClipboard>
+              </Box>
+            </Grid>
+            {/* <Grid item xs={12}>
                 {pack.createdAt && pack.updatedAt && (
                   <Typography variant="body2">{`Created: ${new Date(
                     pack.createdAt
@@ -63,7 +63,6 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                   ).toLocaleDateString()}`}</Typography>
                 )}
               </Grid> */}
-            </Grid>
           </Grid>
           <Grid item xs={4} container justifyContent="flex-end">
             <Grid container spacing={2}>

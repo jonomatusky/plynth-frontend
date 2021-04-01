@@ -17,7 +17,7 @@ import * as Yup from 'yup'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
-import AdminNav from 'components/AdminNav'
+import AdminNav from 'layouts/AdminNav'
 import { cardTypes } from 'components/CardCard'
 import CardCard from 'components/CardCard'
 import Button from 'components/Button'

@@ -14,7 +14,7 @@ import LivePreview from 'components/LivePreview'
 import ButtonColor from 'components/ButtonColor'
 import ButtonColorPicker from 'components/ButtonColorPicker'
 import ButtonFont from 'components/ButtonFont'
-import AdminNav from 'components/AdminNav'
+import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 
 const EditAppearance = () => {
