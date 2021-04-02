@@ -48,7 +48,7 @@ const PacksView = () => {
 
   const NameForm = () => {
     const onSubmit = values => {
-      setNewPack({ name: values.name })
+      setNewPack({ name: values.name, style: { backgroundColor: '#FFF9F0' } })
     }
 
     const defaultValues = {
@@ -160,7 +160,6 @@ const PacksView = () => {
       if (createdPack.id) {
         history.push(`admin/packs/${createdPack.id}/edit/cards`)
       }
-      console.log(createdPack)
     }
 
     return (
@@ -310,11 +309,11 @@ const PacksView = () => {
                 </Grid>
               )}
             </Grid>
-            {packs && packs.length > 0 && (
-              <Hidden mdDown>
-                <Grid item md={5}>
-                  <Box borderLeft={1} borderColor="divider" height="100%">
-                    <Box minHeight="96px" />
+            <Hidden mdDown>
+              <Grid item md={5}>
+                <Box borderLeft={1} borderColor="divider" height="100%">
+                  <Box minHeight="96px" />
+                  {packs && packs.length > 0 && (
                     <Grid container justifyContent="center">
                       <Grid item xs={12} container justifyContent="center">
                         <Box position="fixed">
@@ -324,10 +323,10 @@ const PacksView = () => {
                         </Box>
                       </Grid>
                     </Grid>
-                  </Box>
-                </Grid>
-              </Hidden>
-            )}
+                  )}
+                </Box>
+              </Grid>
+            </Hidden>
           </Grid>
         </Container>
       )}

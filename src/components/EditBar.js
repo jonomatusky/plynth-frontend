@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AppBar, makeStyles, Divider, Tabs, Tab, Box } from '@material-ui/core'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { Link, Link as RouterLink, useLocation } from 'react-router-dom'
 import { Save } from '@material-ui/icons'
 
 import theme from 'theme'
@@ -24,8 +24,14 @@ const EditBar = () => {
   const classes = useStyles()
   const location = useLocation()
 
+  const [isSaving, setIsSaving] = useState(false)
+
   const urlElements = location.pathname.split('/')
   const value = urlElements[urlElements.length - 1]
+
+  const handleSave = () => {
+    setIsSaving(true)
+  }
 
   return (
     <AppBar position="fixed" className={classes.appBar} elevation={0}>
@@ -65,9 +71,11 @@ const EditBar = () => {
             <Button
               size="small"
               endIcon={<Save />}
-              component={RouterLink}
-              to={'/admin'}
+              onClick={handleSave}
+              pending={isSaving}
               disableElevation
+              component={Link}
+              to="/admin"
             >
               <Box paddingLeft={0.5}>
                 <b>{`Save & Close`}</b>

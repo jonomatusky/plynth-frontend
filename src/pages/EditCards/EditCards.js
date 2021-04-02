@@ -156,7 +156,6 @@ const EditCards = () => {
                 </Grid> */}
               </Box>
             )}
-
             <Box minHeight="48px" />
             <Grid container justifyContent="center">
               <Grid item xs={2}>

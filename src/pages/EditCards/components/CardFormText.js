@@ -94,7 +94,7 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
               type="submit"
               variant="contained"
               color="primary"
-              isLoading={isLoading}
+              pending={isLoading}
               size="large"
             >
               Save Card

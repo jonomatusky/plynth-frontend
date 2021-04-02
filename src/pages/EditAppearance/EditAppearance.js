@@ -12,7 +12,7 @@ import {
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
 import ButtonColor from 'components/ButtonColor'
-import ButtonColorPicker from 'components/ButtonColorPicker'
+import ButtonColorPicker from 'pages/EditAppearance/components/ButtonColorPicker'
 import ButtonFont from 'components/ButtonFont'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
@@ -40,8 +40,6 @@ const EditAppearance = () => {
 
   const handleColorChange = color => {
     let textColor
-
-    console.log('changing color')
 
     const hexToRGB = h => {
       let r = 0,
@@ -74,8 +72,6 @@ const EditAppearance = () => {
             parseInt(rgb[2], 16) * 114
         ) / 1000
 
-      console.log(brightness)
-
       if (brightness > 200) {
         textColor = '#000000'
       } else if (brightness > 125) {
@@ -83,8 +79,6 @@ const EditAppearance = () => {
       } else {
         textColor = '#ffffff'
       }
-
-      console.log(textColor)
     } catch (err) {
       console.log(err)
     }

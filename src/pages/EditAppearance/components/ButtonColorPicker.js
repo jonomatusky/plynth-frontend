@@ -8,7 +8,7 @@ const ButtonColorPicker = ({ color, onChange }) => {
   const [tempColor, setTempColor] = useState(color)
 
   const handleSelect = (color, event) => {
-    onChange(tempColor.hex)
+    onChange(color.hex)
   }
 
   const openPicker = event => {

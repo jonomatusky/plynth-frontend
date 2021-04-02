@@ -132,7 +132,7 @@ const EditAccess = () => {
         </DialogContent>
         <DialogActions>
           <MuiButton onClick={handleDeleteClose}>Cancel</MuiButton>
-          <MuiButton onClick={handleDeletePack}>Remove</MuiButton>
+          <MuiButton onClick={handleDeletePack}>DELETE</MuiButton>
         </DialogActions>
       </Dialog>
       <Box height="100vh">
@@ -216,7 +216,7 @@ const EditAccess = () => {
                       </Grid>
                       <Grid item xs={12}>
                         <Box display="flex">
-                          {pieces.length > 0 &&
+                          {(pieces || []).length > 0 &&
                             pieces.map(piece => {
                               return <PieceImage piece={piece} key={piece.id} />
                             })}

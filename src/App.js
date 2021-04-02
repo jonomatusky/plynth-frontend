@@ -10,6 +10,7 @@ import { useAuth } from 'hooks/use-auth'
 import firebase from 'config/firebase'
 import posthog from 'posthog-js'
 
+import PrivateRoute from 'routes/PrivateRoute'
 import Signup from 'pages/SignUp/SignUp'
 import Login from 'pages/Login/Login'
 import Register from 'pages/Register/Register'
@@ -36,67 +37,41 @@ const App = () => {
 
   let routes
 
-  const PrivateRoute = ({ children, ...rest }) => {
-    return (
-      <Route
-        {...rest}
-        render={({ location }) =>
-          initializing ? (
-            <></>
-          ) : user ? (
-            children
-          ) : (
-            <Redirect to={{ pathname: '/login', state: { from: location } }} />
-          )
-        }
-      />
-    )
-  }
-
   routes = (
     <Switch>
-      <Route path="/p/:packId">
-        <ViewPack />
-      </Route>
-      <PrivateRoute path="/admin/packs/:packId/edit/cards" exact>
-        <EditCards />
-      </PrivateRoute>
-      <PrivateRoute path="/admin/packs/:packId/edit/appearance" exact>
-        <EditAppearance />
-      </PrivateRoute>
-      <PrivateRoute path="/admin/packs/:packId/edit/access" exact>
-        <EditAccess />
-      </PrivateRoute>
-      <PrivateRoute path="/admin/account">
-        <MyAccount />
-      </PrivateRoute>
-      <PrivateRoute path="/admin/register">
-        <Register />
-      </PrivateRoute>
+      <Route component={ViewPack} path="/p/:packId" />
+      <PrivateRoute
+        component={EditCards}
+        path="/admin/packs/:packId/edit/cards"
+      />
+
+      <PrivateRoute
+        component={EditAppearance}
+        path="/admin/packs/:packId/edit/appearance"
+      />
+
+      <PrivateRoute
+        component={EditAccess}
+        path="/admin/packs/:packId/edit/access"
+      />
+      <PrivateRoute component={MyAccount} path="/admin/account" />
+      <PrivateRoute component={Register} path="/admin/register" />
 
       <Redirect path="/admin/packs" to="/admin" />
 
-      <PrivateRoute path="/admin">
-        <MyPacks />
-      </PrivateRoute>
+      <PrivateRoute component={MyPacks} path="/admin" />
 
-      <Route path="/signup">
-        <Signup />
-      </Route>
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="/" exact>
-        <Login />
-      </Route>
-      <Route>
-        <NotFound />
-      </Route>
+      <Route component={Signup} path="/signup" />
+      <Route component={Login} path="/login" />
+      <Route component={Login} path="/" exact />
+      <Route component={NotFound} />
     </Switch>
   )
 
   return (
-    <UserContext.Provider value={{ user: user, logout: logout }}>
+    <UserContext.Provider
+      value={{ user: user, logout: logout, initializing: initializing }}
+    >
       <Router>
         <AlertBar />
         {routes}

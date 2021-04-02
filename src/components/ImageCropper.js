@@ -102,10 +102,7 @@ const ImageCropper = props => {
                 </Button>
               </Grid>
               <Grid item>
-                <Button
-                  onClick={submitHandler}
-                  isLoading={status === 'loading'}
-                >
+                <Button onClick={submitHandler} pending={status === 'loading'}>
                   Accept
                 </Button>
               </Grid>
