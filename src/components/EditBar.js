@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AppBar, makeStyles, Divider, Tabs, Tab, Box } from '@material-ui/core'
 import { Link, Link as RouterLink, useLocation } from 'react-router-dom'
-import { Save } from '@material-ui/icons'
+import { Check } from '@material-ui/icons'
 
 import theme from 'theme'
 import Button from 'components/Button'
@@ -65,12 +65,19 @@ const EditBar = () => {
                 value="access"
                 classes={{ root: classes.tabRoot }}
               />
+              <Tab
+                label="Settings"
+                component={RouterLink}
+                to="settings"
+                value="settings"
+                classes={{ root: classes.tabRoot }}
+              />
             </Tabs>
           </Box>
           <Box paddingRight={1}>
             <Button
               size="small"
-              endIcon={<Save />}
+              endIcon={<Check />}
               onClick={handleSave}
               pending={isSaving}
               disableElevation
@@ -78,7 +85,7 @@ const EditBar = () => {
               to="/admin"
             >
               <Box paddingLeft={0.5}>
-                <b>{`Save & Close`}</b>
+                <b>{`Done`}</b>
               </Box>
             </Button>
           </Box>

@@ -5,15 +5,10 @@ import {
   Box,
   Grid,
   Typography,
-  TextField,
   Button as MuiButton,
   Hidden,
 } from '@material-ui/core'
 import { Add, ArrowForward, ArrowForwardIos, Close } from '@material-ui/icons'
-
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
@@ -23,6 +18,7 @@ import CardCard from 'components/CardCard'
 import Button from 'components/Button'
 import PackListItem from './components/PackListItem'
 import Emoji from 'components/Emoji'
+import PackNameForm from 'components/PackNameForm'
 
 const PacksView = () => {
   const history = useHistory()
@@ -46,99 +42,8 @@ const PacksView = () => {
     setSelectedPackIndex(clickedPackIndex)
   }
 
-  const NameForm = () => {
-    const onSubmit = values => {
-      setNewPack({ name: values.name, style: { backgroundColor: '#FFF9F0' } })
-    }
-
-    const defaultValues = {
-      name: '',
-    }
-
-    const validationSchema = Yup.object({
-      name: Yup.string()
-        .max(50, 'A little long there! Keep it under 50 characters')
-        .required('Need a name. Bueller?'),
-    })
-
-    const { register, handleSubmit, errors } = useForm({
-      mode: 'onBlur',
-      resolver: yupResolver(validationSchema),
-      defaultValues,
-      shouldUnregister: false,
-    })
-
-    return (
-      <Container maxWidth="sm">
-        <Box paddingTop={12} />
-        <Grid container justifyContent="center" spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h5">Name your new pack</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography>(You can always change this later)</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    name="name"
-                    label="Name"
-                    placeholder="My Awesome Pack"
-                    inputRef={register}
-                    error={Boolean(errors.name)}
-                    helperText={errors.name?.message}
-                    autoComplete="off"
-                    // InputProps={{
-                    //   fontSize: 50,
-                    // }}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid
-                    container
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Grid item>
-                      <Grid item>
-                        <MuiButton
-                          onClick={handleCancel}
-                          variant="text"
-                          startIcon={<Close />}
-                          size="small"
-                        >
-                          Cancel
-                        </MuiButton>
-                      </Grid>
-                    </Grid>
-
-                    <Grid item>
-                      <Button
-                        fullWidth
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        endIcon={<ArrowForward />}
-                      >
-                        <b>Choose your cards</b>
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </form>
-          </Grid>
-        </Grid>
-      </Container>
-    )
+  const handleSubmitPackName = values => {
+    setNewPack({ name: values.name, style: { backgroundColor: '#FFF9F0' } })
   }
 
   const ChooseCards = () => {
@@ -221,11 +126,30 @@ const PacksView = () => {
   return (
     <AdminNav>
       {newPack && newPack.name && <ChooseCards />}
-      {newPack && !newPack.name && <NameForm />}
+      {newPack && !newPack.name && (
+        <Container maxWidth="sm">
+          <Box paddingTop={12} />
+          <Grid container justifyContent="center" spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h5">Name your new pack</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>(You can always change this later)</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <PackNameForm
+                onSubmit={handleSubmitPackName}
+                onCancel={handleCancel}
+                buttonText="Choose your cards"
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      )}
       {!newPack && (
         <Container disableGutters maxWidth={false}>
           <Grid container justifyContent="center">
-            <Grid item xs={12} md={7} container>
+            <Grid item xs={12} md={7}>
               <Box minHeight="100vh">
                 <Grid container justifyContent="center" spacing={3}>
                   <Grid
@@ -310,17 +234,15 @@ const PacksView = () => {
               <Grid item md={5}>
                 <Box borderLeft={1} borderColor="divider" height="100%">
                   <Box minHeight="96px" />
-                  {packs && packs.length > 0 && (
-                    <Grid container justifyContent="center">
-                      <Grid item xs={12} container justifyContent="center">
-                        <Box position="fixed">
-                          {!!selectedPack.id && (
-                            <LivePreview pack={selectedPack} />
-                          )}
-                        </Box>
-                      </Grid>
+                  <Grid container justifyContent="center">
+                    <Grid item xs={12} container justifyContent="center">
+                      <Box position="fixed">
+                        {!!selectedPack.id && (
+                          <LivePreview pack={selectedPack} />
+                        )}
+                      </Box>
                     </Grid>
-                  )}
+                  </Grid>
                 </Box>
               </Grid>
             </Hidden>

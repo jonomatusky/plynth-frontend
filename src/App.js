@@ -23,6 +23,7 @@ import EditAccess from 'pages/EditAccess.js/EditAccess'
 import ViewPack from 'pages/ViewPack/ViewPack'
 import AlertBar from 'components/AlertBar'
 import NotFound from 'components/NotFound'
+import EditSettings from 'pages/EditSettings/EditSettings'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -53,6 +54,10 @@ const App = () => {
       <PrivateRoute
         component={EditAccess}
         path="/admin/packs/:packId/edit/access"
+      />
+      <PrivateRoute
+        component={EditSettings}
+        path="/admin/packs/:packId/edit/settings"
       />
       <PrivateRoute component={MyAccount} path="/admin/account" />
       <PrivateRoute component={Register} path="/admin/register" />

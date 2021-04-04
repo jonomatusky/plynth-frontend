@@ -41,9 +41,6 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
     const startIndex = result.source.index
     const endIndex = result.destination.index
 
-    console.log('startIndex: ' + startIndex)
-    console.log('endIndex: ' + endIndex)
-
     if (cardIndex === startIndex) {
       setCardIndex(endIndex)
     } else if (cardIndex > startIndex && cardIndex <= endIndex) {
