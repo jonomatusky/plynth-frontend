@@ -79,7 +79,7 @@ const EditSettings = () => {
                           <Grid item xs={12}>
                             <PackNameForm
                               onSubmit={handleSubmit}
-                              buttonText=""
+                              buttonText="Save"
                               name={pack.name}
                               pending={updateStatus === 'loading'}
                             />

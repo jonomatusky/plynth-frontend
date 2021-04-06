@@ -31,7 +31,8 @@ const EditCards = () => {
     status,
     updateStatus,
   } = usePackStore()
-  const [pack, setPack] = useState(null)
+  const reduxPack = selectPack(packId)
+  const [pack, setPack] = useState(reduxPack)
   const [cardIndex, setCardIndex] = useState(0)
   const [removeDialogIsOpen, setRemoveDialogIsOpen] = useState(false)
 
@@ -39,14 +40,24 @@ const EditCards = () => {
   const currentCard = (cards || [])[cardIndex]
 
   useEffect(() => {
-    const packItUp = () => {
-      const reduxPack = selectPack(packId)
+    const onPackChange = () => {
       setPack(reduxPack)
     }
-    if (status === 'succeeded' && updateStatus !== 'loading') {
-      packItUp()
-    }
-  }, [packId, selectPack, status, updateStatus])
+    onPackChange()
+  }, [reduxPack])
+
+  // useEffect(() => {
+  //   const packItUp = () => {
+  //     const reduxPack = selectPack(packId)
+  //     setPack(reduxPack)
+  //   }
+  //   if (status === 'succeeded' && updateStatus !== 'loading') {
+  //     console.log('packing it up')
+  //     packItUp()
+  //   }
+  //   console.log(status)
+  //   console.log(updateStatus)
+  // }, [packId, selectPack, status, updateStatus])
 
   const updatePack = updatedPack => {
     setPack({ ...pack, ...updatedPack })
@@ -57,7 +68,7 @@ const EditCards = () => {
     if (status !== 'loading') {
       let updatedCards = [...pack.cards]
       updatedCards[cardIndex] = { ...updatedCards[cardIndex], ...values }
-      setPack({ ...pack, cards: updatedCards })
+      // setPack({ ...pack, cards: updatedCards })
       updateReduxPack({ id: packId, cards: updatedCards })
     }
   }
@@ -97,7 +108,7 @@ const EditCards = () => {
       ...cards.slice(cardIndex + 1),
     ]
 
-    setPack({ ...pack, cards: updatedCards })
+    // setPack({ ...pack, cards: updatedCards })
     updateReduxPack({ id: packId, cards: updatedCards })
 
     setRemoveDialogIsOpen(false)
