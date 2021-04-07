@@ -4,6 +4,7 @@ import { useHistory } from 'react-router'
 import { useUserStore } from './store/use-user-store'
 import { usePackStore } from './store/use-pack-store'
 import { useSession } from './use-session'
+import useAlertStore from './store/use-alert-store'
 
 export const useFetch = () => {
   const { user } = useSession()
@@ -11,22 +12,23 @@ export const useFetch = () => {
 
   const { fetchUser, status: fetchUserStatus } = useUserStore()
   const { fetchPacks, status: fetchPacksStatus } = usePackStore()
+  const { clearError } = useAlertStore()
 
   useEffect(() => {
     const fetch = async () => {
       try {
         await fetchUser()
       } catch (err) {
-        console.log(err)
         if (err.message === 'Please complete your registration to continue.') {
           history.push('/admin/register')
+          clearError()
         }
       }
     }
     if (!!user && fetchUserStatus === 'idle') {
       fetch()
     }
-  }, [user, history, fetchUser, fetchUserStatus])
+  }, [user, history, fetchUser, fetchUserStatus, clearError])
 
   useEffect(() => {
     const fetch = async () => {

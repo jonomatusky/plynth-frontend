@@ -15,7 +15,6 @@ const ImageUpload = ({ imageUrl: propImageUrl, onInput, children, round }) => {
   }
 
   const handleSelect = url => {
-    console.log(url)
     setDialogIsOpen(true)
     setImageSrc(url)
   }

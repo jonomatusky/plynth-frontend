@@ -11,7 +11,7 @@ import Button from 'components/Button'
 
 // const ASSET_URL = process.env.REACT_APP_ASSET_URL
 
-const UserForm = ({ user, onSubmit, isLoading, submitLabel }) => {
+const UserForm = ({ user, onSubmit, pending, submitLabel }) => {
   const { displayName, username } = user || {}
 
   const defaultValues = {
@@ -105,12 +105,7 @@ const UserForm = ({ user, onSubmit, isLoading, submitLabel }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Button
-            fullWidth
-            type="submit"
-            size="large"
-            // loading={isLoading}
-          >
+          <Button fullWidth type="submit" size="large" pending={pending}>
             {submitLabel || `Save & Close`}
           </Button>
         </Grid>

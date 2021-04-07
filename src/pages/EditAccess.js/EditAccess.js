@@ -177,12 +177,6 @@ const EditAccess = () => {
                         </Grid>
                       </Grid>
                       <Grid item xs={12}>
-                        <Typography variant="body2">
-                          Public packs can be opened by anyone. Private packs
-                          are only available to users who have opened it before.
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
                         <Typography>
                           <b>Share Pack:</b>
                         </Typography>
