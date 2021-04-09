@@ -73,9 +73,9 @@ const EditAppearance = () => {
         ) / 1000
 
       if (brightness > 200) {
-        textColor = '#000000'
-      } else if (brightness > 125) {
         textColor = '#333333'
+      } else if (brightness > 125) {
+        textColor = '#000000'
       } else {
         textColor = '#ffffff'
       }

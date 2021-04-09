@@ -43,7 +43,10 @@ const PacksView = () => {
   }
 
   const handleSubmitPackName = values => {
-    setNewPack({ name: values.name, style: { backgroundColor: '#FFF9F0' } })
+    setNewPack({
+      name: values.name,
+      style: { backgroundColor: '#FFF9F0', fontColor: '#333333' },
+    })
   }
 
   const ChooseCards = () => {
