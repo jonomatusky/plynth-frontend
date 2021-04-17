@@ -199,8 +199,7 @@ const EditAccess = () => {
                       <Grid item xs={12}>
                         <Typography variant="body2">
                           Link this bundle to art in the real-world. Fans snap a
-                          photo at www.plynth.com to access.{' '}
-                          <Link>{`Learn more >`} </Link>
+                          photo at www.plynth.com to access.
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
