@@ -38,7 +38,7 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
   })
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form id="card-form" onSubmit={handleSubmit(onSubmit)}>
       <Box minHeight="300px">
         <Grid container justifyContent="flex-end" spacing={3}>
           <Grid item xs={12}>

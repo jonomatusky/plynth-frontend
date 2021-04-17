@@ -23,7 +23,13 @@ export const cardTypes = [
     type: 'download',
     title: 'Download',
     icon: '⬇️',
-    description: 'Upload a file.',
+    description: 'Link to a file.',
+  },
+  {
+    type: 'highlight',
+    title: 'Highlight',
+    icon: '💡',
+    description: 'Add an image, link and text.',
   },
 ]
 
@@ -70,7 +76,7 @@ const CardCard = ({ type, onSelect }) => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box height="65px">
+              <Box height="50px">
                 <Typography>{cardInfo.description}</Typography>
               </Box>
             </Grid>

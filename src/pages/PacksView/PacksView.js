@@ -1,24 +1,15 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import {
-  Container,
-  Box,
-  Grid,
-  Typography,
-  Button as MuiButton,
-  Hidden,
-} from '@material-ui/core'
-import { Add, ArrowForward, ArrowForwardIos, Close } from '@material-ui/icons'
+import { Container, Box, Grid, Typography, Hidden } from '@material-ui/core'
+import { Add, ArrowForwardIos } from '@material-ui/icons'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
 import AdminNav from 'layouts/AdminNav'
-import { cardTypes } from 'components/CardCard'
-import CardCard from 'components/CardCard'
 import Button from 'components/Button'
 import PackListItem from './components/PackListItem'
 import Emoji from 'components/Emoji'
 import PackNameForm from 'components/PackNameForm'
+import { useHistory } from 'react-router'
 
 const PacksView = () => {
   const history = useHistory()
@@ -26,9 +17,12 @@ const PacksView = () => {
 
   const [selectedPackIndex, setSelectedPackIndex] = useState(0)
   const [newPack, setNewPack] = useState(null)
-  const [selectedCards, setSelectedCards] = useState([])
 
   const selectedPack = packs[selectedPackIndex] || {}
+
+  const handleSelectPack = clickedPackIndex => {
+    setSelectedPackIndex(clickedPackIndex)
+  }
 
   const handleClick = () => {
     setNewPack({})
@@ -38,97 +32,20 @@ const PacksView = () => {
     setNewPack(null)
   }
 
-  const handleSelectPack = clickedPackIndex => {
-    setSelectedPackIndex(clickedPackIndex)
-  }
-
-  const handleSubmitPackName = values => {
-    setNewPack({
+  const handleSubmitPackName = async values => {
+    const createdPack = await createPack({
       name: values.name,
       style: { backgroundColor: '#FFF9F0', fontColor: '#333333' },
     })
-  }
-
-  const ChooseCards = () => {
-    const handleSelect = card => {
-      let sCards = selectedCards
-      const cardIndex = sCards.findIndex(sCard => sCard.type === card.type)
-      if (cardIndex > -1) {
-        sCards.splice(cardIndex, 1)
-      } else {
-        sCards.push(card)
-      }
-      setSelectedCards(sCards)
+    if (createdPack.id) {
+      history.push(`admin/packs/${createdPack.id}/edit/cards`)
+    } else {
+      setNewPack(null)
     }
-
-    const handleSubmit = async () => {
-      const pack = newPack
-      pack.cards = selectedCards
-      const createdPack = await createPack(pack)
-      if (createdPack.id) {
-        history.push(`admin/packs/${createdPack.id}/edit/cards`)
-      }
-    }
-
-    return (
-      <Container maxWidth="sm">
-        <Box paddingTop={12} />
-        <Grid container justifyContent="center" spacing={4}>
-          <Grid item xs={12}>
-            <Box paddingBottom={2}>
-              <Typography variant="h5" align="center">
-                Choose your cards
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container justifyContent="flex-start" spacing={2}>
-              {cardTypes.map((cardType, index) => {
-                return (
-                  <Grid item xs={6} md={4} key={index}>
-                    <CardCard type={cardType.type} onSelect={handleSelect} />
-                  </Grid>
-                )
-              })}
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container justifyContent="space-between" alignItems="center">
-              <Grid item>
-                <Grid item>
-                  <MuiButton
-                    onClick={handleCancel}
-                    variant="text"
-                    startIcon={<Close />}
-                    size="small"
-                  >
-                    Cancel
-                  </MuiButton>
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Button
-                  fullWidth
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  endIcon={<ArrowForward />}
-                  onClick={handleSubmit}
-                >
-                  <b>Create Your Pack</b>
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
-    )
   }
 
   return (
     <AdminNav>
-      {newPack && newPack.name && <ChooseCards />}
       {newPack && !newPack.name && (
         <Container maxWidth="sm">
           <Box paddingTop={12} />
@@ -143,7 +60,7 @@ const PacksView = () => {
               <PackNameForm
                 onSubmit={handleSubmitPackName}
                 onCancel={handleCancel}
-                buttonText="Choose your cards"
+                buttonText="Get started"
               />
             </Grid>
           </Grid>
