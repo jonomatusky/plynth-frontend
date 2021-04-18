@@ -5,6 +5,7 @@ import CardText from './CardText'
 import CardVideo from './CardVideo'
 import CardDownload from './CardDownload'
 import { Grid, Hidden, Box } from '@material-ui/core'
+import CardHighlight from './CardHighlight'
 
 const PackContent = ({ preview, pack, index, setIndex }) => {
   const cards = (pack || {}).cards
@@ -14,6 +15,10 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
 
   const gridProps = preview ? { xs: 12 } : { xs: 12, sm: 8, md: 6 }
   const swipeProps = preview ? {} : { enableMouseEvents: true }
+
+  const increment = () => {
+    if (index < (cards || []).length - 1) setIndex(index + 1)
+  }
 
   return (
     <SwipeableViews
@@ -46,6 +51,13 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                 {type === 'video' && <CardVideo card={card} style={style} />}
                 {type === 'download' && (
                   <CardDownload card={card} style={style} />
+                )}
+                {type === 'highlight' && (
+                  <CardHighlight
+                    card={card}
+                    style={style}
+                    increment={increment}
+                  />
                 )}
               </Grid>
             </Grid>

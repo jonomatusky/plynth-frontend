@@ -10,19 +10,20 @@ const PaginationDots = ({ count, index, color }) => {
       <Grid container justifyContent="center">
         <Grid item>
           <Box display="flex">
-            {dots.map((dot, i) => {
-              return (
-                <Box
-                  key={i}
-                  bgcolor={color}
-                  borderRadius="50%"
-                  width="7px"
-                  height="7px"
-                  mr="5px"
-                  style={i !== index ? { opacity: '30%' } : null}
-                />
-              )
-            })}
+            {count > 1 &&
+              dots.map((dot, i) => {
+                return (
+                  <Box
+                    key={i}
+                    bgcolor={color}
+                    borderRadius="50%"
+                    width="7px"
+                    height="7px"
+                    mr="5px"
+                    style={i !== index ? { opacity: '30%' } : null}
+                  />
+                )
+              })}
           </Box>
         </Grid>
       </Grid>

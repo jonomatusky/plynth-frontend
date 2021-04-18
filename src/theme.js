@@ -9,10 +9,10 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: ['Degular', 'sans-serif'].join(','),
     h5: {
-      lineHeight: '1.5rem',
+      lineHeight: '1.5',
     },
     h6: {
-      lineHeight: '1.25rem',
+      lineHeight: '1.25',
     },
   },
   // overrides: {

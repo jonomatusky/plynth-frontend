@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, Grid, Button as MuiButton, Box } from '@material-ui/core'
+import {
+  TextField,
+  Grid,
+  Button as MuiButton,
+  Typography,
+} from '@material-ui/core'
 import { DeleteOutline } from '@material-ui/icons'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
@@ -11,21 +16,19 @@ import CardImage from './CardImage'
 const CardFormHighlight = ({ card, onSubmit, isLoading, onRemove }) => {
   const [prevCardId, setPrevCardId] = useState(null)
 
-  const { title, text, links } = card || {}
+  const { title, text, label, url } = card || {}
 
   const defaultValues = {
     title: title || '',
     text: text || '',
-    label: ((links || [])[0] || {}).name || '',
-    url: ((links || [])[0] || {}).url || '',
+    label: label || '',
+    url: url || '',
   }
 
   const validationSchema = Yup.object({
     title: Yup.string().max(50, 'Enter a title under 50 characters'),
     text: Yup.string(),
-    label: Yup.string()
-      .max(16, 'Must be 16 characters or less')
-      .required('Required'),
+    label: Yup.string().max(16, 'Must be 16 characters or less'),
     url: Yup.string().url('Must be a valid URL'),
   })
 
@@ -39,7 +42,7 @@ const CardFormHighlight = ({ card, onSubmit, isLoading, onRemove }) => {
   useEffect(() => {
     const setReset = () => {
       setPrevCardId(card.id)
-      reset({ title: card.title, text: card.text })
+      reset({ title, text, label, url })
     }
     if (card.id && prevCardId !== card.id) {
       setReset()
@@ -90,7 +93,13 @@ const CardFormHighlight = ({ card, onSubmit, isLoading, onRemove }) => {
                 }}
               />
             </Grid>
-            <Grid item xs={12} />
+            <Grid item xs={12}>
+              <Typography variant="h5">Add a Button</Typography>
+              <Typography>
+                Add a button that links to external content. Leave the Link
+                field blank to scroll to the next card instead.
+              </Typography>
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -112,7 +121,7 @@ const CardFormHighlight = ({ card, onSubmit, isLoading, onRemove }) => {
                 variant="outlined"
                 fullWidth
                 name="url"
-                label="Button Link"
+                label="Link"
                 placeholder="Leave this blank to take users to the next card"
                 inputRef={register}
                 error={Boolean(errors.url)}

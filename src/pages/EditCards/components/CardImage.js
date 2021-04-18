@@ -17,9 +17,6 @@ const CardImage = ({ card, onSubmit }) => {
   const [pending, setPending] = useState(false)
   const { image, imageUrl } = card || {}
 
-  console.log(image)
-  console.log(pending)
-
   const handleAdd = async newImage => {
     console.log(newImage)
     setPending(true)
