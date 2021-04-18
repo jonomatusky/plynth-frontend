@@ -41,8 +41,10 @@ const PieceImage = ({ piece }) => {
         method: 'DELETE',
       })
       console.log(res)
+      await setTimeout(() => {
+        fetchPacks()
+      }, 200)
     } catch (err) {}
-    fetchPacks()
     handleClose()
   }
 
