@@ -11,9 +11,10 @@ import {
 import theme from 'theme'
 import {
   GetApp,
-  Highlight,
   Subject,
   PlayCircleOutline,
+  StarBorder,
+  Headset,
 } from '@material-ui/icons'
 
 export const cardTypes = [
@@ -38,8 +39,14 @@ export const cardTypes = [
   {
     type: 'highlight',
     title: 'Highlight',
-    icon: 'highlight',
+    icon: 'star_border',
     description: 'Add an image, link and text.',
+  },
+  {
+    type: 'music',
+    title: 'Music',
+    icon: 'headset',
+    description: 'Link to your music.',
   },
 ]
 
@@ -59,7 +66,9 @@ const MuiIcon = ({ icon, fontSize }) => {
     case 'get_app':
       return <GetApp fontSize={fontSize} />
     case 'highlight':
-      return <Highlight fontSize={fontSize} />
+      return <StarBorder fontSize={fontSize} />
+    case 'album':
+      return <Headset fontSize={fontSize} />
     default:
       return <></>
   }

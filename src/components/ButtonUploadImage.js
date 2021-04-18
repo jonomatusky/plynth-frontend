@@ -9,8 +9,8 @@ const useStyles = makeStyles({
     minHeight: 0,
     minWidth: 0,
     borderRadius: '0px',
-    height: '200px',
-    width: '200px',
+    height: '150px',
+    width: '150px',
   },
 })
 

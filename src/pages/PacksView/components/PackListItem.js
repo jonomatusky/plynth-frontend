@@ -9,6 +9,7 @@ import {
   IconButton,
   Chip,
   Icon,
+  Hidden,
 } from '@material-ui/core'
 import { Edit, Public, Visibility } from '@material-ui/icons'
 
@@ -85,44 +86,48 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                   />
                 </Box>
               </Grid>
-              <Grid item container justifyContent="flex-end">
-                <Box display="flex" justifyContent="flex-end">
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12}>
-                      <Typography variant="body2" align="center">
-                        Edit
-                      </Typography>
+              <Hidden smDown>
+                <Grid item container justifyContent="flex-end">
+                  <Box display="flex" justifyContent="flex-end">
+                    <Grid container justifyContent="center">
+                      <Grid item xs={12}>
+                        <Typography variant="body2" align="center">
+                          Edit
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Box textAlign="center" minWidth={48}>
+                          <IconButton
+                            component={Link}
+                            to={`/admin/packs/${pack.id}/edit/cards`}
+                          >
+                            <Edit aria-label="edit" />
+                          </IconButton>
+                        </Box>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                      <Box textAlign="center" minWidth={48}>
-                        <IconButton
-                          component={Link}
-                          to={`/admin/packs/${pack.id}/edit/cards`}
-                        >
-                          <Edit aria-label="edit" />
-                        </IconButton>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12}>
-                      <Typography variant="body2" align="center">
-                        Preview
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Box textAlign="center" minWidth={48}>
-                        <IconButton onClick={onSelectPack}>
-                          {isSelected && (
-                            <Visibility aria-label="view" color="primary" />
-                          )}
-                          {!isSelected && <Visibility aria-label="view" />}
-                        </IconButton>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
+                    <Hidden mdDown>
+                      <Grid container justifyContent="center">
+                        <Grid item xs={12}>
+                          <Typography variant="body2" align="center">
+                            Preview
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Box textAlign="center" minWidth={48}>
+                            <IconButton onClick={onSelectPack}>
+                              {isSelected && (
+                                <Visibility aria-label="view" color="primary" />
+                              )}
+                              {!isSelected && <Visibility aria-label="view" />}
+                            </IconButton>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Hidden>
+                  </Box>
+                </Grid>
+              </Hidden>
             </Grid>
           </Grid>
         </Grid>

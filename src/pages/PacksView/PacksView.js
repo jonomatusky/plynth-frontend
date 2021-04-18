@@ -1,6 +1,17 @@
 import React, { useState } from 'react'
-import { Container, Box, Grid, Typography, Hidden } from '@material-ui/core'
-import { Add, ArrowForwardIos } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
+import {
+  Container,
+  Box,
+  Grid,
+  Typography,
+  Hidden,
+  IconButton,
+  Menu,
+  MenuItem,
+  Divider,
+} from '@material-ui/core'
+import { Add, ArrowForwardIos, Person } from '@material-ui/icons'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
@@ -10,9 +21,11 @@ import PackListItem from './components/PackListItem'
 import Emoji from 'components/Emoji'
 import PackNameForm from 'components/PackNameForm'
 import { useHistory } from 'react-router'
+import { useSession } from 'hooks/use-session'
 
 const PacksView = () => {
   const history = useHistory()
+  const { logout } = useSession()
   const { packs, status, createPack } = usePackStore()
 
   const [selectedPackIndex, setSelectedPackIndex] = useState(0)
@@ -30,6 +43,20 @@ const PacksView = () => {
 
   const handleCancel = () => {
     setNewPack(null)
+  }
+
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleOpen = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = event => {
+    setAnchorEl(null)
+  }
+
+  const handleLogout = async () => {
+    logout()
   }
 
   const handleSubmitPackName = async values => {
@@ -76,7 +103,8 @@ const PacksView = () => {
                     item
                     container
                     justifyContent="space-between"
-                    xs={10}
+                    xs={11}
+                    sm={10}
                     spacing={2}
                     style={{ marginTop: '30px' }}
                   >
@@ -86,15 +114,36 @@ const PacksView = () => {
                       </Typography>
                     </Grid>
                     <Grid item>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        onClick={handleClick}
-                        endIcon={<Add />}
-                      >
-                        <b>Create New Pack</b>
-                      </Button>
+                      <Hidden smDown>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="large"
+                          onClick={handleClick}
+                          endIcon={<Add />}
+                        >
+                          <b>Create New Pack</b>
+                        </Button>
+                      </Hidden>
+                      <Hidden smUp>
+                        <IconButton onClick={handleOpen}>
+                          <Person />
+                        </IconButton>
+
+                        <Menu
+                          id="simple-menu"
+                          anchorEl={anchorEl}
+                          open={Boolean(anchorEl)}
+                          transitionDuration={0}
+                          onClose={handleClose}
+                        >
+                          <MenuItem component={Link} to="/admin/account">
+                            My account
+                          </MenuItem>
+                          <Divider />
+                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                        </Menu>
+                      </Hidden>
                     </Grid>
                   </Grid>
                   {status === 'succeeded' && (packs || []).length === 0 && (
@@ -120,23 +169,26 @@ const PacksView = () => {
                               item
                               xs={12}
                               container
-                              justifyContent="flex-end"
+                              justifyContent="center"
                               alignItems="center"
                               key={pack.id}
                             >
-                              <Grid item xs={10}>
+                              <Grid item xs={false} sm={1} />
+                              <Grid item xs={11} sm={10}>
                                 <PackListItem
                                   pack={pack}
                                   isSelected={index === selectedPackIndex}
                                   onSelectPack={() => handleSelectPack(index)}
                                 />
                               </Grid>
-                              <Grid item xs={1}>
-                                <Box textAlign="center">
-                                  {index === selectedPackIndex && (
-                                    <ArrowForwardIos color="disabled" />
-                                  )}
-                                </Box>
+                              <Grid item xs={false} sm={1}>
+                                <Hidden mdDown>
+                                  <Box textAlign="center">
+                                    {index === selectedPackIndex && (
+                                      <ArrowForwardIos color="disabled" />
+                                    )}
+                                  </Box>
+                                </Hidden>
                               </Grid>
                             </Grid>
                           )

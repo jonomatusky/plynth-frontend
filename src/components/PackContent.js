@@ -6,6 +6,7 @@ import CardVideo from './CardVideo'
 import CardDownload from './CardDownload'
 import { Grid, Hidden, Box } from '@material-ui/core'
 import CardHighlight from './CardHighlight'
+import CardMusic from './CardMusic'
 
 const PackContent = ({ preview, pack, index, setIndex }) => {
   const cards = (pack || {}).cards
@@ -59,6 +60,7 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                     increment={increment}
                   />
                 )}
+                {type === 'music' && <CardMusic card={card} style={style} />}
               </Grid>
             </Grid>
           </div>

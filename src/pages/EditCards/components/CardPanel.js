@@ -6,6 +6,7 @@ import CardFormText from './CardFormText'
 import CardFormVideo from './CardFormVideo'
 import CardFormDownload from './CardFormDownload'
 import CardFormHighlight from './CardFormHighlight'
+import CardFormMusic from './CardFormMusic'
 
 const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
   const type = card.type
@@ -50,6 +51,14 @@ const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
             )}
             {type === 'highlight' && (
               <CardFormHighlight
+                card={card}
+                onSubmit={onSubmit}
+                isLoading={isLoading}
+                onRemove={onRemove}
+              />
+            )}
+            {type === 'music' && (
+              <CardFormMusic
                 card={card}
                 onSubmit={onSubmit}
                 isLoading={isLoading}

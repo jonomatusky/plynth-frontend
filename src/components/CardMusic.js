@@ -1,8 +1,7 @@
 import React from 'react'
 import { Grid, Box, Typography, makeStyles, styled } from '@material-ui/core'
-import { Photo, ArrowForward } from '@material-ui/icons'
-import ButtonCard from './ButtonCard'
-import TextTypography from './TextTypography'
+import { Photo } from '@material-ui/icons'
+import ButtonIconMusicLink from './ButtonIconMusicLink'
 
 const useStyles = makeStyles({
   type: {
@@ -29,25 +28,18 @@ const Image = styled('img')(props => ({
   boxShadow: '0px 4px 10px',
 }))
 
-const CardHighlight = ({ card, style, increment }) => {
+const CardMusic = ({ card, style, increment }) => {
   const classes = useStyles(style)
 
-  const handleClick = () => {
-    if (!card.url) {
-      increment()
-    }
-  }
+  const musicLinkTypes = ['youtube', 'spotify', 'apple_music', 'other']
 
   return (
     <Grid container justifyContent="center">
-      <Grid
-        item
-        xs={8}
-        container
-        justifyContent="center"
-        sx={{ maxWidth: '250px' }}
-      >
-        <Grid container justifyContent="center" spacing={2}>
+      <Grid item xs={8} container justifyContent="center">
+        <Grid container justifyContent="center" spacing={3}>
+          <Grid item xs={12}>
+            <Box height={30} />
+          </Grid>
           <Grid item xs={12}>
             <Box
               height="100%"
@@ -78,28 +70,30 @@ const CardHighlight = ({ card, style, increment }) => {
           </Grid>
           <Grid item xs={12}>
             <Box>
-              <Typography variant="h4" className={classes.type}>
-                {card.title}
+              <Typography
+                variant="h5"
+                className={classes.type}
+                textAlign="center"
+              >
+                <b>{card.title}</b>
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12}>
-            <TextTypography variant="h5" font={style.font}>
-              {card.text}
-            </TextTypography>
-          </Grid>
-          {card.label && (
+          {card.links && (
             <Grid item xs={12}>
-              <ButtonCard
-                endIcon={!card.url && <ArrowForward />}
-                href={card.url}
-                color={style.fontColor}
-                onClick={handleClick}
-                target="_blank"
-                fullWidth
-              >
-                <b>{card.label || 'Get Started'}</b>
-              </ButtonCard>
+              <Typography textAlign="center">
+                {musicLinkTypes
+                  .map(type => {
+                    const link = (card.links || []).find(
+                      link => link.type === type
+                    )
+                    return link
+                  })
+                  .filter(link => !!link)
+                  .map(link => {
+                    return <ButtonIconMusicLink key={link.type} link={link} />
+                  })}
+              </Typography>
             </Grid>
           )}
         </Grid>
@@ -108,4 +102,4 @@ const CardHighlight = ({ card, style, increment }) => {
   )
 }
 
-export default CardHighlight
+export default CardMusic
