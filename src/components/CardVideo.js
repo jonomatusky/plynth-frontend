@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Box, Typography, makeStyles } from '@material-ui/core'
 import ReactPlayer from 'react-player'
+import TextTypography from './TextTypography'
 
 const useStyles = makeStyles({
   type: {
@@ -37,9 +38,9 @@ const CardText = ({ card, style }) => {
       </Grid>
       <Grid item xs={12} container justifyContent="center">
         <Grid item xs={10}>
-          <Typography variant="h5" className={classes.type}>
+          <TextTypography variant="h5" font={style.font}>
             {card.text}
-          </Typography>
+          </TextTypography>
         </Grid>
       </Grid>
     </Grid>

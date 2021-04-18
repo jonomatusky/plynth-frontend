@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Box, Typography, makeStyles } from '@material-ui/core'
 import ButtonDownload from './ButtonDownload'
+import TextTypography from './TextTypography'
 
 const useStyles = makeStyles({
   type: {
@@ -28,9 +29,9 @@ const CardDownload = ({ card, style }) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h5" align="center" className={classes.type}>
+        <TextTypography variant="h5" align="center" font={style.font}>
           {card.text}
-        </Typography>
+        </TextTypography>
       </Grid>
     </Grid>
   )

@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Box, Typography, makeStyles, styled } from '@material-ui/core'
 import { Photo, ArrowForward } from '@material-ui/icons'
 import ButtonCard from './ButtonCard'
+import TextTypography from './TextTypography'
 
 const useStyles = makeStyles({
   type: {
@@ -78,7 +79,9 @@ const CardHighlight = ({ card, style, increment }) => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Typography className={classes.type}>{card.text}</Typography>
+              <TextTypography variant="h5" font={style.font}>
+                {card.text}
+              </TextTypography>
             </Grid>
             {card.label && (
               <Grid item xs={12}>
