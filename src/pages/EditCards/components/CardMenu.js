@@ -23,7 +23,7 @@ const CardMenu = ({ packId }) => {
       </Grid>
       {cardTypes.map((cardType, index) => {
         return (
-          <Grid item xs={6} md={4} key={index}>
+          <Grid item xs={4} lg={3} key={index}>
             <CardCard
               type={cardType.type}
               onSelect={() => handleSelect(cardType.type)}

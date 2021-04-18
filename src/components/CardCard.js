@@ -8,27 +8,37 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core'
-import Emoji from './Emoji'
 import theme from 'theme'
+import {
+  GetApp,
+  Highlight,
+  Subject,
+  PlayCircleOutline,
+} from '@material-ui/icons'
 
 export const cardTypes = [
   {
     type: 'text',
     title: 'Text',
-    icon: '📝',
+    icon: 'subject',
     description: 'Add a message.',
   },
-  { type: 'video', title: 'Video', icon: '🎥', description: 'Share a video.' },
+  {
+    type: 'video',
+    title: 'Video',
+    icon: 'play_circle_outline',
+    description: 'Share a video.',
+  },
   {
     type: 'download',
     title: 'Download',
-    icon: '⬇️',
+    icon: 'get_app',
     description: 'Link to a file.',
   },
   {
     type: 'highlight',
     title: 'Highlight',
-    icon: '💡',
+    icon: 'highlight',
     description: 'Add an image, link and text.',
   },
 ]
@@ -39,6 +49,21 @@ const useStyles = makeStyles({
       props.isSelected ? theme.palette.action.selected : null,
   },
 })
+
+const MuiIcon = ({ icon, fontSize }) => {
+  switch (icon) {
+    case 'subject':
+      return <Subject fontSize={fontSize} />
+    case 'play_circle_outline':
+      return <PlayCircleOutline fontSize={fontSize} />
+    case 'get_app':
+      return <GetApp fontSize={fontSize} />
+    case 'highlight':
+      return <Highlight fontSize={fontSize} />
+    default:
+      return <></>
+  }
+}
 
 const CardCard = ({ type, onSelect }) => {
   const [isSelected, setIsSelected] = useState(null)
@@ -57,16 +82,15 @@ const CardCard = ({ type, onSelect }) => {
         <CardContent>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Box height="100px">
+              <Box height="70px">
                 <Box
                   height="100%"
                   display="flex"
                   flexDirection="column"
                   justifyContent="center"
+                  alignItems="center"
                 >
-                  <Typography variant="h2" align="center">
-                    <Emoji label={type} symbol={cardInfo.icon} />
-                  </Typography>
+                  <MuiIcon icon={cardInfo.icon} fontSize="large" />
                 </Box>
               </Box>
             </Grid>
@@ -76,7 +100,7 @@ const CardCard = ({ type, onSelect }) => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box height="50px">
+              <Box height="60px">
                 <Typography>{cardInfo.description}</Typography>
               </Box>
             </Grid>

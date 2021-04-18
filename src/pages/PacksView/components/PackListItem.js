@@ -8,11 +8,11 @@ import {
   Typography,
   IconButton,
   Chip,
+  Icon,
 } from '@material-ui/core'
 import { Edit, Public, Visibility } from '@material-ui/icons'
 
 import ButtonCopyToClipboard from 'components/ButtonCopyToClipboard'
-import Emoji from 'components/Emoji'
 import { cardTypes } from 'components/CardCard'
 
 const { REACT_APP_PUBLIC_URL } = process.env
@@ -40,7 +40,7 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
 
                     return (
                       <Grid item key={card.id || index}>
-                        <Emoji label={type} symbol={cardInfo.icon} />
+                        <Icon>{cardInfo.icon}</Icon>
                       </Grid>
                     )
                   })}

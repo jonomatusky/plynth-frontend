@@ -143,7 +143,7 @@ const EditCards = () => {
               <Box minHeight="48px" />
               {cards && cards.length > 0 && (
                 <Box
-                  height="76px"
+                  height="79px"
                   border={1}
                   borderTop={0}
                   borderLeft={0}

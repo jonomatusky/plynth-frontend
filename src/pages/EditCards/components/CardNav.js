@@ -8,10 +8,10 @@ import {
   CardActionArea,
   Box,
   Button as MuiButton,
+  Icon,
 } from '@material-ui/core'
 import { Add, DragIndicator } from '@material-ui/icons'
 
-import Emoji from 'components/Emoji'
 import { cardTypes } from 'components/CardCard'
 
 // const useStyles = makeStyles(theme => ({
@@ -124,17 +124,14 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
                                       onClick={() => setCardIndex(index)}
                                     >
                                       <Box p={2} pr={1}>
-                                        <Typography variant="h5" align="center">
-                                          <Emoji
-                                            label={card.type}
-                                            symbol={
-                                              cardTypes.find(
-                                                cardType =>
-                                                  cardType.type === card.type
-                                              ).icon
-                                            }
-                                          />
-                                        </Typography>
+                                        <Icon>
+                                          {
+                                            cardTypes.find(
+                                              cardType =>
+                                                cardType.type === card.type
+                                            ).icon
+                                          }
+                                        </Icon>
                                       </Box>
                                     </CardActionArea>
                                   </Grid>
