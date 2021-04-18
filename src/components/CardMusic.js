@@ -91,7 +91,13 @@ const CardMusic = ({ card, style, increment }) => {
                   })
                   .filter(link => !!link)
                   .map(link => {
-                    return <ButtonIconMusicLink key={link.type} link={link} />
+                    return (
+                      <ButtonIconMusicLink
+                        key={link.type}
+                        link={link}
+                        color={style.fontColor}
+                      />
+                    )
                   })}
               </Typography>
             </Grid>
