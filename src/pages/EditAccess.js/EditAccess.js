@@ -15,6 +15,7 @@ import {
   DialogTitle,
   Button as MuiButton,
 } from '@material-ui/core'
+// import QRCode from 'qrcode.react'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
@@ -176,13 +177,14 @@ const EditAccess = () => {
                         </Grid>
                       </Grid>
                       <Grid item xs={12}>
-                        <Typography>
-                          <b>Share Pack:</b>
+                        <Typography variant="body2">
+                          <b>Share:</b> {packLink}
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
+                        <Typography variant="subtitle1"></Typography>
                         <ButtonCopyToClipboard textToCopy={packLink}>
-                          {packLink}
+                          Copy Link
                         </ButtonCopyToClipboard>
                       </Grid>
                       <Grid item xs={12}>
