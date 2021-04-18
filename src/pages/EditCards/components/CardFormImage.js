@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react'
 import {
   TextField,
   Grid,
-  Button as MuiButton,
   // FormControlLabel,
   // Switch,
 } from '@material-ui/core'
-import { DeleteOutline } from '@material-ui/icons'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -114,19 +112,9 @@ const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
               item
               xs={12}
               container
-              justifyContent="space-between"
+              justifyContent="flex-end"
               alignItems="flex-end"
             >
-              <Grid item>
-                <MuiButton
-                  endIcon={<DeleteOutline fontSize="small" />}
-                  color="primary"
-                  size="small"
-                  onClick={onRemove}
-                >
-                  Remove
-                </MuiButton>
-              </Grid>
               <Grid item>
                 <Button
                   type="submit"

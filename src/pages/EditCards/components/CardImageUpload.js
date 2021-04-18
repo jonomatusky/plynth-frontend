@@ -36,7 +36,9 @@ const CardImage = ({ card, crop, pending, onSubmit }) => {
   }
 
   useEffect(() => {
-    setShowLoadingSpinner(pending)
+    if (pending === false) {
+      setShowLoadingSpinner(false)
+    }
   }, [pending])
 
   return (

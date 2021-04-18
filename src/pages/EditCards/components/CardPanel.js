@@ -1,5 +1,11 @@
-import { Paper, Box, Grid, Typography } from '@material-ui/core'
 import React from 'react'
+import {
+  Paper,
+  Box,
+  Grid,
+  Typography,
+  Button as MuiButton,
+} from '@material-ui/core'
 
 import { cardTypes } from 'components/CardCard'
 import CardFormText from './CardFormText'
@@ -8,6 +14,7 @@ import CardFormDownload from './CardFormDownload'
 import CardFormHighlight from './CardFormHighlight'
 import CardFormMusic from './CardFormMusic'
 import CardFormImage from './CardFormImage'
+import { DeleteOutline } from '@material-ui/icons'
 
 const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
   const type = card.type
@@ -17,7 +24,7 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
 
   return (
     <Paper>
-      <Box p={3}>
+      <Box pt={2} pb={1} pl={3} pr={3}>
         <Grid container justifyContent="flex-start" spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h4">
@@ -26,55 +33,77 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
             <Typography>{description}</Typography>
           </Grid>
           <Grid item xs={12}>
-            {type === 'text' && (
-              <CardFormText
-                card={card}
-                onSubmit={onSubmit}
-                pending={pending}
-                onRemove={onRemove}
-              />
-            )}
-            {type === 'video' && (
-              <CardFormVideo
-                card={card}
-                onSubmit={onSubmit}
-                pending={pending}
-                onRemove={onRemove}
-              />
-            )}
-            {type === 'download' && (
-              <CardFormDownload
-                card={card}
-                onSubmit={onSubmit}
-                isLoading={pending}
-                onRemove={onRemove}
-              />
-            )}
-            {type === 'highlight' && (
-              <CardFormHighlight
-                card={card}
-                onSubmit={onSubmit}
-                pending={pending}
-                onRemove={onRemove}
-              />
-            )}
-            {type === 'music' && (
-              <CardFormMusic
-                card={card}
-                onSubmit={onSubmit}
-                pending={pending}
-                onRemove={onRemove}
-              />
-            )}
-            {type === 'image' && (
-              <CardFormImage
-                card={card}
-                onSubmit={onSubmit}
-                isLoading={pending}
-                onRemove={onRemove}
-                pending={pending}
-              />
-            )}
+            <Grid container justify="center">
+              <Grid item xs={12}>
+                {type === 'text' && (
+                  <CardFormText
+                    card={card}
+                    onSubmit={onSubmit}
+                    pending={pending}
+                    onRemove={onRemove}
+                  />
+                )}
+                {type === 'video' && (
+                  <CardFormVideo
+                    card={card}
+                    onSubmit={onSubmit}
+                    pending={pending}
+                    onRemove={onRemove}
+                  />
+                )}
+                {type === 'download' && (
+                  <CardFormDownload
+                    card={card}
+                    onSubmit={onSubmit}
+                    isLoading={pending}
+                    onRemove={onRemove}
+                  />
+                )}
+                {type === 'highlight' && (
+                  <CardFormHighlight
+                    card={card}
+                    onSubmit={onSubmit}
+                    pending={pending}
+                    onRemove={onRemove}
+                  />
+                )}
+                {type === 'music' && (
+                  <CardFormMusic
+                    card={card}
+                    onSubmit={onSubmit}
+                    pending={pending}
+                    onRemove={onRemove}
+                  />
+                )}
+                {type === 'image' && (
+                  <CardFormImage
+                    card={card}
+                    onSubmit={onSubmit}
+                    isLoading={pending}
+                    onRemove={onRemove}
+                    pending={pending}
+                  />
+                )}
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                container
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item>
+                  <MuiButton
+                    endIcon={<DeleteOutline fontSize="small" />}
+                    color="secondary"
+                    size="small"
+                    onClick={onRemove}
+                  >
+                    Remove
+                  </MuiButton>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
