@@ -214,7 +214,7 @@ const EditAccess = () => {
                             })}
                           <Grid item>
                             <Box mb={4}>
-                              <ImageUpload onInput={handleNewImage}>
+                              <ImageUpload onSubmit={handleNewImage}>
                                 <ButtonUpload />
                               </ImageUpload>
                             </Box>

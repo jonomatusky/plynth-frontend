@@ -1,71 +1,41 @@
-import React, { useState } from 'react'
-import { Dialog } from '@material-ui/core'
+import React from 'react'
 
-import ImageCropper from './ImageCropper'
-import ImagePicker from './ImagePicker'
+import { useRequest } from 'hooks/use-request'
+import { useImageResize } from 'hooks/use-image-upload'
+import ImagePicker from 'components/ImagePicker'
 
-const ImageUpload = ({ imageUrl: propImageUrl, onInput, children, round }) => {
-  const [dialogIsOpen, setDialogIsOpen] = useState(false)
-  const [imageSrc, setImageSrc] = useState(null)
-  // const [imageUrl, setImageUrl] = useState(null)
+const ImageUpload = ({ onSubmit, resolution, children }) => {
+  const resizeImage = useImageResize()
+  // const { setError } = useAlertStore()
+  const { request } = useRequest()
 
-  const closeDialog = () => {
-    setDialogIsOpen(false)
-    setImageSrc(null)
+  const handleSubmit = async imageSrc => {
+    let resizedImage
+
+    try {
+      resizedImage = await resizeImage(imageSrc, resolution || 600)
+    } catch (err) {
+      // setError({ message: err.message })
+      console.log(err.message)
+    }
+
+    try {
+      let { signedUrl, imageFilepath } = await request({
+        url: '/auth/sign-s3',
+        method: 'POST',
+        data: {
+          fileName: resizedImage.name,
+          fileType: resizedImage.type,
+        },
+      })
+
+      await request({ url: signedUrl, method: 'PUT', data: resizedImage })
+
+      onSubmit(imageFilepath)
+    } catch (err) {}
   }
 
-  const handleSelect = url => {
-    setDialogIsOpen(true)
-    setImageSrc(url)
-  }
-
-  const submitHandler = ({ imageFilepath }) => {
-    // setImageUrl(imageUrl)
-    onInput(imageFilepath)
-    closeDialog()
-  }
-
-  // useEffect(() => {
-  //   const setImage = () => {
-  //     setImageUrl(propImageUrl)
-  //   }
-  //   setImage()
-  // }, [setImageUrl, propImageUrl])
-
-  return (
-    <>
-      <Dialog
-        fullScreen
-        open={!!dialogIsOpen && !!imageSrc}
-        onClose={closeDialog}
-      >
-        <ImageCropper
-          round={round}
-          imageSrc={imageSrc}
-          onCancel={closeDialog}
-          onSubmit={submitHandler}
-        />
-      </Dialog>
-      {/* <Dialog open={!!(dialogIsOpen && !imageSrc)} onClose={closeDialog}>
-        <DialogTitle>"Change Profile Photo"</DialogTitle>
-        <DialogContent
-          dividers
-        >{`Upload a new image to change your profile picture.`}</DialogContent>
-        <DialogActions>
-          <ActionButton
-            fullWidth={true}
-            variant="text"
-            onClick={closeDialog}
-            label="Close"
-          />
-          <ImagePicker onSelect={handleSelect}>
-            <Button></Button>
-          </ImagePicker>
-        </DialogActions>
-      </Dialog> */}
-      <ImagePicker onSelect={handleSelect}>{children}</ImagePicker>
-    </>
-  )
+  return <ImagePicker onSelect={handleSubmit}>{children}</ImagePicker>
 }
 
 export default ImageUpload

@@ -22,7 +22,6 @@ const CardImage = ({ card, onSubmit }) => {
   const { image, imageUrl } = card || {}
 
   const handleAdd = async newImage => {
-    console.log(newImage)
     setPending(true)
     await onSubmit({ id: card.id, image: newImage })
     setPending(false)

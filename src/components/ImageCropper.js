@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const ImageCropper = props => {
+const ImageCropper = ({ imageSrc, resolution, onSubmit, onCancel, round }) => {
   const classes = useStyles()
   const resizeImage = useImageResize()
   // const { setError } = useAlertStore()
@@ -57,7 +57,11 @@ const ImageCropper = props => {
     let resizedImage
 
     try {
-      resizedImage = await resizeImage(props.imageSrc, 600, croppedAreaPixels)
+      resizedImage = await resizeImage(
+        imageSrc,
+        resolution || 600,
+        croppedAreaPixels
+      )
     } catch (err) {
       // setError({ message: err.message })
       console.log(err.message)
@@ -75,7 +79,7 @@ const ImageCropper = props => {
 
       await request({ url: signedUrl, method: 'PUT', data: resizedImage })
 
-      props.onSubmit({ imageUrl, imageFilepath })
+      onSubmit({ imageUrl, imageFilepath })
     } catch (err) {}
   }
 
@@ -97,7 +101,7 @@ const ImageCropper = props => {
             </Grid>
             <Grid item xs={12} container spacing={1} justifyContent="flex-end">
               <Grid item>
-                <Button onClick={props.onCancel} variant="text">
+                <Button onClick={onCancel} variant="text">
                   Cancel
                 </Button>
               </Grid>
@@ -110,16 +114,16 @@ const ImageCropper = props => {
           </Grid>
         </Toolbar>
       </AppBar>
-      {!props.imageSrc ? (
+      {!imageSrc ? (
         <CircularProgress />
       ) : (
         <div>
           <Cropper
-            image={props.imageSrc}
+            image={imageSrc}
             crop={crop}
             zoom={zoom}
             aspect={1 / 1}
-            cropShape={props.round ? 'round' : 'rect'}
+            cropShape={round ? 'round' : 'rect'}
             onCropChange={setCrop}
             onCropComplete={onCropComplete}
             onZoomChange={setZoom}

@@ -36,11 +36,10 @@ const PieceImage = ({ piece }) => {
 
   const handleRemove = async () => {
     try {
-      const res = await request({
+      await request({
         url: `/pieces/${piece.id}`,
         method: 'DELETE',
       })
-      console.log(res)
       await setTimeout(() => {
         fetchPacks()
       }, 200)
