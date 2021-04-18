@@ -12,7 +12,7 @@ const Button = ({ children, pending, color, variant, onClick, ...props }) => {
   const classes = useStyles()
   return (
     <LoadingButton
-      pending={pending}
+      // pending={pending}
       color={color || 'primary'}
       variant={variant || 'contained'}
       className={classes.button}

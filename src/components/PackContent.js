@@ -1,12 +1,13 @@
 import React from 'react'
 import SwipeableViews from 'react-swipeable-views'
+import { Grid, Hidden, Box } from '@material-ui/core'
 
 import CardText from './CardText'
 import CardVideo from './CardVideo'
 import CardDownload from './CardDownload'
-import { Grid, Hidden, Box } from '@material-ui/core'
 import CardHighlight from './CardHighlight'
 import CardMusic from './CardMusic'
+import CardImage from './CardImage'
 
 const PackContent = ({ preview, pack, index, setIndex }) => {
   const cards = (pack || {}).cards
@@ -39,6 +40,10 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
               width: '100%',
               flexGrow: 1,
               color: (style || {}).fontColor,
+              background:
+                card.isFullscreenMobile && card.image
+                  ? `url(${card.imageUrl}) no-repeat center`
+                  : null,
             }}
           >
             <Grid container justifyContent="center">
@@ -61,6 +66,7 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                   />
                 )}
                 {type === 'music' && <CardMusic card={card} style={style} />}
+                {type === 'image' && <CardImage card={card} style={style} />}
               </Grid>
             </Grid>
           </div>

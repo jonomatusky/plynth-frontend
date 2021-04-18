@@ -4,12 +4,14 @@ import { useRequest } from 'hooks/use-request'
 import { useImageResize } from 'hooks/use-image-upload'
 import ImagePicker from 'components/ImagePicker'
 
-const ImageUpload = ({ onSubmit, resolution, children }) => {
+const ImageUpload = ({ onSubmit, resolution, children, setIsPending }) => {
   const resizeImage = useImageResize()
   // const { setError } = useAlertStore()
   const { request } = useRequest()
 
   const handleSubmit = async imageSrc => {
+    setIsPending(true)
+
     let resizedImage
 
     try {

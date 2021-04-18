@@ -7,8 +7,9 @@ import CardFormVideo from './CardFormVideo'
 import CardFormDownload from './CardFormDownload'
 import CardFormHighlight from './CardFormHighlight'
 import CardFormMusic from './CardFormMusic'
+import CardFormImage from './CardFormImage'
 
-const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
+const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
   const type = card.type
   const { title, description } = cardTypes.find(
     cardType => cardType.type === type
@@ -29,7 +30,7 @@ const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
               <CardFormText
                 card={card}
                 onSubmit={onSubmit}
-                isLoading={isLoading}
+                pending={pending}
                 onRemove={onRemove}
               />
             )}
@@ -37,7 +38,7 @@ const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
               <CardFormVideo
                 card={card}
                 onSubmit={onSubmit}
-                isLoading={isLoading}
+                pending={pending}
                 onRemove={onRemove}
               />
             )}
@@ -45,7 +46,7 @@ const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
               <CardFormDownload
                 card={card}
                 onSubmit={onSubmit}
-                isLoading={isLoading}
+                isLoading={pending}
                 onRemove={onRemove}
               />
             )}
@@ -53,7 +54,7 @@ const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
               <CardFormHighlight
                 card={card}
                 onSubmit={onSubmit}
-                isLoading={isLoading}
+                pending={pending}
                 onRemove={onRemove}
               />
             )}
@@ -61,8 +62,17 @@ const CardPanel = ({ card, onSubmit, isLoading, onRemove }) => {
               <CardFormMusic
                 card={card}
                 onSubmit={onSubmit}
-                isLoading={isLoading}
+                pending={pending}
                 onRemove={onRemove}
+              />
+            )}
+            {type === 'image' && (
+              <CardFormImage
+                card={card}
+                onSubmit={onSubmit}
+                isLoading={pending}
+                onRemove={onRemove}
+                pending={pending}
               />
             )}
           </Grid>

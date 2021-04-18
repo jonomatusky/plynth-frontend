@@ -15,6 +15,7 @@ import {
   PlayCircleOutline,
   StarBorder,
   Headset,
+  Photo,
 } from '@material-ui/icons'
 
 export const cardTypes = [
@@ -48,6 +49,12 @@ export const cardTypes = [
     icon: 'headset',
     description: 'Link to your music.',
   },
+  {
+    type: 'image',
+    title: 'Image',
+    icon: 'photo',
+    description: 'Link to your music.',
+  },
 ]
 
 const useStyles = makeStyles({
@@ -65,10 +72,12 @@ const MuiIcon = ({ icon, fontSize }) => {
       return <PlayCircleOutline fontSize={fontSize} />
     case 'get_app':
       return <GetApp fontSize={fontSize} />
-    case 'highlight':
+    case 'star_border':
       return <StarBorder fontSize={fontSize} />
-    case 'album':
+    case 'headset':
       return <Headset fontSize={fontSize} />
+    case 'photo':
+      return <Photo fontSize={fontSize} />
     default:
       return <></>
   }

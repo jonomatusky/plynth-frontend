@@ -11,9 +11,9 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import Button from 'components/Button'
-import CardImage from './CardImage'
+import CardImage from './CardImageUpload'
 
-const CardFormMusic = ({ card, onSubmit, isLoading, onRemove }) => {
+const CardFormMusic = ({ card, onSubmit, pending, onRemove }) => {
   const [prevCardId, setPrevCardId] = useState(null)
 
   const { title, text, links } = card || {}
@@ -87,7 +87,7 @@ const CardFormMusic = ({ card, onSubmit, isLoading, onRemove }) => {
       <Grid container item xs={12} justifyContent="center">
         <Grid item container xs={12} justifyContent="center">
           <Grid item>
-            <CardImage card={card} onSubmit={onSubmit} />
+            <CardImage card={card} onSubmit={onSubmit} crop />
           </Grid>
         </Grid>
       </Grid>
@@ -203,7 +203,7 @@ const CardFormMusic = ({ card, onSubmit, isLoading, onRemove }) => {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  pending={isLoading}
+                  pending={pending}
                   size="large"
                 >
                   Save Card

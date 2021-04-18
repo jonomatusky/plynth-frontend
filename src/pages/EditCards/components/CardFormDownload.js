@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 
 import Button from 'components/Button'
 
-const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
+const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
   const [prevCardId, setPrevCardId] = useState(null)
 
   const defaultValues = {
@@ -112,7 +112,7 @@ const CardFormText = ({ card, onSubmit, isLoading, onRemove }) => {
               type="submit"
               variant="contained"
               color="primary"
-              pending={isLoading}
+              pending={pending}
               size="large"
             >
               Save Card

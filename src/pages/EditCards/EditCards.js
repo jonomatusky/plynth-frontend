@@ -199,6 +199,7 @@ const EditCards = () => {
                             card={currentCard}
                             onSubmit={handleCardSubmit}
                             onRemove={handleRemoveOpen}
+                            pending={updateStatus === 'loading'}
                           />
                         )}
                         {pack && cardIndex >= (cards || []).length && (

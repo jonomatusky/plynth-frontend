@@ -3,7 +3,8 @@ import {
   TextField,
   Grid,
   Button as MuiButton,
-  Typography,
+  // FormControlLabel,
+  // Switch,
 } from '@material-ui/core'
 import { DeleteOutline } from '@material-ui/icons'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -13,23 +14,20 @@ import * as Yup from 'yup'
 import Button from 'components/Button'
 import CardImage from './CardImageUpload'
 
-const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
+const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
   const [prevCardId, setPrevCardId] = useState(null)
+  // const [isFullscreenOnMobile, setIsFullscreenOnMobile ] = useState(card.isFullscreenMobile)
 
   const { title, text, label, url } = card || {}
 
   const defaultValues = {
     title: title || '',
     text: text || '',
-    label: label || '',
-    url: url || '',
   }
 
   const validationSchema = Yup.object({
     title: Yup.string().max(50, 'Enter a title under 50 characters'),
     text: Yup.string(),
-    label: Yup.string().max(16, 'Must be 16 characters or less'),
-    url: Yup.string().url('Must be a valid URL'),
   })
 
   const { register, handleSubmit, errors, reset } = useForm({
@@ -49,12 +47,20 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
     }
   })
 
+  useEffect(() => {})
+
+  // const changeFullscreenMobile = () => {
+  //   const newCard = { ...card }
+  //   newCard.isFullscreenMobile = !card.isFullscreenMobile
+  //   onSubmit(newCard)
+  // }
+
   return (
     <Grid container>
       <Grid container item xs={12} justifyContent="center">
         <Grid item container xs={12} justifyContent="center">
           <Grid item>
-            <CardImage card={card} onSubmit={onSubmit} crop />
+            <CardImage card={card} onSubmit={onSubmit} pending={pending} />
           </Grid>
         </Grid>
       </Grid>
@@ -93,45 +99,17 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h5">Add a Button</Typography>
-              <Typography>
-                Add a button that links to external content. Leave the Link
-                field blank to scroll to the next card instead.
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                name="label"
-                label="Button Label"
-                placeholder="Add a button label"
-                inputRef={register}
-                error={Boolean(errors.label)}
-                helperText={errors.label?.message}
-                autoComplete="off"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+            {/* <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={card.isFullscreenMobile}
+                    onChange={changeFullscreenMobile}
+                  />
+                }
+                label="Make full screen on mobile"
               />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                name="url"
-                label="Link"
-                placeholder="Leave this blank to take users to the next card"
-                inputRef={register}
-                error={Boolean(errors.url)}
-                helperText={errors.url?.message}
-                autoComplete="off"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
+            </Grid> */}
             <Grid
               item
               xs={12}
@@ -168,4 +146,4 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
   )
 }
 
-export default CardFormHighlight
+export default CardFormImage

@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Box, CircularProgress } from '@material-ui/core'
 import { styled } from '@material-ui/core/styles'
 import { Clear } from '@material-ui/icons'
 import ImageCropDialog from 'components/ImageCropDialog'
 import ButtonUploadImage from 'components/ButtonUploadImage'
 import ImagePicker from 'components/ImagePicker'
+import ImageUpload from 'components/ImageUpload'
 
 const Image = styled('div')(props => ({
   background: `url(${props.image}) no-repeat center`,
@@ -14,29 +15,29 @@ const Image = styled('div')(props => ({
   height: `150px`,
 }))
 
-const CardImage = ({ card, onSubmit }) => {
-  const [pending, setPending] = useState(false)
+const CardImage = ({ card, crop, pending, onSubmit }) => {
   const [cropDialogIsOpen, setCropDialogIsOpen] = useState(false)
   const [imageSrc, setImageSrc] = useState()
+  const [showLoadingSpinner, setShowLoadingSpinner] = useState(pending)
 
   const { image, imageUrl } = card || {}
 
   const handleAdd = async newImage => {
-    setPending(true)
     await onSubmit({ id: card.id, image: newImage })
-    setPending(false)
   }
 
   const handleRemove = async event => {
-    setPending(true)
     await onSubmit({ id: card.id, image: null })
-    setPending(false)
   }
 
   const handleSelect = url => {
     setCropDialogIsOpen(true)
     setImageSrc(url)
   }
+
+  useEffect(() => {
+    setShowLoadingSpinner(pending)
+  }, [pending])
 
   return (
     <>
@@ -46,13 +47,22 @@ const CardImage = ({ card, onSubmit }) => {
         imageUrl={imageSrc}
         onSubmit={handleAdd}
       />
-      {!pending && image && <Image image={imageUrl} />}
-      {!pending && !image && (
+      {!showLoadingSpinner && image && <Image image={imageUrl} />}
+      {!showLoadingSpinner && !image && crop && (
         <ImagePicker onSelect={handleSelect}>
           <ButtonUploadImage />
         </ImagePicker>
       )}
-      {pending && (
+      {!showLoadingSpinner && !image && !crop && (
+        <ImageUpload
+          onSubmit={handleAdd}
+          resolution={800}
+          setIsPending={setShowLoadingSpinner}
+        >
+          <ButtonUploadImage />
+        </ImageUpload>
+      )}
+      {showLoadingSpinner && (
         <Box
           height="150px"
           width="150px"
