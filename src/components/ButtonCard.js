@@ -12,7 +12,7 @@ const CardButton = styled(Button)(props => ({
   '&:hover': {
     border: '2px solid',
     backgroundColor: `${props.buttoncolor}11`,
-    boxShadow: `0px 1px ${props.buttoncolor}`,
+    boxShadow: `0px 1px #000`,
   },
 }))
 
