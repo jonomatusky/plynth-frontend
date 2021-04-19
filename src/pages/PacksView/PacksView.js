@@ -97,6 +97,7 @@ const PacksView = () => {
         <Container disableGutters maxWidth={false}>
           <Grid container justifyContent="center">
             <Grid item xs={12} md={7}>
+              {/* fix viewheight on mobile */}
               <Box minHeight="100vh">
                 <Grid container justifyContent="center" spacing={3}>
                   <Grid

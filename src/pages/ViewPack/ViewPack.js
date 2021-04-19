@@ -44,21 +44,13 @@ const ViewPack = () => {
 
   return pack && pack.isPublic ? (
     <PublicNav>
+      <PaginationDots
+        count={(cards || []).length}
+        index={index}
+        color={fontColor}
+      />
       <Container disableGutters style={{ minHeight: '100vh' }}>
-        <PaginationDots
-          count={(cards || []).length}
-          index={index}
-          color={fontColor}
-        />
         <PackContent pack={pack} index={index} setIndex={setIndex} />
-        <Hidden smUp>
-          <PackButtonsMobile
-            index={index}
-            lastIndex={(cards || []).length - 1}
-            setIndex={setIndex}
-            fontColor={fontColor}
-          />
-        </Hidden>
         <Hidden smDown>
           <PackButtonsDesktop
             index={index}
@@ -69,6 +61,14 @@ const ViewPack = () => {
         </Hidden>
         <LogoBar color={fontColor} />
       </Container>
+      <Hidden smUp>
+        <PackButtonsMobile
+          index={index}
+          lastIndex={(cards || []).length - 1}
+          setIndex={setIndex}
+          fontColor={fontColor}
+        />
+      </Hidden>
     </PublicNav>
   ) : (
     <PublicNav>

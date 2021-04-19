@@ -36,7 +36,7 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
           <div
             key={card.id}
             style={{
-              height: '100vh',
+              height: '100%',
               width: '100%',
               flexGrow: 1,
               color: (style || {}).fontColor,

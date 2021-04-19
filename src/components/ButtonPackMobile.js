@@ -12,9 +12,9 @@ const useStyles = makeStyles({
     borderRadius: '50%',
     border: '2px solid',
     color: props => props.color,
-    height: '60px',
-    width: '60px',
-    position: 'absolute',
+    height: '50px',
+    width: '50px',
+    position: 'fixed',
     bottom: theme.spacing(8),
     '&:hover': {
       border: '2px solid',
@@ -28,17 +28,15 @@ const ButtonPackMobile = ({ children, isLeft, color, ...props }) => {
   const classes = useStyles({ isLeft, color })
 
   return (
-    <>
-      <Button
-        color="secondary"
-        {...props}
-        className={classes.buttonRound}
-        variant="outlined"
-      >
-        {isLeft && <ArrowBack fontSize="large" />}
-        {!isLeft && <ArrowForward fontSize="large" />}
-      </Button>
-    </>
+    <Button
+      color="secondary"
+      {...props}
+      className={classes.buttonRound}
+      variant="outlined"
+    >
+      {isLeft && <ArrowBack fontSize="large" />}
+      {!isLeft && <ArrowForward fontSize="large" />}
+    </Button>
   )
 }
 
