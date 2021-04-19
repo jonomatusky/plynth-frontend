@@ -10,7 +10,9 @@ const ImageUpload = ({ onSubmit, resolution, children, setIsPending }) => {
   const { request } = useRequest()
 
   const handleSubmit = async imageSrc => {
-    setIsPending(true)
+    if (setIsPending) {
+      setIsPending(true)
+    }
 
     let resizedImage
 
