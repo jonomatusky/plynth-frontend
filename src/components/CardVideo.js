@@ -28,7 +28,6 @@ const CardText = ({ card, style }) => {
       <Grid item xs={12}>
         <div style={{ position: 'relative', paddingTop: '56.25%' }}>
           <ReactPlayer
-            light
             url={card.url}
             width="100%"
             height="100%"
