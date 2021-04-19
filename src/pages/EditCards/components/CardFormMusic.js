@@ -18,7 +18,7 @@ const CardFormMusic = ({ card, onSubmit, pending, onRemove }) => {
 
   const spotify = getLink('spotify')
   const youtube = getLink('youtube')
-  const appleMusic = getLink('apple_music')
+  const appleMusic = getLink('appleMusic')
   const other = getLink('other')
 
   const defaultValues = {

@@ -28,10 +28,10 @@ const Image = styled('img')(props => ({
   boxShadow: '0px 4px 10px #000',
 }))
 
-const CardMusic = ({ card, style, increment }) => {
+const CardMusic = ({ card, style }) => {
   const classes = useStyles(style)
 
-  const musicLinkTypes = ['youtube', 'spotify', 'apple_music', 'other']
+  const musicLinkTypes = ['youtube', 'spotify', 'appleMusic', 'other']
 
   return (
     <Grid container justifyContent="center">

@@ -11,7 +11,7 @@ import { IconButton } from '@material-ui/core'
 const ButtonIconMusicLink = ({ link, color }) => {
   const icons = {
     spotify: faSpotify,
-    apple_music: faApple,
+    appleMusic: faApple,
     youtube: faYoutube,
     other: faLink,
   }
