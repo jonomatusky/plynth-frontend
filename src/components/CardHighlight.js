@@ -78,13 +78,13 @@ const CardHighlight = ({ card, style, increment }) => {
           </Grid>
           <Grid item xs={12}>
             <Box>
-              <Typography variant="h4" className={classes.type}>
+              <Typography variant="h5" className={classes.type}>
                 {card.title}
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <TextTypography variant="h5" font={style.font}>
+            <TextTypography variant="h6" font={style.font}>
               {card.text}
             </TextTypography>
           </Grid>

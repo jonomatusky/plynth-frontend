@@ -27,7 +27,9 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
       {...swipeProps}
       index={index}
       onChangeIndex={setIndex}
-      containerStyle={{ minHeight: '100vh' }}
+      containerStyle={{
+        height: window.innerHeight ? `${window.innerHeight}px` : null,
+      }}
     >
       {(cards || []).map(card => {
         let { type } = card
@@ -50,7 +52,7 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
               <Grid item {...gridProps}>
                 {!preview && (
                   <Hidden mdDown>
-                    <Box height="5vh" />
+                    <Box height="30px" />
                   </Hidden>
                 )}
                 {type === 'text' && <CardText card={card} style={style} />}
