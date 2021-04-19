@@ -12,6 +12,10 @@ import NotFound from 'components/NotFound'
 import PublicNav from 'layouts/PublicNav'
 
 const ViewPack = () => {
+  let vh = window.innerHeight * 0.01
+
+  document.documentElement.style.setProperty('--vh', `${vh}px`)
+
   const { packId } = useParams()
   const { request, status } = useRequest()
   const [index, setIndex] = useState(0)
