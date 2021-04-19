@@ -72,6 +72,7 @@ const LivePreview = ({
         borderRadius="40px"
         position="relative"
         className={classes.phone}
+        overflow="hidden"
       >
         {/* <Frame pack={pack} /> */}
         <PaginationDots
@@ -79,12 +80,14 @@ const LivePreview = ({
           color={(style || {}).fontColor}
           count={(cards || []).length}
         />
-        <PackContent
-          preview={true}
-          pack={pack}
-          index={index}
-          setIndex={setIndex}
-        />
+        <Box maxHeight="100%">
+          <PackContent
+            preview={true}
+            pack={pack}
+            index={index}
+            setIndex={setIndex}
+          />
+        </Box>
         <PackButtonsMobile
           index={index}
           setIndex={setIndex}

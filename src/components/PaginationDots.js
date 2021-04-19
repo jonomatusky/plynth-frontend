@@ -6,7 +6,13 @@ const PaginationDots = ({ count, index, color }) => {
   const dots = [...Array(count)]
 
   return (
-    <Box position="absolute" top={theme.spacing(3)} left="0" right="0">
+    <Box
+      position="absolute"
+      top={theme.spacing(3)}
+      left="0"
+      right="0"
+      zIndex={10}
+    >
       <Grid container justifyContent="center">
         <Grid item>
           <Box display="flex">

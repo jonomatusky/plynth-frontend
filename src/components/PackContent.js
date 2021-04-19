@@ -36,7 +36,7 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
           <div
             key={card.id}
             style={{
-              height: '100%',
+              height: '100vh',
               width: '100%',
               flexGrow: 1,
               color: (style || {}).fontColor,
@@ -67,6 +67,15 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                 )}
                 {type === 'music' && <CardMusic card={card} style={style} />}
                 {type === 'image' && <CardImage card={card} style={style} />}
+                {/* temp - adding extra space because live preview screen is still a little too long */}
+                {preview && (
+                  <Grid item xs={12}>
+                    <Box height="75px" />
+                  </Grid>
+                )}
+                <Grid item xs={12}>
+                  <Box height="125px" />
+                </Grid>
               </Grid>
             </Grid>
           </div>
