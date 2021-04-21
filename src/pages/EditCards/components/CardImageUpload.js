@@ -7,10 +7,7 @@ import ButtonUploadImage from 'components/ButtonUploadImage'
 import ImagePicker from 'components/ImagePicker'
 import ImageUpload from 'components/ImageUpload'
 
-const Image = styled('div')(props => ({
-  background: `url(${props.image}) no-repeat center`,
-  backgroundSize: `contain`,
-  textAlign: `center`,
+const Image = styled('img')(props => ({
   width: `150px`,
   height: `150px`,
 }))
@@ -49,7 +46,7 @@ const CardImage = ({ card, crop, pending, onSubmit }) => {
         imageUrl={imageSrc}
         onSubmit={handleAdd}
       />
-      {!showLoadingSpinner && image && <Image image={imageUrl} />}
+      {!showLoadingSpinner && image && <Image src={imageUrl} />}
       {!showLoadingSpinner && !image && crop && (
         <ImagePicker onSelect={handleSelect}>
           <ButtonUploadImage />
@@ -78,14 +75,16 @@ const CardImage = ({ card, crop, pending, onSubmit }) => {
         </Box>
       )}
       {image && (
-        <Button
-          onClick={handleRemove}
-          size="small"
-          endIcon={<Clear />}
-          fullWidth
-        >
-          Remove
-        </Button>
+        <Box width="150px">
+          <Button
+            onClick={handleRemove}
+            size="small"
+            endIcon={<Clear />}
+            fullWidth
+          >
+            Remove
+          </Button>
+        </Box>
       )}
       {!image && <Box height="30px" />}
     </>
