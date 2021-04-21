@@ -18,7 +18,7 @@ import { useSession } from 'hooks/use-session'
 import logo from 'images/Plynth-Loading-Final.png'
 import usePageTrack from 'hooks/usePageTrack'
 
-const drawerWidth = 70
+export const drawerWidth = 70
 
 const useStyles = makeStyles(theme => ({
   root: {

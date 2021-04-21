@@ -80,12 +80,12 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
   })
 
   return (
-    <Grid container alignItems="center">
+    <Grid container alignItems="center" overflow="hidden">
       <Grid item xs={1}>
         <Typography variant="body2">Current Cards:</Typography>
       </Grid>
       <Grid item xs={11}>
-        <Box display="flex" alignContent="center" overflow="scroll">
+        <Box display="flex" alignContent="center" overflow="auto">
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="droppable" direction="horizontal">
               {(provided, snapshot) => (
