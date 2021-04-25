@@ -22,11 +22,12 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
     setTitle(card.title)
   }, [card.title])
 
-  const handleClick = event => {
+  const handleAdd = event => {
     const newLinks = [...card.links, { type: 'other' }]
+    const newReduxLinks = [...card.links, { type: 'other' }]
     setLinks(newLinks)
-    setExpanded(newLinks.length - 1)
-    onSubmit({ ...card, links: newLinks })
+    setExpanded('new')
+    onSubmit({ ...card, links: newReduxLinks })
   }
 
   const handleChange = (link, index) => {
@@ -149,7 +150,9 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
                                 onExpand={handleExpand}
                                 onRemove={handleRemove}
                                 expanded={
-                                  expanded === link.id || expanded === 'last'
+                                  expanded === link.id ||
+                                  (index === links.length - 1 &&
+                                    expanded === 'new')
                                 }
                               />
                             </Box>
@@ -173,12 +176,7 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
       </Grid>
       <Grid item xs={12} container justifyContent="center">
         <Grid item xs={12}>
-          <Button
-            onClick={handleClick}
-            fullWidth
-            size="large"
-            variant="outlined"
-          >
+          <Button onClick={handleAdd} fullWidth size="large" variant="outlined">
             Add Link +
           </Button>
         </Grid>

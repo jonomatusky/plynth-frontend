@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { DeleteOutline } from '@material-ui/icons'
+import { DeleteOutline, DragIndicator } from '@material-ui/icons'
 import iconOptions from 'util/iconOptions'
 
 const IconLinkItem = ({
@@ -46,7 +46,7 @@ const IconLinkItem = ({
     return !!pattern.test(str)
   }
 
-  const error = !url || !validURL(url)
+  const error = !!url && !validURL(url)
 
   const optionsList = Object.keys(iconOptions).sort()
 
@@ -98,7 +98,7 @@ const IconLinkItem = ({
       expanded={expanded}
       onChange={onExpand(link.id)}
     >
-      <AccordionSummary>
+      <AccordionSummary sx={{ pr: 0.75 }}>
         <Box
           width="100%"
           display="flex"
@@ -116,11 +116,15 @@ const IconLinkItem = ({
               {(iconOptions[type] || {}).name || 'Link'}
             </Typography>
           </Box>
-        </Box>
-        <Box>
-          <IconButton size="small" onClick={handleRemove}>
-            <DeleteOutline />
-          </IconButton>
+          <Box>
+            <Box display="flex" alignItems="center">
+              <IconButton size="small" onClick={handleRemove}>
+                <DeleteOutline />
+              </IconButton>
+
+              <DragIndicator color="secondary" />
+            </Box>
+          </Box>
         </Box>
       </AccordionSummary>
       <AccordionDetails>
