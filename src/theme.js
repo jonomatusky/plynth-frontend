@@ -3,11 +3,11 @@ import { createMuiTheme } from '@material-ui/core'
 const theme = createMuiTheme({
   palette: {
     primary: { main: '#CD0A64' },
-    secondary: { main: '#888888' },
+    secondary: { main: '#666666' },
     error: { main: '#FF9516' },
   },
   typography: {
-    fontFamily: ['Degular', 'sans-serif'].join(','),
+    fontFamily: ['Rubik', 'sans-serif'].join(','),
     h5: {
       lineHeight: '1.5',
     },

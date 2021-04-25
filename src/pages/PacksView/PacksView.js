@@ -10,6 +10,7 @@ import {
   Menu,
   MenuItem,
   Divider,
+  Icon,
 } from '@material-ui/core'
 import { Add, ArrowForwardIos, Person } from '@material-ui/icons'
 
@@ -22,6 +23,8 @@ import Emoji from 'components/Emoji'
 import PackNameForm from 'components/PackNameForm'
 import { useHistory } from 'react-router'
 import { useSession } from 'hooks/use-session'
+
+import { cardTypes } from 'components/CardCard'
 
 const PacksView = () => {
   const history = useHistory()
@@ -207,15 +210,48 @@ const PacksView = () => {
               <Grid item md={5}>
                 <Box borderLeft={1} borderColor="divider" height="100%">
                   <Box minHeight="96px" />
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12} container justifyContent="center">
-                      <Box position="fixed">
-                        {!!selectedPack.id && (
-                          <LivePreview pack={selectedPack} />
-                        )}
-                      </Box>
+                  <Box>
+                    <Grid container justifyContent="center" spacing={3}>
+                      <Grid item xs={12} container justifyContent="center">
+                        <Box position="fixed">
+                          {!!selectedPack.id && (
+                            <LivePreview pack={selectedPack} />
+                          )}
+                        </Box>
+                      </Grid>
+                      {/* <Grid
+                        item
+                        xs={8}
+                        container
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <Box minHeight="25px" maxWidth="300px">
+                          <Grid
+                            container
+                            spacing={1}
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            {(selectedPack.cards || []).map((card, index) => {
+                              const type = card.type
+                              const cardInfo = cardTypes.find(
+                                cardType => cardType.type === type
+                              )
+
+                              return (
+                                <Grid item key={card.id || index}>
+                                  <Icon color="secondary" fontSize="small">
+                                    {cardInfo.icon}
+                                  </Icon>
+                                </Grid>
+                              )
+                            })}
+                          </Grid>
+                        </Box>
+                      </Grid> */}
                     </Grid>
-                  </Grid>
+                  </Box>
                 </Box>
               </Grid>
             </Hidden>
