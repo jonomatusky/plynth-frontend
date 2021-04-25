@@ -11,6 +11,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import App from './App'
 import store from './redux/store'
 import theme from './theme'
+import './config/fontawesome'
 
 ReactDOM.render(
   <React.StrictMode>

@@ -226,22 +226,18 @@ const EditCards = () => {
                         <Grid item xs={2}>
                           <Grid container justifyContent="center">
                             <Box paddingTop={30} position="absolute">
-                              {cardIndex < (cards || []).length - 1 && (
-                                <CircleButton
-                                  onClick={() => setCardIndex(cardIndex + 1)}
-                                >
+                              <CircleButton
+                                type="submit"
+                                form="card-form"
+                                onClick={() => setCardIndex(cardIndex + 1)}
+                              >
+                                {cardIndex < (cards || []).length - 1 && (
                                   <ArrowForward />
-                                </CircleButton>
-                              )}
-                              {cardIndex === (cards || []).length - 1 && (
-                                <CircleButton
-                                  onClick={() => {
-                                    setCardIndex(cardIndex + 1)
-                                  }}
-                                >
+                                )}
+                                {cardIndex === (cards || []).length - 1 && (
                                   <Add />
-                                </CircleButton>
-                              )}
+                                )}
+                              </CircleButton>
                             </Box>
                           </Grid>
                         </Grid>

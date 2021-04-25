@@ -16,6 +16,7 @@ import {
   StarBorder,
   Headset,
   Photo,
+  Link,
 } from '@material-ui/icons'
 
 export const cardTypes = [
@@ -55,6 +56,12 @@ export const cardTypes = [
     icon: 'photo',
     description: 'Link to your music.',
   },
+  {
+    type: 'buttons',
+    title: 'Links',
+    icon: 'link',
+    description: 'Share a list of links.',
+  },
 ]
 
 const useStyles = makeStyles({
@@ -78,6 +85,8 @@ const MuiIcon = ({ icon, fontSize }) => {
       return <Headset fontSize={fontSize} />
     case 'photo':
       return <Photo fontSize={fontSize} />
+    case 'buttons':
+      return <Link fontSize={fontSize} />
     default:
       return <></>
   }

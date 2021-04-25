@@ -15,6 +15,7 @@ import CardFormHighlight from './CardFormHighlight'
 import CardFormMusic from './CardFormMusic'
 import CardFormImage from './CardFormImage'
 import { DeleteOutline } from '@material-ui/icons'
+import CardFormLinks from './CardFormLink'
 
 const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
   const type = card.type
@@ -55,7 +56,7 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
                   <CardFormDownload
                     card={card}
                     onSubmit={onSubmit}
-                    isLoading={pending}
+                    pending={pending}
                     onRemove={onRemove}
                   />
                 )}
@@ -79,7 +80,14 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
                   <CardFormImage
                     card={card}
                     onSubmit={onSubmit}
-                    isLoading={pending}
+                    onRemove={onRemove}
+                    pending={pending}
+                  />
+                )}
+                {type === 'buttons' && (
+                  <CardFormLinks
+                    card={card}
+                    onSubmit={onSubmit}
                     onRemove={onRemove}
                     pending={pending}
                   />

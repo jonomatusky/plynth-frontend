@@ -8,6 +8,7 @@ import CardDownload from './CardDownload'
 import CardHighlight from './CardHighlight'
 import CardMusic from './CardMusic'
 import CardImage from './CardImage'
+import CardButtons from './CardButtons'
 
 const PackContent = ({ preview, pack, index, setIndex }) => {
   const cards = (pack || {}).cards
@@ -69,6 +70,9 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                 )}
                 {type === 'music' && <CardMusic card={card} style={style} />}
                 {type === 'image' && <CardImage card={card} style={style} />}
+                {type === 'buttons' && (
+                  <CardButtons card={card} style={style} />
+                )}
                 {/* temp - adding extra space because live preview screen is still a little too long */}
                 {preview && (
                   <Grid item xs={12}>
