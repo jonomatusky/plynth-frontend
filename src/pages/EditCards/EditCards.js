@@ -48,19 +48,6 @@ const EditCards = () => {
     onPackChange()
   }, [reduxPack])
 
-  // useEffect(() => {
-  //   const packItUp = () => {
-  //     const reduxPack = selectPack(packId)
-  //     setPack(reduxPack)
-  //   }
-  //   if (status === 'succeeded' && updateStatus !== 'loading') {
-  //     console.log('packing it up')
-  //     packItUp()
-  //   }
-  //   console.log(status)
-  //   console.log(updateStatus)
-  // }, [packId, selectPack, status, updateStatus])
-
   const updatePack = updatedPack => {
     setPack({ ...pack, ...updatedPack })
     updateReduxPack(updatedPack)
@@ -110,7 +97,8 @@ const EditCards = () => {
       ...cards.slice(cardIndex + 1),
     ]
 
-    // setPack({ ...pack, cards: updatedCards })
+    setPack({ ...pack, cards: updatedCards })
+    setCardIndex(cardIndex - 1)
     updateReduxPack({ id: packId, cards: updatedCards })
 
     setRemoveDialogIsOpen(false)
