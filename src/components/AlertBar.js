@@ -44,11 +44,11 @@ const AlertBar = props => {
             borderRadius: 0,
             fontWeight: 'bold',
           }}
-          message={error}
+          message={message}
           action={
             <Button
               sx={{ minWidth: '30px ' }}
-              onClick={clearError}
+              onClick={clearMessage}
               color="inherit"
               size="small"
             >

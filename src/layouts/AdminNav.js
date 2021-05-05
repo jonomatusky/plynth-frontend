@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -17,6 +17,7 @@ import { useFetch } from 'hooks/use-fetch'
 import { useSession } from 'hooks/use-session'
 import logo from 'images/Plynth-Loading-Final.png'
 import usePageTrack from 'hooks/usePageTrack'
+import useAlertStore from 'hooks/store/use-alert-store'
 
 export const drawerWidth = 70
 
@@ -46,8 +47,15 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AdminNav = ({ children }) => {
+  const history = useHistory()
   useFetch()
   usePageTrack()
+  const { error, clearError } = useAlertStore()
+
+  if (error === 'Please complete your registration to continue.') {
+    history.push('/admin/register')
+    clearError()
+  }
 
   const { logout } = useSession()
   const classes = useStyles()

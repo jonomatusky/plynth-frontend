@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Container, Box, Grid, Typography, Paper } from '@material-ui/core'
+import {
+  Container,
+  Box,
+  Grid,
+  Typography,
+  Paper,
+  Button,
+} from '@material-ui/core'
 
 import UserForm from 'components/UserForm'
 import useUserStore from 'hooks/store/use-user-store'
@@ -9,7 +16,7 @@ import PublicNav from 'layouts/PublicNav'
 
 const Register = () => {
   const history = useHistory()
-  const { user: authUser } = useSession()
+  const { user: authUser, logout } = useSession()
   const { user } = useUserStore()
   const { createUser, createStatus, fetchUser } = useUserStore()
 
@@ -35,14 +42,20 @@ const Register = () => {
         <Box pt={10}>
           <Grid container justifyContent="center">
             <Grid item xs={12}>
-              <Box pb={4}>
+              <Box pb={1}>
                 <Typography variant="h5" align="center">
-                  Create Your Account
+                  Account Info
+                </Typography>
+              </Box>
+              <Box pb={4}>
+                <Typography align="center">
+                  Please choose a display name and username to finish setting up
+                  your account.
                 </Typography>
               </Box>
 
               <Paper>
-                <Box p={3}>
+                <Box p={4}>
                   <Grid container justifyContent="center">
                     <Grid item xs={12}>
                       <UserForm
@@ -54,6 +67,13 @@ const Register = () => {
                   </Grid>
                 </Box>
               </Paper>
+            </Grid>
+            <Grid item xs={12} container justifyContent="center">
+              <Box>
+                <Button onClick={logout} color="secondary">
+                  Cancel X
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </Box>
