@@ -41,7 +41,7 @@ const CardImage = ({ card, style, increment }) => {
   return (
     <Grid container justifyContent="center">
       <Grid item xs={10} container justifyContent="center">
-        <Grid container justifyContent="center" spacing={2}>
+        <Grid item container justifyContent="center" spacing={2}>
           <Grid item xs={12}>
             <Box
               height="100%"
