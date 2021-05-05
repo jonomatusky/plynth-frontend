@@ -10,6 +10,7 @@ import PaginationDots from 'components/PaginationDots'
 import LogoBar from 'components/LogoBar'
 import NotFound from 'components/NotFound'
 import PublicNav from 'layouts/PublicNav'
+import PowerBar from 'components/PowerBar'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -32,8 +33,10 @@ const ViewPack = () => {
 
         const { style } = pack || {}
 
-        if ((style || {}).backgroundColor) {
-          document.body.style.backgroundColor = style.backgroundColor
+        if (pack && pack.isPublic) {
+          if ((style || {}).backgroundColor) {
+            document.body.style.backgroundColor = style.backgroundColor
+          }
         }
       } catch (err) {}
     }
@@ -49,10 +52,10 @@ const ViewPack = () => {
         index={index}
         color={fontColor}
       />
-      <Container disableGutters>
+      <Container disableGutters maxWidth={false}>
         <PackContent pack={pack} index={index} setIndex={setIndex} />
       </Container>
-      <LogoBar color={fontColor} />
+      <PowerBar style={style} />
       <Hidden smDown>
         <PackButtonsDesktop
           index={index}
