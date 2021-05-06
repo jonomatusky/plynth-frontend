@@ -75,7 +75,7 @@ const CardMusic = ({ card, style }) => {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box>
+            <Box pt={2}>
               <Typography
                 variant="h5"
                 className={classes.type}
