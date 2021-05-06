@@ -21,10 +21,10 @@ import {
 
 export const cardTypes = [
   {
-    type: 'text',
-    title: 'Text',
-    icon: 'subject',
-    description: 'Add a message.',
+    type: 'highlight',
+    title: 'Highlight',
+    icon: 'star_border',
+    description: 'Add an image, link and text.',
   },
   {
     type: 'video',
@@ -33,16 +33,17 @@ export const cardTypes = [
     description: 'Share a video.',
   },
   {
-    type: 'download',
-    title: 'Download',
-    icon: 'get_app',
-    description: 'Link to a file.',
+    type: 'text',
+    title: 'Text',
+    icon: 'subject',
+    description: 'Add a message.',
   },
+
   {
-    type: 'highlight',
-    title: 'Highlight',
-    icon: 'star_border',
-    description: 'Add an image, link and text.',
+    type: 'image',
+    title: 'Image',
+    icon: 'photo',
+    description: 'Link to your music.',
   },
   {
     type: 'music',
@@ -51,16 +52,16 @@ export const cardTypes = [
     description: 'Link to your music.',
   },
   {
-    type: 'image',
-    title: 'Image',
-    icon: 'photo',
-    description: 'Link to your music.',
-  },
-  {
     type: 'buttons',
     title: 'Links',
     icon: 'link',
     description: 'Share a list of links.',
+  },
+  {
+    type: 'download',
+    title: 'Download',
+    icon: 'get_app',
+    description: 'Link to a file.',
   },
 ]
 
@@ -85,7 +86,7 @@ const MuiIcon = ({ icon, fontSize }) => {
       return <Headset fontSize={fontSize} />
     case 'photo':
       return <Photo fontSize={fontSize} />
-    case 'buttons':
+    case 'link':
       return <Link fontSize={fontSize} />
     default:
       return <></>
