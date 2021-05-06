@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import {
-  Container,
   Grid,
   Box,
   CircularProgress,
@@ -48,19 +47,6 @@ const EditCards = () => {
     }
     onPackChange()
   }, [reduxPack])
-
-  // useEffect(() => {
-  //   const packItUp = () => {
-  //     const reduxPack = selectPack(packId)
-  //     setPack(reduxPack)
-  //   }
-  //   if (status === 'succeeded' && updateStatus !== 'loading') {
-  //     console.log('packing it up')
-  //     packItUp()
-  //   }
-  //   console.log(status)
-  //   console.log(updateStatus)
-  // }, [packId, selectPack, status, updateStatus])
 
   const updatePack = updatedPack => {
     setPack({ ...pack, ...updatedPack })
@@ -111,146 +97,142 @@ const EditCards = () => {
       ...cards.slice(cardIndex + 1),
     ]
 
-    // setPack({ ...pack, cards: updatedCards })
+    setPack({ ...pack, cards: updatedCards })
+    setCardIndex(cardIndex - 1)
     updateReduxPack({ id: packId, cards: updatedCards })
 
     setRemoveDialogIsOpen(false)
   }
 
   return (
-    <AdminNav>
-      <EditBar />
-      <Dialog
-        onClose={handleRemoveClose}
-        aria-labelledby="remove-dialog-title"
-        open={removeDialogIsOpen}
-      >
-        <DialogTitle id="remove-dialog-title">Remove Card</DialogTitle>
-        <DialogContent>
-          Are you sure you want to remove this card? This cannot be undone.
-        </DialogContent>
-        <DialogActions>
-          <MuiButton onClick={handleRemoveClose}>Cancel</MuiButton>
-          <MuiButton onClick={handleDeleteCard}>Remove</MuiButton>
-        </DialogActions>
-      </Dialog>
-      <Container
-        disableGutters
-        style={{ maxWidth: `calc(100vw - ${drawerWidth}px` }}
-      >
-        <Box height="100vh">
-          <Grid
-            container
-            justifyContent="center"
-            alignItems="stretch"
-            style={{ height: `100vh` }}
-          >
+    <>
+      <AdminNav>
+        <EditBar />
+        <div
+          style={{
+            width: `calc(100vw - ${drawerWidth}px`,
+            position: 'absolute',
+            top: '48px',
+            zIndex: '15',
+          }}
+        >
+          <Grid container justifyContent="flex-start">
             <Grid item sm={12} md={8}>
-              <Box height="100%">
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Box minHeight="48px" />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Box overflow="auto"></Box>
-                    {cards && cards.length > 0 && (
-                      <Box
-                        height="79px"
-                        border={1}
-                        borderTop={0}
-                        borderLeft={0}
-                        borderRight={0}
-                        borderColor="divider"
-                        // padding={1}
-                        paddingLeft={1}
-                        overflow="auto"
-                      >
-                        <CardNav
-                          cards={cards}
-                          cardIndex={cardIndex}
-                          setCardIndex={setCardIndex}
-                          updatePack={updatePack}
-                        />
-                      </Box>
-                    )}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Box
-                      display="flex"
-                      alignContent="center"
-                      overflow="auto"
-                      pb={1}
-                      height="calc(100vh - 75px - 48px)"
-                    >
-                      <Grid container justifyContent="center">
-                        <Grid item xs={2}>
-                          <Grid container justifyContent="center">
-                            <Box paddingTop={30} position="absolute">
-                              {cardIndex !== 0 && (
-                                <CircleButton
-                                  onClick={() => setCardIndex(cardIndex - 1)}
-                                >
-                                  <ArrowBack />
-                                </CircleButton>
-                              )}
-                            </Box>
+              <Box overflow="auto">
+                {cards && cards.length > 0 && (
+                  <Box
+                    border={1}
+                    borderTop={0}
+                    borderLeft={0}
+                    borderRight={0}
+                    borderColor="divider"
+                    // padding={1}
+                    paddingLeft={1}
+                    overflow="auto"
+                  >
+                    <CardNav
+                      cards={cards}
+                      cardIndex={cardIndex}
+                      setCardIndex={setCardIndex}
+                      updatePack={updatePack}
+                    />
+                  </Box>
+                )}
+              </Box>
+            </Grid>
+          </Grid>
+        </div>
+        <Grid container justifyContent="flex-start">
+          <Grid item sm={12} md={8}>
+            <Box
+              maxHeight="calc(100vh - 127px)"
+              marginTop="127px"
+              overflow="scroll"
+            >
+              <Grid container>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <Box display="flex" alignContent="center" pb={1}>
+                        <Grid container justifyContent="center">
+                          <Grid item xs={2}>
+                            <Grid container justifyContent="center">
+                              <Box paddingTop={30} position="absolute">
+                                {cardIndex !== 0 && (
+                                  <CircleButton
+                                    onClick={() => setCardIndex(cardIndex - 1)}
+                                  >
+                                    <ArrowBack />
+                                  </CircleButton>
+                                )}
+                              </Box>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                        <Grid item xs={8}>
-                          <Grid container>
-                            <Grid item xs={12}>
-                              <Box minHeight="24px" />
+                          <Grid item xs={8}>
+                            <Grid container>
+                              <Grid item xs={12}>
+                                <Box minHeight="24px" />
 
-                              {pack && cardIndex < (cards || []).length && (
-                                <CardPanel
-                                  card={currentCard}
-                                  onSubmit={handleCardSubmit}
-                                  onRemove={handleRemoveOpen}
-                                  pending={updateStatus === 'loading'}
-                                />
-                              )}
-                              {pack && cardIndex >= (cards || []).length && (
-                                <CardMenu packId={packId} />
-                              )}
-                              {(status === 'loading' || status === 'idle') && (
-                                <Grid container justifyContent="center">
-                                  <Grid item>
-                                    <CircularProgress color="secondary" />
+                                {pack && cardIndex < (cards || []).length && (
+                                  <CardPanel
+                                    card={currentCard}
+                                    onSubmit={handleCardSubmit}
+                                    onRemove={handleRemoveOpen}
+                                    pending={updateStatus === 'loading'}
+                                  />
+                                )}
+                                {pack && cardIndex >= (cards || []).length && (
+                                  <CardMenu packId={packId} />
+                                )}
+                                {(status === 'loading' ||
+                                  status === 'idle') && (
+                                  <Grid container justifyContent="center">
+                                    <Grid item>
+                                      <CircularProgress color="secondary" />
+                                    </Grid>
                                   </Grid>
-                                </Grid>
-                              )}
-                              <Box minHeight="24px" />
+                                )}
+                                <Box minHeight="24px" />
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Grid item xs={2}>
+                            <Grid container justifyContent="center">
+                              <Box paddingTop={30} position="absolute">
+                                <CircleButton
+                                  type="submit"
+                                  form="card-form"
+                                  onClick={() => setCardIndex(cardIndex + 1)}
+                                >
+                                  {cardIndex < (cards || []).length - 1 && (
+                                    <ArrowForward />
+                                  )}
+                                  {cardIndex === (cards || []).length - 1 && (
+                                    <Add />
+                                  )}
+                                </CircleButton>
+                              </Box>
                             </Grid>
                           </Grid>
                         </Grid>
-                        <Grid item xs={2}>
-                          <Grid container justifyContent="center">
-                            <Box paddingTop={30} position="absolute">
-                              <CircleButton
-                                type="submit"
-                                form="card-form"
-                                onClick={() => setCardIndex(cardIndex + 1)}
-                              >
-                                {cardIndex < (cards || []).length - 1 && (
-                                  <ArrowForward />
-                                )}
-                                {cardIndex === (cards || []).length - 1 && (
-                                  <Add />
-                                )}
-                              </CircleButton>
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Box>
+                      </Box>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Box>
-            </Grid>
-            <Hidden mdDown>
-              <Grid item md={4}>
-                <Box borderLeft={1} borderColor="divider" height="100%">
-                  <Box minHeight="96px" />
+              </Grid>
+            </Box>
+          </Grid>
+          <Hidden mdDown>
+            <Grid item md={4}>
+              <Box
+                borderLeft={1}
+                borderColor="divider"
+                height="calc(100vh - 48px)"
+                marginTop="48px"
+                paddingTop="24px"
+                overflow="hidden"
+              >
+                <Box width="100%">
                   <Grid container justifyContent="center">
                     <Grid item xs={12}>
                       <Box paddingBottom={2}>
@@ -280,49 +262,27 @@ const EditCards = () => {
                     </Grid>
                   </Grid>
                 </Box>
-              </Grid>
-            </Hidden>
-          </Grid>
-        </Box>
-      </Container>
-    </AdminNav>
+              </Box>
+            </Grid>
+          </Hidden>
+        </Grid>
+      </AdminNav>
+      <Dialog
+        onClose={handleRemoveClose}
+        aria-labelledby="remove-dialog-title"
+        open={removeDialogIsOpen}
+      >
+        <DialogTitle id="remove-dialog-title">Remove Card</DialogTitle>
+        <DialogContent>
+          Are you sure you want to remove this card? This cannot be undone.
+        </DialogContent>
+        <DialogActions>
+          <MuiButton onClick={handleRemoveClose}>Cancel</MuiButton>
+          <MuiButton onClick={handleDeleteCard}>Remove</MuiButton>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 
 export default EditCards
-
-// const useStyles = makeStyles(theme => ({
-//   barPadding: {
-//     minHeight: '48px',
-//   },
-// }))
-
-// const initialState = {
-//   cards,
-//   cardIndex: 0,
-//   currentCard: {},
-//   cardType: null,
-// }
-
-// const reducer = (state, action) => {
-//   switch (action.type) {
-//     case 'increment':
-//       const currentIndex = state.cardIndex
-//       return {
-//         cards: state.cards,
-//         cardIndex: currentIndex + 1,
-//         currentCard: state.cards[currentIndex + 1],
-//         cardType: state.cards[currentIndex + 1].type,
-//       }
-//     case 'decrement':
-//       return {
-//         cards: state.cards,
-//         cardIndex: state.cardIndex + 1,
-//         currentCard: state.cards[currentIndex - 1],
-//         cardType: state.cards[currentIndex - 1].type,
-//       }
-
-//     default:
-//       throw new Error()
-//   }
-// }
