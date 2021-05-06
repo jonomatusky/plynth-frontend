@@ -30,7 +30,6 @@
     "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "^17.0.1",
     "react-easy-crop": "^3.3.2",
-    "react-firebaseui": "^4.1.0",
     "react-hook-form": "^6.15.4",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.2",
@@ -66,6 +65,7 @@
     ]
   },
   "devDependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "react-firebaseui": "^5.0.2"
   }
 }

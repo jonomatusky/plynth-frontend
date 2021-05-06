@@ -10,7 +10,6 @@ import {
   Menu,
   MenuItem,
   Divider,
-  Icon,
 } from '@material-ui/core'
 import { Add, ArrowForwardIos, Person } from '@material-ui/icons'
 
@@ -23,8 +22,6 @@ import Emoji from 'components/Emoji'
 import PackNameForm from 'components/PackNameForm'
 import { useHistory } from 'react-router'
 import { useSession } from 'hooks/use-session'
-
-import { cardTypes } from 'components/CardCard'
 
 const PacksView = () => {
   const history = useHistory()
