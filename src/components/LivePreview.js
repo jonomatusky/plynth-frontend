@@ -77,6 +77,7 @@ const LivePreview = ({
         {/* <Frame pack={pack} /> */}
         <PaginationDots
           index={index}
+          setIndex={setIndex}
           color={(style || {}).fontColor}
           count={(cards || []).length}
         />

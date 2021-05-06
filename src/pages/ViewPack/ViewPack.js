@@ -49,6 +49,7 @@ const ViewPack = () => {
       <PaginationDots
         count={(cards || []).length}
         index={index}
+        setIndex={setIndex}
         color={fontColor}
       />
       <Container disableGutters maxWidth={false}>
