@@ -12,10 +12,10 @@ const PowerBar = ({ style }) => {
       paddingBottom="0.25rem"
       left="0"
       right="0"
-      bgcolor={style.backgroundColor}
+      bgcolor={(style || {}).backgroundColor}
     >
       <Box
-        color={style.fontColor}
+        color={(style || {}).fontColor}
         sx={{
           opacity: '0.6',
           // '&:hover': {

@@ -22,7 +22,13 @@ const CardButtons = ({ card, style }) => {
       </Grid>
       <Grid item xs={11} container justifyContent="center">
         <Box maxWidth="275px">
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            justifyContent={
+              (card.links || []).length === 1 ? 'center' : 'flex-start'
+            }
+          >
             {(card.links || []).map(link => {
               return (
                 <Grid

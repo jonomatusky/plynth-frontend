@@ -6,9 +6,6 @@ import iconOptions from 'util/iconOptions'
 
 const useStyles = makeStyles({
   buttonRound: {
-    // padding: 0,
-    minHeight: 0,
-    minWidth: 0,
     borderRadius: '15px',
     height: '125px',
     width: '125px',
@@ -33,7 +30,7 @@ const ButtonSquareIconLink = ({ link, style, ...props }) => {
       href={link.url}
       target="_blank"
     >
-      <Grid container justifyContent="Center">
+      <Grid container justifyContent="center">
         <Grid item>
           <FontAwesomeIcon
             size="4x"

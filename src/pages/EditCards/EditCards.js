@@ -196,25 +196,25 @@ const EditCards = () => {
                               </Grid>
                             </Grid>
                           </Grid>
-                        </Grid>
-                        <Grid item xs={2}>
-                          <Grid container justifyContent="center">
-                            <Box paddingTop={30} position="absolute">
-                              {cardIndex < (cards || []).length && (
-                                <CircleButton
-                                  type="submit"
-                                  form="card-form"
-                                  onClick={() => setCardIndex(cardIndex + 1)}
-                                >
-                                  {cardIndex < (cards || []).length - 1 && (
-                                    <ArrowForward />
-                                  )}
-                                  {cardIndex === (cards || []).length - 1 && (
-                                    <Add />
-                                  )}
-                                </CircleButton>
-                              )}
-                            </Box>
+                          <Grid item xs={2}>
+                            <Grid container justifyContent="center">
+                              <Box paddingTop={30} position="absolute">
+                                {cardIndex < (cards || []).length && (
+                                  <CircleButton
+                                    type="submit"
+                                    form="card-form"
+                                    onClick={() => setCardIndex(cardIndex + 1)}
+                                  >
+                                    {cardIndex < (cards || []).length - 1 && (
+                                      <ArrowForward />
+                                    )}
+                                    {cardIndex === (cards || []).length - 1 && (
+                                      <Add />
+                                    )}
+                                  </CircleButton>
+                                )}
+                              </Box>
+                            </Grid>
                           </Grid>
                         </Grid>
                       </Box>

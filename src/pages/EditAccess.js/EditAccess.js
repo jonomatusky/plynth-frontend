@@ -188,36 +188,44 @@ const EditAccess = () => {
           </Grid>
           <Hidden mdDown>
             <Grid item md={4}>
-              <Box borderLeft={1} borderColor="divider" height="100%">
-                <Box minHeight="96px" />
-                <Grid container justifyContent="center">
-                  <Grid item xs={12}>
-                    <Box paddingBottom={2}>
-                      <Typography align="center" color="textSecondary">
-                        LIVE PREVIEW
-                      </Typography>
-                    </Box>
+              <Box
+                borderLeft={1}
+                borderColor="divider"
+                height="calc(100vh - 48px)"
+                marginTop="48px"
+                paddingTop="24px"
+                overflow="hidden"
+              >
+                <Box width="100%">
+                  <Grid container justifyContent="center">
+                    <Grid item xs={12}>
+                      <Box paddingBottom={2}>
+                        <Typography align="center" color="textSecondary">
+                          LIVE PREVIEW
+                        </Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} container justifyContent="center">
+                      <LivePreview
+                        pack={pack}
+                        cardIndex={cardIndex}
+                        isLoading={updateStatus === 'loading'}
+                        setIndex={setCardIndex}
+                      />
+                    </Grid>
+                    <Grid item container xs={12} justifyContent="center">
+                      <Box paddingTop={4}>
+                        {isSpinning && (
+                          <CircularProgress
+                            size="1.25rem"
+                            color="inherit"
+                            thickness={6}
+                          />
+                        )}
+                      </Box>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} container justifyContent="center">
-                    <LivePreview
-                      pack={pack}
-                      cardIndex={cardIndex}
-                      isLoading={updateStatus === 'loading'}
-                      setIndex={setCardIndex}
-                    />
-                  </Grid>
-                  <Grid item container xs={12} justifyContent="center">
-                    <Box paddingTop={4}>
-                      {isSpinning && (
-                        <CircularProgress
-                          size="1.25rem"
-                          color="inherit"
-                          thickness={6}
-                        />
-                      )}
-                    </Box>
-                  </Grid>
-                </Grid>
+                </Box>
               </Box>
             </Grid>
           </Hidden>

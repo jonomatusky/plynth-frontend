@@ -15,18 +15,14 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
   }
 
   useEffect(() => {
-    setLinks(card.links)
-  }, [card.links])
-
-  useEffect(() => {
     setTitle(card.title)
   }, [card.title])
 
   const handleAdd = event => {
     const newLinks = [...card.links, { type: 'other' }]
     const newReduxLinks = [...card.links, { type: 'other' }]
-    setLinks(newLinks)
     setExpanded('new')
+    setLinks(newLinks)
     onSubmit({ ...card, links: newReduxLinks })
   }
 
@@ -80,12 +76,15 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
     const [removed] = newLinks.splice(startIndex, 1)
     newLinks.splice(endIndex, 0, removed)
 
+    if (expanded === 'new' && result.source.index === card.links.length - 1) {
+      setExpanded(removed.id)
+    }
+
     setLinks(newLinks)
     onSubmit({ ...card, links: newLinks })
   }
 
   const handleRemove = index => {
-    console.log('removing')
     const newLinks = [...card.links]
     newLinks.splice(index, 1)
 

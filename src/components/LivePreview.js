@@ -4,7 +4,6 @@ import PackContent from './PackContent'
 import theme from 'theme'
 import PackButtonsMobile from './PackButtonsMobile'
 import PaginationDots from './PaginationDots'
-import LogoBar from './LogoBar'
 import PowerBar from './PowerBar'
 
 // const { REACT_APP_PUBLIC_URL } = process.env
