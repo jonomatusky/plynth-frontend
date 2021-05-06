@@ -124,7 +124,7 @@ const AdminNav = ({ children }) => {
                           onClose={handleClose}
                         >
                           <MenuItem component={Link} to="/admin/account">
-                            My account
+                            My Account
                           </MenuItem>
 
                           <MenuItem
