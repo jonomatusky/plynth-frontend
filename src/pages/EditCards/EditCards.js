@@ -196,9 +196,11 @@ const EditCards = () => {
                               </Grid>
                             </Grid>
                           </Grid>
-                          <Grid item xs={2}>
-                            <Grid container justifyContent="center">
-                              <Box paddingTop={30} position="absolute">
+                        </Grid>
+                        <Grid item xs={2}>
+                          <Grid container justifyContent="center">
+                            <Box paddingTop={30} position="absolute">
+                              {cardIndex < (cards || []).length && (
                                 <CircleButton
                                   type="submit"
                                   form="card-form"
@@ -211,8 +213,8 @@ const EditCards = () => {
                                     <Add />
                                   )}
                                 </CircleButton>
-                              </Box>
-                            </Grid>
+                              )}
+                            </Box>
                           </Grid>
                         </Grid>
                       </Box>

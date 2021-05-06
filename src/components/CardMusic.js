@@ -35,8 +35,14 @@ const CardMusic = ({ card, style }) => {
 
   return (
     <Grid container justifyContent="center">
-      <Grid item xs={8} container justifyContent="center">
-        <Grid container justifyContent="center" spacing={3}>
+      <Grid
+        item
+        xs={8}
+        container
+        justifyContent="center"
+        sx={{ maxWidth: '300px' }}
+      >
+        <Grid item container justifyContent="center" spacing={3}>
           <Grid item xs={12}>
             <Box height={30} />
           </Grid>

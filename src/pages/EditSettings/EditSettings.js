@@ -14,6 +14,7 @@ import LivePreview from 'components/LivePreview'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 import PackNameForm from 'components/PackNameForm'
+import DangerZone from './components/DangerZone'
 
 const EditSettings = () => {
   const { packId } = useParams()
@@ -88,6 +89,9 @@ const EditSettings = () => {
                       </Grid>
                     </Box>
                   </Paper>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <DangerZone packId={packId} />
                 </Grid>
               </Grid>
             )}

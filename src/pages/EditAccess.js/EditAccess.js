@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import {
   Grid,
   Box,
@@ -9,11 +9,6 @@ import {
   Hidden,
   Divider,
   Switch,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Button as MuiButton,
 } from '@material-ui/core'
 // import QRCode from 'qrcode.react'
 
@@ -24,22 +19,14 @@ import ButtonUpload from 'components/ButtonUpload'
 import ButtonCopyToClipboard from 'components/ButtonCopyToClipboard'
 import { useRequest } from 'hooks/use-request'
 import PieceImage from './components/PieceImage'
-import { DeleteOutline } from '@material-ui/icons'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 
 const { REACT_APP_PUBLIC_URL } = process.env
 
 const EditAccess = () => {
-  const history = useHistory()
   const { packId } = useParams()
-  const {
-    selectPack,
-    updatePack,
-    updateStatus,
-    fetchPacks,
-    deletePack,
-  } = usePackStore()
+  const { selectPack, updatePack, updateStatus, fetchPacks } = usePackStore()
   const { request } = useRequest()
 
   const pack = selectPack(packId)
@@ -48,7 +35,6 @@ const EditAccess = () => {
 
   const [isSpinning, setIsSpinning] = useState(false)
   const [pieces, setPieces] = useState([])
-  const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false)
 
   useEffect(() => {
     const setSpinning = () => {
@@ -103,38 +89,9 @@ const EditAccess = () => {
     fetchPacks()
   }
 
-  const handleDeleteClose = () => {
-    setDeleteDialogIsOpen(false)
-  }
-
-  const handleDeleteOpen = () => {
-    setDeleteDialogIsOpen(true)
-  }
-
-  const handleDeletePack = async () => {
-    try {
-      await deletePack(packId)
-      history.push('/admin/packs')
-    } catch (err) {}
-  }
-
   return (
     <AdminNav>
       <EditBar />
-      <Dialog
-        onClose={handleDeleteClose}
-        aria-labelledby="remove-dialog-title"
-        open={deleteDialogIsOpen}
-      >
-        <DialogTitle id="remove-dialog-title">Delete Pack</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete this pack? This cannot be undone.
-        </DialogContent>
-        <DialogActions>
-          <MuiButton onClick={handleDeleteClose}>Cancel</MuiButton>
-          <MuiButton onClick={handleDeletePack}>DELETE</MuiButton>
-        </DialogActions>
-      </Dialog>
       <Box height="100vh">
         <Grid
           container
@@ -222,25 +179,6 @@ const EditAccess = () => {
                             </Box>
                           </Grid>
                         </Box>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={9}>
-                <Paper>
-                  <Box padding={3}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={12}>
-                        <Typography variant="h6">Danger Zone</Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <MuiButton
-                          onClick={handleDeleteOpen}
-                          startIcon={<DeleteOutline />}
-                        >
-                          Delete Pack
-                        </MuiButton>
                       </Grid>
                     </Grid>
                   </Box>

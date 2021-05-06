@@ -20,7 +20,6 @@ export const useFetch = () => {
         await fetchUser()
       } catch (err) {
         if (err.message === 'Please complete your registration to continue.') {
-          history.push('/admin/register')
           clearError()
         }
       }
