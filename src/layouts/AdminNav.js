@@ -10,6 +10,8 @@ import {
   Drawer,
   Divider,
   Hidden,
+  IconButton,
+  Link as MuiLink,
 } from '@material-ui/core'
 import { Person } from '@material-ui/icons'
 
@@ -106,7 +108,9 @@ const AdminNav = ({ children }) => {
                   <Grid item>
                     <Box paddingBottom={2}>
                       <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
-                        <Person />
+                        <IconButton onClick={handleOpen}>
+                          <Person />
+                        </IconButton>
                         <Menu
                           id="simple-menu"
                           anchorEl={anchorEl}
@@ -121,6 +125,14 @@ const AdminNav = ({ children }) => {
                         >
                           <MenuItem component={Link} to="/admin/account">
                             My account
+                          </MenuItem>
+
+                          <MenuItem
+                            component={MuiLink}
+                            href="https://www.notion.so/Plynth-Customer-Success-15a675424a724de3bf6f703019a52aaf"
+                            target="_blank"
+                          >
+                            Get Support
                           </MenuItem>
                           <Divider />
                           <MenuItem onClick={handleLogout}>Logout</MenuItem>
