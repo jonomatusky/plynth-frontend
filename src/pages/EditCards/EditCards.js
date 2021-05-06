@@ -98,7 +98,9 @@ const EditCards = () => {
     ]
 
     setPack({ ...pack, cards: updatedCards })
-    setCardIndex(cardIndex - 1)
+    if (cardIndex > 0) {
+      setCardIndex(cardIndex - 1)
+    }
     updateReduxPack({ id: packId, cards: updatedCards })
 
     setRemoveDialogIsOpen(false)
