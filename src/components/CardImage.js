@@ -41,7 +41,7 @@ const CardImage = ({ card, style, increment }) => {
   return (
     <Grid container justifyContent="center">
       <Grid item xs={10} container justifyContent="center">
-        <Grid container justifyContent="center" spacing={2}>
+        <Grid container justifyContent="center" spacing={1}>
           <Grid item xs={12}>
             <Box
               height="100%"
@@ -71,16 +71,14 @@ const CardImage = ({ card, style, increment }) => {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box>
+            <Box pt={2}>
               <Typography variant="h4" className={classes.type}>
                 {card.title}
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <TextTypography variant="h5" font={style.font}>
-              {card.text}
-            </TextTypography>
+            <TextTypography font={style.font}>{card.text}</TextTypography>
           </Grid>
           {card.label && (
             <Grid item xs={12}>

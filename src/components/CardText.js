@@ -12,15 +12,15 @@ const CardText = ({ card, style }) => {
   const classes = useStyles(style)
 
   return (
-    <Grid container spacing={6} justifyContent="center">
-      <Grid item xs={11}>
-        <Box paddingTop={12}>
+    <Grid container spacing={3} justifyContent="center">
+      <Grid item xs={10}>
+        <Box paddingTop={10}>
           <Typography variant="h4" className={classes.type}>
             {card.title}
           </Typography>
         </Box>
       </Grid>
-      <Grid item xs={11}>
+      <Grid item xs={10}>
         <TextTypography variant="h5" font={style.font}>
           {card.text}
         </TextTypography>

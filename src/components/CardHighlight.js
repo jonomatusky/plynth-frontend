@@ -42,10 +42,10 @@ const CardHighlight = ({ card, style, increment }) => {
     <Grid container justifyContent="center">
       <Grid
         item
-        xs={8}
+        xs={9}
         container
         justifyContent="center"
-        sx={{ maxWidth: '250px' }}
+        sx={{ maxWidth: '300px' }}
       >
         <Grid container justifyContent="center" spacing={2}>
           <Grid item xs={12}>
@@ -77,16 +77,14 @@ const CardHighlight = ({ card, style, increment }) => {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box>
+            <Box pt={2}>
               <Typography variant="h5" className={classes.type}>
                 {card.title}
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <TextTypography variant="h6" font={style.font}>
-              {card.text}
-            </TextTypography>
+            <TextTypography font={style.font}>{card.text}</TextTypography>
           </Grid>
           {card.label && (
             <Grid item xs={12}>

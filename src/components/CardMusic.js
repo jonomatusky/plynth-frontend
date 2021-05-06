@@ -36,10 +36,7 @@ const CardMusic = ({ card, style }) => {
   return (
     <Grid container justifyContent="center">
       <Grid item xs={8} container justifyContent="center">
-        <Grid container justifyContent="center" spacing={3}>
-          <Grid item xs={12}>
-            <Box height={30} />
-          </Grid>
+        <Grid container justifyContent="center" spacing={2}>
           <Grid item xs={12}>
             <Box
               height="100%"
@@ -69,7 +66,7 @@ const CardMusic = ({ card, style }) => {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box>
+            <Box pt={2}>
               <Typography
                 variant="h5"
                 className={classes.type}

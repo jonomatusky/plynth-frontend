@@ -75,8 +75,10 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
               <TextField
                 variant="outlined"
                 fullWidth
+                multiline
+                rows={4}
                 name="text"
-                label="Subtitle"
+                label="Text"
                 placeholder="We wanted to give you guys a behind-the-scenes look at..."
                 inputRef={register}
                 error={Boolean(errors.text)}

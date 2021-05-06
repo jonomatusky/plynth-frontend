@@ -10,14 +10,15 @@ const useStyles = makeStyles({
     minHeight: 0,
     minWidth: 0,
     borderRadius: '50%',
-    border: '2px solid',
-    color: props => props.color,
-    height: '50px',
-    width: '50px',
+    // border: '2px solid',
+    // color: props => props.color,
+    backgroundColor: '#00000077',
+    height: '45px',
+    width: '45px',
     position: 'fixed',
     bottom: theme.spacing(8),
     '&:hover': {
-      border: '2px solid',
+      backgroundColor: '#00000077',
     },
     right: props => !props.isLeft && theme.spacing(1),
     left: props => props.isLeft && theme.spacing(1),
@@ -29,10 +30,11 @@ const ButtonPackMobile = ({ children, isLeft, color, ...props }) => {
 
   return (
     <Button
-      color="secondary"
+      // color="primary"
+      variant="contained"
       {...props}
       className={classes.buttonRound}
-      variant="outlined"
+      disableElevation
     >
       {isLeft && <ArrowBack fontSize="large" />}
       {!isLeft && <ArrowForward fontSize="large" />}

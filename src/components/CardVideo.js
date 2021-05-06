@@ -17,11 +17,15 @@ const CardText = ({ card, style }) => {
       <Grid item xs={12}>
         <Grid container justifyContent="center">
           <Grid item xs={10}>
-            <Box paddingTop={12} width="100%">
-              <Typography variant="h4" className={classes.type}>
-                {card.title}
-              </Typography>
-            </Box>
+            {card.title && (
+              <Box paddingTop={10} width="100%">
+                <Typography variant="h4" className={classes.type}>
+                  {card.title}
+                </Typography>
+              </Box>
+            )}
+
+            {!card.title && <Box paddingTop={16} />}
           </Grid>
         </Grid>
       </Grid>
