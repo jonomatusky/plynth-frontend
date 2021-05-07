@@ -24,12 +24,16 @@ const IconLinkItem = ({
   index,
   onExpand,
   expanded,
+  disableButton,
 }) => {
   const [values, setValues] = useState(link)
 
   useEffect(() => {
     setValues(link)
   }, [link])
+
+  // attempt to blur form field after hitting enter to submit
+  // const linkRef = useRef()
 
   const { type, url } = values
 
@@ -69,13 +73,20 @@ const IconLinkItem = ({
 
   const handleSubmit = async event => {
     event.preventDefault()
+    // linkRef.current.blur()
     // console.log(event.target.value)
     // const newUrl = event.target.value
+
     if (url !== link.url) {
       const newValues = { ...values, url }
       setValues(newValues)
       onChange(newValues, index)
     }
+  }
+
+  const handleBlur = event => {
+    disableButton(false)
+    handleSubmit(event)
   }
 
   const handleRemove = () => {
@@ -130,6 +141,28 @@ const IconLinkItem = ({
       <AccordionDetails>
         <Grid container spacing={2}>
           <Grid item xs={12}>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                // ref={linkRef}
+                variant="outlined"
+                fullWidth
+                name="url"
+                label="URL"
+                placeholder="Add your URL"
+                value={url}
+                error={error}
+                helperText={error && 'Must be a valid URL'}
+                onBlur={handleBlur}
+                onFocus={() => disableButton(true)}
+                autoComplete="off"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={handleChange}
+              />
+            </form>
+          </Grid>
+          <Grid item xs={12}>
             <FormControl fullWidth variant="outlined">
               <InputLabel id="link-select-label" shrink={true}>
                 Type
@@ -153,28 +186,6 @@ const IconLinkItem = ({
                 })}
               </Select>
             </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                name="url"
-                label="URL"
-                placeholder="Add your URL"
-                value={url}
-                error={error}
-                helperText={
-                  error && 'Must be a valid URL. Include http:// or https://'
-                }
-                onBlur={handleSubmit}
-                autoComplete="off"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={handleChange}
-              />
-            </form>
           </Grid>
         </Grid>
       </AccordionDetails>

@@ -9,6 +9,7 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
   const [links, setLinks] = useState(card.links)
   const [title, setTitle] = useState(card.title)
   const [expanded, setExpanded] = useState(false)
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(false)
 
   const handleExpand = identifier => (event, isExpanded) => {
     setExpanded(isExpanded ? identifier : false)
@@ -18,23 +19,25 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
     setTitle(card.title)
   }, [card.title])
 
+  useEffect(() => {
+    setLinks(card.links)
+  }, [card.links])
+
   const handleAdd = event => {
-    const newLinks = [...card.links, { type: 'other' }]
-    const newReduxLinks = [...card.links, { type: 'other' }]
+    const newLinks = [...card.links, { type: 'other', url: '' }]
+    const newReduxLinks = [...card.links, { type: 'other', url: '' }]
     setExpanded('new')
     setLinks(newLinks)
     onSubmit({ ...card, links: newReduxLinks })
   }
 
   const handleChange = (link, index) => {
-    console.log('handling change')
     const newLinks = [...card.links]
     newLinks[index] = link
     onSubmit({ ...card, links: newLinks })
   }
 
   const handleTitleChange = event => {
-    console.log('changing title')
     const newTitle = event.target.value
     setTitle(newTitle)
   }
@@ -143,6 +146,7 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
                           >
                             <Box {...provided.dragHandleProps} pb={1}>
                               <IconLinkItem
+                                disableButton={setButtonIsDisabled}
                                 link={link}
                                 index={index}
                                 onChange={handleChange}
@@ -175,7 +179,13 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
       </Grid>
       <Grid item xs={12} container justifyContent="center">
         <Grid item xs={12}>
-          <Button onClick={handleAdd} fullWidth size="large" variant="outlined">
+          <Button
+            onClick={handleAdd}
+            fullWidth
+            size="large"
+            variant="outlined"
+            disabled={buttonIsDisabled}
+          >
             Add Link +
           </Button>
         </Grid>
