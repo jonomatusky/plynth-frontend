@@ -15,6 +15,8 @@ import {
 } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DeleteOutline, DragIndicator } from '@material-ui/icons'
+import isURL from 'validator/lib/isURL'
+
 import iconOptions from 'util/iconOptions'
 
 const IconLinkItem = ({
@@ -37,20 +39,7 @@ const IconLinkItem = ({
 
   const { type, url } = values
 
-  const validURL = str => {
-    var pattern = new RegExp(
-      '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
-      'i'
-    ) // fragment locator
-    return !!pattern.test(str)
-  }
-
-  const error = !!url && !validURL(url)
+  const error = !!url && !isURL(url, { require_protocol: true })
 
   const optionsList = Object.keys(iconOptions).sort()
 
@@ -151,7 +140,9 @@ const IconLinkItem = ({
                 placeholder="Add your URL"
                 value={url}
                 error={error}
-                helperText={error && 'Must be a valid URL'}
+                helperText={
+                  error && 'Must be a valid URL. Include http:// or https://'
+                }
                 onBlur={handleBlur}
                 onFocus={() => disableButton(true)}
                 autoComplete="off"
