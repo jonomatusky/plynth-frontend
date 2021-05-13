@@ -44,6 +44,7 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
 
   const handleSubmit = event => {
     event.preventDefault()
+    setButtonIsDisabled(false)
     if (title !== card.title) {
       onSubmit({ ...card, title })
     }
@@ -113,6 +114,7 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
               InputLabelProps={{
                 shrink: true,
               }}
+              onFocus={() => setButtonIsDisabled(true)}
             />
           </form>
         </Box>
