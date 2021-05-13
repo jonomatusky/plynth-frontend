@@ -44,10 +44,14 @@ const CardFormButtons = ({ card, onSubmit, pending, onRemove }) => {
 
   const handleSubmit = event => {
     event.preventDefault()
-    setButtonIsDisabled(false)
     if (title !== card.title) {
       onSubmit({ ...card, title })
     }
+  }
+
+  const handleBlur = event => {
+    setButtonIsDisabled(false)
+    handleSubmit(event)
   }
 
   // const getItemStyle = (isDragging, draggableStyle, index) => ({
@@ -110,7 +114,7 @@ const CardFormButtons = ({ card, onSubmit, pending, onRemove }) => {
               autoComplete="off"
               value={title}
               onChange={handleTitleChange}
-              onBlur={handleSubmit}
+              onBlur={handleBlur}
               InputLabelProps={{
                 shrink: true,
               }}
