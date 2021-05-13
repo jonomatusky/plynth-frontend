@@ -39,7 +39,7 @@ const LivePreview = ({
   isLoading,
   setIndex: setCardIndex,
 }) => {
-  const { cards, style } = pack || {}
+  const { cards, style, hideBranding } = pack || {}
   const [i, setI] = useState(0)
 
   const classes = useStyles(style)
@@ -81,7 +81,7 @@ const LivePreview = ({
           color={(style || {}).fontColor}
           count={(cards || []).length}
         />
-        <Box maxHeight="100%">
+        <Box height="100%">
           <PackContent
             preview={true}
             pack={pack}
@@ -95,7 +95,7 @@ const LivePreview = ({
           lastIndex={(cards || []).length - 1}
           fontColor={(style || {}).fontColor}
         />
-        <PowerBar style={style} />
+        {!hideBranding && <PowerBar style={style} />}
       </Box>
     </Box>
   )

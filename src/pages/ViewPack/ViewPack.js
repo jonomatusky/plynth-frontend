@@ -17,7 +17,7 @@ const ViewPack = () => {
   const [index, setIndex] = useState(0)
   const [pack, setPack] = useState(null)
 
-  const { style, cards } = pack || {}
+  const { style, cards, hideBranding } = pack || {}
   const { fontColor } = style || {}
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const ViewPack = () => {
       <Container disableGutters maxWidth={false}>
         <PackContent pack={pack} index={index} setIndex={setIndex} />
       </Container>
-      <PowerBar style={style} />
+      {!hideBranding && <PowerBar style={style} />}
       <Hidden smDown>
         <PackButtonsDesktop
           index={index}

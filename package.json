@@ -20,6 +20,7 @@
     "env-cmd": "^10.1.0",
     "firebase": "^8.2.9",
     "firebaseui": "^4.7.3",
+    "formik": "^2.2.6",
     "install": "^0.13.0",
     "npm": "^7.6.0",
     "posthog-js": "^1.9.6",

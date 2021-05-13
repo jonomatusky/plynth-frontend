@@ -1,48 +1,53 @@
-import React, { useState, useEffect } from 'react'
-import { TextField, Grid, Box } from '@material-ui/core'
+import React from 'react'
+import {
+  TextField,
+  Grid,
+  Box,
+  Switch,
+  FormControlLabel,
+} from '@material-ui/core'
 
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-import Button from 'components/Button'
-
 const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
-  const [prevCardId, setPrevCardId] = useState(null)
-
-  const defaultValues = {
-    title: card.title || '',
-    text: card.text || '',
-    url: card.url || '',
-  }
-
   const validationSchema = Yup.object({
     title: Yup.string().max(50, 'Enter a title under 50 characters'),
     text: Yup.string(),
     url: Yup.string().url(`Must be a valid URL. Include http:// or https://`),
   })
 
-  const { register, handleSubmit, errors, reset } = useForm({
-    mode: 'onBlur',
-    resolver: yupResolver(validationSchema),
-    defaultValues,
-    shouldUnregister: false,
+  const formik = useFormik({
+    initialValues: {
+      title: card.title || '',
+      text: card.text || '',
+      url: card.url || '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: onSubmit,
   })
+
+  // const [prevCardId, setPrevCardId] = useState(null)
 
   //ensures the form is rerendered when the index is changed
-  useEffect(() => {
-    const setReset = () => {
-      setPrevCardId(card.id)
-      reset({ title: card.title, text: card.text, url: card.url })
-    }
-    if (card.id && prevCardId !== card.id) {
-      setReset()
-    }
-  })
+  // useEffect(() => {
+  //   const setReset = () => {
+  //     setPrevCardId(card.id)
+  //     reset({ title: card.title, text: card.text, url: card.url })
+  //   }
+  //   if (card.id && prevCardId !== card.id) {
+  //     setReset()
+  //   }
+  // })
+
+  const handleFullscreenMobile = async event => {
+    // await formik.submitForm()
+    onSubmit({ isFullscreenMobile: event.target.checked })
+  }
 
   return (
-    <form id="card-form" onSubmit={handleSubmit(onSubmit)}>
-      <Box minHeight="300px">
+    <Box minHeight="300px" pb={2}>
+      <form onSubmit={formik.handleSubmit}>
         <Grid container justifyContent="flex-end" spacing={3}>
           <Grid item xs={12}>
             <TextField
@@ -51,13 +56,12 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
               name="title"
               label="Title"
               placeholder="Thanks for the support!"
-              inputRef={register}
-              error={Boolean(errors.title)}
-              helperText={errors.title?.message}
+              {...formik.getFieldProps('title')}
               autoComplete="off"
               InputLabelProps={{
                 shrink: true,
               }}
+              onBlur={formik.handleSubmit}
             />
           </Grid>
           <Grid item xs={12}>
@@ -67,13 +71,12 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
               name="text"
               label="Subtitle"
               placeholder="Get a sneak peak at our latest video..."
-              inputRef={register}
-              error={Boolean(errors.text)}
-              helperText={errors.text?.message}
+              {...formik.getFieldProps('text')}
               autoComplete="off"
               InputLabelProps={{
                 shrink: true,
               }}
+              onBlur={formik.handleSubmit}
             />
           </Grid>
           <Grid item xs={12}>
@@ -83,37 +86,29 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
               name="url"
               label="Link to Video"
               placeholder="Add a link to your video"
-              inputRef={register}
-              error={Boolean(errors.url)}
-              helperText={errors.url?.message}
+              {...formik.getFieldProps('url')}
               autoComplete="off"
               InputLabelProps={{
                 shrink: true,
               }}
+              onBlur={formik.handleSubmit}
             />
           </Grid>
-          <Grid
-            item
-            xs={12}
-            container
-            justifyContent="flex-end"
-            alignItems="flex-end"
-          >
-            <Grid item>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                pending={pending}
-                size="large"
-              >
-                Save Card
-              </Button>
-            </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Switch
+                  color="primary"
+                  checked={card.isFullscreenMobile}
+                  onChange={handleFullscreenMobile}
+                />
+              }
+              label="Make fullscreen on mobile"
+            />
           </Grid>
         </Grid>
-      </Box>
-    </form>
+      </form>
+    </Box>
   )
 }
 
