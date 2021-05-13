@@ -5,7 +5,7 @@ import { Box, Grid, Button, TextField, Typography } from '@material-ui/core'
 import IconLinkItem from './IconLinkItem'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
-const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
+const CardFormButtons = ({ card, onSubmit, pending, onRemove }) => {
   const [links, setLinks] = useState(card.links)
   const [title, setTitle] = useState(card.title)
   const [expanded, setExpanded] = useState(false)
@@ -199,4 +199,4 @@ const CardFormLinks = ({ card, onSubmit, pending, onRemove }) => {
   )
 }
 
-export default CardFormLinks
+export default CardFormButtons
