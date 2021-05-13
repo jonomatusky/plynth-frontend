@@ -15,7 +15,8 @@ const useStyles = makeStyles({
     backgroundColor: '#00000066',
     height: '45px',
     width: '45px',
-    position: 'fixed',
+    position: 'absolute',
+    zIndex: '50',
     bottom: theme.spacing(8),
     '&:hover': {
       backgroundColor: '#00000066',

@@ -44,6 +44,8 @@ const CardVideo = ({ card, style }) => {
                 height={0.3 * windowHeight}
                 position="absolute"
                 zIndex={10}
+                width="100%"
+                bottom={0}
               />
             </Box>
           </Div100vh>
