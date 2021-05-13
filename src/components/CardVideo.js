@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player'
 
 import TextTypography from 'components/TextTypography'
 import Div100vh from 'components/Div100vh'
+import { use100vh } from 'hooks/use-100-vh'
 
 const useStyles = makeStyles({
   type: {
@@ -16,6 +17,8 @@ const CardVideo = ({ card, style }) => {
 
   const { title, url, text, isFullscreenMobile } = card || {}
   const { font } = style || {}
+
+  const windowHeight = use100vh()
 
   return (
     <>
@@ -35,7 +38,12 @@ const CardVideo = ({ card, style }) => {
                 width="100%"
                 overflow="hidden"
                 controls={false}
-                style={{ position: 'absolute', top: 0, bottom: 0 }}
+                config={{ youtube: { modestbranding: true } }}
+              />
+              <Box
+                height={0.3 * windowHeight}
+                position="absolute"
+                zIndex={10}
               />
             </Box>
           </Div100vh>
