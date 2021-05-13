@@ -1,6 +1,8 @@
 import React from 'react'
 import { Grid, Box, Typography, makeStyles } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import ReactPlayer from 'react-player'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 import TextTypography from 'components/TextTypography'
 import Div100vh from 'components/Div100vh'
@@ -12,7 +14,10 @@ const useStyles = makeStyles({
   },
 })
 
-const CardVideo = ({ card, style }) => {
+const CardVideo = ({ card, style, preview }) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   const classes = useStyles(style)
 
   const { title, url, text, isFullscreenMobile } = card || {}
@@ -22,7 +27,7 @@ const CardVideo = ({ card, style }) => {
 
   return (
     <>
-      {isFullscreenMobile && (
+      {isFullscreenMobile && (isMobile || preview) && (
         <>
           <Div100vh overflow="hidden">
             <Box
@@ -38,10 +43,9 @@ const CardVideo = ({ card, style }) => {
                 width="100%"
                 overflow="hidden"
                 controls={false}
-                config={{ youtube: { modestbranding: true } }}
               />
               <Box
-                height={0.3 * windowHeight}
+                height={0.35 * windowHeight}
                 position="absolute"
                 zIndex={10}
                 width="100%"
@@ -51,7 +55,7 @@ const CardVideo = ({ card, style }) => {
           </Div100vh>
         </>
       )}
-      {!isFullscreenMobile && (
+      {(!isFullscreenMobile || (!isMobile && !preview)) && (
         <Grid container spacing={3} justifyContent="flex-start">
           <Grid item xs={12}>
             <Grid container justifyContent="center">
