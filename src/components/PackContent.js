@@ -9,6 +9,7 @@ import CardHighlight from './CardHighlight'
 import CardMusic from './CardMusic'
 import CardImage from './CardImage'
 import CardButtons from './CardButtons'
+import { use100vh } from 'hooks/use-100-vh'
 
 const PackContent = ({ preview, pack, index, setIndex }) => {
   const cards = (pack || {}).cards
@@ -23,13 +24,16 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
     if (index < (cards || []).length - 1) setIndex(index + 1)
   }
 
+  const windowHeight = use100vh()
+  console.log(windowHeight)
+
   return (
     <SwipeableViews
       {...swipeProps}
       index={index}
       onChangeIndex={setIndex}
       containerStyle={{
-        height: window.innerHeight ? `${window.innerHeight}px` : null,
+        height: windowHeight,
       }}
     >
       {(cards || []).map(card => {
@@ -79,9 +83,9 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                     <Box height="75px" />
                   </Grid>
                 )}
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <Box height="125px" />
-                </Grid>
+                </Grid> */}
               </Grid>
             </Grid>
           </div>

@@ -34,6 +34,7 @@ const CardVideo = ({ card, style }) => {
                 height="100%"
                 width="100%"
                 overflow="hidden"
+                controls={false}
                 style={{ position: 'absolute', top: 0, bottom: 0 }}
               />
             </Box>
