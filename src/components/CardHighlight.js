@@ -89,9 +89,19 @@ const CardHighlight = ({ card, style, increment }) => {
           {card.label && (
             <Grid item xs={12}>
               <ButtonCard
-                endIcon={!card.url && <ArrowForward />}
+                endIcon={
+                  !card.url && (
+                    <ArrowForward
+                      sx={{
+                        color: style.buttonColor
+                          ? style.buttonFontColor
+                          : style.fontColor,
+                      }}
+                    />
+                  )
+                }
                 href={card.url}
-                color={style.fontColor}
+                style={style}
                 onClick={handleClick}
                 target="_blank"
                 fullWidth

@@ -25,7 +25,6 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
   }
 
   const windowHeight = use100vh()
-  console.log(windowHeight)
 
   return (
     <SwipeableViews

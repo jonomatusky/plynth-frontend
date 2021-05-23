@@ -13,15 +13,18 @@ import {
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
-import ButtonColor from 'components/ButtonColor'
+import ButtonColor from 'pages/EditAppearance/components/ButtonColor'
 import ButtonColorPicker from 'pages/EditAppearance/components/ButtonColorPicker'
 import ButtonFont from 'components/ButtonFont'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
+import useUserStore from 'hooks/store/use-user-store'
+import ButtonColorButtons from './components/ButtonColorButtons'
 
 const EditAppearance = () => {
   const { packId } = useParams()
   const { selectPack, updatePack, updateStatus } = usePackStore()
+  const { user } = useUserStore()
 
   const pack = selectPack(packId)
   const [cardIndex, setCardIndex] = useState(0)
@@ -40,7 +43,7 @@ const EditAppearance = () => {
   //   }
   // }, [packId, selectPack, status, updateStatus])
 
-  const handleColorChange = color => {
+  const getFontColor = color => {
     let textColor
 
     const hexToRGB = h => {
@@ -85,9 +88,30 @@ const EditAppearance = () => {
       console.log(err)
     }
 
+    return textColor
+  }
+
+  const handleColorChange = color => {
+    const fontColor = getFontColor(color)
+
     updatePack({
       id: packId,
-      style: { ...style, backgroundColor: color, fontColor: textColor },
+      style: { ...style, backgroundColor: color, fontColor: fontColor },
+    })
+  }
+
+  const handleButtonColorchange = color => {
+    const { buttonColor, buttonFontColor, ...newStyle } = style
+
+    if (color) {
+      const fontColor = getFontColor(color)
+      newStyle.buttonColor = color
+      newStyle.buttonFontColor = fontColor
+    }
+
+    updatePack({
+      id: packId,
+      style: newStyle,
     })
   }
 
@@ -128,204 +152,203 @@ const EditAppearance = () => {
     }
   }, [updateStatus, isSpinning])
 
+  const backgroundColors = [
+    '#FFFFFF',
+    '#000000',
+    '#757575',
+    '#2F87B3',
+    '#FFF9F0',
+    '#9DFFE8',
+    '#CD0A64',
+    '#FE6B8B',
+    '#DCF10B',
+  ]
+  const buttonColors = backgroundColors
+
   return (
     <AdminNav>
       <EditBar />
       <Box height="100vh">
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="stretch"
-          style={{ height: `100vh` }}
-        >
-          <Grid item sm={12} md={8}>
-            <Box minHeight="48px" />
+        {pack && (
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="stretch"
+            style={{ height: `100vh` }}
+          >
+            <Grid item sm={12} md={8}>
+              <Box minHeight="48px" />
 
-            <Box minHeight="48px" />
-            <Grid container justifyContent="center" spacing={2}>
-              <Grid item xs={12} sm={9}>
-                <Paper>
-                  <Box padding={3}>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12}>
-                        <Typography variant="h4">Edit Appearance</Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography variant="h5">Background</Typography>
-                      </Grid>
-                      <Grid item xs={12} container spacing={2}>
-                        <Grid item>
-                          <ButtonColor
-                            color={'#FFFFFF'}
-                            setColor={handleColorChange}
-                          />
+              <Box minHeight="48px" />
+              <Grid container justifyContent="center" spacing={2}>
+                <Grid item xs={12} sm={9}>
+                  <Paper>
+                    <Box padding={3}>
+                      <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                          <Typography variant="h4">Edit Appearance</Typography>
                         </Grid>
-                        <Grid item>
-                          <ButtonColor
-                            color={'#000000'}
-                            setColor={handleColorChange}
-                          />
+                        <Grid item xs={12}>
+                          <Typography variant="h5">Background</Typography>
                         </Grid>
-                        <Grid item>
-                          <ButtonColor
-                            color={'#757575'}
-                            setColor={handleColorChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <ButtonColor
-                            color={'#2F87B3'}
-                            setColor={handleColorChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <ButtonColor
-                            color={'#FFF9F0'}
-                            setColor={handleColorChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <ButtonColor
-                            color={'#9DFFE8'}
-                            setColor={handleColorChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <ButtonColor
-                            color={'#CD0A64'}
-                            setColor={handleColorChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <ButtonColor
-                            color={'#FE6B8B'}
-                            setColor={handleColorChange}
-                          />
+                        <Grid item xs={12} container spacing={2}>
+                          {backgroundColors.map(color => (
+                            <Grid item key={color}>
+                              <ButtonColor
+                                color={color}
+                                setColor={handleColorChange}
+                              />
+                            </Grid>
+                          ))}
+                          <Grid item>
+                            <ButtonColorPicker
+                              color={backgroundColor || '#ffffff'}
+                              onChange={handleColorChange}
+                            />
+                          </Grid>
                         </Grid>
 
-                        <Grid item>
-                          <ButtonColor
-                            color={'#DCF10B'}
-                            setColor={handleColorChange}
-                          />
+                        <Grid item xs={12}>
+                          <Typography variant="h5">Font</Typography>
                         </Grid>
-                        <Grid item>
-                          <ButtonColorPicker
-                            color={backgroundColor || '#ffffff'}
-                            onChange={handleColorChange}
-                          />
-                        </Grid>
-                      </Grid>
 
-                      <Grid item xs={12}>
-                        <Typography variant="h5">Font</Typography>
-                      </Grid>
-
-                      <Grid item xs={12} container spacing={2}>
-                        <Grid item>
-                          <ButtonFont
-                            font={`'Degular', sans-serif`}
-                            setFont={handleFontChange}
-                          />
+                        <Grid item xs={12} container spacing={2}>
+                          <Grid item>
+                            <ButtonFont
+                              font={`'Degular', sans-serif`}
+                              setFont={handleFontChange}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <ButtonFont
+                              font={`'Inter', sans-serif`}
+                              setFont={handleFontChange}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <ButtonFont
+                              font={`'Josefin Sans', sans-serif`}
+                              setFont={handleFontChange}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <ButtonFont
+                              font={`'Jacques Francois', serif`}
+                              setFont={handleFontChange}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <ButtonFont
+                              font={`'Cutive Mono', monospace`}
+                              setFont={handleFontChange}
+                            />
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <ButtonFont
-                            font={`'Inter', sans-serif`}
-                            setFont={handleFontChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <ButtonFont
-                            font={`'Josefin Sans', sans-serif`}
-                            setFont={handleFontChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <ButtonFont
-                            font={`'Jacques Francois', serif`}
-                            setFont={handleFontChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <ButtonFont
-                            font={`'Cutive Mono', monospace`}
-                            setFont={handleFontChange}
-                          />
-                        </Grid>
-                      </Grid>
-                      {/* <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                         <Typography variant="h5">Patterns</Typography>
                       </Grid>
                       <Grid item xs={12}>
                         <Typography>Coming Soon...</Typography>
                         <Button variant="outline">Unlock</Button>
                       </Grid> */}
-                    </Grid>
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={9}>
-                <Paper>
-                  <Box padding={3}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          color="primary"
-                          checked={hideBranding}
-                          onChange={handleChangeBranding}
-                        />
-                      }
-                      label="Hide branding"
-                    />
-                  </Box>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Hidden mdDown>
-            <Grid item md={4}>
-              <Box
-                borderLeft={1}
-                borderColor="divider"
-                height="calc(100vh - 48px)"
-                marginTop="48px"
-                paddingTop="24px"
-                overflow="hidden"
-              >
-                <Box width="100%">
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12}>
-                      <Box paddingBottom={2}>
-                        <Typography align="center" color="textSecondary">
-                          LIVE PREVIEW
-                        </Typography>
+                      </Grid>
+                    </Box>
+                  </Paper>
+                </Grid>
+                {user.tier && user.tier !== 'free' && (
+                  <Grid item xs={12} sm={9}>
+                    <Paper>
+                      <Box padding={3}>
+                        <Grid container spacing={3}>
+                          <Grid item xs={12}>
+                            <Typography variant="h5">Button Color</Typography>
+                          </Grid>
+                          <Grid item xs={12} container spacing={2}>
+                            <Grid item>
+                              <ButtonColorButtons
+                                color={'white'}
+                                onChange={handleButtonColorchange}
+                              />
+                            </Grid>
+                            {buttonColors.map(color => (
+                              <Grid item key={color}>
+                                <ButtonColor
+                                  color={color}
+                                  setColor={handleButtonColorchange}
+                                />
+                              </Grid>
+                            ))}
+                            <Grid item>
+                              <ButtonColorPicker
+                                color={backgroundColor || '#ffffff'}
+                                onChange={handleButtonColorchange}
+                              />
+                            </Grid>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControlLabel
+                              control={
+                                <Switch
+                                  color="primary"
+                                  checked={hideBranding}
+                                  onChange={handleChangeBranding}
+                                />
+                              }
+                              label="Hide branding"
+                            />
+                          </Grid>
+                        </Grid>
                       </Box>
-                    </Grid>
-                    <Grid item xs={12} container justifyContent="center">
-                      <LivePreview
-                        pack={pack}
-                        cardIndex={cardIndex}
-                        isLoading={updateStatus === 'loading'}
-                        setIndex={setCardIndex}
-                      />
-                    </Grid>
-                    <Grid item container xs={12} justifyContent="center">
-                      <Box paddingTop={4}>
-                        {isSpinning && (
-                          <CircularProgress
-                            size="1.25rem"
-                            color="inherit"
-                            thickness={6}
-                          />
-                        )}
-                      </Box>
-                    </Grid>
+                    </Paper>
                   </Grid>
-                </Box>
-              </Box>
+                )}
+              </Grid>
             </Grid>
-          </Hidden>
-        </Grid>
+            <Hidden mdDown>
+              <Grid item md={4}>
+                <Box
+                  borderLeft={1}
+                  borderColor="divider"
+                  height="calc(100vh - 48px)"
+                  marginTop="48px"
+                  paddingTop="24px"
+                  overflow="hidden"
+                >
+                  <Box width="100%">
+                    <Grid container justifyContent="center">
+                      <Grid item xs={12}>
+                        <Box paddingBottom={2}>
+                          <Typography align="center" color="textSecondary">
+                            LIVE PREVIEW
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12} container justifyContent="center">
+                        <LivePreview
+                          pack={pack}
+                          cardIndex={cardIndex}
+                          isLoading={updateStatus === 'loading'}
+                          setIndex={setCardIndex}
+                        />
+                      </Grid>
+                      <Grid item container xs={12} justifyContent="center">
+                        <Box paddingTop={4}>
+                          {isSpinning && (
+                            <CircularProgress
+                              size="1.25rem"
+                              color="inherit"
+                              thickness={6}
+                            />
+                          )}
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Grid>
+            </Hidden>
+          </Grid>
+        )}
       </Box>
     </AdminNav>
   )

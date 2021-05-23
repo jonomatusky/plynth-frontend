@@ -85,7 +85,7 @@ const CardImage = ({ card, style, increment }) => {
               <ButtonCard
                 endIcon={!card.url && <ArrowForward />}
                 href={card.url}
-                color={style.fontColor}
+                style={style}
                 onClick={handleClick}
                 target="_blank"
                 fullWidth
