@@ -42,7 +42,8 @@ const CardVideo = ({ card, style, preview }) => {
                 height="100%"
                 width="100%"
                 overflow="hidden"
-                controls={false}
+                controls={true}
+                playsinline={true}
               />
               <Box
                 height={0.35 * windowHeight}
@@ -79,6 +80,8 @@ const CardVideo = ({ card, style, preview }) => {
                 width="100%"
                 height="100%"
                 style={{ position: 'absolute', top: 0, left: 0 }}
+                controls={true}
+                playsinline={true}
               />
             </div>
           </Grid>
