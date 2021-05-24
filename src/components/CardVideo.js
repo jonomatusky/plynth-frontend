@@ -54,6 +54,7 @@ const CardVideo = ({ card, style, preview }) => {
                 width="100%"
                 overflow="hidden"
                 controls={false}
+                playsinline={true}
                 playing={isPlaying}
               />
               <Box
