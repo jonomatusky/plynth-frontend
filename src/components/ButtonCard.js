@@ -40,7 +40,9 @@ const CardButtonContained = styled(({ children, style, ...props }) => {
   },
 }))
 
-const ColorText = styled(Typography)(({ cardStyle }) => ({
+const ColorText = styled(({ cardStyle, children, ...rest }) => (
+  <Typography {...rest}>{children}</Typography>
+))(({ cardStyle }) => ({
   color: cardStyle.buttonFontColor || cardStyle.fontColor,
 }))
 

@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, Grid, Typography } from '@material-ui/core'
+import {
+  TextField,
+  Grid,
+  Typography,
+  IconButton,
+  Box,
+  FormControlLabel,
+  Switch,
+} from '@material-ui/core'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import Button from 'components/Button'
 import CardImage from './CardImageUpload'
+import {
+  FormatAlignCenter,
+  FormatAlignLeft,
+  FormatAlignRight,
+} from '@material-ui/icons'
+import useUserStore from 'hooks/store/use-user-store'
 
 const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
+  const { user } = useUserStore()
   const [prevCardId, setPrevCardId] = useState(null)
 
   const { title, text, label, url } = card || {}
@@ -42,6 +57,14 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
       setReset()
     }
   })
+
+  const handleTextAlign = alignment => {
+    onSubmit({ textAlign: alignment })
+  }
+
+  const handleHideButtons = async event => {
+    onSubmit({ hideButtons: event.target.checked })
+  }
 
   return (
     <Grid container>
@@ -89,6 +112,43 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                 }}
               />
             </Grid>
+            {user.tier && user.tier !== 'free' && (
+              <Grid item xs={12} container alignItems="center">
+                <Grid item>
+                  <Box pr={1}>
+                    <Typography>Text Align</Typography>
+                  </Box>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    color={
+                      !card.textAlign || card.textAlign === 'left'
+                        ? 'primary'
+                        : 'default'
+                    }
+                    onClick={() => handleTextAlign('left')}
+                  >
+                    <FormatAlignLeft />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    color={card.textAlign === 'center' ? 'primary' : 'default'}
+                    onClick={() => handleTextAlign('center')}
+                  >
+                    <FormatAlignCenter />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    color={card.textAlign === 'right' ? 'primary' : 'default'}
+                    onClick={() => handleTextAlign('right')}
+                  >
+                    <FormatAlignRight />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <Typography variant="h5">Add a Button</Typography>
               <Typography>
@@ -128,6 +188,20 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                 }}
               />
             </Grid>
+            {user.tier && user.tier !== 'free' && (
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      color="primary"
+                      checked={card.hideButtons}
+                      onChange={handleHideButtons}
+                    />
+                  }
+                  label="Hide navigation arrows"
+                />
+              </Grid>
+            )}
             <Grid
               item
               xs={12}

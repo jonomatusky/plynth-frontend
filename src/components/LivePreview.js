@@ -89,12 +89,15 @@ const LivePreview = ({
             setIndex={setIndex}
           />
         </Box>
-        <PackButtonsMobile
-          index={index}
-          setIndex={setIndex}
-          lastIndex={(cards || []).length - 1}
-          fontColor={(style || {}).fontColor}
-        />
+        {!cards[index].hideButtons && (
+          <PackButtonsMobile
+            index={index}
+            setIndex={setIndex}
+            lastIndex={(cards || []).length - 1}
+            fontColor={(style || {}).fontColor}
+          />
+        )}
+
         {!hideBranding && <PowerBar style={style} />}
       </Box>
     </Box>

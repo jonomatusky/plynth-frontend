@@ -65,12 +65,14 @@ const ViewPack = () => {
         />
       </Hidden>
       <Hidden smUp>
-        <PackButtonsMobile
-          index={index}
-          lastIndex={(cards || []).length - 1}
-          setIndex={setIndex}
-          fontColor={fontColor}
-        />
+        {!cards[index].hideButtons && (
+          <PackButtonsMobile
+            index={index}
+            setIndex={setIndex}
+            lastIndex={(cards || []).length - 1}
+            fontColor={(style || {}).fontColor}
+          />
+        )}
       </Hidden>
     </PublicNav>
   ) : (
