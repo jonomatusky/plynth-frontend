@@ -1,5 +1,11 @@
-import React from 'react'
-import { Grid, Box, Typography, makeStyles } from '@material-ui/core'
+import React, { useState } from 'react'
+import {
+  Grid,
+  Box,
+  Typography,
+  makeStyles,
+  ButtonBase,
+} from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import ReactPlayer from 'react-player'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -7,6 +13,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import TextTypography from 'components/TextTypography'
 import Div100vh from 'components/Div100vh'
 import { use100vh } from 'hooks/use-100-vh'
+import { PlayCircle } from '@material-ui/icons'
 
 const useStyles = makeStyles({
   type: {
@@ -25,6 +32,9 @@ const CardVideo = ({ card, style, preview }) => {
 
   const windowHeight = use100vh()
 
+  const hideControls = (url || '').includes('vimeo.com')
+  const [isPlaying, setIsPlaying] = useState(false)
+
   return (
     <>
       {isFullscreenMobile && (isMobile || preview) && (
@@ -32,26 +42,44 @@ const CardVideo = ({ card, style, preview }) => {
           <Div100vh overflow="hidden">
             <Box
               height="100%"
-              maxWidth="100%"
-              diplay="flex"
+              maxWidth="100vw"
+              display="flex"
               justifyContent="center"
               overflow="hidden"
+              bgcolor="black"
             >
               <ReactPlayer
                 url={url}
                 height="100%"
                 width="100%"
                 overflow="hidden"
-                controls={true}
-                playsinline={true}
+                controls={false}
+                playing={isPlaying}
               />
               <Box
-                height={0.35 * windowHeight}
+                height={windowHeight}
                 position="absolute"
                 zIndex={10}
-                width="100%"
+                width="100vw"
                 bottom={0}
-              />
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                // add onClick to Box
+                component={ButtonBase}
+                onClick={() => setIsPlaying(!isPlaying)}
+              >
+                {hideControls && (
+                  <Box width="100vw">
+                    {!isPlaying && (
+                      <PlayCircle
+                        fontSize="large"
+                        sx={{ width: '20vw', height: '20vw', color: 'white' }}
+                      />
+                    )}
+                  </Box>
+                )}
+              </Box>
             </Box>
           </Div100vh>
         </>
@@ -80,8 +108,6 @@ const CardVideo = ({ card, style, preview }) => {
                 width="100%"
                 height="100%"
                 style={{ position: 'absolute', top: 0, left: 0 }}
-                controls={true}
-                playsinline={true}
               />
             </div>
           </Grid>
