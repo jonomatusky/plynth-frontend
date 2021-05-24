@@ -50,97 +50,99 @@ const EditSettings = () => {
   return (
     <AdminNav>
       <EditBar />
-      <Box height="100vh">
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="stretch"
-          style={{ height: `100vh` }}
-        >
-          <Grid item sm={12} md={8}>
-            <Box minHeight="48px" />
+      {pack && (
+        <Box height="100vh">
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="stretch"
+            style={{ height: `100vh` }}
+          >
+            <Grid item sm={12} md={8}>
+              <Box minHeight="48px" />
 
-            <Box minHeight="48px" />
-            {pack && (
-              <Grid container justifyContent="center" spacing={2}>
-                <Grid item xs={12} sm={9}>
-                  <Paper>
-                    <Box padding={3}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                          <Typography variant="h4">Settings</Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography>
-                            Change the name of your pack. Currently, the name is
-                            only visible to you.
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12} container alignItems="center">
+              <Box minHeight="48px" />
+              {pack && (
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={12} sm={9}>
+                    <Paper>
+                      <Box padding={3}>
+                        <Grid container spacing={2}>
                           <Grid item xs={12}>
-                            <PackNameForm
-                              onSubmit={handleSubmit}
-                              buttonText="Save"
-                              name={pack.name}
-                              pending={updateStatus === 'loading'}
-                            />
+                            <Typography variant="h4">Settings</Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography>
+                              Change the name of your pack. Currently, the name
+                              is only visible to you.
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12} container alignItems="center">
+                            <Grid item xs={12}>
+                              <PackNameForm
+                                onSubmit={handleSubmit}
+                                buttonText="Save"
+                                name={pack.name}
+                                pending={updateStatus === 'loading'}
+                              />
+                            </Grid>
                           </Grid>
                         </Grid>
-                      </Grid>
-                    </Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} sm={9}>
-                  <DangerZone packId={packId} />
-                </Grid>
-              </Grid>
-            )}
-          </Grid>
-          <Hidden mdDown>
-            <Grid item md={4}>
-              <Box
-                borderLeft={1}
-                borderColor="divider"
-                height="calc(100vh - 48px)"
-                marginTop="48px"
-                paddingTop="24px"
-                overflow="hidden"
-              >
-                <Box width="100%">
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12}>
-                      <Box paddingBottom={2}>
-                        <Typography align="center" color="textSecondary">
-                          LIVE PREVIEW
-                        </Typography>
                       </Box>
-                    </Grid>
-                    <Grid item xs={12} container justifyContent="center">
-                      <LivePreview
-                        pack={pack}
-                        cardIndex={cardIndex}
-                        isLoading={updateStatus === 'loading'}
-                        setIndex={setCardIndex}
-                      />
-                    </Grid>
-                    <Grid item container xs={12} justifyContent="center">
-                      <Box paddingTop={4}>
-                        {isSpinning && (
-                          <CircularProgress
-                            size="1.25rem"
-                            color="inherit"
-                            thickness={6}
-                          />
-                        )}
-                      </Box>
-                    </Grid>
+                    </Paper>
                   </Grid>
-                </Box>
-              </Box>
+                  <Grid item xs={12} sm={9}>
+                    <DangerZone packId={packId} />
+                  </Grid>
+                </Grid>
+              )}
             </Grid>
-          </Hidden>
-        </Grid>
-      </Box>
+            <Hidden mdDown>
+              <Grid item md={4}>
+                <Box
+                  borderLeft={1}
+                  borderColor="divider"
+                  height="calc(100vh - 48px)"
+                  marginTop="48px"
+                  paddingTop="24px"
+                  overflow="hidden"
+                >
+                  <Box width="100%">
+                    <Grid container justifyContent="center">
+                      <Grid item xs={12}>
+                        <Box paddingBottom={2}>
+                          <Typography align="center" color="textSecondary">
+                            LIVE PREVIEW
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12} container justifyContent="center">
+                        <LivePreview
+                          pack={pack}
+                          cardIndex={cardIndex}
+                          isLoading={updateStatus === 'loading'}
+                          setIndex={setCardIndex}
+                        />
+                      </Grid>
+                      <Grid item container xs={12} justifyContent="center">
+                        <Box paddingTop={4}>
+                          {isSpinning && (
+                            <CircularProgress
+                              size="1.25rem"
+                              color="inherit"
+                              thickness={6}
+                            />
+                          )}
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Grid>
+            </Hidden>
+          </Grid>
+        </Box>
+      )}
     </AdminNav>
   )
 }

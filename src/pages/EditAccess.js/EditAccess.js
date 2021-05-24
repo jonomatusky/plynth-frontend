@@ -92,145 +92,150 @@ const EditAccess = () => {
   return (
     <AdminNav>
       <EditBar />
-      <Box height="100vh">
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="stretch"
-          style={{ height: `100vh` }}
-        >
-          <Grid item sm={12} md={8}>
-            <Box minHeight="48px" />
+      {pack && (
+        <Box height="100vh">
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="stretch"
+            style={{ height: `100vh` }}
+          >
+            <Grid item sm={12} md={8}>
+              <Box minHeight="48px" />
 
-            <Box minHeight="48px" />
-            <Grid container justifyContent="center" spacing={2}>
-              <Grid item xs={12} sm={9}>
-                <Paper>
-                  <Box padding={3}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={12}>
-                        <Typography variant="h4">Manage Access</Typography>
-                      </Grid>
-                      <Grid item xs={12} container alignItems="center">
-                        <Grid item>
-                          <Typography>
-                            <b>This pack is:</b>
+              <Box minHeight="48px" />
+              <Grid container justifyContent="center" spacing={2}>
+                <Grid item xs={12} sm={9}>
+                  <Paper>
+                    <Box padding={3}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={12}>
+                          <Typography variant="h4">Manage Access</Typography>
+                        </Grid>
+                        <Grid item xs={12} container alignItems="center">
+                          <Grid item>
+                            <Typography>
+                              <b>This pack is:</b>
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            {pack && (
+                              <Switch
+                                color="primary"
+                                checked={pack.isPublic}
+                                onChange={handleChangeAvailability}
+                              />
+                            )}
+                            {!pack && <Switch checked={false} disabled />}
+                          </Grid>
+                          <Grid item>
+                            <Typography>
+                              {(pack || {}).isPublic ? 'PUBLIC' : 'PRIVATE'}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography variant="body2">
+                            <b>Share:</b> {packLink}
                           </Typography>
                         </Grid>
-                        <Grid item>
-                          {pack && (
-                            <Switch
-                              color="primary"
-                              checked={pack.isPublic}
-                              onChange={handleChangeAvailability}
-                            />
-                          )}
-                          {!pack && <Switch checked={false} disabled />}
+                        <Grid item xs={12}>
+                          <Typography variant="subtitle1"></Typography>
+                          <ButtonCopyToClipboard textToCopy={packLink}>
+                            Copy Link
+                          </ButtonCopyToClipboard>
                         </Grid>
-                        <Grid item>
-                          <Typography>
-                            {(pack || {}).isPublic ? 'PUBLIC' : 'PRIVATE'}
+                        <Grid item xs={12}>
+                          <Box width="100%" pb={3}>
+                            <Divider />
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography variant="h6">
+                            Link to Physical Artwork
                           </Typography>
                         </Grid>
+                        <Grid item xs={12}>
+                          <Typography variant="body2">
+                            Link this bundle to art in the real-world. Fans snap
+                            a photo at www.plynth.com to access.
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <b>
+                            Upload photos or art files to link them to this
+                            bundle
+                          </b>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Box display="flex">
+                            {(pieces || []).length > 0 &&
+                              pieces.map(piece => {
+                                return (
+                                  <PieceImage piece={piece} key={piece.id} />
+                                )
+                              })}
+                            <Grid item>
+                              <Box mb={4}>
+                                <ImageUpload onSubmit={handleNewImage}>
+                                  <ButtonUpload />
+                                </ImageUpload>
+                              </Box>
+                            </Grid>
+                          </Box>
+                        </Grid>
                       </Grid>
+                    </Box>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Hidden mdDown>
+              <Grid item md={4}>
+                <Box
+                  borderLeft={1}
+                  borderColor="divider"
+                  height="calc(100vh - 48px)"
+                  marginTop="48px"
+                  paddingTop="24px"
+                  overflow="hidden"
+                >
+                  <Box width="100%">
+                    <Grid container justifyContent="center">
                       <Grid item xs={12}>
-                        <Typography variant="body2">
-                          <b>Share:</b> {packLink}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography variant="subtitle1"></Typography>
-                        <ButtonCopyToClipboard textToCopy={packLink}>
-                          Copy Link
-                        </ButtonCopyToClipboard>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Box width="100%" pb={3}>
-                          <Divider />
+                        <Box paddingBottom={2}>
+                          <Typography align="center" color="textSecondary">
+                            LIVE PREVIEW
+                          </Typography>
                         </Box>
                       </Grid>
-                      <Grid item xs={12}>
-                        <Typography variant="h6">
-                          Link to Physical Artwork
-                        </Typography>
+                      <Grid item xs={12} container justifyContent="center">
+                        <LivePreview
+                          pack={pack}
+                          cardIndex={cardIndex}
+                          isLoading={updateStatus === 'loading'}
+                          setIndex={setCardIndex}
+                        />
                       </Grid>
-                      <Grid item xs={12}>
-                        <Typography variant="body2">
-                          Link this bundle to art in the real-world. Fans snap a
-                          photo at www.plynth.com to access.
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <b>
-                          Upload photos or art files to link them to this bundle
-                        </b>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Box display="flex">
-                          {(pieces || []).length > 0 &&
-                            pieces.map(piece => {
-                              return <PieceImage piece={piece} key={piece.id} />
-                            })}
-                          <Grid item>
-                            <Box mb={4}>
-                              <ImageUpload onSubmit={handleNewImage}>
-                                <ButtonUpload />
-                              </ImageUpload>
-                            </Box>
-                          </Grid>
+                      <Grid item container xs={12} justifyContent="center">
+                        <Box paddingTop={4}>
+                          {isSpinning && (
+                            <CircularProgress
+                              size="1.25rem"
+                              color="inherit"
+                              thickness={6}
+                            />
+                          )}
                         </Box>
                       </Grid>
                     </Grid>
                   </Box>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Hidden mdDown>
-            <Grid item md={4}>
-              <Box
-                borderLeft={1}
-                borderColor="divider"
-                height="calc(100vh - 48px)"
-                marginTop="48px"
-                paddingTop="24px"
-                overflow="hidden"
-              >
-                <Box width="100%">
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12}>
-                      <Box paddingBottom={2}>
-                        <Typography align="center" color="textSecondary">
-                          LIVE PREVIEW
-                        </Typography>
-                      </Box>
-                    </Grid>
-                    <Grid item xs={12} container justifyContent="center">
-                      <LivePreview
-                        pack={pack}
-                        cardIndex={cardIndex}
-                        isLoading={updateStatus === 'loading'}
-                        setIndex={setCardIndex}
-                      />
-                    </Grid>
-                    <Grid item container xs={12} justifyContent="center">
-                      <Box paddingTop={4}>
-                        {isSpinning && (
-                          <CircularProgress
-                            size="1.25rem"
-                            color="inherit"
-                            thickness={6}
-                          />
-                        )}
-                      </Box>
-                    </Grid>
-                  </Grid>
                 </Box>
-              </Box>
-            </Grid>
-          </Hidden>
-        </Grid>
-      </Box>
+              </Grid>
+            </Hidden>
+          </Grid>
+        </Box>
+      )}
     </AdminNav>
   )
 }

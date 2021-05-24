@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { TextField, Grid, Box } from '@material-ui/core'
+import {
+  TextField,
+  Grid,
+  Box,
+  FormControlLabel,
+  Switch,
+} from '@material-ui/core'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import Button from 'components/Button'
+import useUserStore from 'hooks/store/use-user-store'
 
 const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
+  const { user } = useUserStore()
   const [prevCardId, setPrevCardId] = useState(null)
 
   const defaultValues = {
@@ -39,6 +47,10 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
       setReset()
     }
   })
+
+  const handleEmailDownload = async event => {
+    onSubmit({ emailDownload: event.target.checked })
+  }
 
   return (
     <form id="card-form" onSubmit={handleSubmit(onSubmit)}>
@@ -92,6 +104,20 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
               }}
             />
           </Grid>
+          {user.tier && user.tier !== 'free' && (
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="primary"
+                    checked={card.emailDownload}
+                    onChange={handleEmailDownload}
+                  />
+                }
+                label="Let users send the file to their email"
+              />
+            </Grid>
+          )}
           <Grid
             item
             xs={12}
