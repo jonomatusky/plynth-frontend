@@ -72,6 +72,7 @@ const CardDownloadDialog = ({ packId, cardIndex, style, open, onClose }) => {
             <Grid item xs={12}>
               <ColorTextField
                 fontColor={'black'}
+                color="secondary"
                 variant="outlined"
                 fullWidth
                 id="email"

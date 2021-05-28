@@ -11,7 +11,7 @@ const CardButton = styled(LoadingButton)(props => ({
   border: '2px solid',
   '&:hover': {
     border: '2px solid',
-    backgroundColor: `${props.buttoncolor}11`,
+    backgroundColor: `${props.buttoncolor}99`,
     boxShadow: `0px 1px #000`,
   },
   '&:disabled': {
@@ -24,7 +24,7 @@ const ButtonCardLoading = ({ children, color, ...props }) => {
   return (
     <CardButton
       variant="outlined"
-      color="primary"
+      color="secondary"
       buttoncolor={color}
       {...props}
       size="large"

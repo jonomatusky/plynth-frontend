@@ -55,7 +55,7 @@ const CardDownload = ({ packId, cardIndex, card, style }) => {
           </Grid>
           {card.emailDownload && (
             <Grid item>
-              <Button onClick={openDownloadDialog}>
+              <Button onClick={openDownloadDialog} disableRipple>
                 <Box color={style.fontColor}>
                   <Typography color="inherit" variant="subtitle2">
                     Send to My Email
