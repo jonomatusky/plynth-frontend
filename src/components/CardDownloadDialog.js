@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Grid,
   Box,
@@ -31,6 +31,7 @@ const ColorTextField = styled(({ fontColor, ...rest }) => (
 
 const CardDownloadDialog = ({ packId, cardIndex, style, open, onClose }) => {
   const { request, status } = useRequest()
+  const [error, setError] = useState(null)
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -38,12 +39,17 @@ const CardDownloadDialog = ({ packId, cardIndex, style, open, onClose }) => {
       .required('Email is required'),
   })
 
-  const handleSubmit = values => {
-    request({
-      url: `/packs/${packId}/cards/${cardIndex}/download`,
-      method: 'POST',
-      data: values,
-    })
+  const handleSubmit = async values => {
+    setError(null)
+    try {
+      await request({
+        url: `/packs/${packId}/cards/${cardIndex}/download`,
+        method: 'POST',
+        data: values,
+      })
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   const formik = useFormik({
@@ -93,12 +99,17 @@ const CardDownloadDialog = ({ packId, cardIndex, style, open, onClose }) => {
                   fullWidth
                   color={'black'}
                   type="submit"
-                  loading={status === 'loading'}
+                  // loading={status === 'loading'}
                   disabled={status === 'succeeded'}
                 >
                   {status === 'succeeded' ? <b>Sent ✔</b> : 'Send'}
                 </ButtonCardLoading>
               </Grid>
+              {error && (
+                <Grid item xs={12}>
+                  <Typography>{error}</Typography>
+                </Grid>
+              )}
               <Grid item xs={12}>
                 <Box pb={1}>
                   <Button

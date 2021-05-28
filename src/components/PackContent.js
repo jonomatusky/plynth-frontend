@@ -64,7 +64,12 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                   <CardVideo card={card} style={style} preview={preview} />
                 )}
                 {type === 'download' && (
-                  <CardDownload card={card} style={style} />
+                  <CardDownload
+                    packId={pack.id}
+                    cardIndex={index}
+                    card={card}
+                    style={style}
+                  />
                 )}
                 {type === 'highlight' && (
                   <CardHighlight

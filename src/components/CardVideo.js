@@ -53,7 +53,7 @@ const CardVideo = ({ card, style, preview }) => {
                 height="100%"
                 width="100%"
                 overflow="hidden"
-                controls={false}
+                controls={hideControls}
                 playsinline={true}
                 playing={isPlaying}
               />
@@ -108,6 +108,7 @@ const CardVideo = ({ card, style, preview }) => {
                 url={url}
                 width="100%"
                 height="100%"
+                controls={true}
                 style={{ position: 'absolute', top: 0, left: 0 }}
               />
             </div>
