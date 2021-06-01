@@ -1,9 +1,9 @@
 import React from 'react'
-import { Container, Box, Grid, Typography } from '@material-ui/core'
+import { Container, Box, Grid, Typography, Link } from '@material-ui/core'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
 import firebase from 'config/firebase'
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
 
 const Login = () => {
@@ -37,13 +37,16 @@ const Login = () => {
         <Box pt={20}>
           <Grid container justifyContent="center" spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h5" align="center">
-                <b>Sign In</b>
+              <Typography variant="h5" align="center" color="white">
+                <b>Log In</b>
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography textAlign="center" variant="body2">
-                Don't have an account yet? <Link to="/signup">Sign Up</Link>
+              <Typography textAlign="center" variant="body2" color="white">
+                Don't have an account yet?{' '}
+                <Link component={RouterLink} to="/admin/signup">
+                  <b>Sign Up</b>
+                </Link>
               </Typography>
             </Grid>
             <Grid item xs={12}>

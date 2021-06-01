@@ -65,7 +65,7 @@ const ViewPack = () => {
         />
       </Hidden>
       <Hidden smUp>
-        {!cards[index].hideButtons && (
+        {!(cards[index] || {}).hideButtons && (
           <PackButtonsMobile
             index={index}
             setIndex={setIndex}

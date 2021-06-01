@@ -17,7 +17,7 @@ import { Person } from '@material-ui/icons'
 
 import { useFetch } from 'hooks/use-fetch'
 import { useSession } from 'hooks/use-session'
-import logo from 'images/Plynth-Loading-Final.png'
+import logo from 'images/plynth_logo_simple.svg'
 import usePageTrack from 'hooks/usePageTrack'
 import useAlertStore from 'hooks/store/use-alert-store'
 

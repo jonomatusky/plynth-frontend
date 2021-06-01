@@ -89,7 +89,7 @@ const LivePreview = ({
             setIndex={setIndex}
           />
         </Box>
-        {!cards[index].hideButtons && (
+        {!(cards[index] || {}).hideButtons && (
           <PackButtonsMobile
             index={index}
             setIndex={setIndex}

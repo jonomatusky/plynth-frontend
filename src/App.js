@@ -24,6 +24,11 @@ import ViewPack from 'pages/ViewPack/ViewPack'
 import AlertBar from 'components/AlertBar'
 import NotFound from 'components/NotFound'
 import EditSettings from 'pages/EditSettings/EditSettings'
+import NewPickup from 'pages/Pickup/Pickup'
+import Home from 'pages/Home/Home'
+import TestLoading from 'pages/TestLoading/TestLoading'
+import GroundUP from 'pages/GroundUP/GroundUP'
+import Waitlist from 'pages/Waitlist/Waitlist'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -41,16 +46,19 @@ const App = () => {
   routes = (
     <Switch>
       <Route component={ViewPack} path="/p/:packId" />
+
+      <Route component={Signup} path="/signup" />
+      <Route component={Signup} path="/admin/signup" />
+      <Route component={Login} path="/admin/login" />
+
       <PrivateRoute
         component={EditCards}
         path="/admin/packs/:packId/edit/cards"
       />
-
       <PrivateRoute
         component={EditAppearance}
         path="/admin/packs/:packId/edit/appearance"
       />
-
       <PrivateRoute
         component={EditAccess}
         path="/admin/packs/:packId/edit/access"
@@ -61,14 +69,14 @@ const App = () => {
       />
       <PrivateRoute component={MyAccount} path="/admin/account" />
       <PrivateRoute component={Register} path="/admin/register" />
-
       <Redirect path="/admin/packs" to="/admin" />
-
       <PrivateRoute component={MyPacks} path="/admin" />
 
-      <Route component={Signup} path="/signup" />
-      <Route component={Login} path="/login" />
-      <Route component={Login} path="/" exact />
+      <Route publicRoute={true} component={NewPickup} path="/pickup" exact />
+      <Route component={Waitlist} path="/s/waitlist" />
+      <Route component={TestLoading} path="/test/loading" />
+      <Route component={GroundUP} path="/groundup" />
+      <Route component={Home} path="/" exact />
       <Route component={NotFound} />
     </Switch>
   )

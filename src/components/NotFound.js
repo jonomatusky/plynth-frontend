@@ -2,7 +2,7 @@ import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { Container, Grid, Typography, Link, Box } from '@material-ui/core'
 
-import plynthLogoHeader from '../images/Plynth-Loading-Final.png'
+import plynthLogoHeader from '../images/plynth_logo_simple.svg'
 
 import LogoBar from 'components/LogoBar'
 

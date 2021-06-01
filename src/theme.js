@@ -4,7 +4,11 @@ const theme = createMuiTheme({
   palette: {
     primary: { main: '#CD0A64' },
     secondary: { main: '#666666' },
+    website: { main: '#ffffff' },
     error: { main: '#FF9516' },
+    background: {
+      card: '#212421',
+    },
   },
   typography: {
     fontFamily: ['Rubik', 'sans-serif'].join(','),
