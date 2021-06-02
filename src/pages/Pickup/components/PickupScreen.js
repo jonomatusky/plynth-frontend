@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import CameraDialog from 'components/CameraDialog'
 import ScanScreen from 'components/ScanScreen'
-import { Typography, Box, Button } from '@material-ui/core'
+import { Typography, Box, Grid, Button } from '@material-ui/core'
 import { Clear } from '@material-ui/icons'
 
 const PickupScreen = ({ fontColor, backgroundColor }) => {
@@ -62,6 +62,7 @@ const PickupScreen = ({ fontColor, backgroundColor }) => {
           </Box>
 
           <Box
+            maxWidth="100%"
             bottom={0}
             position="absolute"
             top="auto"
@@ -71,11 +72,13 @@ const PickupScreen = ({ fontColor, backgroundColor }) => {
             zIndex="5"
           >
             {hasUserMedia && (
-              <Box color={fontColor}>
-                <Typography variant="h6" textAlign="center">
-                  <b>Snap a photo to unlock your content</b>
-                </Typography>
-              </Box>
+              <Grid container>
+                <Grid item xs={11}>
+                  <Typography variant="h6" textAlign="center" color={fontColor}>
+                    <b>Snap a photo to unlock your content</b>
+                  </Typography>
+                </Grid>
+              </Grid>
             )}
           </Box>
         </ScanScreen>

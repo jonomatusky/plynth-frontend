@@ -111,7 +111,7 @@ const Home = () => {
             <Box height="4rem" mt={4} />
           </Grid>
           <Grid item xs={12} md={6} container justifyContent="center">
-            <Grid item xs={9} container spacing={2} justifyContent="center">
+            <Grid item xs={11} container spacing={2} justifyContent="center">
               <Grid item xs={12}>
                 <Box color="white" pb={2}>
                   <Typography variant="h3" letterSpacing={1}>
@@ -244,16 +244,16 @@ const Home = () => {
               <Grid item xs={7} container justifyContent="center">
                 <Typography color="white">
                   <Link component={RouterLink} to="/s/contact" color="inherit">
-                    Contact Us
+                    <b>Contact Us</b>
                   </Link>
                 </Typography>
               </Grid>
               <Grid item xs={7} container justifyContent="center">
-                <Box height="1rem" />
-                <Typography variant="body2" color="white">
-                  Copyright © 2021 Plynth
-                </Typography>
-                <Box height="1rem" />
+                <Box pt={1} pb={1}>
+                  <Typography variant="body2" color="gray">
+                    Copyright © Plynth 2021
+                  </Typography>
+                </Box>
               </Grid>
             </Grid>
           </Grid>

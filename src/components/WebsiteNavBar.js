@@ -64,7 +64,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
               size="small"
               sx={{ textTransform: 'lowercase' }}
             >
-              <Typography color="white">
+              <Typography color="#BBBBBB">
                 <b>_</b>sign in
               </Typography>
             </Button>
