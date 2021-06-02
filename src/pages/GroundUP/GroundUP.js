@@ -58,6 +58,7 @@ const GroundUP = () => {
       <>
         <CameraDialog
           open={helpDialogIsOpen}
+          username="groundup"
           onClose={() => setHelpDialogIsOpen(false)}
         />
         {cameraAuthorizationStatus !== 'authorized' && (
@@ -78,6 +79,7 @@ const GroundUP = () => {
                     src={GroundUPLogo}
                     style={{
                       width: '150px',
+                      height: '150px',
                       display: imageIsLoaded ? null : 'none',
                     }}
                     onLoad={() => setImageIsLoaded(true)}

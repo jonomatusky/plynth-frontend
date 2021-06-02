@@ -29,6 +29,7 @@ import Home from 'pages/Home/Home'
 import TestLoading from 'pages/TestLoading/TestLoading'
 import GroundUP from 'pages/GroundUP/GroundUP'
 import Waitlist from 'pages/Waitlist/Waitlist'
+import Contact from 'pages/Contact/Contact'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -74,6 +75,7 @@ const App = () => {
 
       <Route publicRoute={true} component={NewPickup} path="/pickup" exact />
       <Route component={Waitlist} path="/s/waitlist" />
+      <Route component={Contact} path="/s/contact" />
       <Route component={TestLoading} path="/test/loading" />
       <Route component={GroundUP} path="/groundup" />
       <Route component={Home} path="/" exact />

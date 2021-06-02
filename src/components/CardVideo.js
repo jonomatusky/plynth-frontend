@@ -53,7 +53,7 @@ const CardVideo = ({ card, style, preview }) => {
                 height="100%"
                 width="100%"
                 overflow="hidden"
-                controls={hideControls}
+                controls={!hideControls}
                 playsinline={true}
                 playing={isPlaying}
               />

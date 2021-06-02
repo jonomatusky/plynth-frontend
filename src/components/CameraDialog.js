@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import {
   Grid,
   Box,
@@ -18,8 +19,17 @@ import {
   isMobile,
 } from 'react-device-detect'
 
-const CameraDialog = ({ packId, cardIndex, style, open, onClose }) => {
+const CameraDialog = ({
+  username,
+  packId,
+  cardIndex,
+  style,
+  open,
+  onClose,
+}) => {
   let content
+
+  console.log('Safari: ' + isSafari)
 
   if (!isMobile) {
     content = (
@@ -27,7 +37,7 @@ const CameraDialog = ({ packId, cardIndex, style, open, onClose }) => {
         Make sure your browser has access to your device's camera. If you're
         still unable to take a photo,{' '}
         <Link
-          href="https://plynth.com/s/contact"
+          href="/s/contact"
           target="_blank"
           color="inherit"
           underline="always"
@@ -43,18 +53,18 @@ const CameraDialog = ({ packId, cardIndex, style, open, onClose }) => {
         <Typography pb={1}>
           Make sure to give Safari access to your device's camera.
         </Typography>
-        <Typography pb={1}>
+        <Box pb={1}>
           <ol>
             <li>Open the Settings app</li>
             <li>Scroll down and tap Safari</li>
             <li>Tap Permissions</li>
             <li>Flip switch next to "Camera"</li>
           </ol>
-        </Typography>
+        </Box>
         <Typography pb={1}>
           If you're still unable to take a photo,{' '}
           <Link
-            href="https://plynth.com/s/contact"
+            href="/s/contact"
             target="_blank"
             color="inherit"
             underline="always"
@@ -81,7 +91,7 @@ const CameraDialog = ({ packId, cardIndex, style, open, onClose }) => {
         <Typography pb={1}>
           If you're still unable to take a photo,{' '}
           <Link
-            href="https://plynth.com/s/contact"
+            href="/s/contact"
             target="_blank"
             color="inherit"
             underline="always"
@@ -100,7 +110,7 @@ const CameraDialog = ({ packId, cardIndex, style, open, onClose }) => {
           Safari for the best experience. If you're still unable to take a
           photo,{' '}
           <Link
-            href="https://plynth.com/s/contact"
+            href="/s/contact"
             target="_blank"
             color="inherit"
             underline="always"
@@ -119,7 +129,7 @@ const CameraDialog = ({ packId, cardIndex, style, open, onClose }) => {
           Chrome for the best experience. If you're still unable to take a
           photo,{' '}
           <Link
-            href="https://plynth.com/s/contact"
+            href="/s/contact"
             target="_blank"
             color="inherit"
             underline="always"
@@ -152,7 +162,7 @@ const CameraDialog = ({ packId, cardIndex, style, open, onClose }) => {
         <Typography pb={1}>
           If you're still unable to take a photo,{' '}
           <Link
-            href="https://plynth.com/s/contact"
+            href="/s/contact"
             target="_blank"
             color="inherit"
             underline="always"
@@ -178,10 +188,15 @@ const CameraDialog = ({ packId, cardIndex, style, open, onClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button href="https://plynth.com/s/contact" target="_blank">
-          Get Help
-        </Button>
-        <Button onClick={onClose}>Close</Button>
+        {username && <Button onClick={onClose}>{`Close & Try Again`}</Button>}
+        {!username && (
+          <>
+            <Button component={RouterLink} to={'/'}>
+              Exit
+            </Button>
+            <Button onClick={onClose}>Try Again</Button>
+          </>
+        )}
       </DialogActions>
     </Dialog>
   )

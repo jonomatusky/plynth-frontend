@@ -85,10 +85,10 @@ const CardDownloadDialog = ({ packId, cardIndex, style, open, onClose }) => {
                 name="email"
                 label="Email"
                 placeholder="Email"
-                {...formik.getFieldProps('email')}
                 InputLabelProps={{
                   shrink: true,
                 }}
+                {...formik.getFieldProps('email')}
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
               />

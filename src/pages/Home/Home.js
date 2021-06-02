@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   useMediaQuery,
+  Link,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { HashLink } from 'react-router-hash-link'
@@ -235,12 +236,19 @@ const Home = () => {
           <Grid item xs={12}>
             <Grid
               container
-              direction="column"
               justifyContent="center"
               alignItems="center"
               alignContent="center"
+              spacing={2}
             >
-              <Grid item>
+              <Grid item xs={7} container justifyContent="center">
+                <Typography color="white">
+                  <Link component={RouterLink} to="/s/contact" color="inherit">
+                    Contact Us
+                  </Link>
+                </Typography>
+              </Grid>
+              <Grid item xs={7} container justifyContent="center">
                 <Box height="1rem" />
                 <Typography variant="body2" color="white">
                   Copyright © 2021 Plynth

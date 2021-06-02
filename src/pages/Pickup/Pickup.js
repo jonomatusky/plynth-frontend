@@ -21,7 +21,7 @@ const Pickup = () => {
   const [hasUserMedia, setHasUserMedia] = useState(false)
 
   const handleUserMediaError = () => {
-    setHelpDialogIsOpen(true)
+    setTimeout(() => setHelpDialogIsOpen(true), 1000)
   }
 
   const handleUserMedia = () => {
