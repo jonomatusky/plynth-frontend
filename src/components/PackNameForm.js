@@ -33,7 +33,7 @@ const PackNameForm = ({ onSubmit, onCancel, name, buttonText, pending }) => {
             fullWidth
             name="name"
             label="Name"
-            placeholder="My Awesome Pack"
+            placeholder="Your Awesome Pack"
             inputRef={register}
             error={Boolean(errors.name)}
             helperText={errors.name?.message}

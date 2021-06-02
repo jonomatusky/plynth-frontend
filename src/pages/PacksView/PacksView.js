@@ -111,7 +111,7 @@ const PacksView = () => {
                   >
                     <Grid item>
                       <Typography variant="h4" align="center">
-                        <b>My Packs</b>
+                        <b>Your Packs</b>
                       </Typography>
                     </Grid>
                     <Grid item>

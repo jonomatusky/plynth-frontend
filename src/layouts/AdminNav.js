@@ -97,7 +97,7 @@ const AdminNav = ({ children }) => {
               style={{ height: '100%' }}
             >
               <Grid item>
-                <Box width={30} pt={2}>
+                <Box width={25} pt={2}>
                   <Link to="/admin">
                     <img src={logo} alt="logo" style={{ maxWidth: '100%' }} />
                   </Link>

@@ -110,7 +110,7 @@ const CardFormButtons = ({ card, onSubmit, pending, onRemove }) => {
               fullWidth
               name="title"
               label="Title"
-              placeholder="My Links"
+              placeholder="Your Links"
               autoComplete="off"
               value={title}
               onChange={handleTitleChange}
