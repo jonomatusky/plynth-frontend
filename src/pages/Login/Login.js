@@ -34,20 +34,20 @@ const Login = () => {
 
   return (
     <PublicNav>
-      <WebsiteNavBar />
+      <WebsiteNavBar right={<></>} />
       <Container maxWidth="xs">
         <Box pt={20}>
           <Grid container justifyContent="center" spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h5" align="center" color="white">
-                <b>Log In</b>
+                <b>sign in</b>
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography textAlign="center" variant="body2" color="white">
                 Don't have an account yet?{' '}
-                <Link component={RouterLink} to="/admin/signup">
-                  <b>Sign Up</b>
+                <Link component={RouterLink} to="/s/waitlist">
+                  <b>Join the waitlist</b>
                 </Link>
               </Typography>
             </Grid>

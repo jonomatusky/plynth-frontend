@@ -2,11 +2,7 @@ import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { Container, Grid, Typography, Link, Box } from '@material-ui/core'
 
-import plynthLogoHeader from '../images/plynth_logo_simple.svg'
-
-import LogoBar from 'components/LogoBar'
-
-const NotFound = () => {
+const NotFound = ({ fontColor }) => {
   return (
     <Container maxWidth="md">
       <Grid
@@ -18,31 +14,26 @@ const NotFound = () => {
         spacing={1}
       >
         <Grid item>
-          <Box mt="15vh" mb={1} maxWidth="80px">
-            <img
-              src={plynthLogoHeader}
-              alt="Plynth Logo Large"
-              style={{ maxWidth: '100%' }}
-            />
-          </Box>
+          <Box mt="20vh" mb={1} maxWidth="80px" />
         </Grid>
         <Grid item>
-          <Typography variant="h4" align="center">
+          <Typography variant="h4" align="center" color={fontColor}>
+            Not Found
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="h5" align="center" color={fontColor}>
             The page you’re looking for doesn’t exist.
           </Typography>
         </Grid>
         <Grid item>
-          <Link
-            component={RouterLink}
-            to="/"
-            color="inherit"
-            underline="always"
-          >
-            <Typography align="center">Back to Home</Typography>
+          <Link component={RouterLink} to="/">
+            <Typography align="center">
+              <b>Back to Home</b>
+            </Typography>
           </Link>
         </Grid>
       </Grid>
-      <LogoBar to="/" />
     </Container>
   )
 }

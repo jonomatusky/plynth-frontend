@@ -22,7 +22,6 @@ import EditAppearance from 'pages/EditAppearance/EditAppearance'
 import EditAccess from 'pages/EditAccess.js/EditAccess'
 import ViewPack from 'pages/ViewPack/ViewPack'
 import AlertBar from 'components/AlertBar'
-import NotFound from 'components/NotFound'
 import EditSettings from 'pages/EditSettings/EditSettings'
 import NewPickup from 'pages/Pickup/Pickup'
 import Home from 'pages/Home/Home'
@@ -30,6 +29,7 @@ import TestLoading from 'pages/TestLoading/TestLoading'
 import GroundUP from 'pages/GroundUP/GroundUP'
 import Waitlist from 'pages/Waitlist/Waitlist'
 import Contact from 'pages/Contact/Contact'
+import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -79,7 +79,7 @@ const App = () => {
       <Route component={TestLoading} path="/test/loading" />
       <Route component={GroundUP} path="/groundup" />
       <Route component={Home} path="/" exact />
-      <Route component={NotFound} />
+      <Route component={NotFoundPage} />
     </Switch>
   )
 

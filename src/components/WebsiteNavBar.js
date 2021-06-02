@@ -64,7 +64,9 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
               size="small"
               sx={{ textTransform: 'lowercase' }}
             >
-              <Typography color="white">_sign in</Typography>
+              <Typography color="white">
+                <b>_</b>sign in
+              </Typography>
             </Button>
           )}
         </Grid>

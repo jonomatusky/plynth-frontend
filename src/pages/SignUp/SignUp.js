@@ -35,7 +35,7 @@ const Login = () => {
 
   return (
     <PublicNav>
-      <WebsiteNavBar />
+      <WebsiteNavBar right={<></>} />
       <Container maxWidth="xs">
         <Box pt={20}>
           <Grid container justifyContent="center" spacing={2}>
