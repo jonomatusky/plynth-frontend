@@ -20,7 +20,7 @@ const ScanError = ({ fontColor, onClose }) => {
             <Typography align="center" sx={{ color: fontColor }}>
               If you keep seeing this error,{' '}
               <Link
-                href="https://plynth.com/s/contact"
+                href="/s/contact"
                 target="_blank"
                 color="inherit"
                 underline="always"

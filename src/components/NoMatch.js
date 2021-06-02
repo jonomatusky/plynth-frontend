@@ -20,7 +20,7 @@ const NoMatch = ({ fontColor, onClose }) => {
             <Typography align="center" sx={{ color: fontColor }}>
               Give it another try or{' '}
               <Link
-                href="https://plynth.com/s/contact"
+                href="/s/contact"
                 target="_blank"
                 color="inherit"
                 underline="always"

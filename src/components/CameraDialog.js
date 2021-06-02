@@ -57,8 +57,10 @@ const CameraDialog = ({
           <ol>
             <li>Open the Settings app</li>
             <li>Scroll down and tap Safari</li>
-            <li>Tap Permissions</li>
-            <li>Flip switch next to "Camera"</li>
+            <li>
+              Scrop down to the Settings for Websites section and tap Camera
+            </li>
+            <li>Tap "Ask" or "Allow"</li>
           </ol>
         </Box>
         <Typography pb={1}>

@@ -25,7 +25,7 @@ const PowerBar = ({ style }) => {
       >
         <Typography variant="subtitle2">
           <Link
-            href="https://plynth.com/#about"
+            href="/#about"
             color="inherit"
             underline="always"
             target="_blank"
