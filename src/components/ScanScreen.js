@@ -18,7 +18,7 @@ const ScanScreen = ({
   }, [backgroundColor])
 
   return (
-    <Div100vh width="100%">
+    <Div100vh width="100vw">
       <Box position="absolute" zIndex="0" width="100%" height="100%">
         <ScanWindow
           onUserMedia={onUserMedia}

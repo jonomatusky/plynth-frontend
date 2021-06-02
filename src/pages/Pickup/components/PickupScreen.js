@@ -62,19 +62,26 @@ const PickupScreen = ({ fontColor, backgroundColor }) => {
           </Box>
 
           <Box
-            maxWidth="100%"
+            maxWidth="100vw"
             bottom={0}
             position="absolute"
             top="auto"
+            right={0}
+            left={0}
             display="flex"
             justifyContent="center"
             mb={10}
             zIndex="5"
           >
             {hasUserMedia && (
-              <Grid container>
+              <Grid container justifyContent="center">
                 <Grid item xs={11}>
-                  <Typography variant="h6" textAlign="center" color={fontColor}>
+                  <Typography
+                    variant="h6"
+                    textAlign="center"
+                    color={fontColor}
+                    sx={{ textShadow: '0px 1px 7px #555555' }}
+                  >
                     <b>Snap a photo to unlock your content</b>
                   </Typography>
                 </Grid>
