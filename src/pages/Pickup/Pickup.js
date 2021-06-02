@@ -1,111 +1,54 @@
-import React, { useEffect, useState } from 'react'
-import { Typography, Box, Button } from '@material-ui/core'
-import ScanScreen from 'components/ScanScreen'
+import React, { useEffect } from 'react'
+
 import useScanStore from 'hooks/store/use-scan-store'
 import NotFound from 'components/NotFound'
 import Pack from 'components/Pack'
 import NoMatch from 'components/NoMatch'
-import CameraDialog from 'components/CameraDialog'
-import { Clear } from '@material-ui/icons'
+
 import ScanError from 'components/ScanError'
-import { Link } from 'react-router-dom'
 import LoadingScreen from 'components/LoadingScreen'
+import PickupScreen from './components/PickupScreen'
 
 const Pickup = () => {
-  const { clearScan, foundPack, error, status } = useScanStore()
+  const { clearScan, foundPiece, foundPack, error, status } = useScanStore()
 
   const backgroundColor = 'black'
   const fontColor = 'white'
-
-  const [helpDialogIsOpen, setHelpDialogIsOpen] = useState(false)
-  const [hasUserMedia, setHasUserMedia] = useState(false)
-
-  const handleUserMediaError = () => {
-    setTimeout(() => setHelpDialogIsOpen(true), 1000)
-  }
-
-  const handleUserMedia = () => {
-    setHasUserMedia(true)
-  }
-
-  useEffect(() => {
-    document.body.style.backgroundColor = backgroundColor
-  }, [])
 
   const handleClose = () => {
     clearScan()
   }
 
+  const { REACT_APP_LEGACY_URL } = process.env
+
+  useEffect(() => {
+    if (status === 'succeeded' && !foundPack && foundPiece) {
+      let url
+
+      if (foundPiece.isDirect) {
+        url =
+          foundPiece.directLink ||
+          `${REACT_APP_LEGACY_URL}/${foundPiece.owner.username}`
+      } else {
+        url = `${REACT_APP_LEGACY_URL}/p/${foundPiece.id}`
+      }
+      window.location.assign(url)
+    }
+  }, [foundPack, foundPiece, status, REACT_APP_LEGACY_URL])
+
   if (error) {
     return <ScanError fontColor={fontColor} onClose={clearScan} />
-  } else if (status === 'loading') {
+  } else if (status === 'loading' || (foundPiece && !foundPack)) {
     return <LoadingScreen color="white" />
   } else if (status === 'succeeded' && foundPack && foundPack.isPublic) {
     return <Pack pack={foundPack} />
   } else if (status === 'succeeded' && foundPack && !foundPack.isPublic) {
     return <NotFound />
-  } else if (status === 'succeeded' && !foundPack) {
+  } else if (status === 'succeeded' && !foundPiece) {
     return <NoMatch fontColor={fontColor} onClose={handleClose} />
   } else {
     return (
-      <>
-        <CameraDialog
-          open={helpDialogIsOpen}
-          onClose={() => setHelpDialogIsOpen(false)}
-        />
-        {!helpDialogIsOpen && (
-          <ScanScreen
-            onUserMediaError={handleUserMediaError}
-            onUserMedia={handleUserMedia}
-            hasUserMedia={hasUserMedia}
-            backgroundColor={backgroundColor}
-            fontColor={fontColor}
-          >
-            <Box
-              bottom="auto"
-              position="absolute"
-              top="0"
-              display="flex"
-              justifyContent="flex-end"
-              paddingBottom="0.25rem"
-              left="0"
-              right="0"
-              zIndex="5"
-              pt={1}
-              pr={1}
-            >
-              <Button
-                component={Link}
-                to={'/'}
-                size="small"
-                color="inherit"
-                disableRipple
-                endIcon={<Clear sx={{ color: fontColor }} />}
-              >
-                <Box color={fontColor}>Close</Box>
-              </Button>
-            </Box>
-
-            <Box
-              bottom={0}
-              position="absolute"
-              top="auto"
-              display="flex"
-              justifyContent="center"
-              mb={10}
-              zIndex="5"
-            >
-              {hasUserMedia && (
-                <Box color={fontColor}>
-                  <Typography variant="h6" textAlign="center">
-                    <b>Snap a photo to unlock your content</b>
-                  </Typography>
-                </Box>
-              )}
-            </Box>
-          </ScanScreen>
-        )}
-      </>
+      <PickupScreen fontColor={fontColor} backgroundColor={backgroundColor} />
     )
   }
 }

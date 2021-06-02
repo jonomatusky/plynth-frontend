@@ -31,13 +31,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
   }, [])
 
   return (
-    <AppBar
-      position="absolute"
-      top="0"
-      zIndex="10"
-      color="transparent"
-      elevation={0}
-    >
+    <AppBar position="absolute" top="0" color="transparent" elevation={0}>
       <Toolbar>
         <Grid container justify="space-between" alignItems="center">
           {left}

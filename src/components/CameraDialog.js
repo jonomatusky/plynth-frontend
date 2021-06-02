@@ -29,8 +29,6 @@ const CameraDialog = ({
 }) => {
   let content
 
-  console.log('Safari: ' + isSafari)
-
   if (!isMobile) {
     content = (
       <Typography pb={1}>

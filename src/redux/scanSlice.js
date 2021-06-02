@@ -8,6 +8,7 @@ let initialState = {
   error: null,
   status: 'idle',
   foundPiece: null,
+  foundPack: null,
   isDirect: false,
   scanToken: null,
 }
@@ -69,6 +70,7 @@ const scanSlice = createSlice({
     clearScan(state, action) {
       state.scan = null
       state.foundPiece = null
+      state.foundPack = null
       state.imageUrl = null
       state.status = 'idle'
       state.error = null
@@ -87,6 +89,7 @@ const scanSlice = createSlice({
       state.scan = scan
       state.scanToken = scanToken
       state.foundPiece = scan.piece || null
+      state.foundPack = (scan.piece || {}).pack || null
       if ((scan.piece || {}).isDirect) {
         state.isDirect = true
         state.status = 'idle'
@@ -100,11 +103,7 @@ const scanSlice = createSlice({
   },
 })
 
-export const {
-  setImageUrl,
-  clearImageUrl,
-  clearScan,
-  setScanStatus,
-} = scanSlice.actions
+export const { setImageUrl, clearImageUrl, clearScan, setScanStatus } =
+  scanSlice.actions
 
 export default scanSlice.reducer

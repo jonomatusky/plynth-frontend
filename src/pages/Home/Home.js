@@ -35,7 +35,7 @@ const Home = () => {
     <>
       <ScrollToTopOnMount />
       <Grid item xs={12}>
-        <WebsiteNavBar position="absolute" zIndex="10" top="0" opacity="0.4" />
+        <WebsiteNavBar />
       </Grid>
       <Div100vh
         style={{
