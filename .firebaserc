@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "plynth-frontend",
+    "default": "plynth-2020",
     "staging": "plynth-test"
   }
 }
