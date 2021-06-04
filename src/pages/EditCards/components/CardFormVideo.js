@@ -9,6 +9,7 @@ import {
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useSession } from 'hooks/use-session'
 
 const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
   const validationSchema = Yup.object({
@@ -44,6 +45,13 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
     // await formik.submitForm()
     onSubmit({ isFullscreenMobile: event.target.checked })
   }
+
+  const handleLoopingVideo = async event => {
+    // await formik.submitForm()
+    onSubmit({ loopingVideo: event.target.checked })
+  }
+
+  const { user } = useSession()
 
   return (
     <Box minHeight="300px" pb={2}>
@@ -94,17 +102,34 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
               onBlur={formik.handleSubmit}
             />
           </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Switch
-                  color="primary"
-                  checked={card.isFullscreenMobile}
-                  onChange={handleFullscreenMobile}
+          <Grid item xs={12} container>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="primary"
+                    checked={card.isFullscreenMobile}
+                    onChange={handleFullscreenMobile}
+                  />
+                }
+                label="Make fullscreen on mobile"
+              />
+            </Grid>
+            {user.tier !== 'free' && (
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      color="primary"
+                      checked={card.loopingVideo}
+                      onChange={handleLoopingVideo}
+                    />
+                  }
+                  label="Looping video"
+                  disabled={!card.isFullscreenMobile}
                 />
-              }
-              label="Make fullscreen on mobile"
-            />
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </form>

@@ -1,8 +1,18 @@
 import React from 'react'
-import { Grid, Box, Typography, makeStyles, styled } from '@material-ui/core'
+import {
+  Grid,
+  Box,
+  Typography,
+  makeStyles,
+  styled,
+  useMediaQuery,
+} from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import { Photo, ArrowForward } from '@material-ui/icons'
+
 import ButtonCard from './ButtonCard'
 import TextTypography from './TextTypography'
+import Div100vh from './Div100vh'
 
 const useStyles = makeStyles({
   type: {
@@ -29,74 +39,95 @@ const Image = styled('img')(props => ({
   boxShadow: '0px 4px 10px #000',
 }))
 
-const CardImage = ({ card, style, increment }) => {
+const CardImage = ({ card, style, increment, preview }) => {
   const classes = useStyles(style)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { image, imageUrl, title, url, text, label, isFullscreenMobile } =
+    card || {}
 
   const handleClick = () => {
-    if (!card.url) {
+    if (!url) {
       increment()
     }
   }
 
+  const showFullscreen = !!isFullscreenMobile && (!!isMobile || !!preview)
+
   return (
-    <Grid container justifyContent="center">
-      <Grid item xs={10} container justifyContent="center">
-        <Grid item container justifyContent="center" spacing={2}>
-          <Grid item xs={12}>
+    <>
+      {showFullscreen && (
+        <Div100vh>
+          {image && (
             <Box
+              width="100%"
               height="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              justifyItems="center"
-              paddingTop={8}
-            >
-              {card.image ? (
-                <Image src={card.imageUrl} />
-              ) : (
-                <NoImage color={style.fontColor}>
-                  <Box
-                    height="100%"
-                    width="100%"
-                    position="absolute"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    justifyItems="center"
-                  >
-                    <Photo fontSize="large" />
-                  </Box>
-                </NoImage>
-              )}
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Box pt={2}>
-              <Typography variant="h4" className={classes.type}>
-                {card.title}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <TextTypography font={style.font}>{card.text}</TextTypography>
-          </Grid>
-          {card.label && (
-            <Grid item xs={12}>
-              <ButtonCard
-                endIcon={!card.url && <ArrowForward />}
-                href={card.url}
-                style={style}
-                onClick={handleClick}
-                target="_blank"
-                fullWidth
-              >
-                <b>{card.label || 'Get Started'}</b>
-              </ButtonCard>
-            </Grid>
+              sx={{ background: `url(${imageUrl}) no-repeat center` }}
+            />
           )}
+        </Div100vh>
+      )}
+      {!showFullscreen && (
+        <Grid container justifyContent="center">
+          <Grid item xs={10} container justifyContent="center">
+            <Grid item container justifyContent="center" spacing={2}>
+              <Grid item xs={12}>
+                <Box
+                  height="100%"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  justifyItems="center"
+                  paddingTop={8}
+                >
+                  {image ? (
+                    <Image src={imageUrl} />
+                  ) : (
+                    <NoImage color={style.fontColor}>
+                      <Box
+                        height="100%"
+                        width="100%"
+                        position="absolute"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        justifyItems="center"
+                      >
+                        <Photo fontSize="large" />
+                      </Box>
+                    </NoImage>
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Box pt={2}>
+                  <Typography variant="h4" className={classes.type}>
+                    {title}
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <TextTypography font={style.font}>{text}</TextTypography>
+              </Grid>
+              {card.label && (
+                <Grid item xs={12}>
+                  <ButtonCard
+                    endIcon={!url && <ArrowForward />}
+                    href={url}
+                    style={style}
+                    onClick={handleClick}
+                    target="_blank"
+                    fullWidth
+                  >
+                    <b>{label || 'Get Started'}</b>
+                  </ButtonCard>
+                </Grid>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-    </Grid>
+      )}
+    </>
   )
 }
 

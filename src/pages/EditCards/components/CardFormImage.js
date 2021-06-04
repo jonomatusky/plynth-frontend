@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import {
   TextField,
   Grid,
+  FormControlLabel,
+  Switch,
   // FormControlLabel,
   // Switch,
 } from '@material-ui/core'
@@ -11,9 +13,11 @@ import * as Yup from 'yup'
 
 import Button from 'components/Button'
 import CardImage from './CardImageUpload'
+import { useSession } from 'hooks/use-session'
 
 const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
   const [prevCardId, setPrevCardId] = useState(null)
+  const { user } = useSession()
   // const [isFullscreenOnMobile, setIsFullscreenOnMobile ] = useState(card.isFullscreenMobile)
 
   const { title, text, label, url } = card || {}
@@ -45,7 +49,10 @@ const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
     }
   })
 
-  useEffect(() => {})
+  const handleFullscreenMobile = async event => {
+    // await formik.submitForm()
+    onSubmit({ isFullscreenMobile: event.target.checked })
+  }
 
   // const changeFullscreenMobile = () => {
   //   const newCard = { ...card }
@@ -97,17 +104,20 @@ const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
                 }}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={card.isFullscreenMobile}
-                    onChange={changeFullscreenMobile}
-                  />
-                }
-                label="Make full screen on mobile"
-              />
-            </Grid> */}
+            {user.tier !== 'free' && (
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      color="primary"
+                      checked={card.isFullscreenMobile}
+                      onChange={handleFullscreenMobile}
+                    />
+                  }
+                  label="Make fullscreen on mobile"
+                />
+              </Grid>
+            )}
             <Grid
               item
               xs={12}

@@ -27,12 +27,12 @@ const CardVideo = ({ card, style, preview }) => {
 
   const classes = useStyles(style)
 
-  const { title, url, text, isFullscreenMobile } = card || {}
+  const { title, url, text, isFullscreenMobile, loopingVideo } = card || {}
   const { font } = style || {}
 
   const windowHeight = use100vh()
 
-  const hideControls = (url || '').includes('vimeo.com')
+  const hideControls = (url || '').includes('vimeo.com') || loopingVideo
   const [isPlaying, setIsPlaying] = useState(false)
 
   return (
@@ -55,7 +55,9 @@ const CardVideo = ({ card, style, preview }) => {
                 overflow="hidden"
                 controls={!hideControls}
                 playsinline={true}
-                playing={isPlaying}
+                playing={isPlaying || loopingVideo}
+                loop={loopingVideo}
+                volume={loopingVideo ? 0 : null}
               />
               <Box
                 height={windowHeight}
@@ -70,7 +72,7 @@ const CardVideo = ({ card, style, preview }) => {
                 component={ButtonBase}
                 onClick={() => setIsPlaying(!isPlaying)}
               >
-                {hideControls && (
+                {hideControls && !loopingVideo && (
                   <Box width="100vw">
                     {!isPlaying && (
                       <PlayCircle

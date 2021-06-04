@@ -46,10 +46,10 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
               width: '100%',
               flexGrow: 1,
               color: (style || {}).fontColor,
-              background:
-                card.isFullscreenMobile && card.image
-                  ? `url(${card.imageUrl}) no-repeat center`
-                  : null,
+              // background:
+              //   card.isFullscreenMobile && card.image
+              //     ? `url(${card.imageUrl}) no-repeat center`
+              //     : null,
             }}
           >
             <Grid container justifyContent="center">
@@ -79,7 +79,9 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                   />
                 )}
                 {type === 'music' && <CardMusic card={card} style={style} />}
-                {type === 'image' && <CardImage card={card} style={style} />}
+                {type === 'image' && (
+                  <CardImage card={card} style={style} preview={preview} />
+                )}
                 {type === 'buttons' && (
                   <CardButtons card={card} style={style} />
                 )}
