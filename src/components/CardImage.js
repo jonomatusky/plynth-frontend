@@ -62,7 +62,12 @@ const CardImage = ({ card, style, increment, preview }) => {
             <Box
               width="100%"
               height="100%"
-              sx={{ background: `url(${imageUrl}) no-repeat center` }}
+              sx={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
             />
           )}
         </Div100vh>
