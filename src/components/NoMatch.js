@@ -18,7 +18,19 @@ const NoMatch = ({ fontColor, onClose }) => {
               <b>Sorry, that doesn't look right 🧐</b>
             </Typography>
             <Typography align="center" sx={{ color: fontColor }}>
-              Give it another try or{' '}
+              Give it another try. Make sure you're taking a photo with:
+            </Typography>
+            <Typography align="center" sx={{ color: fontColor }}>
+              1. Good lighting
+            </Typography>
+            <Typography align="center" sx={{ color: fontColor }}>
+              2. Minimal glare
+            </Typography>
+            <Typography align="center" sx={{ color: fontColor }}>
+              3. The entire object in the frame
+            </Typography>
+            <Typography align="center" sx={{ color: fontColor }}>
+              If you think there's an error,{' '}
               <Link
                 href="/s/contact"
                 target="_blank"
@@ -27,7 +39,7 @@ const NoMatch = ({ fontColor, onClose }) => {
               >
                 contact us
               </Link>{' '}
-              if you think there's an error.
+              .
             </Typography>
           </Grid>
           <Grid item xs={12} container justifyContent="center">

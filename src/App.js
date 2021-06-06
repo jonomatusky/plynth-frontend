@@ -26,6 +26,7 @@ import EditSettings from 'pages/EditSettings/EditSettings'
 import NewPickup from 'pages/Pickup/Pickup'
 import Home from 'pages/Home/Home'
 import TestLoading from 'pages/TestLoading/TestLoading'
+import TestNoMatch from 'pages/TestNoMatch/TestNoMatch'
 import GroundUP from 'pages/GroundUP/GroundUP'
 import Waitlist from 'pages/Waitlist/Waitlist'
 import Contact from 'pages/Contact/Contact'
@@ -77,6 +78,7 @@ const App = () => {
       <Route component={Waitlist} path="/s/waitlist" />
       <Route component={Contact} path="/s/contact" />
       <Route component={TestLoading} path="/test/loading" />
+      <Route component={TestNoMatch} path="/test/nomatch" />
       <Route component={GroundUP} path="/groundup" />
       <Route component={Home} path="/" exact />
       <Route component={NotFoundPage} />
