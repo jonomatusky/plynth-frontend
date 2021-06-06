@@ -18,7 +18,7 @@ const NoMatch = ({ fontColor, onClose }) => {
               <b>Sorry, that doesn't look right 🧐</b>
             </Typography>
             <Typography align="center" sx={{ color: fontColor }}>
-              Give it another try. Make sure you're taking a photo with:
+              Give it another try. Make sure to take a photo with:
             </Typography>
             <Typography align="center" sx={{ color: fontColor }}>
               1. Good lighting
