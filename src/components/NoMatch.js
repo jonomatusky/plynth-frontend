@@ -38,7 +38,7 @@ const NoMatch = ({ fontColor, onClose }) => {
                 underline="always"
               >
                 contact us
-              </Link>{' '}
+              </Link>
               .
             </Typography>
           </Grid>
