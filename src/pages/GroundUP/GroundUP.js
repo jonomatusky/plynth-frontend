@@ -41,8 +41,6 @@ const GroundUP = () => {
     clearScan()
   }
 
-  console.log(imageIsLoaded)
-
   if (error) {
     return <ScanError fontColor={fontColor} onClose={handleClose} />
   } else if (status === 'loading') {
