@@ -180,8 +180,8 @@ const GroundUP = () => {
                       sx={{ textShadow: '0px 1px 7px #555555' }}
                     >
                       <b>
-                        Snap a photo of your postcard to unlock this month's
-                        newsletter
+                        Take a photo of the front of your postcard to access
+                        this month's newsletter
                       </b>
                     </Typography>
                   </Box>
