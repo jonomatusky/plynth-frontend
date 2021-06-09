@@ -91,9 +91,9 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                     <Box height="75px" />
                   </Grid>
                 )}
-                {/* <Grid item xs={12}>
-                  <Box height="125px" />
-                </Grid> */}
+                <Grid item xs={12}>
+                  <Box height="50px" />
+                </Grid>
               </Grid>
             </Grid>
           </div>
