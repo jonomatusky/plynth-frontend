@@ -13,13 +13,13 @@ import {
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
-import ButtonColor from 'pages/EditAppearance/components/ButtonColor'
-import ButtonColorPicker from 'pages/EditAppearance/components/ButtonColorPicker'
+import ButtonColor from 'components/ButtonColor'
+import ButtonColorPicker from 'components/ButtonColorPicker'
 import ButtonFont from 'components/ButtonFont'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 import useUserStore from 'hooks/store/use-user-store'
-import ButtonColorButtons from './components/ButtonColorButtons'
+import ButtonColorButtons from 'components/ButtonColorButtons'
 
 const EditAppearance = () => {
   const { packId } = useParams()

@@ -13,7 +13,8 @@ import {
   IconButton,
   Link as MuiLink,
 } from '@material-ui/core'
-import { Person } from '@material-ui/icons'
+import { Portrait } from '@material-ui/icons'
+// import { Person, HelpOutline } from '@material-ui/icons'
 
 import { useFetch } from 'hooks/use-fetch'
 import { useSession } from 'hooks/use-session'
@@ -103,15 +104,19 @@ const AdminNav = ({ children }) => {
                   </Link>
                 </Box>
               </Grid>
-              <Grid item>
-                <Grid container>
-                  <Grid item>
-                    <Box paddingBottom={2}>
-                      <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
-                        <IconButton onClick={handleOpen}>
-                          <Person />
-                        </IconButton>
-                        <Menu
+              <Grid item container justifyContent="center">
+                {/* <Grid item>
+                  <Box paddingBottom={2}>
+                  <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
+
+                    <IconButton
+                      component={MuiLink}
+                      href="https://www.notion.so/Plynth-Customer-Success-15a675424a724de3bf6f703019a52aaf"
+                      target="_blank"
+                    >
+                      <HelpOutline />
+                    </IconButton>
+                    <Menu
                           id="simple-menu"
                           anchorEl={anchorEl}
                           open={Boolean(anchorEl)}
@@ -126,18 +131,48 @@ const AdminNav = ({ children }) => {
                           <MenuItem component={Link} to="/admin/account">
                             My Account
                           </MenuItem>
-
-                          <MenuItem
-                            component={MuiLink}
-                            href="https://www.notion.so/Plynth-Customer-Success-15a675424a724de3bf6f703019a52aaf"
-                            target="_blank"
-                          >
-                            Get Support
-                          </MenuItem>
                           <Divider />
                           <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
-                      </div>
+                    </div>
+
+                  </Box>
+                </Grid> */}
+                <Grid item xs={12} container justifyContent="center">
+                  <Grid item>
+                    <Box paddingBottom={2}>
+                      <IconButton onClick={handleOpen} onMouseOver={handleOpen}>
+                        <Portrait fontSize="large" />
+                      </IconButton>
+                      <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        transitionDuration={0}
+                        anchorOrigin={{
+                          horizontal: 'right',
+                          vertical: 'top',
+                        }}
+                        anchorPosition={{ left: 0, top: -20 }}
+                        onClose={handleClose}
+                        MenuListProps={{ onMouseLeave: handleClose }}
+                      >
+                        <MenuItem
+                          component={Link}
+                          to="/admin/profile/appearance"
+                        >
+                          My Portal
+                        </MenuItem>
+                        <MenuItem
+                          component={MuiLink}
+                          href="https://help.plynth.com"
+                          target="_blank"
+                        >
+                          Get Help
+                        </MenuItem>
+                        <Divider />
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      </Menu>
                     </Box>
                   </Grid>
                 </Grid>

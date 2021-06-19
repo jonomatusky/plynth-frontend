@@ -36,7 +36,7 @@ const imgToBlobAsync = (img, canvas, croppedAreaPixels) => {
 
     ctxMain.canvas.toBlob(async blob => {
       resolve(blob)
-    }, 'image/jpeg')
+    })
   })
 }
 

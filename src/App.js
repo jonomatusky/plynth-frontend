@@ -14,7 +14,6 @@ import PrivateRoute from 'routes/PrivateRoute'
 import Signup from 'pages/SignUp/SignUp'
 import Login from 'pages/Login/Login'
 import Register from 'pages/Register/Register'
-import MyAccount from 'pages/MyAccount/MyAccount'
 import MyPacks from 'pages/PacksView/PacksView'
 
 import EditCards from 'pages/EditCards/EditCards'
@@ -31,6 +30,8 @@ import GroundUP from 'pages/GroundUP/GroundUP'
 import Waitlist from 'pages/Waitlist/Waitlist'
 import Contact from 'pages/Contact/Contact'
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
+import ProfileAppearance from 'pages/EditPortalAppearance/EditPortalAppearance'
+import Portal from 'pages/Portal/Portal'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -69,7 +70,14 @@ const App = () => {
         component={EditSettings}
         path="/admin/packs/:packId/edit/settings"
       />
-      <PrivateRoute component={MyAccount} path="/admin/account" />
+      <PrivateRoute
+        component={ProfileAppearance}
+        path="/admin/profile/appearance"
+      />
+      <PrivateRoute
+        component={ProfileAppearance}
+        path="/admin/profile/appearance"
+      />
       <PrivateRoute component={Register} path="/admin/register" />
       <Redirect path="/admin/packs" to="/admin" />
       <PrivateRoute component={MyPacks} path="/admin" />
@@ -81,6 +89,14 @@ const App = () => {
       <Route component={TestNoMatch} path="/test/nomatch" />
       <Route component={GroundUP} path="/groundup" />
       <Route component={Home} path="/" exact />
+
+      <Route
+        publicRoute={true}
+        restricted={false}
+        component={Portal}
+        path="/:username"
+      />
+
       <Route component={NotFoundPage} />
     </Switch>
   )
