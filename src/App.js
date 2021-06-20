@@ -85,6 +85,7 @@ const App = () => {
       <Route component={Contact} path="/s/contact" />
       <Route component={TestLoading} path="/test/loading" />
       <Route component={TestNoMatch} path="/test/nomatch" />
+      <Route component={Register} path="/test/register" />
       <Route component={GroundUP} path="/groundup" />
       <Route component={Home} path="/" exact />
 

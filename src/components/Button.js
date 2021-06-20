@@ -8,15 +8,15 @@ const useStyles = makeStyles({
   },
 })
 
-const Button = ({ children, pending, color, variant, onClick, ...props }) => {
+const Button = ({ children, loading, color, variant, onClick, ...props }) => {
   const classes = useStyles()
   return (
     <LoadingButton
-      // pending={pending}
+      pending={loading}
       color={color || 'primary'}
       variant={variant || 'contained'}
       className={classes.button}
-      onClick={!pending ? onClick : null}
+      onClick={!loading ? onClick : null}
       {...props}
     >
       {children}

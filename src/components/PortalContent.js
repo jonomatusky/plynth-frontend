@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Grid, Typography, Box, Button, Link } from '@material-ui/core'
 import ScanScreen from 'components/ScanScreen'
 import useScanStore from 'hooks/store/use-scan-store'

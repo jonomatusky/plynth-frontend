@@ -7,8 +7,6 @@ import {
   Paper,
   Typography,
   Hidden,
-  FormControlLabel,
-  Switch,
 } from '@material-ui/core'
 
 import usePackStore from 'hooks/store/use-pack-store'
@@ -29,7 +27,7 @@ const EditAppearance = () => {
   const pack = selectPack(packId)
   const [cardIndex, setCardIndex] = useState(0)
 
-  const { style, hideBranding } = pack || {}
+  const { style } = pack || {}
   const { backgroundColor } = style || {}
 
   // useEffect(() => {
@@ -120,16 +118,6 @@ const EditAppearance = () => {
       id: packId,
       style: { ...style, font },
     })
-  }
-
-  // const handleSave = values => {
-  //   if (status !== 'loading') {
-  //     updateReduxPack(pack)
-  //   }
-  // }
-
-  const handleChangeBranding = event => {
-    updatePack({ id: packId, hideBranding: event.target.checked })
   }
 
   const [isSpinning, setIsSpinning] = useState(false)
@@ -284,18 +272,6 @@ const EditAppearance = () => {
                                 onChange={handleButtonColorchange}
                               />
                             </Grid>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <FormControlLabel
-                              control={
-                                <Switch
-                                  color="primary"
-                                  checked={hideBranding}
-                                  onChange={handleChangeBranding}
-                                />
-                              }
-                              label="Hide branding"
-                            />
                           </Grid>
                         </Grid>
                       </Box>

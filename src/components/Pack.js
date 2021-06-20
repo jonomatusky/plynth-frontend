@@ -6,12 +6,11 @@ import PackButtonsDesktop from './PackButtonsDesktop'
 import PackButtonsMobile from './PackButtonsMobile'
 import PackContent from './PackContent'
 import PaginationDots from './PaginationDots'
-import PowerBar from './PowerBar'
 
 const Pack = ({ pack }) => {
   const [index, setIndex] = useState(0)
 
-  const { style, cards, hideBranding } = pack || {}
+  const { style, cards } = pack || {}
   const { fontColor } = style
 
   if (pack && pack.isPublic) {
@@ -31,7 +30,6 @@ const Pack = ({ pack }) => {
       <Container disableGutters maxWidth={false}>
         <PackContent pack={pack} index={index} setIndex={setIndex} />
       </Container>
-      {!hideBranding && <PowerBar style={style} />}
       <Hidden smDown>
         <PackButtonsDesktop
           index={index}

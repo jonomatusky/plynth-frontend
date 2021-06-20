@@ -9,7 +9,6 @@ import PackButtonsDesktop from 'components/PackButtonsDesktop'
 import PaginationDots from 'components/PaginationDots'
 import NotFound from 'components/NotFound'
 import PublicNav from 'layouts/PublicNav'
-import PowerBar from 'components/PowerBar'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -17,7 +16,7 @@ const ViewPack = () => {
   const [index, setIndex] = useState(0)
   const [pack, setPack] = useState(null)
 
-  const { style, cards, hideBranding } = pack || {}
+  const { style, cards } = pack || {}
   const { fontColor } = style || {}
 
   useEffect(() => {
@@ -55,7 +54,6 @@ const ViewPack = () => {
       <Container disableGutters maxWidth={false}>
         <PackContent pack={pack} index={index} setIndex={setIndex} />
       </Container>
-      {!hideBranding && <PowerBar style={style} />}
       <Hidden smDown>
         <PackButtonsDesktop
           index={index}

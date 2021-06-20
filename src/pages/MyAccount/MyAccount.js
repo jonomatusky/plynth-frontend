@@ -6,10 +6,9 @@ import {
   Typography,
   IconButton,
   Button,
+  Link,
 } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import { ArrowBackIos } from '@material-ui/icons'
-import UserForm from 'components/UserForm'
 import AdminNav from 'layouts/AdminNav'
 import { useSession } from 'hooks/use-session'
 import { useState } from 'react'
@@ -64,9 +63,11 @@ const MyAccount = () => {
                   <FormEmail />
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography>
-                    <b>Password</b>
-                  </Typography>
+                  <Box pt={3}>
+                    <Typography>
+                      <b>Password</b>
+                    </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12}>
                   <Paper>
@@ -92,6 +93,57 @@ const MyAccount = () => {
                       )}
                     </Box>
                   </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box pt={3}>
+                    <Typography>
+                      <b>Username</b>
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Paper>
+                    <Box p={3}>
+                      <Typography variant="subtitle2">
+                        To change your username, please{' '}
+                        <Link
+                          href="https://help.plynth.com"
+                          target="_blank"
+                          color="inherit"
+                          underline="always"
+                        >
+                          contact us
+                        </Link>
+                      </Typography>
+                    </Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box pt={3}>
+                    <Typography>
+                      <b>Delete Account</b>
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Paper>
+                    <Box p={3}>
+                      <Typography variant="subtitle2">
+                        To delete your account, please{' '}
+                        <Link
+                          href="https://help.plynth.com"
+                          target="_blank"
+                          color="inherit"
+                          underline="always"
+                        >
+                          contact us
+                        </Link>
+                      </Typography>
+                    </Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box height="24px" />
                 </Grid>
               </Grid>
             </Box>

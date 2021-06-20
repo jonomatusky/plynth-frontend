@@ -105,8 +105,6 @@ const FormEmail = () => {
             </Box>
           </Paper>
         </Grid>
-
-        <Grid item xs={12} container justifyContent="flex-start"></Grid>
       </Grid>
     </>
   )

@@ -4,7 +4,6 @@ import PackContent from './PackContent'
 import theme from 'theme'
 import PackButtonsMobile from './PackButtonsMobile'
 import PaginationDots from './PaginationDots'
-import PowerBar from './PowerBar'
 
 // const { REACT_APP_PUBLIC_URL } = process.env
 
@@ -39,7 +38,7 @@ const LivePreview = ({
   isLoading,
   setIndex: setCardIndex,
 }) => {
-  const { cards, style, hideBranding } = pack || {}
+  const { cards, style } = pack || {}
   const [i, setI] = useState(0)
 
   const classes = useStyles(style)
@@ -97,8 +96,6 @@ const LivePreview = ({
             fontColor={(style || {}).fontColor}
           />
         )}
-
-        {!hideBranding && <PowerBar style={style} />}
       </Box>
     </Box>
   )
