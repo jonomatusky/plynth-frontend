@@ -13,7 +13,6 @@ import AdminNav from 'layouts/AdminNav'
 import useUserStore from 'hooks/store/use-user-store'
 import PortalBar from 'components/PortalBar'
 import PortalLoadingUpload from './components/PortalLoadingUpload'
-import coloring from 'util/coloring'
 import LivePreviewPortalLoading from './components/LivePreviewPortalLoading'
 
 const EditPortalAnimation = () => {
