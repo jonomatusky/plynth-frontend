@@ -6,64 +6,42 @@ import {
   Paper,
   Typography,
   Hidden,
-  FormControlLabel,
-  Switch,
-  Divider,
 } from '@material-ui/core'
 
 import ButtonColorPicker from 'components/ButtonColorPicker'
-import ButtonFont from 'components/ButtonFont'
 import AdminNav from 'layouts/AdminNav'
 import useUserStore from 'hooks/store/use-user-store'
-import LivePreviewPortal from './components/LivePreviewPortal'
 import PortalBar from 'components/PortalBar'
-import FormPortalAppearance from './components/FormPortalAppearance'
-import PortalImageUpload from './components/PortalImageUpload'
+import PortalLoadingUpload from './components/PortalLoadingUpload'
 import coloring from 'util/coloring'
+import LivePreviewPortalLoading from './components/LivePreviewPortalLoading'
 
-const EditPortalAppearance = () => {
+const EditPortalAnimation = () => {
   const { user, status, updateUser, updateStatus } = useUserStore()
 
   const portal = user.portal || {}
-  const { style, hideBranding } = portal || {}
-  const { backgroundColor, buttonColor } = style || {}
+  const { style } = portal || {}
+  const { animationBackgroundColor, animationColor } = style || {}
 
   const handleColorChange = color => {
-    const fontColor = coloring.getFontColor(color)
-
     updateUser({
       portal: {
         ...portal,
-        style: { ...style, backgroundColor: color, fontColor: fontColor },
+        style: {
+          ...style,
+          animationBackgroundColor: color,
+        },
       },
     })
   }
 
-  const handleButtonColorchange = color => {
-    const { buttonColor, buttonFontColor, ...newStyle } = style
-
-    if (color) {
-      const fontColor = coloring.getFontColor(color)
-      newStyle.buttonColor = color
-      newStyle.buttonFontColor = fontColor
-    }
-
-    updateUser({
-      portal: { ...portal, style: newStyle },
-    })
-  }
-
-  const handleFontChange = font => {
+  const handleAnimationColorChange = color => {
     updateUser({
       portal: {
         ...portal,
-        style: { ...style, font },
+        style: { ...style, animationColor: color },
       },
     })
-  }
-
-  const handleChangeBranding = event => {
-    updateUser({ portal: { ...portal, hideBranding: event.target.checked } })
   }
 
   const [isSpinning, setIsSpinning] = useState(false)
@@ -126,18 +104,12 @@ const EditPortalAppearance = () => {
                                       justifyContent="center"
                                     >
                                       <Grid item>
-                                        <PortalImageUpload
+                                        <PortalLoadingUpload
                                           onSubmit={handleUpdatePortal}
                                           portal={portal}
                                           crop
                                         />
                                       </Grid>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                      <FormPortalAppearance
-                                        portal={portal}
-                                        onSubmit={handleUpdatePortal}
-                                      />
                                     </Grid>
                                     <Grid
                                       item
@@ -172,7 +144,10 @@ const EditPortalAppearance = () => {
                                         </Grid>
                                         <Grid item>
                                           <ButtonColorPicker
-                                            color={backgroundColor || '#ffffff'}
+                                            color={
+                                              animationBackgroundColor ||
+                                              '#ffffff'
+                                            }
                                             onChange={handleColorChange}
                                           />
                                         </Grid>
@@ -187,92 +162,19 @@ const EditPortalAppearance = () => {
                                         <Grid item>
                                           <Box minWidth="200px">
                                             <Typography>
-                                              Button Color
+                                              Animation Color
                                             </Typography>
                                           </Box>
                                         </Grid>
                                         <Grid item>
                                           <ButtonColorPicker
-                                            color={buttonColor || '#ffffff'}
-                                            onChange={handleButtonColorchange}
+                                            color={animationColor || '#ffffff'}
+                                            onChange={
+                                              handleAnimationColorChange
+                                            }
                                           />
                                         </Grid>
                                       </Grid>
-                                      <Grid item xs={12}>
-                                        <Box minWidth="200px">
-                                          <Typography variant="subtitle2">
-                                            *Make sure to pick a buttoncolor
-                                            that contrasts with the background
-                                          </Typography>
-                                        </Box>
-                                      </Grid>
-                                      <Grid item xs={12}>
-                                        <Box mt={2} mb={1}>
-                                          <Divider />
-                                        </Box>
-                                      </Grid>
-                                      <Grid item xs={12}>
-                                        <Typography
-                                          variant="h6"
-                                          fontWeight={900}
-                                        >
-                                          Font
-                                        </Typography>
-                                      </Grid>
-
-                                      <Grid item xs={12} container spacing={2}>
-                                        <Grid item>
-                                          <ButtonFont
-                                            font={`'Degular', sans-serif`}
-                                            setFont={handleFontChange}
-                                          />
-                                        </Grid>
-                                        <Grid item>
-                                          <ButtonFont
-                                            font={`'Inter', sans-serif`}
-                                            setFont={handleFontChange}
-                                          />
-                                        </Grid>
-                                        <Grid item>
-                                          <ButtonFont
-                                            font={`'Josefin Sans', sans-serif`}
-                                            setFont={handleFontChange}
-                                          />
-                                        </Grid>
-                                        <Grid item>
-                                          <ButtonFont
-                                            font={`'Jacques Francois', serif`}
-                                            setFont={handleFontChange}
-                                          />
-                                        </Grid>
-                                        <Grid item>
-                                          <ButtonFont
-                                            font={`'Cutive Mono', monospace`}
-                                            setFont={handleFontChange}
-                                          />
-                                        </Grid>
-                                      </Grid>
-                                    </Grid>
-                                  </Grid>
-                                </Box>
-                              </Paper>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                              <Paper>
-                                <Box padding={3}>
-                                  <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                      <FormControlLabel
-                                        control={
-                                          <Switch
-                                            color="primary"
-                                            checked={hideBranding}
-                                            onChange={handleChangeBranding}
-                                          />
-                                        }
-                                        label="Hide branding"
-                                      />
                                     </Grid>
                                   </Grid>
                                 </Box>
@@ -309,7 +211,7 @@ const EditPortalAppearance = () => {
                         </Box>
                       </Grid>
                       <Grid item xs={12} container justifyContent="center">
-                        <LivePreviewPortal
+                        <LivePreviewPortalLoading
                           portal={user.portal}
                           isLoading={updateStatus === 'loading'}
                         />
@@ -337,4 +239,4 @@ const EditPortalAppearance = () => {
   )
 }
 
-export default EditPortalAppearance
+export default EditPortalAnimation

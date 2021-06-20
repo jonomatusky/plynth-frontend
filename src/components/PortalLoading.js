@@ -1,9 +1,8 @@
 import React from 'react-hook-form'
-import { Box } from '@material-ui/core'
+import { Box, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Div100vh from 'components/Div100vh'
-import GroundUPLogo from '../pages/GroundUP/images/groundup-logo.png'
 
 const useStyles = makeStyles({
   '@keyframes spin': {
@@ -15,28 +14,44 @@ const useStyles = makeStyles({
   },
 })
 
-const PortalLoading = () => {
+const LoadingIcon = ({ color }) => {
+  return (
+    <CircularProgress
+      sx={{ color: color || 'white' }}
+      size={60}
+      thickness={5}
+    />
+  )
+}
+
+const PortalLoading = ({ portal }) => {
   const classes = useStyles()
+
+  const { loadingImage, loadingImageUrl, style } = portal || {}
+  const { animationColor, animationBackgroundColor } = style || {}
 
   return (
     <Div100vh width="100%">
       <Box
         height="100%"
-        width="100vw"
+        width="100%"
         display="flex"
         justifyContent="center"
         alignItems="center"
         position="absolute"
         zIndex="20"
-        backgroundColor="black"
+        backgroundColor={animationBackgroundColor}
         textAlign="center"
       >
-        <img
-          className={classes.spin}
-          alt="GroundUp Logo"
-          src={GroundUPLogo}
-          style={{ width: '150px' }}
-        />
+        {loadingImage && (
+          <img
+            className={classes.spin}
+            alt="GroundUp Logo"
+            src={loadingImageUrl}
+            style={{ width: '150px' }}
+          />
+        )}
+        {!loadingImage && <LoadingIcon color={animationColor} />}
       </Box>
     </Div100vh>
   )

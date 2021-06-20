@@ -39,7 +39,7 @@ const PortalContent = ({ portal }) => {
   if (error) {
     return <ScanError fontColor={fontColor} onClose={handleClose} />
   } else if (status === 'loading') {
-    return <ProfileLoading />
+    return <ProfileLoading portal={portal} />
   } else if (status === 'succeeded' && foundPack && foundPack.isPublic) {
     return <Pack pack={foundPack} />
   } else if (status === 'succeeded' && foundPack && !foundPack.isPublic) {

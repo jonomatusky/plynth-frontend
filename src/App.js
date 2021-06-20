@@ -33,6 +33,7 @@ import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
 import EditPortalAppearance from 'pages/EditPortalAppearance/EditPortalAppearance'
 import MyAccount from 'pages/MyAccount/MyAccount'
 import Portal from 'pages/Portal/Portal'
+import EditPortalAnimation from 'pages/EditPortalAnimation/EditPortalAnimation'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -74,6 +75,10 @@ const App = () => {
       <PrivateRoute
         component={EditPortalAppearance}
         path="/admin/portal/appearance"
+      />
+      <PrivateRoute
+        component={EditPortalAnimation}
+        path="/admin/portal/animation"
       />
       <PrivateRoute component={MyAccount} path="/admin/account" />
       <PrivateRoute component={Register} path="/admin/register" />
