@@ -14,7 +14,7 @@ import EditBar from 'components/EditBar'
 import useUserStore from 'hooks/store/use-user-store'
 import UserForm from 'components/UserForm'
 
-const PortalAccount = () => {
+const EditPortalAccount = () => {
   const [cardIndex, setCardIndex] = useState(0)
 
   const { user, status, updateUser, updateStatus } = useUserStore()
@@ -133,4 +133,4 @@ const PortalAccount = () => {
   )
 }
 
-export default PortalAccount
+export default EditPortalAccount

@@ -159,9 +159,12 @@ const AdminNav = ({ children }) => {
                       >
                         <MenuItem
                           component={Link}
-                          to="/admin/profile/appearance"
+                          to="/admin/portal/appearance"
                         >
                           My Portal
+                        </MenuItem>
+                        <MenuItem component={Link} to="/admin/account">
+                          My Account
                         </MenuItem>
                         <MenuItem
                           component={MuiLink}

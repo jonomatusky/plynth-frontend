@@ -30,7 +30,8 @@ import GroundUP from 'pages/GroundUP/GroundUP'
 import Waitlist from 'pages/Waitlist/Waitlist'
 import Contact from 'pages/Contact/Contact'
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
-import ProfileAppearance from 'pages/EditPortalAppearance/EditPortalAppearance'
+import EditPortalAppearance from 'pages/EditPortalAppearance/EditPortalAppearance'
+import MyAccount from 'pages/MyAccount/MyAccount'
 import Portal from 'pages/Portal/Portal'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
@@ -71,13 +72,10 @@ const App = () => {
         path="/admin/packs/:packId/edit/settings"
       />
       <PrivateRoute
-        component={ProfileAppearance}
-        path="/admin/profile/appearance"
+        component={EditPortalAppearance}
+        path="/admin/portal/appearance"
       />
-      <PrivateRoute
-        component={ProfileAppearance}
-        path="/admin/profile/appearance"
-      />
+      <PrivateRoute component={MyAccount} path="/admin/account" />
       <PrivateRoute component={Register} path="/admin/register" />
       <Redirect path="/admin/packs" to="/admin" />
       <PrivateRoute component={MyPacks} path="/admin" />

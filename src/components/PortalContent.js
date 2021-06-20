@@ -11,7 +11,7 @@ import { CameraAlt, Clear } from '@material-ui/icons'
 import ScanError from 'components/ScanError'
 
 const PortalContent = ({ portal }) => {
-  const { title, text, instructions, style, imageUrl, hideBranding } =
+  const { title, text, instructions, style, image, imageUrl, hideBranding } =
     portal || {}
   const { font, fontColor, backgroundColor, buttonColor } = style || {}
   const { clearScan, foundPack, error, status } = useScanStore()
@@ -31,10 +31,6 @@ const PortalContent = ({ portal }) => {
     setCameraAuthorizationStatus('rejected')
     setHelpDialogIsOpen('true')
   }
-
-  useEffect(() => {
-    document.body.style.backgroundColor = backgroundColor
-  }, [backgroundColor])
 
   const handleClose = () => {
     clearScan()
@@ -82,23 +78,29 @@ const PortalContent = ({ portal }) => {
                   </Box>
                 </Grid>
                 <Grid item xs={12} container justifyContent="center">
-                  <img
-                    alt="Logo"
-                    onClick={() => setCameraAuthorizationStatus('requested')}
-                    src={imageUrl}
-                    style={{
-                      width: '125px',
-                      height: '125px',
-                      display: imageIsLoaded ? null : 'none',
-                    }}
-                    onLoad={() => setImageIsLoaded(true)}
-                  />
-                  {!imageIsLoaded && <Box height="150px" width="150px" />}
+                  {image && (
+                    <>
+                      <img
+                        alt="Logo"
+                        onClick={() =>
+                          setCameraAuthorizationStatus('requested')
+                        }
+                        src={imageUrl}
+                        style={{
+                          width: '125px',
+                          height: '125px',
+                          display: imageIsLoaded ? null : 'none',
+                        }}
+                        onLoad={() => setImageIsLoaded(true)}
+                      />
+                      {!imageIsLoaded && <Box height="150px" width="150px" />}
+                    </>
+                  )}
                 </Grid>
                 <Grid item xs={10}>
                   <Box color={fontColor} pt={2} pb={2}>
                     <Typography textAlign="center" fontFamily={font}>
-                      {text}
+                      {text || `Snap a photo to access your content`}
                     </Typography>
                   </Box>
                 </Grid>
@@ -229,7 +231,9 @@ const PortalContent = ({ portal }) => {
                       textAlign="center"
                       sx={{ textShadow: '0px 1px 7px #555555' }}
                     >
-                      <b>{instructions}</b>
+                      <b>
+                        {instructions || `Snap a photo to access your content`}
+                      </b>
                     </Typography>
                   </Box>
                 </Grid>

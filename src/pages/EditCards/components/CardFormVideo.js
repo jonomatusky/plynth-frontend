@@ -11,7 +11,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useSession } from 'hooks/use-session'
 
-const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
+const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
   const validationSchema = Yup.object({
     title: Yup.string().max(50, 'Enter a title under 50 characters'),
     text: Yup.string(),
@@ -137,4 +137,4 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
   )
 }
 
-export default CardFormText
+export default CardFormVideo

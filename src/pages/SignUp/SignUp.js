@@ -23,6 +23,7 @@ const Login = () => {
     signInOptions: [
       {
         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        requireDisplayName: false,
         fullLabel: 'Sign up with email',
         buttonColor: '#CD0A64',
       },

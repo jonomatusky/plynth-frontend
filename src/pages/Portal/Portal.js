@@ -28,15 +28,14 @@ const Portal = () => {
 
   const { portal } = user || {}
 
-  console.log(portal)
-  // const { style } = portal || {}
-  // const { backgroundColor } = style || {}
+  const { style } = portal || {}
+  const { backgroundColor } = style || {}
 
-  // useEffect(() => {
-  //   if (backgroundColor) {
-  //     document.body.style.backgroundColor = backgroundColor
-  //   }
-  // }, [backgroundColor])
+  useEffect(() => {
+    if (backgroundColor) {
+      document.body.style.backgroundColor = backgroundColor
+    }
+  }, [backgroundColor])
 
   return (
     <>

@@ -70,13 +70,6 @@ const PortalBar = () => {
                 value="animation"
                 classes={{ root: classes.tabRoot }}
               />
-              <Tab
-                label="Account"
-                component={RouterLink}
-                to="account"
-                value="account"
-                classes={{ root: classes.tabRoot }}
-              />
             </Tabs>
           </Grid>
           <Hidden mdDown>
