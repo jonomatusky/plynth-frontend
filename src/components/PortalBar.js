@@ -10,12 +10,12 @@ import {
   Hidden,
   Typography,
   Link,
-  Button,
 } from '@material-ui/core'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import theme from 'theme'
 import useUserStore from 'hooks/store/use-user-store'
+import ButtonSharePortal from './ButtonSharePortal'
 
 const drawerWidth = 70
 
@@ -97,9 +97,7 @@ const PortalBar = () => {
                         {portalUrl}
                       </Link>
                     </Typography>
-                    <Button variant="outlined" size="small" color="secondary">
-                      Share
-                    </Button>
+                    <ButtonSharePortal url={portalUrl} />
                   </>
                 )}
               </Box>
