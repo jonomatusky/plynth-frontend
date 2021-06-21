@@ -35,7 +35,7 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
         height: !preview ? windowHeight : '100%',
       }}
     >
-      {(cards || []).map(card => {
+      {(cards || []).map((card, i) => {
         let { type } = card
 
         return (
@@ -61,7 +61,13 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
                 )}
                 {type === 'text' && <CardText card={card} style={style} />}
                 {type === 'video' && (
-                  <CardVideo card={card} style={style} preview={preview} />
+                  <CardVideo
+                    card={card}
+                    style={style}
+                    preview={preview}
+                    currentIndex={i}
+                    cardIndex={index}
+                  />
                 )}
                 {type === 'download' && (
                   <CardDownload

@@ -21,7 +21,8 @@ const useStyles = makeStyles({
   },
 })
 
-const CardVideo = ({ card, style, preview }) => {
+const CardVideo = ({ cardIndex, currentIndex, card, style, preview }) => {
+  // note: cardindex and current index are actually swapped. current index is the index of the card in the pack, card index is the index the user is viewing currently
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -37,92 +38,100 @@ const CardVideo = ({ card, style, preview }) => {
 
   return (
     <>
-      {isFullscreenMobile && (isMobile || preview) && (
+      {currentIndex === cardIndex && (
         <>
-          <Div100vh overflow="hidden">
-            <Box
-              height="100%"
-              maxWidth="100vw"
-              display="flex"
-              justifyContent="center"
-              overflow="hidden"
-              bgcolor="black"
-            >
-              <ReactPlayer
-                url={url}
-                height="100%"
-                width="100%"
-                overflow="hidden"
-                controls={!hideControls}
-                playsinline={true}
-                playing={isPlaying || loopingVideo}
-                loop={loopingVideo}
-                volume={loopingVideo ? 0 : null}
-              />
-              <Box
-                height={windowHeight}
-                position="absolute"
-                zIndex={10}
-                width="100vw"
-                bottom={0}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                // add onClick to Box
-                component={ButtonBase}
-                onClick={() => setIsPlaying(!isPlaying)}
-              >
-                {hideControls && !loopingVideo && (
-                  <Box width="100vw">
-                    {!isPlaying && (
-                      <PlayCircle
-                        fontSize="large"
-                        sx={{ width: '20vw', height: '20vw', color: 'white' }}
-                      />
+          {isFullscreenMobile && (isMobile || preview) && (
+            <>
+              <Div100vh overflow="hidden">
+                <Box
+                  height="100%"
+                  maxWidth="100vw"
+                  display="flex"
+                  justifyContent="center"
+                  overflow="hidden"
+                  bgcolor="black"
+                >
+                  <ReactPlayer
+                    url={url}
+                    height="100%"
+                    width="100%"
+                    overflow="hidden"
+                    controls={!hideControls}
+                    playsinline={true}
+                    playing={isPlaying || loopingVideo}
+                    loop={loopingVideo}
+                    volume={loopingVideo ? 0 : null}
+                  />
+                  <Box
+                    height={windowHeight}
+                    position="absolute"
+                    zIndex={10}
+                    width="100vw"
+                    bottom={0}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    // add onClick to Box
+                    component={ButtonBase}
+                    onClick={() => setIsPlaying(!isPlaying)}
+                  >
+                    {hideControls && !loopingVideo && (
+                      <Box width="100vw">
+                        {!isPlaying && (
+                          <PlayCircle
+                            fontSize="large"
+                            sx={{
+                              width: '20vw',
+                              height: '20vw',
+                              color: 'white',
+                            }}
+                          />
+                        )}
+                      </Box>
                     )}
                   </Box>
-                )}
-              </Box>
-            </Box>
-          </Div100vh>
-        </>
-      )}
-      {(!isFullscreenMobile || (!isMobile && !preview)) && (
-        <Grid container spacing={3} justifyContent="flex-start">
-          <Grid item xs={12}>
-            <Grid container justifyContent="center">
-              <Grid item xs={10}>
-                {title && (
-                  <Box paddingTop={10} width="100%">
-                    <Typography variant="h4" className={classes.type}>
-                      {title}
-                    </Typography>
-                  </Box>
-                )}
+                </Box>
+              </Div100vh>
+            </>
+          )}
+          {(!isFullscreenMobile || (!isMobile && !preview)) && (
+            <Grid container spacing={3} justifyContent="flex-start">
+              <Grid item xs={12}>
+                <Grid container justifyContent="center">
+                  <Grid item xs={10}>
+                    {title && (
+                      <Box paddingTop={10} width="100%">
+                        <Typography variant="h4" className={classes.type}>
+                          {title}
+                        </Typography>
+                      </Box>
+                    )}
 
-                {!title && <Box paddingTop={16} />}
+                    {!title && <Box paddingTop={16} />}
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <div style={{ position: 'relative', paddingTop: '56.25%' }}>
+                  <ReactPlayer
+                    url={url}
+                    width="100%"
+                    height="100%"
+                    controls={true}
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} container justifyContent="center">
+                <Grid item xs={10}>
+                  <TextTypography variant="h5" font={font}>
+                    {text}
+                  </TextTypography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <div style={{ position: 'relative', paddingTop: '56.25%' }}>
-              <ReactPlayer
-                url={url}
-                width="100%"
-                height="100%"
-                controls={true}
-                style={{ position: 'absolute', top: 0, left: 0 }}
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12} container justifyContent="center">
-            <Grid item xs={10}>
-              <TextTypography variant="h5" font={font}>
-                {text}
-              </TextTypography>
-            </Grid>
-          </Grid>
-        </Grid>
+          )}
+        </>
       )}
     </>
   )
