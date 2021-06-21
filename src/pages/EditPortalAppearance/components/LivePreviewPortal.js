@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, makeStyles } from '@material-ui/core'
-import PortalContent from 'components/PortalContent'
+import PortalContent from 'pages/Portal/components/PortalContent'
 import theme from 'theme'
 
 // const { REACT_APP_PUBLIC_URL } = process.env

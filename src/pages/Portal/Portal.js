@@ -1,5 +1,5 @@
 import LoadingScreen from 'components/LoadingScreen'
-import PortalContent from 'components/PortalContent'
+import PortalContent from 'pages/Portal/components/PortalContent'
 import { useRequest } from 'hooks/use-request'
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
 import React, { useEffect, useState } from 'react'

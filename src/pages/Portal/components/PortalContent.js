@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Grid, Typography, Box, Button, Link } from '@material-ui/core'
-import ScanScreen from 'components/ScanScreen'
 import useScanStore from 'hooks/store/use-scan-store'
 import NotFound from 'components/NotFound'
 import Pack from 'components/Pack'
-import ProfileLoading from 'components/PortalLoading'
+import ProfileLoading from 'pages/Portal/components/PortalLoading'
 import NoMatch from 'components/NoMatch'
 import CameraDialog from 'components/CameraDialog'
-import { CameraAlt, Clear } from '@material-ui/icons'
+import { CameraAlt } from '@material-ui/icons'
 import ScanError from 'components/ScanError'
+import PortalCamera from './PortalCamera'
 
 const PortalContent = ({ portal }) => {
   const { title, text, instructions, style, image, imageUrl, hideBranding } =
@@ -33,6 +33,7 @@ const PortalContent = ({ portal }) => {
   }
 
   const handleClose = () => {
+    setCameraAuthorizationStatus('unauthorized')
     clearScan()
   }
 
@@ -182,63 +183,15 @@ const PortalContent = ({ portal }) => {
         )}
         {cameraAuthorizationStatus !== 'unauthorized' &&
           cameraAuthorizationStatus !== 'rejected' && (
-            <ScanScreen
+            <PortalCamera
               onUserMedia={handleUserMedia}
               onUserMediaError={handleUserMediaError}
               hasUserMedia={hasUserMedia}
               backgroundColor={backgroundColor}
               fontColor={fontColor}
-            >
-              <Box
-                bottom="auto"
-                position="absolute"
-                top="0"
-                display="flex"
-                justifyContent="flex-end"
-                paddingBottom="0.25rem"
-                left="0"
-                right="0"
-                zIndex="5"
-                pt={1}
-                pr={1}
-              >
-                <Button
-                  onClick={() => setCameraAuthorizationStatus('unauthorized')}
-                  size="small"
-                  color="inherit"
-                  disableRipple
-                  endIcon={<Clear sx={{ color: fontColor }} />}
-                >
-                  <Box color={fontColor}>Close</Box>
-                </Button>
-              </Box>
-              <Grid container justifyContent="center" spacing={2}>
-                {/* <Grid item>
-                  <Box display="flex" justifyContent="center">
-                    <Box
-                      width="90vw"
-                      maxWidth="600px"
-                      height="60vw"
-                      maxHeight="400px"
-                      border={'8px dashed #ffffff88'}
-                    />
-                  </Box>
-                </Grid> */}
-                <Grid item xs={11}>
-                  <Box color={fontColor}>
-                    <Typography
-                      variant="h6"
-                      textAlign="center"
-                      sx={{ textShadow: '0px 1px 7px #555555' }}
-                    >
-                      <b>
-                        {instructions || `Snap a photo to access your content`}
-                      </b>
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </ScanScreen>
+              instructions={instructions}
+              onClose={handleClose}
+            />
           )}
       </>
     )
