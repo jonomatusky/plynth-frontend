@@ -9,6 +9,7 @@ import {
   Hidden,
   Divider,
   Switch,
+  Button,
 } from '@material-ui/core'
 // import QRCode from 'qrcode.react'
 
@@ -21,6 +22,8 @@ import { useRequest } from 'hooks/use-request'
 import PieceImage from './components/PieceImage'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
+import DownloadQR from 'components/DownloadQr'
+import { GetApp } from '@material-ui/icons'
 
 const { REACT_APP_PUBLIC_URL } = process.env
 
@@ -139,11 +142,44 @@ const EditAccess = () => {
                             <b>Share:</b> {packLink}
                           </Typography>
                         </Grid>
-                        <Grid item xs={12}>
-                          <Typography variant="subtitle1"></Typography>
-                          <ButtonCopyToClipboard textToCopy={packLink}>
-                            Copy Link
-                          </ButtonCopyToClipboard>
+                        <Grid item xs={12} container spacing={2}>
+                          <Grid item>
+                            <ButtonCopyToClipboard textToCopy={packLink}>
+                              Copy Link
+                            </ButtonCopyToClipboard>
+                          </Grid>
+                          <Grid item>
+                            <DownloadQR
+                              qrValue={packLink}
+                              fileName={
+                                `QR Code ` +
+                                (pack.name || 'Pack').replace(
+                                  /[/\\?%*:|"<>]/g,
+                                  '_'
+                                ) +
+                                '.png'
+                              }
+                            >
+                              <Button
+                                endIcon={
+                                  <GetApp
+                                    fontSize="small"
+                                    // sx={{ color: 'text.primary' }}
+                                  />
+                                }
+                                size="small"
+                                style={{ textTransform: 'none' }}
+                                color="secondary"
+                                disableElevation
+                              >
+                                <Box color="text.primary">
+                                  <Typography variant="body2">
+                                    Download QR
+                                  </Typography>
+                                </Box>
+                              </Button>
+                            </DownloadQR>
+                          </Grid>
                         </Grid>
                         <Grid item xs={12}>
                           <Box width="100%" pb={3}>

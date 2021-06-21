@@ -1,7 +1,7 @@
 import React from 'react'
 import QRCode from 'qrcode.react'
 
-const DownloadQR = ({ children, qrValue }) => {
+const DownloadQR = ({ children, qrValue, fileName }) => {
   const downloadQRCode = () => {
     // Generate download with use canvas and stream
     const canvas = document.getElementById('qr-gen')
@@ -10,7 +10,7 @@ const DownloadQR = ({ children, qrValue }) => {
       .replace('image/png', 'image/octet-stream')
     let downloadLink = document.createElement('a')
     downloadLink.href = pngUrl
-    downloadLink.download = `Plynth_Portal_QR.png`
+    downloadLink.download = fileName || `Plynth_Portal_QR.png`
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
