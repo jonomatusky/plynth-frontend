@@ -251,6 +251,18 @@ const EditPortalAppearance = () => {
                                             setFont={handleFontChange}
                                           />
                                         </Grid>
+                                        <Grid item>
+                                          <ButtonFont
+                                            font={`'Patrick Hand', sans-serif`}
+                                            setFont={handleFontChange}
+                                          />
+                                        </Grid>
+                                        <Grid item>
+                                          <ButtonFont
+                                            font={`'Shadows Into Light', sans-serif`}
+                                            setFont={handleFontChange}
+                                          />
+                                        </Grid>
                                       </Grid>
                                     </Grid>
                                   </Grid>
