@@ -32,12 +32,13 @@ const CardVideo = ({ card, style, preview }) => {
 
   const windowHeight = use100vh()
 
-  const hideControls = (url || '').includes('vimeo.com') || loopingVideo
+  const isVimeo = (url || '').includes('vimeo.com')
+  const hideControls = isVimeo || loopingVideo
   const [isPlaying, setIsPlaying] = useState(false)
 
   return (
     <>
-      {isFullscreenMobile && (isMobile || preview) && (
+      {isFullscreenMobile && (isMobile || preview) && isVimeo && (
         <>
           <Div100vh overflow="hidden">
             <Box
@@ -87,7 +88,7 @@ const CardVideo = ({ card, style, preview }) => {
           </Div100vh>
         </>
       )}
-      {(!isFullscreenMobile || (!isMobile && !preview)) && (
+      {(!isFullscreenMobile || (!isMobile && !preview) || !isVimeo) && (
         <Grid container spacing={3} justifyContent="flex-start">
           <Grid item xs={12}>
             <Grid container justifyContent="center">

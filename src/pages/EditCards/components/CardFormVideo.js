@@ -26,6 +26,7 @@ const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
     },
     validationSchema: validationSchema,
     onSubmit: onSubmit,
+    enableReinitialize: true
   })
 
   // const [prevCardId, setPrevCardId] = useState(null)
@@ -112,7 +113,7 @@ const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
                     onChange={handleFullscreenMobile}
                   />
                 }
-                label="Make fullscreen on mobile"
+                label="Make fullscreen on mobile (Vimeo-only)"
               />
             </Grid>
             {user.tier !== 'free' && (
