@@ -188,20 +188,18 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                 }}
               />
             </Grid>
-            {user.tier && user.tier !== 'free' && (
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      color="primary"
-                      checked={card.hideButtons}
-                      onChange={handleHideButtons}
-                    />
-                  }
-                  label="Hide navigation arrows"
-                />
-              </Grid>
-            )}
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="primary"
+                    checked={card.hideButtons}
+                    onChange={handleHideButtons}
+                  />
+                }
+                label="Hide navigation arrows"
+              />
+            </Grid>
             <Grid
               item
               xs={12}
