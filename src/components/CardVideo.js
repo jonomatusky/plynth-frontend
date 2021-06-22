@@ -39,7 +39,9 @@ const CardVideo = ({ cardIndex, currentIndex, card, style, preview }) => {
 
   return (
     <>
-      {currentIndex === cardIndex && (
+      {(currentIndex === cardIndex ||
+        currentIndex === cardIndex + 1 ||
+        currentIndex === cardIndex - 1) && (
         <>
           {isFullscreenMobile && (isMobile || preview) && (
             <Div100vh overflow="hidden">
