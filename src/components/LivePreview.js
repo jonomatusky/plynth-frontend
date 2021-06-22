@@ -47,21 +47,6 @@ const LivePreview = ({
 
   const setIndex = setCardIndex || setI
 
-  // const Frame = ({ pack }) => {
-  //   return (
-  //     <>
-  //       {pack && (
-  //         <iframe
-  //           src={`${REACT_APP_PUBLIC_URL}/p/${pack.id}`}
-  //           title="live-preview"
-  //           height="100%"
-  //           width="100%"
-  //         />
-  //       )}
-  //     </>
-  //   )
-  // }
-
   return (
     <Box className={classes.phoneContainer}>
       <Box
