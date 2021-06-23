@@ -43,7 +43,57 @@ const CardVideo = ({ cardIndex, currentIndex, card, style, preview }) => {
         currentIndex === cardIndex + 1 ||
         currentIndex === cardIndex - 1) && (
         <>
-          {isFullscreenMobile && (isMobile || preview) && (
+          {isFullscreenMobile && preview && (
+            <Box height="100%" overflow="hidden">
+              <Box
+                height="100%"
+                display="flex"
+                justifyContent="center"
+                overflow="hidden"
+                bgcolor="black"
+              >
+                <ReactPlayer
+                  url={url}
+                  height="100%"
+                  overflow="hidden"
+                  controls={!hideControls}
+                  playsinline={true}
+                  playing={isPlaying || loopingVideo}
+                  loop={loopingVideo}
+                  volume={loopingVideo ? 0 : null}
+                />
+                <Box
+                  height="100%"
+                  position="absolute"
+                  zIndex={10}
+                  width="100%"
+                  bottom={0}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  // add onClick to Box
+                  component={ButtonBase}
+                  onClick={() => setIsPlaying(!isPlaying)}
+                >
+                  {hideControls && !loopingVideo && (
+                    <Box width="100%">
+                      {!isPlaying && (
+                        <PlayCircle
+                          fontSize="large"
+                          sx={{
+                            width: '80px',
+                            height: '80px',
+                            color: 'white',
+                          }}
+                        />
+                      )}
+                    </Box>
+                  )}
+                </Box>
+              </Box>
+            </Box>
+          )}
+          {isFullscreenMobile && isMobile && (
             <Div100vh overflow="hidden">
               <Box
                 height="100%"

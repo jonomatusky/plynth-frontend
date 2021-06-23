@@ -1,21 +1,28 @@
 import React, { useState } from 'react'
 import { Box, makeStyles } from '@material-ui/core'
-import PackContent from './PackContent'
 import theme from 'theme'
 import PackButtonsMobile from './PackButtonsMobile'
 import PaginationDots from './PaginationDots'
+import LivePreviewContent from './LivePreviewContent'
+import { useTheme } from '@material-ui/core/styles'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 // const { REACT_APP_PUBLIC_URL } = process.env
+
+const scaleLgUp = 0.75
+const scaleLgDown = 0.65
+const screenHeight = 800
+const screenWidth = 400
 
 const useStyles = makeStyles({
   phoneContainer: {
     [theme.breakpoints.up('lg')]: {
-      maxHeight: '600px',
-      maxWidth: '300px',
+      maxHeight: `${screenHeight * scaleLgUp}px`,
+      maxWidth: `${screenWidth * scaleLgUp}px`,
     },
     [theme.breakpoints.down('lg')]: {
-      maxHeight: '520px',
-      maxWidth: '260px',
+      maxHeight: `${screenHeight * scaleLgDown}px`,
+      maxWidth: `${screenWidth * scaleLgDown}px`,
     },
   },
   phone: {
@@ -23,10 +30,10 @@ const useStyles = makeStyles({
     color: props => props.fontColor || '#000000',
     borderColor: '#000000',
     [theme.breakpoints.up('lg')]: {
-      transform: 'scale(0.75)',
+      transform: `scale(${scaleLgUp})`,
     },
     [theme.breakpoints.down('lg')]: {
-      transform: 'scale(0.65)',
+      transform: `scale(${scaleLgDown})`,
     },
     transformOrigin: 'top left',
   },
@@ -42,10 +49,16 @@ const LivePreview = ({
   const [i, setI] = useState(0)
 
   const classes = useStyles(style)
+  const theme = useTheme()
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'))
+  console.log(theme.breakpoints.up('lg'))
+  console.log(isLgUp)
 
   const index = cardIndex || i
 
   const setIndex = setCardIndex || setI
+
+  console.log(classes.phoneContainer)
 
   return (
     <Box className={classes.phoneContainer}>
@@ -65,12 +78,12 @@ const LivePreview = ({
           color={(style || {}).fontColor}
           count={(cards || []).length}
         />
-        <Box height="100%">
-          <PackContent
-            preview={true}
+        <Box id="content-box" height="100%" overflow="hidden">
+          <LivePreviewContent
             pack={pack}
             index={index}
             setIndex={setIndex}
+            height={`${screenHeight}px`}
           />
         </Box>
         {!(cards[index] || {}).hideButtons && (
