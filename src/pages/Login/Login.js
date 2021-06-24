@@ -24,6 +24,7 @@ const Login = () => {
     signInOptions: [
       {
         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        requireDisplayName: false,
         buttonColor: '#CD0A64',
       },
       {
