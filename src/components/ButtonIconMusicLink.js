@@ -18,6 +18,13 @@ const useStyles = makeStyles({
     borderRadius: '50%',
     height: '50px',
     width: '50px',
+    color: style.fontColor,
+    border: '2px solid',
+    '&:hover': {
+      border: '2px solid',
+      backgroundColor: `${style.fontColor}11`,
+      boxShadow: `0px 1px #000`,
+    },
   },
 })
 
