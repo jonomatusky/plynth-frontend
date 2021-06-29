@@ -67,19 +67,8 @@ const PortalContent = ({ portal }) => {
               backgroundColor={backgroundColor}
             >
               <Grid container justifyContent="center" textAlign="center">
-                <Grid item xs={10}>
-                  <Box color={fontColor} pt={2} pb={2}>
-                    <Typography
-                      textAlign="center"
-                      fontFamily={font}
-                      variant="h5"
-                    >
-                      <b>{title}</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} container justifyContent="center">
-                  {image && (
+                {image && (
+                  <Grid item xs={12} container justifyContent="center">
                     <>
                       <img
                         alt="Logo"
@@ -88,23 +77,38 @@ const PortalContent = ({ portal }) => {
                         }
                         src={imageUrl}
                         style={{
-                          width: '125px',
-                          height: '125px',
+                          width: '150px',
+                          height: '150px',
                           display: imageIsLoaded ? null : 'none',
                         }}
                         onLoad={() => setImageIsLoaded(true)}
                       />
                       {!imageIsLoaded && <Box height="150px" width="150px" />}
                     </>
-                  )}
-                </Grid>
-                <Grid item xs={10}>
-                  <Box color={fontColor} pt={2} pb={2}>
-                    <Typography textAlign="center" fontFamily={font}>
-                      {text || `Snap a photo to access your content`}
-                    </Typography>
-                  </Box>
-                </Grid>
+                  </Grid>
+                )}
+                {title && (
+                  <Grid item xs={10}>
+                    <Box color={fontColor} pt={2}>
+                      <Typography
+                        textAlign="center"
+                        fontFamily={font}
+                        variant="h5"
+                      >
+                        <b>{title}</b>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+                {text && (
+                  <Grid item xs={10}>
+                    <Box color={fontColor} pb={2}>
+                      <Typography textAlign="center" fontFamily={font}>
+                        {text || `Snap a photo to access your content`}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <Button
                     onClick={() => setCameraAuthorizationStatus('requested')}
