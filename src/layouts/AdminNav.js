@@ -19,7 +19,7 @@ import { Portrait } from '@material-ui/icons'
 import { useFetch } from 'hooks/use-fetch'
 import { useSession } from 'hooks/use-session'
 import logo from 'images/plynth_logo_simple.svg'
-import usePageTrack from 'hooks/usePageTrack'
+import usePageTrack from 'hooks/use-page-track'
 import useAlertStore from 'hooks/store/use-alert-store'
 
 export const drawerWidth = 70

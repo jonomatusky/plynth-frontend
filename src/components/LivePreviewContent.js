@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import { Grid, Box } from '@material-ui/core'
 
@@ -20,7 +20,10 @@ const LivePreviewContent = ({ pack, index, setIndex, height }) => {
     if (index < (cards || []).length - 1) setIndex(index + 1)
   }
 
-  console.log(height)
+  useEffect(() => {
+    console.log('hash')
+    window.history.pushState(null, null, `#card=${index}_${cards[index].id}`)
+  }, [index, cards])
 
   return (
     <SwipeableViews

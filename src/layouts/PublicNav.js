@@ -1,5 +1,5 @@
 import { useFetch } from 'hooks/use-fetch'
-import usePageTrack from 'hooks/usePageTrack'
+import usePageTrack from 'hooks/use-page-track'
 
 const PublicNav = ({ children }) => {
   useFetch()

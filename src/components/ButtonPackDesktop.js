@@ -33,6 +33,7 @@ const ButtonPackDesktop = ({ children, isLeft, color, ...props }) => {
         {...props}
         className={classes.buttonRound}
         variant="outlined"
+        id={isLeft ? 'previous-card' : 'next-card'}
       >
         {isLeft && <ArrowBack fontSize="large" />}
         {!isLeft && <ArrowForward fontSize="large" />}

@@ -37,8 +37,8 @@ const ButtonPackMobile = ({ children, isLeft, color, ...props }) => {
       className={classes.buttonRound}
       disableElevation
     >
-      {isLeft && <ArrowBack fontSize="large" />}
-      {!isLeft && <ArrowForward fontSize="large" />}
+      {isLeft && <ArrowBack fontSize="large" aria-label="Previous Card" />}
+      {!isLeft && <ArrowForward fontSize="large" aria-label="Next Card" />}
     </Button>
   )
 }

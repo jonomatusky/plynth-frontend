@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import { Grid, Hidden, Box } from '@material-ui/core'
 
@@ -26,6 +26,11 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
 
   const windowHeight = use100vh()
 
+  useEffect(() => {
+    console.log('hash')
+    window.history.pushState(null, null, `#card=${index}_${cards[index].id}`)
+  }, [index, cards])
+
   return (
     <SwipeableViews
       {...swipeProps}
@@ -41,6 +46,7 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
         return (
           <div
             key={card.id}
+            id={'card-' + i}
             style={{
               height: '100%',
               width: '100%',
