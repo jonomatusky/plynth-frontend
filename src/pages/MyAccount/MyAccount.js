@@ -6,8 +6,9 @@ import {
   Typography,
   IconButton,
   Button,
-  Link,
+  Link as MuiLink,
 } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import { ArrowBackIos } from '@material-ui/icons'
 import AdminNav from 'layouts/AdminNav'
 import { useSession } from 'hooks/use-session'
@@ -106,14 +107,14 @@ const MyAccount = () => {
                     <Box p={3}>
                       <Typography variant="subtitle2">
                         To change your username, please{' '}
-                        <Link
+                        <MuiLink
                           href="https://help.plynth.com"
                           target="_blank"
                           color="inherit"
                           underline="always"
                         >
                           contact us
-                        </Link>
+                        </MuiLink>
                       </Typography>
                     </Box>
                   </Paper>
@@ -130,14 +131,14 @@ const MyAccount = () => {
                     <Box p={3}>
                       <Typography variant="subtitle2">
                         To delete your account, please{' '}
-                        <Link
+                        <MuiLink
                           href="https://help.plynth.com"
                           target="_blank"
                           color="inherit"
                           underline="always"
                         >
                           contact us
-                        </Link>
+                        </MuiLink>
                       </Typography>
                     </Box>
                   </Paper>
