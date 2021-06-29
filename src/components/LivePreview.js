@@ -4,14 +4,12 @@ import theme from 'theme'
 import PackButtonsMobile from './PackButtonsMobile'
 import PaginationDots from './PaginationDots'
 import LivePreviewContent from './LivePreviewContent'
-import { useTheme } from '@material-ui/core/styles'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 // const { REACT_APP_PUBLIC_URL } = process.env
 
 const scaleLgUp = 0.75
 const scaleLgDown = 0.65
-const screenHeight = 800
+const screenHeight = 800 - 40
 const screenWidth = 400
 
 const useStyles = makeStyles({
@@ -49,16 +47,10 @@ const LivePreview = ({
   const [i, setI] = useState(0)
 
   const classes = useStyles(style)
-  const theme = useTheme()
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'))
-  console.log(theme.breakpoints.up('lg'))
-  console.log(isLgUp)
 
   const index = cardIndex || i
 
   const setIndex = setCardIndex || setI
-
-  console.log(classes.phoneContainer)
 
   return (
     <Box className={classes.phoneContainer}>
