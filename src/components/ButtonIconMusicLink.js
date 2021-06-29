@@ -16,8 +16,8 @@ const useStyles = makeStyles({
     minHeight: 0,
     minWidth: 0,
     borderRadius: '50%',
-    height: '20px',
-    width: '20px',
+    height: '50px',
+    width: '50px',
   },
 })
 
@@ -35,8 +35,10 @@ const ButtonIconMusicLink = ({ link, color }) => {
     <Button
       target="_blank"
       href={link.url}
-      style={{ color, opacity: '0.90' }}
+      // style={{ color, opacity: '0.90' }}
       classes={classes.buttonRound}
+      variant="contained"
+      color={color}
     >
       <FontAwesomeIcon icon={icons[link.type] || faLink} size="lg" />
     </Button>
