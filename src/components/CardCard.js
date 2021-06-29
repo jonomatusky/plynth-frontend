@@ -43,7 +43,7 @@ export const cardTypes = [
     type: 'image',
     title: 'Image',
     icon: 'photo',
-    description: 'Link to your music.',
+    description: 'Add an image.',
   },
   {
     type: 'music',
