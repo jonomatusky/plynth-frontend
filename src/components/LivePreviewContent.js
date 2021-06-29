@@ -22,7 +22,11 @@ const LivePreviewContent = ({ pack, index, setIndex, height }) => {
 
   useEffect(() => {
     console.log('hash')
-    window.history.pushState(null, null, `#card=${index}_${cards[index].id}`)
+    window.history.pushState(
+      null,
+      null,
+      `#card=${index}_${(cards[index] || {}).id || ''}`
+    )
   }, [index, cards])
 
   return (

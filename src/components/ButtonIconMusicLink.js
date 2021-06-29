@@ -6,9 +6,24 @@ import {
   faYoutube,
   faApple,
 } from '@fortawesome/free-brands-svg-icons'
-import { IconButton } from '@material-ui/core'
+import { Button } from '@material-ui/core'
+
+import { makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles({
+  buttonRound: {
+    // padding: 0,
+    minHeight: 0,
+    minWidth: 0,
+    borderRadius: '50%',
+    height: '20px',
+    width: '20px',
+  },
+})
 
 const ButtonIconMusicLink = ({ link, color }) => {
+  const classes = useStyles()
+
   const icons = {
     spotify: faSpotify,
     appleMusic: faApple,
@@ -17,13 +32,14 @@ const ButtonIconMusicLink = ({ link, color }) => {
   }
 
   return (
-    <IconButton
+    <Button
       target="_blank"
       href={link.url}
       style={{ color, opacity: '0.90' }}
+      classes={classes.buttonRound}
     >
       <FontAwesomeIcon icon={icons[link.type] || faLink} size="lg" />
-    </IconButton>
+    </Button>
   )
 }
 
