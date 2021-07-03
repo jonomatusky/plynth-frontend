@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
 import {
   Grid,
   Typography,
@@ -26,6 +26,13 @@ const SmoothHashLink = React.forwardRef((props, ref) => (
 ))
 
 const Home = () => {
+  const { search } = useLocation()
+  const history = useHistory()
+
+  if (search === '?utm_source=qr') {
+    history.push('/postcardmixtapes')
+  }
+
   const videoViewWidth =
     25 +
     useMediaQuery(theme.breakpoints.down('md')) * 20 +
