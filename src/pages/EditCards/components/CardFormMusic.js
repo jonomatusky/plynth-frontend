@@ -94,10 +94,26 @@ const CardFormMusic = ({ card, onSubmit, pending, onRemove }) => {
                 fullWidth
                 name="title"
                 label="Title"
-                placeholder="Listen Now"
+                placeholder="My Mixtape"
                 inputRef={register}
                 error={Boolean(errors.title)}
                 helperText={errors.title?.message}
+                autoComplete="off"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="text"
+                label="Text"
+                placeholder="Listen Now"
+                inputRef={register}
+                error={Boolean(errors.text)}
+                helperText={errors.text?.message}
                 autoComplete="off"
                 InputLabelProps={{
                   shrink: true,

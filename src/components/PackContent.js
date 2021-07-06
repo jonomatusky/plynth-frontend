@@ -10,6 +10,7 @@ import CardMusic from './CardMusic'
 import CardImage from './CardImage'
 import CardButtons from './CardButtons'
 import { use100vh } from 'hooks/use-100-vh'
+import posthog from 'posthog-js'
 
 const PackContent = ({ preview, pack, index, setIndex }) => {
   const cards = (pack || {}).cards
@@ -27,7 +28,6 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
   const windowHeight = use100vh()
 
   useEffect(() => {
-    console.log('hash')
     window.history.pushState(null, null, `#card=${index}_${cards[index].id}`)
   }, [index, cards])
 

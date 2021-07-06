@@ -37,14 +37,14 @@ const CardMusic = ({ card, style }) => {
     <Grid container justifyContent="center">
       <Grid
         item
-        xs={8}
+        xs={10}
         container
         justifyContent="center"
-        sx={{ maxWidth: '300px' }}
+        sx={{ maxWidth: '400px' }}
       >
-        <Grid item container justifyContent="center" spacing={3}>
+        <Grid item container justifyContent="center" spacing={1}>
           <Grid item xs={12}>
-            <Box height={30} />
+            <Box height={15} />
           </Grid>
           <Grid item xs={12}>
             <Box
@@ -74,38 +74,55 @@ const CardMusic = ({ card, style }) => {
               )}
             </Box>
           </Grid>
-          <Grid item xs={12}>
-            <Box pt={2}>
-              <Typography
-                variant="h5"
-                className={classes.type}
-                textAlign="center"
-              >
-                <b>{card.title}</b>
-              </Typography>
-            </Box>
-          </Grid>
-          {card.links && (
+          {card.title && (
             <Grid item xs={12}>
-              <Typography textAlign="center">
-                {musicLinkTypes
-                  .map(type => {
-                    const link = (card.links || []).find(
-                      link => link.type === type
-                    )
-                    return link
-                  })
-                  .filter(link => !!link)
-                  .map(link => {
-                    return (
+              <Box pt={2}>
+                <Typography
+                  variant="h5"
+                  className={classes.type}
+                  textAlign="center"
+                >
+                  <b>{card.title}</b>
+                </Typography>
+              </Box>
+            </Grid>
+          )}
+
+          {card.text && (
+            <Grid item xs={12}>
+              <Box pt={1} pb={1}>
+                <Typography
+                  variant="h6"
+                  className={classes.type}
+                  textAlign="center"
+                >
+                  {card.text}
+                </Typography>
+              </Box>
+            </Grid>
+          )}
+
+          {card.links && (
+            <Grid item xs={12} container justifyContent="center">
+              {musicLinkTypes
+                .map(type => {
+                  const link = (card.links || []).find(
+                    link => link.type === type
+                  )
+                  return link
+                })
+                .filter(link => !!link)
+                .map(link => {
+                  return (
+                    <Box pr={1}>
                       <ButtonIconMusicLink
                         key={link.type}
                         link={link}
-                        color={style.fontColor}
+                        style={style}
                       />
-                    )
-                  })}
-              </Typography>
+                    </Box>
+                  )
+                })}
             </Grid>
           )}
         </Grid>

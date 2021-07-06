@@ -83,7 +83,7 @@ const CardHighlight = ({ card, style, increment }) => {
                 className={classes.type}
                 align={card.textAlign}
               >
-                {card.title}
+                <b>{card.title}</b>
               </Typography>
             </Box>
           </Grid>

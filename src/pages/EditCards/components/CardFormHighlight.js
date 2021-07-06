@@ -37,7 +37,7 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
   const validationSchema = Yup.object({
     title: Yup.string().max(50, 'Enter a title under 50 characters'),
     text: Yup.string(),
-    label: Yup.string().max(16, 'Must be 16 characters or less'),
+    label: Yup.string().max(32, 'Must be 32 characters or less'),
     url: Yup.string().url('Must be a valid URL'),
   })
 

@@ -6,31 +6,34 @@ import {
   faYoutube,
   faApple,
 } from '@fortawesome/free-brands-svg-icons'
-import { Button } from '@material-ui/core'
+import { Button, styled } from '@material-ui/core'
 
-import { makeStyles } from '@material-ui/core'
-
-const useStyles = makeStyles({
-  buttonRound: {
-    // padding: 0,
-    minHeight: 0,
-    minWidth: 0,
-    borderRadius: '50%',
-    height: '50px',
-    width: '50px',
-    color: style.fontColor,
-    border: '2px solid',
-    '&:hover': {
-      border: '2px solid',
-      backgroundColor: `${style.fontColor}11`,
-      boxShadow: `0px 1px #000`,
-    },
+const MusicButton = styled(({ children, style, link, ...props }) => {
+  return (
+    <Button
+      target="_blank"
+      href={link.url}
+      variant="contained"
+      {...props}
+      disableElevation
+    >
+      {children}
+    </Button>
+  )
+})(({ style }) => ({
+  // padding: 0,
+  height: '60px',
+  width: '60px',
+  borderRadius: '50px',
+  backgroundColor: (style || {}).buttonColor,
+  color: (style || {}).buttonFontColor,
+  '&:hover': {
+    backgroundColor: `${(style || {}).buttonColor}99`,
+    boxShadow: `0px 1px #000`,
   },
-})
+}))
 
-const ButtonIconMusicLink = ({ link, color }) => {
-  const classes = useStyles()
-
+const ButtonIconMusicLink = ({ link, style }) => {
   const icons = {
     spotify: faSpotify,
     appleMusic: faApple,
@@ -39,16 +42,13 @@ const ButtonIconMusicLink = ({ link, color }) => {
   }
 
   return (
-    <Button
-      target="_blank"
-      href={link.url}
-      // style={{ color, opacity: '0.90' }}
-      classes={classes.buttonRound}
-      variant="contained"
-      color={color}
-    >
-      <FontAwesomeIcon icon={icons[link.type] || faLink} size="lg" />
-    </Button>
+    <MusicButton style={style} link={link}>
+      <FontAwesomeIcon
+        icon={icons[link.type] || faLink}
+        size="2x"
+        color={style.buttonFontColor}
+      />
+    </MusicButton>
   )
 }
 
