@@ -11,6 +11,7 @@ import Pack from 'components/Pack'
 import useScanStore from 'hooks/store/use-scan-store'
 import PortalCamera from './components/PortalCamera'
 import usePageTrack from 'hooks/use-page-track'
+import useAlertStore from 'hooks/store/use-alert-store'
 
 const PortalOpen = () => {
   const {
@@ -23,14 +24,29 @@ const PortalOpen = () => {
 
   usePageTrack()
 
+  const { error: alertError, clearError } = useAlertStore()
+
+  useEffect(() => {
+    if (alertError) {
+    }
+  }, [alertError, clearError])
+
   const { username } = useParams()
 
   useEffect(() => {
-    if (!portalUser || portalUser.username !== username) {
-      fetchPortal(username)
-      window.history.replaceState(null, null, `/${username}/open`)
+    const fetchPortalUser = async () => {
+      try {
+        await fetchPortal(username)
+        window.history.replaceState(null, null, `/${username}/open`)
+      } catch (err) {
+        clearError()
+      }
     }
-  }, [portalUser, fetchPortal, username])
+
+    if (!portalUser || portalUser.username !== username) {
+      fetchPortalUser()
+    }
+  }, [portalUser, fetchPortal, username, clearError])
 
   const { portal } = portalUser || {}
   const { style, instructions } = portal || {}
@@ -71,7 +87,7 @@ const PortalOpen = () => {
   } else if (scanStatus === 'succeeded' && foundPack && foundPack.isPublic) {
     return <Pack pack={foundPack} />
   } else if (scanStatus === 'succeeded' && foundPack && !foundPack.isPublic) {
-    return <NotFoundPage />
+    return <NoMatch fontColor={fontColor} onClose={handleClose} />
   } else if (scanStatus === 'succeeded' && !foundPack) {
     return <NoMatch fontColor={fontColor} onClose={handleClose} />
   } else {

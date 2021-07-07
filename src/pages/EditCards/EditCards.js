@@ -87,7 +87,6 @@ const EditCards = () => {
   }
 
   const handleRemoveOpen = () => {
-    console.log('opening')
     setRemoveDialogIsOpen(true)
   }
 

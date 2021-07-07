@@ -48,8 +48,6 @@ const CardFormMusic = ({ card, onSubmit, pending, onRemove }) => {
     const { title, text, ...musicLinks } = values
     const newValues = { title, text }
 
-    console.log(musicLinks)
-
     const links = []
     const types = Object.keys(musicLinks)
     types.forEach(type => {

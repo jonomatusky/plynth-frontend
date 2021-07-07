@@ -8,7 +8,6 @@ import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
 import useScanStore from 'hooks/store/use-scan-store'
 import PortalContent from './components/PortalContent'
 import PortalCamera from 'pages/PortalOpen/components/PortalCamera'
-import PublicNav from 'layouts/PublicNav'
 
 const Portal = () => {
   const { clearScan } = useScanStore()
@@ -25,6 +24,8 @@ const Portal = () => {
       fetchPortal(username)
     }
   }, [fetchPortal, username, portalUser])
+
+  console.log(portalUser)
 
   const { portal } = portalUser || {}
   const { style } = portal || {}
@@ -64,9 +65,9 @@ const Portal = () => {
   }
 
   return (
-    <PublicNav>
-      {status === 'failed' && <NotFoundPage />}
+    <>
       {status !== 'succeeded' && status !== 'failed' && <LoadingScreen />}
+      {status === 'failed' && <NotFoundPage />}
       {status === 'succeeded' && !portalUser && <NotFoundPage />}
       {status === 'succeeded' && portalUser && (
         <>
@@ -88,7 +89,7 @@ const Portal = () => {
           )}
         </>
       )}
-    </PublicNav>
+    </>
   )
 }
 

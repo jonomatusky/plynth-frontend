@@ -6,11 +6,10 @@ import PublicNav from 'layouts/PublicNav'
 
 const NotFoundPage = () => {
   return (
-    <>
-      <PublicNav />
+    <PublicNav>
       <WebsiteNavBar />
       <NotFound fontColor="white" />
-    </>
+    </PublicNav>
   )
 }
 

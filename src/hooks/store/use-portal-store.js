@@ -3,16 +3,22 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useThunk } from 'hooks/use-thunk'
 import { fetchPortal, setCameraError } from 'redux/portalSlice'
+import useAlertStore from './use-alert-store'
 
 export const usePortalStore = () => {
   const dispatchThunk = useThunk()
   const dispatch = useDispatch()
+  const { clearError } = useAlertStore()
 
   const _fetchPortal = useCallback(
     async username => {
-      await dispatchThunk(fetchPortal, { username })
+      try {
+        await dispatchThunk(fetchPortal, { username })
+      } catch (err) {
+        clearError()
+      }
     },
-    [dispatchThunk]
+    [dispatchThunk, clearError]
   )
 
   const _setCameraError = useCallback(
