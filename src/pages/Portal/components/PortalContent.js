@@ -6,7 +6,7 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
   const [imageIsLoaded, setImageIsLoaded] = useState(false)
 
   const { title, text, style, image, imageUrl, hideBranding } = portal || {}
-  const { font, fontColor, backgroundColor, buttonColor } = style || {}
+  let { font, fontColor, backgroundColor, buttonColor } = style || {}
 
   return (
     <>
@@ -17,7 +17,7 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
         alignItems="center"
         position="absolute"
         zIndex="20"
-        backgroundColor={backgroundColor}
+        backgroundColor={backgroundColor || '#ffffff'}
       >
         <Grid container justifyContent="center" textAlign="center">
           {image && (
@@ -31,16 +31,19 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
                     width: '150px',
                     height: '150px',
                     display: imageIsLoaded ? null : 'none',
+                    marginBottom: '10px',
                   }}
                   onLoad={() => setImageIsLoaded(true)}
                 />
-                {!imageIsLoaded && <Box height="150px" width="150px" />}
+                {!imageIsLoaded && (
+                  <Box height="150px" width="150px" mb="10px" />
+                )}
               </>
             </Grid>
           )}
           {title && (
             <Grid item xs={10}>
-              <Box color={fontColor} pt={2}>
+              <Box color={fontColor || '#000000'}>
                 <Typography textAlign="center" fontFamily={font} variant="h5">
                   <b>{title}</b>
                 </Typography>
@@ -49,7 +52,7 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
           )}
           {text && (
             <Grid item xs={10}>
-              <Box color={fontColor} pb={2}>
+              <Box color={fontColor || '#000000'} pb={2}>
                 <Typography textAlign="center" fontFamily={font}>
                   {text || `Snap a photo to access your content`}
                 </Typography>
@@ -59,19 +62,23 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
           <Grid item xs={12}>
             <Button
               onClick={onOpenCamera}
-              endIcon={<CameraAlt style={{ color: buttonColor }} />}
+              endIcon={
+                <CameraAlt style={{ color: buttonColor || '#000000' }} />
+              }
               disableRipple
               sx={{
-                borderBottom: `2px solid ${buttonColor}`,
+                borderBottom: `2px solid ${buttonColor || '#000000'}`,
                 borderRadius: '0px',
                 ':hover': {
-                  borderBottom: `2px solid ${buttonColor}`,
+                  borderBottom: `2px solid ${buttonColor || '#000000'}`,
                   backgroundColor: '#00000000',
                 },
-                ':focus': { borderBottom: `2px solid ${buttonColor}` },
+                ':focus': {
+                  borderBottom: `2px solid ${buttonColor || '#000000'}`,
+                },
               }}
             >
-              <Box color={buttonColor}>
+              <Box color={buttonColor || '#000000'}>
                 <Typography fontFamily={font} variant="h6">
                   <b>Open Camera</b>
                 </Typography>
@@ -95,7 +102,7 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
           {!hideBranding && (
             <Grid item xs={12} container justifyContent="center">
               <Box
-                color={fontColor}
+                color={fontColor || '#000000'}
                 sx={{
                   opacity: '0.6',
                   // '&:hover': {
@@ -118,8 +125,13 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
           )}
 
           <Grid item xs={12} container justifyContent="center">
-            <Button onClick={showHelpDialog} size="small" disableRipple>
-              <Box color={fontColor} fontSize={12}>
+            <Button
+              onClick={showHelpDialog}
+              size="small"
+              disableRipple
+              color="secondary"
+            >
+              <Box color={fontColor || '#000000'} fontSize={12}>
                 Having Trouble?
               </Box>
             </Button>

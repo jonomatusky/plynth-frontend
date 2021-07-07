@@ -169,6 +169,7 @@ const CardVideo = ({ cardIndex, currentIndex, card, style, preview }) => {
                     width="100%"
                     height="100%"
                     controls={true}
+                    playsinline={true}
                     style={{ position: 'absolute', top: 0, left: 0 }}
                   />
                 </div>
@@ -179,6 +180,9 @@ const CardVideo = ({ cardIndex, currentIndex, card, style, preview }) => {
                     {text}
                   </TextTypography>
                 </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Box height="50px" />
               </Grid>
             </Grid>
           )}

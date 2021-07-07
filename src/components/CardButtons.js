@@ -47,6 +47,9 @@ const CardButtons = ({ card, style }) => {
           </Grid>
         </Box>
       </Grid>
+      <Grid item xs={12}>
+        <Box height="50px" />
+      </Grid>
     </Grid>
   )
 }

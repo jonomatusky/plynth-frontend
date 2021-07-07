@@ -12,6 +12,7 @@ import {
 
 import { HashLink } from 'react-router-hash-link'
 import plynthLogoWhite from 'images/plynth_logo_white.svg'
+import { useSession } from 'hooks/use-session'
 
 const StyledLogo = styled('img')({
   opacity: `${props => props.opacity || 1}`,
@@ -26,6 +27,8 @@ const StyledLogo = styled('img')({
 })
 
 const WebsiteNavBar = ({ left, right, position, opacity }) => {
+  const { user } = useSession()
+
   useEffect(() => {
     document.body.style.backgroundColor = '#000000'
   }, [])
@@ -60,7 +63,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
           ) : (
             <Button
               component={RouterLink}
-              to="/admin/login"
+              to={user ? '/admin' : '/admin/login'}
               size="small"
               sx={{ textTransform: 'lowercase' }}
             >

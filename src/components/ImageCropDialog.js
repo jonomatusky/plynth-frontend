@@ -3,7 +3,14 @@ import { Dialog } from '@material-ui/core'
 
 import ImageCropper from './ImageCropper'
 
-const ImageCropDialog = ({ imageUrl, isOpen, setIsOpen, onSubmit, round }) => {
+const ImageCropDialog = ({
+  imageUrl,
+  isOpen,
+  setIsOpen,
+  onSubmit,
+  round,
+  resolution,
+}) => {
   const closeDialog = () => {
     setIsOpen(false)
   }
@@ -20,6 +27,7 @@ const ImageCropDialog = ({ imageUrl, isOpen, setIsOpen, onSubmit, round }) => {
         imageSrc={imageUrl}
         onCancel={closeDialog}
         onSubmit={submitHandler}
+        resolution={resolution}
       />
     </Dialog>
   )

@@ -13,11 +13,11 @@ import * as Yup from 'yup'
 
 import Button from 'components/Button'
 import CardImage from './CardImageUpload'
-import { useSession } from 'hooks/use-session'
+import useUserStore from 'hooks/store/use-user-store'
 
 const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
   const [prevCardId, setPrevCardId] = useState(null)
-  const { user } = useSession()
+  const { user } = useUserStore()
   // const [isFullscreenOnMobile, setIsFullscreenOnMobile ] = useState(card.isFullscreenMobile)
 
   const { title, text, label, url } = card || {}
@@ -65,7 +65,12 @@ const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
       <Grid container item xs={12} justifyContent="center">
         <Grid item container xs={12} justifyContent="center">
           <Grid item>
-            <CardImage card={card} onSubmit={onSubmit} pending={pending} />
+            <CardImage
+              card={card}
+              onSubmit={onSubmit}
+              pending={pending}
+              resolution="1000"
+            />
           </Grid>
         </Grid>
       </Grid>

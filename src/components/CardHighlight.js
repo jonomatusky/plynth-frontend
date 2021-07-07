@@ -116,6 +116,9 @@ const CardHighlight = ({ card, style, increment }) => {
               </ButtonCard>
             </Grid>
           )}
+          <Grid item xs={12}>
+            <Box height="50px" />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

@@ -269,27 +269,28 @@ const EditPortalAppearance = () => {
                                 </Box>
                               </Paper>
                             </Grid>
-
-                            <Grid item xs={12}>
-                              <Paper>
-                                <Box padding={3}>
-                                  <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                      <FormControlLabel
-                                        control={
-                                          <Switch
-                                            color="primary"
-                                            checked={hideBranding}
-                                            onChange={handleChangeBranding}
-                                          />
-                                        }
-                                        label="Hide branding"
-                                      />
+                            {user && user.tier !== 'free' && (
+                              <Grid item xs={12}>
+                                <Paper>
+                                  <Box padding={3}>
+                                    <Grid container spacing={3}>
+                                      <Grid item xs={12}>
+                                        <FormControlLabel
+                                          control={
+                                            <Switch
+                                              color="primary"
+                                              checked={hideBranding}
+                                              onChange={handleChangeBranding}
+                                            />
+                                          }
+                                          label="Hide branding"
+                                        />
+                                      </Grid>
                                     </Grid>
-                                  </Grid>
-                                </Box>
-                              </Paper>
-                            </Grid>
+                                  </Box>
+                                </Paper>
+                              </Grid>
+                            )}
                             <Grid item xs={12}>
                               <Box minHeight="24px" />
                             </Grid>

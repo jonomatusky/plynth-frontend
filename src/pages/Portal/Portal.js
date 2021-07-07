@@ -17,11 +17,14 @@ const Portal = () => {
   const { portalUser, fetchPortal, status, cameraError, setCameraError } =
     usePortalStore()
 
-  const { username } = useParams()
+  let { username } = useParams()
+  username = username.toLowerCase()
 
-  if (!portalUser || portalUser.username !== username) {
-    fetchPortal(username)
-  }
+  useEffect(() => {
+    if (!portalUser || portalUser.username !== username) {
+      fetchPortal(username)
+    }
+  }, [fetchPortal, username, portalUser])
 
   const { portal } = portalUser || {}
   const { style } = portal || {}
@@ -62,10 +65,10 @@ const Portal = () => {
 
   return (
     <PublicNav>
-      {!portalUser && status !== 'failed' && <LoadingScreen />}
-      {portalUser && status !== 'succeeded' && <LoadingScreen />}
-      {!!portalUser && status === 'failed' && <NotFoundPage />}
-      {portalUser && status === 'succeeded' && (
+      {status === 'failed' && <NotFoundPage />}
+      {status !== 'succeeded' && status !== 'failed' && <LoadingScreen />}
+      {status === 'succeeded' && !portalUser && <NotFoundPage />}
+      {status === 'succeeded' && portalUser && (
         <>
           <CameraDialog
             open={cameraError}

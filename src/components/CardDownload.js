@@ -65,6 +65,9 @@ const CardDownload = ({ packId, cardIndex, card, style }) => {
             </Grid>
           )}
         </Grid>
+        <Grid item xs={12}>
+          <Box height="50px" />
+        </Grid>
       </Grid>
     </>
   )

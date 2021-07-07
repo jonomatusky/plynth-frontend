@@ -130,6 +130,9 @@ const CardImage = ({ card, style, increment, preview }) => {
               )}
             </Grid>
           </Grid>
+          <Grid item xs={12}>
+            <Box height="50px" />
+          </Grid>
         </Grid>
       )}
     </>

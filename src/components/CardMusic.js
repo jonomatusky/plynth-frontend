@@ -121,6 +121,9 @@ const CardMusic = ({ card, style }) => {
                 })}
             </Grid>
           )}
+          <Grid item xs={12}>
+            <Box height="50px" />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

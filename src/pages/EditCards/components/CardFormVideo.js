@@ -9,7 +9,7 @@ import {
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useSession } from 'hooks/use-session'
+import useUserStore from 'hooks/store/use-user-store'
 
 const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
   const validationSchema = Yup.object({
@@ -26,7 +26,7 @@ const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
     },
     validationSchema: validationSchema,
     onSubmit: onSubmit,
-    enableReinitialize: true
+    enableReinitialize: true,
   })
 
   // const [prevCardId, setPrevCardId] = useState(null)
@@ -52,7 +52,7 @@ const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
     onSubmit({ loopingVideo: event.target.checked })
   }
 
-  const { user } = useSession()
+  const { user } = useUserStore()
 
   return (
     <Box minHeight="300px" pb={2}>
