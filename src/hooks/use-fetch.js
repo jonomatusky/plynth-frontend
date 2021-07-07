@@ -5,12 +5,13 @@ import { useUserStore } from './store/use-user-store'
 import { usePackStore } from './store/use-pack-store'
 import { useSession } from './use-session'
 import useAlertStore from './store/use-alert-store'
+import posthog from 'posthog-js'
 
 export const useFetch = () => {
   const { user } = useSession()
   const history = useHistory()
 
-  const { fetchUser, status: fetchUserStatus } = useUserStore()
+  const { fetchUser, status: fetchUserStatus, user: storeUser } = useUserStore()
   const { fetchPacks, status: fetchPacksStatus } = usePackStore()
   const { clearError } = useAlertStore()
 
@@ -28,6 +29,10 @@ export const useFetch = () => {
       fetch()
     }
   }, [user, history, fetchUser, fetchUserStatus, clearError])
+
+  useEffect(() => {
+    posthog.people.set({ username: storeUser.username })
+  }, [storeUser.username])
 
   useEffect(() => {
     const fetch = async () => {
