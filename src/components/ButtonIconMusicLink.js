@@ -22,8 +22,8 @@ const MusicButton = styled(({ children, style, link, ...props }) => {
   )
 })(({ style }) => ({
   // padding: 0,
-  height: '60px',
-  width: '60px',
+  height: '64px',
+  width: '64px',
   borderRadius: '50px',
   backgroundColor: (style || {}).buttonColor,
   color: (style || {}).buttonFontColor,

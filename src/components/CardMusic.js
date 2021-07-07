@@ -42,7 +42,7 @@ const CardMusic = ({ card, style }) => {
         justifyContent="center"
         sx={{ maxWidth: '400px' }}
       >
-        <Grid item container justifyContent="center" spacing={1}>
+        <Grid item container justifyContent="center" spacing={2}>
           <Grid item xs={12}>
             <Box height={15} />
           </Grid>
@@ -76,7 +76,7 @@ const CardMusic = ({ card, style }) => {
           </Grid>
           {card.title && (
             <Grid item xs={12}>
-              <Box pt={2}>
+              <Box pt={1}>
                 <Typography
                   variant="h5"
                   className={classes.type}
@@ -90,7 +90,7 @@ const CardMusic = ({ card, style }) => {
 
           {card.text && (
             <Grid item xs={12}>
-              <Box pt={1} pb={1}>
+              <Box>
                 <Typography
                   variant="h6"
                   className={classes.type}
@@ -103,7 +103,7 @@ const CardMusic = ({ card, style }) => {
           )}
 
           {card.links && (
-            <Grid item xs={12} container justifyContent="center">
+            <Grid item xs={12} container justifyContent="center" spacing={1}>
               {musicLinkTypes
                 .map(type => {
                   const link = (card.links || []).find(
@@ -114,9 +114,9 @@ const CardMusic = ({ card, style }) => {
                 .filter(link => !!link)
                 .map(link => {
                   return (
-                    <Box pr={1} key={link.type}>
+                    <Grid item key={link.type}>
                       <ButtonIconMusicLink link={link} style={style} />
-                    </Box>
+                    </Grid>
                   )
                 })}
             </Grid>
