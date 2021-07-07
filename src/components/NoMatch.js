@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Typography, Button, Box, Link } from '@material-ui/core'
 import Div100vh from './Div100vh'
+import posthog from 'posthog-js'
 
 const NoMatch = ({ fontColor, onClose }) => {
+  useEffect(() => {
+    posthog.capture('No Match')
+  }, [])
+
   return (
     <Div100vh width="100%">
       <Box

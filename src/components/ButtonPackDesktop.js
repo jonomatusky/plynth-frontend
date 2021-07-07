@@ -35,8 +35,8 @@ const ButtonPackDesktop = ({ children, isLeft, color, ...props }) => {
         variant="outlined"
         id={isLeft ? 'previous-card' : 'next-card'}
       >
-        {isLeft && <ArrowBack fontSize="large" />}
-        {!isLeft && <ArrowForward fontSize="large" />}
+        {isLeft && <ArrowBack fontSize="large" aria-label="Previous Card" />}
+        {!isLeft && <ArrowForward fontSize="large" aria-label="Next Card" />}
       </IconButton>
     </>
   )

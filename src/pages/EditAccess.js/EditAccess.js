@@ -24,11 +24,13 @@ import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 import DownloadQR from 'components/DownloadQr'
 import { GetApp } from '@material-ui/icons'
+import useUserStore from 'hooks/store/use-user-store'
 
 const { REACT_APP_PUBLIC_URL } = process.env
 
 const EditAccess = () => {
   const { packId } = useParams()
+  const { user } = useUserStore()
   const { selectPack, updatePack, updateStatus, fetchPacks } = usePackStore()
   const { request } = useRequest()
 
@@ -68,6 +70,10 @@ const EditAccess = () => {
 
   const handleChangeAvailability = event => {
     updatePack({ id: packId, isPublic: event.target.checked })
+  }
+
+  const handleShareWithLink = event => {
+    updatePack({ id: packId, shareWithLink: event.target.checked })
   }
 
   const handleNewImage = async imageFilePath => {
@@ -111,7 +117,7 @@ const EditAccess = () => {
                 <Grid item xs={12} sm={9}>
                   <Paper>
                     <Box padding={3}>
-                      <Grid container spacing={1}>
+                      <Grid container spacing={2}>
                         <Grid item xs={12}>
                           <Typography variant="h4">Manage Access</Typography>
                         </Grid>
@@ -138,69 +144,23 @@ const EditAccess = () => {
                           </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                          <Typography variant="body2">
-                            <b>Share:</b> {packLink}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12} container spacing={2}>
-                          <Grid item>
-                            <ButtonCopyToClipboard textToCopy={packLink}>
-                              Copy Link
-                            </ButtonCopyToClipboard>
-                          </Grid>
-                          <Grid item>
-                            <DownloadQR
-                              qrValue={packLink}
-                              fileName={
-                                `QR Code ` +
-                                (pack.name || 'Pack').replace(
-                                  /[/\\?%*:|"<>]/g,
-                                  '_'
-                                ) +
-                                '.png'
-                              }
-                            >
-                              <Button
-                                endIcon={
-                                  <GetApp
-                                    fontSize="small"
-                                    // sx={{ color: 'text.primary' }}
-                                  />
-                                }
-                                size="small"
-                                style={{ textTransform: 'none' }}
-                                color="secondary"
-                                disableElevation
-                              >
-                                <Box color="text.primary">
-                                  <Typography variant="body2">
-                                    Download QR
-                                  </Typography>
-                                </Box>
-                              </Button>
-                            </DownloadQR>
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Box width="100%" pb={3}>
+                          <Box width="100%">
                             <Divider />
                           </Box>
                         </Grid>
                         <Grid item xs={12}>
-                          <Typography variant="h6">
-                            Link to Physical Artwork
-                          </Typography>
+                          <Typography variant="h6">Link to Artwork</Typography>
                         </Grid>
                         <Grid item xs={12}>
                           <Typography variant="body2">
-                            Link this bundle to art in the real-world. Fans snap
-                            a photo at www.plynth.com to access.
+                            Link this pack to physical artwork. Users snap a
+                            photo at www.plynth.com/{user.username} to access
+                            your pack.
                           </Typography>
                         </Grid>
                         <Grid item xs={12}>
                           <b>
-                            Upload photos or art files to link them to this
-                            bundle
+                            Upload photos or art files to link them to this pack
                           </b>
                         </Grid>
                         <Grid item xs={12}>
@@ -220,6 +180,85 @@ const EditAccess = () => {
                             </Grid>
                           </Box>
                         </Grid>
+                        <Grid item xs={12}>
+                          <Box width="100%">
+                            <Divider />
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography variant="h6">
+                            Share with a link or QR code.
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} container alignItems="center">
+                          <Grid item>
+                            {pack && (
+                              <Switch
+                                color="primary"
+                                checked={pack.shareWithLink}
+                                onChange={handleShareWithLink}
+                              />
+                            )}
+                            {!pack && <Switch checked={false} disabled />}
+                          </Grid>
+                          <Grid item>
+                            <Typography>
+                              <b>
+                                {(pack || {}).shareWithLink
+                                  ? 'Link sharing on'
+                                  : 'Link sharing off'}
+                              </b>
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        {(pack || {}).shareWithLink && (
+                          <>
+                            <Grid item xs={12}>
+                              <Typography variant="body2">
+                                <b>URL:</b> {packLink}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={12} container spacing={2}>
+                              <Grid item>
+                                <ButtonCopyToClipboard textToCopy={packLink}>
+                                  Copy Link
+                                </ButtonCopyToClipboard>
+                              </Grid>
+                              <Grid item>
+                                <DownloadQR
+                                  qrValue={packLink + '?utm_source=qr'}
+                                  fileName={
+                                    `QR Code ` +
+                                    (pack.name || 'Pack').replace(
+                                      /[/\\?%*:|"<>]/g,
+                                      '_'
+                                    ) +
+                                    '.png'
+                                  }
+                                >
+                                  <Button
+                                    endIcon={
+                                      <GetApp
+                                        fontSize="small"
+                                        // sx={{ color: 'text.primary' }}
+                                      />
+                                    }
+                                    size="small"
+                                    style={{ textTransform: 'none' }}
+                                    color="secondary"
+                                    disableElevation
+                                  >
+                                    <Box color="text.primary">
+                                      <Typography variant="body2">
+                                        Download QR
+                                      </Typography>
+                                    </Box>
+                                  </Button>
+                                </DownloadQR>
+                              </Grid>
+                            </Grid>
+                          </>
+                        )}
                       </Grid>
                     </Box>
                   </Paper>

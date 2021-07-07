@@ -9,6 +9,7 @@ import PackButtonsDesktop from 'components/PackButtonsDesktop'
 import PaginationDots from 'components/PaginationDots'
 import NotFound from 'components/NotFound'
 import PublicNav from 'layouts/PublicNav'
+import WebsiteNavBar from 'components/WebsiteNavBar'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -31,7 +32,7 @@ const ViewPack = () => {
 
         const { style } = pack || {}
 
-        if (pack && pack.isPublic) {
+        if (pack && pack.isPublic && pack.shareWithLink) {
           if ((style || {}).backgroundColor) {
             document.body.style.backgroundColor = style.backgroundColor
           }
@@ -43,7 +44,7 @@ const ViewPack = () => {
     }
   }, [packId, request, status])
 
-  return pack && pack.isPublic ? (
+  return pack && pack.isPublic && pack.shareWithLink ? (
     <PublicNav>
       <PaginationDots
         count={(cards || []).length}
@@ -75,8 +76,10 @@ const ViewPack = () => {
     </PublicNav>
   ) : (
     <PublicNav>
-      {pack && !pack.isPublic && <NotFound />}
-      {!pack && <></>}
+      <WebsiteNavBar />
+      {(!pack || !(pack || {}).isPublic || !(pack || {}).shareWithLink) && (
+        <NotFound />
+      )}
     </PublicNav>
   )
 }

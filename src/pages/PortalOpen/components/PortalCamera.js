@@ -55,25 +55,35 @@ const PortalCamera = ({
             justifyContent="center"
           >
             <Grid container justifyContent="center" spacing={1}>
-              <Grid item xs={11}>
-                <Typography
-                  variant="h6"
-                  textAlign="center"
-                  color={fontColor}
-                  sx={{ textShadow: '0px 1px 7px #555555' }}
-                >
-                  <b>{instructions || `Snap a photo to unlock your content`}</b>
-                </Typography>
-              </Grid>
-              <Grid item xs={12} container justifyContent="center">
-                {hasUserMedia ? (
-                  <Fab onClick={capture} variant="outlined">
-                    <CameraAlt fontSize="large" />
-                  </Fab>
-                ) : (
+              {hasUserMedia ? (
+                <>
+                  <Grid item xs={11}>
+                    <Typography
+                      variant="h6"
+                      textAlign="center"
+                      color="white"
+                      sx={{ textShadow: '0px 1px 7px #555555' }}
+                    >
+                      <b>
+                        {instructions || `Snap a photo to unlock your content`}
+                      </b>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} container justifyContent="center">
+                    <Fab
+                      onClick={capture}
+                      variant="outlined"
+                      aria-label="Take photo"
+                    >
+                      <CameraAlt fontSize="large" />
+                    </Fab>
+                  </Grid>
+                </>
+              ) : (
+                <Grid item xs={12} container justifyContent="center">
                   <CircularProgress sx={{ color: 'white' }} />
-                )}
-              </Grid>
+                </Grid>
+              )}
             </Grid>
           </Box>
           <Box
@@ -103,7 +113,7 @@ const PortalCamera = ({
                 size="small"
                 color="inherit"
                 disableRipple
-                endIcon={<Clear sx={{ color: fontColor }} />}
+                endIcon={<Clear sx={{ color: fontColor }} aria-label="Close" />}
               >
                 <Box color={fontColor}>Close</Box>
               </Button>

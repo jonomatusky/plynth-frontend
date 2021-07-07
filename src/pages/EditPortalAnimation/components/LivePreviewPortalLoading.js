@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, makeStyles } from '@material-ui/core'
 import theme from 'theme'
-import PortalLoading from 'pages/Portal/components/PortalLoading'
+import PortalLoading from 'pages/PortalOpen/components/PortalLoading'
 
 // const { REACT_APP_PUBLIC_URL } = process.env
 

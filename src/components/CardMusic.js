@@ -114,12 +114,8 @@ const CardMusic = ({ card, style }) => {
                 .filter(link => !!link)
                 .map(link => {
                   return (
-                    <Box pr={1}>
-                      <ButtonIconMusicLink
-                        key={link.type}
-                        link={link}
-                        style={style}
-                      />
+                    <Box pr={1} key={link.type}>
+                      <ButtonIconMusicLink link={link} style={style} />
                     </Box>
                   )
                 })}

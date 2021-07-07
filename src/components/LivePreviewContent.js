@@ -21,7 +21,6 @@ const LivePreviewContent = ({ pack, index, setIndex, height }) => {
   }
 
   useEffect(() => {
-    console.log('hash')
     window.history.pushState(
       null,
       null,

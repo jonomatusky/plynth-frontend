@@ -34,6 +34,7 @@ import EditPortalAppearance from 'pages/EditPortalAppearance/EditPortalAppearanc
 import MyAccount from 'pages/MyAccount/MyAccount'
 import Portal from 'pages/Portal/Portal'
 import EditPortalAnimation from 'pages/EditPortalAnimation/EditPortalAnimation'
+import PortalOpen from 'pages/PortalOpen/PortalOpen'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -93,6 +94,14 @@ const App = () => {
       <Route component={Register} path="/test/register" />
       <Route component={GroundUP} path="/groundup" />
       <Route component={Home} path="/" exact />
+
+      <Route
+        publicRoute={true}
+        restricted={false}
+        component={PortalOpen}
+        path="/:username/open"
+        exact
+      />
 
       <Route
         publicRoute={true}

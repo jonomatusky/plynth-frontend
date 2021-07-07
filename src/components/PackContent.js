@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import { Grid, Hidden, Box } from '@material-ui/core'
 
@@ -10,7 +10,6 @@ import CardMusic from './CardMusic'
 import CardImage from './CardImage'
 import CardButtons from './CardButtons'
 import { use100vh } from 'hooks/use-100-vh'
-import posthog from 'posthog-js'
 
 const PackContent = ({ preview, pack, index, setIndex }) => {
   const cards = (pack || {}).cards
@@ -26,10 +25,6 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
   }
 
   const windowHeight = use100vh()
-
-  useEffect(() => {
-    window.history.pushState(null, null, `#card=${index}_${cards[index].id}`)
-  }, [index, cards])
 
   return (
     <SwipeableViews

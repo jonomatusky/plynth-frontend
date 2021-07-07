@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Container, Hidden } from '@material-ui/core'
 import PublicNav from 'layouts/PublicNav'
@@ -6,6 +6,7 @@ import PackButtonsDesktop from './PackButtonsDesktop'
 import PackButtonsMobile from './PackButtonsMobile'
 import PackContent from './PackContent'
 import PaginationDots from './PaginationDots'
+import posthog from 'posthog-js'
 
 const Pack = ({ pack }) => {
   const [index, setIndex] = useState(0)
@@ -18,6 +19,19 @@ const Pack = ({ pack }) => {
       document.body.style.backgroundColor = style.backgroundColor
     }
   }
+
+  useEffect(() => {
+    posthog.capture('Found Pack', { 'Pack Id': pack.id })
+  }, [pack.id])
+
+  useEffect(() => {
+    window.history.pushState(
+      null,
+      null,
+      `#pack=${pack.id}&card=${index}_${cards[index].id}`
+    )
+    posthog.capture('$pageview')
+  }, [index, cards, pack.id])
 
   return (
     <PublicNav>
