@@ -214,7 +214,7 @@ const PacksView = () => {
             </Grid>
             <Hidden mdDown>
               <Grid item md={5}>
-                <Box borderLeft={1} borderColor="divider" height="100%">
+                <Box borderLeft={1} borderColor="divider" height="100vh">
                   <Box minHeight="96px" />
                   <Box>
                     <Grid container justifyContent="center" spacing={3}>
