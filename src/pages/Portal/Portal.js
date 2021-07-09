@@ -25,8 +25,6 @@ const Portal = () => {
     }
   }, [fetchPortal, username, portalUser])
 
-  console.log(portalUser)
-
   const { portal } = portalUser || {}
   const { style } = portal || {}
   const { backgroundColor } = style || {}

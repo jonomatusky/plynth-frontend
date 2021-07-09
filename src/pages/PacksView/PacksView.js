@@ -149,10 +149,19 @@ const PacksView = () => {
                   </Grid>
                   {status === 'succeeded' && (packs || []).length === 0 && (
                     <Grid item xs={10}>
-                      <Typography align="center">
-                        You don't have any packs yet! Create a new one to get
-                        started <Emoji symbol="👆" label="up" />
-                      </Typography>
+                      <Hidden smDown>
+                        <Typography align="center">
+                          You don't have any packs yet! Create a new one to get
+                          started <Emoji symbol="👆" label="up" />
+                        </Typography>
+                      </Hidden>
+                      <Hidden smUp>
+                        <Typography align="center">
+                          You don't have any packs yet! Switch over to desktop
+                          to start creating{' '}
+                          <Emoji symbol="💻" label="desktop" />
+                        </Typography>
+                      </Hidden>
                     </Grid>
                   )}
                   {(packs || []).length > 0 && (
