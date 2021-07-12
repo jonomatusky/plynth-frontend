@@ -37,7 +37,12 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
       textAlign: true,
       hideButtons: true,
     },
-    image: { image: true, title: true, text: 'Subtitle' },
+    image: {
+      image: true,
+      title: true,
+      text: 'Subtitle',
+      isFullscreenMobile: true,
+    },
     music: { image: true, title: true, text: 'Subtitle', musicButtons: true },
     text: { title: true, text: true, multiline: true },
     video: {
@@ -358,40 +363,43 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
               />
             </Grid>
           )}
-          {showField.isFullscreenMobile ||
-            (showField.loopingVideo && (
-              <Grid item xs={12} container>
-                {showField.isFullscreenMobile && (
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          color="primary"
-                          checked={!!card.isFullscreenMobile}
-                          onChange={handleFullscreenMobile}
-                        />
-                      }
-                      label="Make fullscreen on mobile (Vimeo-only)"
-                    />
-                  </Grid>
-                )}
-                {showField.loopingVideo && user.tier !== 'free' && (
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          color="primary"
-                          checked={!!card.loopingVideo}
-                          onChange={handleLoopingVideo}
-                        />
-                      }
-                      label="Looping video"
-                      disabled={!card.isFullscreenMobile}
-                    />
-                  </Grid>
-                )}
-              </Grid>
-            ))}
+          {(showField.isFullscreenMobile || showField.loopingVideo) && (
+            <Grid item xs={12} container>
+              {showField.isFullscreenMobile && (
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={!!card.isFullscreenMobile}
+                        onChange={handleFullscreenMobile}
+                      />
+                    }
+                    label={
+                      showField.isFullscreenMobile === true
+                        ? 'Make fullscreen on mobile'
+                        : showField.isFullscreenMobile
+                    }
+                  />
+                </Grid>
+              )}
+              {showField.loopingVideo && user.tier !== 'free' && (
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={!!card.loopingVideo}
+                        onChange={handleLoopingVideo}
+                      />
+                    }
+                    label="Looping video"
+                    disabled={!card.isFullscreenMobile}
+                  />
+                </Grid>
+              )}
+            </Grid>
+          )}
         </Grid>
       </form>
       {showField.links && <ButtonsCard card={card} onSubmit={onSubmit} />}
