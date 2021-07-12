@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   TextField,
   Grid,
@@ -7,8 +7,7 @@ import {
   Switch,
 } from '@material-ui/core'
 
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import Button from 'components/Button'
@@ -16,13 +15,6 @@ import useUserStore from 'hooks/store/use-user-store'
 
 const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
   const { user } = useUserStore()
-  const [prevCardId, setPrevCardId] = useState(null)
-
-  const defaultValues = {
-    title: card.title || '',
-    text: card.text || '',
-    url: card.url || '',
-  }
 
   const validationSchema = Yup.object({
     title: Yup.string().max(50, 'Enter a title under 50 characters'),
@@ -30,22 +22,15 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
     url: Yup.string().url(`Must be a valid URL. Include http:// or https://`),
   })
 
-  const { register, handleSubmit, errors, reset } = useForm({
-    mode: 'onBlur',
-    resolver: yupResolver(validationSchema),
-    defaultValues,
-    shouldUnregister: false,
-  })
-
-  //ensures the form is rerendered when the index is changed
-  useEffect(() => {
-    const setReset = () => {
-      setPrevCardId(card.id)
-      reset({ title: card.title, text: card.text, url: card.url })
-    }
-    if (card.id && prevCardId !== card.id) {
-      setReset()
-    }
+  const formik = useFormik({
+    initialValues: {
+      title: card.title || '',
+      text: card.text || '',
+      url: card.url || '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: onSubmit,
+    enableReinitialize: true,
   })
 
   const handleEmailDownload = async event => {
@@ -53,7 +38,7 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
   }
 
   return (
-    <form id="card-form" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={formik.handleSubmit}>
       <Box minHeight="300px">
         <Grid container justifyContent="flex-end" spacing={3}>
           <Grid item xs={12}>
@@ -63,9 +48,9 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
               name="title"
               label="Title"
               placeholder="Thanks for the support!"
-              inputRef={register}
-              error={Boolean(errors.title)}
-              helperText={errors.title?.message}
+              {...formik.getFieldProps('title')}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
               autoComplete="off"
               InputLabelProps={{
                 shrink: true,
@@ -79,9 +64,9 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
               name="text"
               label="Subtitle"
               placeholder="Get a sneak peak at our latest video..."
-              inputRef={register}
-              error={Boolean(errors.text)}
-              helperText={errors.text?.message}
+              {...formik.getFieldProps('text')}
+              error={formik.touched.text && Boolean(formik.errors.text)}
+              helperText={formik.touched.text && formik.errors.text}
               autoComplete="off"
               InputLabelProps={{
                 shrink: true,
@@ -95,9 +80,9 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
               name="url"
               label="Direct Download Link"
               placeholder="Add a link to your download"
-              inputRef={register}
-              error={Boolean(errors.url)}
-              helperText={errors.url?.message}
+              {...formik.getFieldProps('url')}
+              error={formik.touched.url && Boolean(formik.errors.url)}
+              helperText={formik.touched.url && formik.errors.url}
               autoComplete="off"
               InputLabelProps={{
                 shrink: true,

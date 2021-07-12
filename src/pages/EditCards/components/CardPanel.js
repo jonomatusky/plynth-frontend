@@ -8,14 +8,8 @@ import {
 } from '@material-ui/core'
 
 import { cardTypes } from 'components/CardCard'
-import CardFormText from './CardFormText'
-import CardFormVideo from './CardFormVideo'
-import CardFormDownload from './CardFormDownload'
-import CardFormHighlight from './CardFormHighlight'
-import CardFormMusic from './CardFormMusic'
-import CardFormImage from './CardFormImage'
 import { DeleteOutline } from '@material-ui/icons'
-import CardFormButtons from './CardFormButtons'
+import CardForm from './CardForm'
 
 const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
   const type = card.type
@@ -36,62 +30,7 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
           <Grid item xs={12}>
             <Grid container justify="center">
               <Grid item xs={12}>
-                {type === 'text' && (
-                  <CardFormText
-                    card={card}
-                    onSubmit={onSubmit}
-                    pending={pending}
-                    onRemove={onRemove}
-                  />
-                )}
-                {type === 'video' && (
-                  <CardFormVideo
-                    card={card}
-                    onSubmit={onSubmit}
-                    pending={pending}
-                    onRemove={onRemove}
-                  />
-                )}
-                {type === 'download' && (
-                  <CardFormDownload
-                    card={card}
-                    onSubmit={onSubmit}
-                    pending={pending}
-                    onRemove={onRemove}
-                  />
-                )}
-                {type === 'highlight' && (
-                  <CardFormHighlight
-                    card={card}
-                    onSubmit={onSubmit}
-                    pending={pending}
-                    onRemove={onRemove}
-                  />
-                )}
-                {type === 'music' && (
-                  <CardFormMusic
-                    card={card}
-                    onSubmit={onSubmit}
-                    pending={pending}
-                    onRemove={onRemove}
-                  />
-                )}
-                {type === 'image' && (
-                  <CardFormImage
-                    card={card}
-                    onSubmit={onSubmit}
-                    onRemove={onRemove}
-                    pending={pending}
-                  />
-                )}
-                {type === 'buttons' && (
-                  <CardFormButtons
-                    card={card}
-                    onSubmit={onSubmit}
-                    onRemove={onRemove}
-                    pending={pending}
-                  />
-                )}
+                <CardForm card={card} onSubmit={onSubmit} />
               </Grid>
               <Grid
                 item
