@@ -23,6 +23,8 @@ const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
       title: card.title || '',
       text: card.text || '',
       url: card.url || '',
+      isFullscreenMobile: !!card.isFullscreenMobile,
+      loopingVideo: !!card.loopingVideo,
     },
     validationSchema: validationSchema,
     onSubmit: onSubmit,
@@ -42,14 +44,18 @@ const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
   //   }
   // })
 
+  // const [isFullscreenMobile, setIsFullscreenMob]
+
   const handleFullscreenMobile = async event => {
     // await formik.submitForm()
-    onSubmit({ isFullscreenMobile: event.target.checked })
+    // onSubmit({ isFullscreenMobile: event.target.checked })
+    formik.setFieldValue('isFullscreenMobile', event.target.checked)
+    formik.submitForm()
   }
 
   const handleLoopingVideo = async event => {
-    // await formik.submitForm()
-    onSubmit({ loopingVideo: event.target.checked })
+    formik.setFieldValue('loopingVideo', event.target.checked)
+    formik.submitForm()
   }
 
   const { user } = useUserStore()
