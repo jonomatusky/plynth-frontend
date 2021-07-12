@@ -52,6 +52,7 @@
     "build-testing": "env-cmd -f .env.testing.local react-scripts build",
     "build": "env-cmd -f .env.staging.local react-scripts build",
     "deploy": "firebase deploy --only hosting:staging",
+    "deploy-production": "firebase deploy --only hosting:production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
