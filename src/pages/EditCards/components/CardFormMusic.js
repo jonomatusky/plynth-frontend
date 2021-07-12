@@ -54,7 +54,6 @@ const CardFormMusic = ({ card, onSubmit, pending, onRemove }) => {
       const url = musicLinks[type]
       if (url) {
         const link = { type, url }
-        console.log(link)
         links.push(link)
       }
     })
