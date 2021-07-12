@@ -21,7 +21,7 @@ const LivePreviewContent = ({ pack, index, setIndex, height }) => {
   }
 
   useEffect(() => {
-    window.history.pushState(
+    window.history.replaceState(
       null,
       null,
       `#card=${index}_${(cards[index] || {}).id || ''}`

@@ -113,9 +113,9 @@ const PortalCamera = ({
                 size="small"
                 color="inherit"
                 disableRipple
-                endIcon={<Clear sx={{ color: fontColor }} aria-label="Close" />}
+                endIcon={<Clear sx={{ color: '#ffffff' }} aria-label="Close" />}
               >
-                <Box color={fontColor}>Close</Box>
+                <Box color={'#ffffff'}>Close</Box>
               </Button>
             </Box>
             <Box

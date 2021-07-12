@@ -25,10 +25,14 @@ const MusicButton = styled(({ children, style, link, ...props }) => {
   height: '64px',
   width: '64px',
   borderRadius: '50px',
-  backgroundColor: (style || {}).buttonColor,
-  color: (style || {}).buttonFontColor,
+  backgroundColor: (style || {}).buttonColor || `${(style || {}).fontColor}cc`,
+  color:
+    (style || {}).buttonFontColor ||
+    ((style || {}).fontColor === '#ffffff' ? '#000000' : '#ffffff'),
   '&:hover': {
-    backgroundColor: `${(style || {}).buttonColor}99`,
+    backgroundColor: `${
+      (style || {}).buttonColor || (style || {}).fontColor
+    }99`,
     boxShadow: `0px 1px #000`,
   },
 }))

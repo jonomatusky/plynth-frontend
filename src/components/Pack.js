@@ -25,7 +25,7 @@ const Pack = ({ pack }) => {
   }, [pack.id])
 
   useEffect(() => {
-    window.history.pushState(
+    window.history.replaceState(
       null,
       null,
       `#pack=${pack.id}&card=${index}_${cards[index].id}`

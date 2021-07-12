@@ -109,7 +109,7 @@ const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
                 control={
                   <Switch
                     color="primary"
-                    checked={card.isFullscreenMobile}
+                    checked={!!card.isFullscreenMobile}
                     onChange={handleFullscreenMobile}
                   />
                 }
@@ -122,7 +122,7 @@ const CardFormVideo = ({ card, onSubmit, pending, onRemove }) => {
                   control={
                     <Switch
                       color="primary"
-                      checked={card.loopingVideo}
+                      checked={!!card.loopingVideo}
                       onChange={handleLoopingVideo}
                     />
                   }

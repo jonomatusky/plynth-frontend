@@ -2,5 +2,17 @@
   "projects": {
     "default": "plynth-2020",
     "staging": "plynth-test"
+  },
+  "targets": {
+    "plynth-2020": {
+      "hosting": {
+        "production": [
+          "plynth-2020"
+        ],
+        "staging": [
+          "plynth-staging"
+        ]
+      }
+    }
   }
 }

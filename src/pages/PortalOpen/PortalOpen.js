@@ -37,7 +37,6 @@ const PortalOpen = () => {
     const fetchPortalUser = async () => {
       try {
         await fetchPortal(username)
-        window.history.replaceState(null, null, `/${username}/open`)
       } catch (err) {
         clearError()
       }
@@ -45,6 +44,8 @@ const PortalOpen = () => {
 
     if (!portalUser || portalUser.username !== username) {
       fetchPortalUser()
+    } else {
+      window.history.replaceState(null, null, `/${username}/open`)
     }
   }, [portalUser, fetchPortal, username, clearError])
 

@@ -128,18 +128,15 @@ const EditAccess = () => {
                             </Typography>
                           </Grid>
                           <Grid item>
-                            {pack && (
-                              <Switch
-                                color="primary"
-                                checked={pack.isPublic}
-                                onChange={handleChangeAvailability}
-                              />
-                            )}
-                            {!pack && <Switch checked={false} disabled />}
+                            <Switch
+                              color="primary"
+                              checked={!!pack.isPublic}
+                              onChange={handleChangeAvailability}
+                            />
                           </Grid>
                           <Grid item>
                             <Typography>
-                              {(pack || {}).isPublic ? 'PUBLIC' : 'PRIVATE'}
+                              {pack.isPublic ? 'PUBLIC' : 'PRIVATE'}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -192,26 +189,23 @@ const EditAccess = () => {
                         </Grid>
                         <Grid item xs={12} container alignItems="center">
                           <Grid item>
-                            {pack && (
-                              <Switch
-                                color="primary"
-                                checked={pack.shareWithLink}
-                                onChange={handleShareWithLink}
-                              />
-                            )}
-                            {!pack && <Switch checked={false} disabled />}
+                            <Switch
+                              color="primary"
+                              checked={!!pack.shareWithLink}
+                              onChange={handleShareWithLink}
+                            />
                           </Grid>
                           <Grid item>
                             <Typography>
                               <b>
-                                {(pack || {}).shareWithLink
+                                {pack.shareWithLink
                                   ? 'Link sharing on'
                                   : 'Link sharing off'}
                               </b>
                             </Typography>
                           </Grid>
                         </Grid>
-                        {(pack || {}).shareWithLink && (
+                        {pack.shareWithLink && (
                           <>
                             <Grid item xs={12}>
                               <Typography variant="body2">

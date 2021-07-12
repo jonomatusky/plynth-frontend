@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import {
-  TextField,
-  Grid,
-  FormControlLabel,
-  Switch,
-  // FormControlLabel,
-  // Switch,
-} from '@material-ui/core'
+import { TextField, Grid, FormControlLabel, Switch } from '@material-ui/core'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import Button from 'components/Button'
 import CardImage from './CardImageUpload'
-import useUserStore from 'hooks/store/use-user-store'
 
 const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
   const [prevCardId, setPrevCardId] = useState(null)
-  const { user } = useUserStore()
-  // const [isFullscreenOnMobile, setIsFullscreenOnMobile ] = useState(card.isFullscreenMobile)
 
   const { title, text, label, url } = card || {}
 
@@ -50,15 +40,8 @@ const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
   })
 
   const handleFullscreenMobile = async event => {
-    // await formik.submitForm()
     onSubmit({ isFullscreenMobile: event.target.checked })
   }
-
-  // const changeFullscreenMobile = () => {
-  //   const newCard = { ...card }
-  //   newCard.isFullscreenMobile = !card.isFullscreenMobile
-  //   onSubmit(newCard)
-  // }
 
   return (
     <Grid container>
@@ -109,20 +92,18 @@ const CardFormImage = ({ card, onSubmit, pending, onRemove }) => {
                 }}
               />
             </Grid>
-            {user.tier !== 'free' && (
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      color="primary"
-                      checked={card.isFullscreenMobile}
-                      onChange={handleFullscreenMobile}
-                    />
-                  }
-                  label="Make fullscreen on mobile"
-                />
-              </Grid>
-            )}
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="primary"
+                    checked={!!card.isFullscreenMobile}
+                    onChange={handleFullscreenMobile}
+                  />
+                }
+                label="Make fullscreen on mobile"
+              />
+            </Grid>
             <Grid
               item
               xs={12}

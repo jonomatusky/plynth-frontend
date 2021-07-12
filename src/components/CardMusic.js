@@ -90,35 +90,37 @@ const CardMusic = ({ card, style }) => {
 
           {card.text && (
             <Grid item xs={12}>
-              <Box>
-                <Typography
-                  variant="h6"
-                  className={classes.type}
-                  textAlign="center"
-                >
-                  {card.text}
-                </Typography>
-              </Box>
+              <Typography
+                variant="h6"
+                className={classes.type}
+                textAlign="center"
+              >
+                {card.text}
+              </Typography>
             </Grid>
           )}
 
           {card.links && (
-            <Grid item xs={12} container justifyContent="center" spacing={1}>
-              {musicLinkTypes
-                .map(type => {
-                  const link = (card.links || []).find(
-                    link => link.type === type
-                  )
-                  return link
-                })
-                .filter(link => !!link)
-                .map(link => {
-                  return (
-                    <Grid item key={link.type}>
-                      <ButtonIconMusicLink link={link} style={style} />
-                    </Grid>
-                  )
-                })}
+            <Grid item xs={12}>
+              <Box pt={2}>
+                <Grid container justifyContent="center" spacing={1}>
+                  {musicLinkTypes
+                    .map(type => {
+                      const link = (card.links || []).find(
+                        link => link.type === type
+                      )
+                      return link
+                    })
+                    .filter(link => !!link)
+                    .map(link => {
+                      return (
+                        <Grid item key={link.type}>
+                          <ButtonIconMusicLink link={link} style={style} />
+                        </Grid>
+                      )
+                    })}
+                </Grid>
+              </Box>
             </Grid>
           )}
           <Grid item xs={12}>
