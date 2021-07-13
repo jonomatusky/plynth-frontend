@@ -101,6 +101,7 @@ const PortalOpen = () => {
         fontColor={fontColor}
         instructions={instructions}
         onClose={handleClose}
+        portal={username}
       />
     )
   }

@@ -54,7 +54,7 @@ const CardImage = ({ card, style, increment, preview }) => {
 
   return (
     <>
-      {isFullscreenMobile && !preview && (
+      {isFullscreenMobile && !preview && isMobile && (
         <Div100vh>
           {image && (
             <Box
@@ -94,7 +94,7 @@ const CardImage = ({ card, style, increment, preview }) => {
           </Box>
         </Box>
       )}
-      {!isFullscreenMobile && (
+      {(!isFullscreenMobile || !isMobile) && (
         <Grid container justifyContent="center">
           <Grid item xs={10} container justifyContent="center">
             <Grid item container justifyContent="center" spacing={2}>

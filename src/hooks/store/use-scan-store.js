@@ -36,8 +36,8 @@ export const useScanStore = () => {
   }, [dispatch])
 
   const startScan = useCallback(
-    async imageSrc => {
-      await dispatchThunk(createScan, { imageSrc })
+    async (imageSrc, portal) => {
+      await dispatchThunk(createScan, { imageSrc, portal })
     },
     [dispatchThunk]
   )

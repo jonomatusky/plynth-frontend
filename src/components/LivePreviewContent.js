@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import { Grid, Box } from '@material-ui/core'
 
 import CardText from './CardText'
 import CardVideo from './CardVideo'

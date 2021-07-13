@@ -22,6 +22,7 @@ const PortalCamera = ({
   fontColor,
   instructions,
   onClose,
+  portal,
 }) => {
   const { startScan } = useScanStore()
   const { clearError } = useAlertStore()
@@ -36,11 +37,11 @@ const PortalCamera = ({
     const imageSrc = webcamRef.current.getScreenshot()
 
     try {
-      await startScan(imageSrc)
+      await startScan(imageSrc, portal)
     } catch (err) {
       clearError()
     }
-  }, [webcamRef, startScan, clearError])
+  }, [webcamRef, startScan, clearError, portal])
 
   return (
     <Div100vh width="100vw">
