@@ -31,8 +31,8 @@ const ScanError = ({ fontColor, onClose }) => {
             </Typography>
           </Grid>
           <Grid item xs={12} container justifyContent="center">
-            <Button onClick={onClose}>
-              <Box sx={{ color: 'white' }}>Try Again</Box>
+            <Button onClick={onClose} color="secondary">
+              <Box sx={{ color: fontColor }}>Try Again</Box>
             </Button>
           </Grid>
         </Grid>
