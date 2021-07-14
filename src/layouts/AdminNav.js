@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
   Grid,
   Box,
@@ -62,6 +62,11 @@ const AdminNav = ({ children }) => {
 
   const { logout } = useSession()
   const classes = useStyles()
+  const theme = useTheme()
+
+  useEffect(() => {
+    document.body.style.backgroundColor = theme.palette.background.default
+  }, [theme.palette.background.default])
 
   const [anchorEl, setAnchorEl] = useState(null)
 
