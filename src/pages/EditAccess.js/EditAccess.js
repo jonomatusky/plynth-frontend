@@ -119,40 +119,14 @@ const EditAccess = () => {
                     <Box padding={3}>
                       <Grid container spacing={2}>
                         <Grid item xs={12}>
-                          <Typography variant="h4">Manage Access</Typography>
+                          <Typography variant="h4">Link to Artwork</Typography>
                         </Grid>
-                        <Grid item xs={12} container alignItems="center">
-                          <Grid item>
-                            <Typography>
-                              <b>This pack is:</b>
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Switch
-                              color="primary"
-                              checked={!!pack.isPublic}
-                              onChange={handleChangeAvailability}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <Typography>
-                              {pack.isPublic ? 'PUBLIC' : 'PRIVATE'}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Box width="100%">
-                            <Divider />
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography variant="h6">Link to Artwork</Typography>
-                        </Grid>
+
                         <Grid item xs={12}>
                           <Typography variant="body2">
                             Link this pack to physical artwork. Users snap a
-                            photo at www.plynth.com/{user.username} to access
-                            your pack.
+                            photo at <b>www.plynth.com/{user.username}</b> to
+                            access your pack.
                           </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -253,6 +227,30 @@ const EditAccess = () => {
                             </Grid>
                           </>
                         )}
+                        <Grid item xs={12}>
+                          <Box width="100%">
+                            <Divider />
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12} container alignItems="center">
+                          <Grid item>
+                            <Typography>
+                              <b>This pack is:</b>
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Switch
+                              color="primary"
+                              checked={!!pack.isPublic}
+                              onChange={handleChangeAvailability}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <Typography>
+                              {pack.isPublic ? 'PUBLIC' : 'PRIVATE'}
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Box>
                   </Paper>
