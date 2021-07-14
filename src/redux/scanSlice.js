@@ -24,7 +24,6 @@ export const createScan = createAsyncThunk(
       data: {
         fileName: resizedImage.name,
         fileType: resizedImage.type,
-        portal: portal,
       },
     })
 
@@ -38,8 +37,9 @@ export const createScan = createAsyncThunk(
       headers,
       url: `/scans`,
       method: 'POST',
-      data: { imageFilepath },
+      data: { imageFilepath, portal },
     })
+
     return { scan, scanToken }
   }
 )

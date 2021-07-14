@@ -26,7 +26,7 @@ const ScanError = ({ fontColor, onClose }) => {
                 underline="always"
               >
                 contact us
-              </Link>{' '}
+              </Link>
               .
             </Typography>
           </Grid>
