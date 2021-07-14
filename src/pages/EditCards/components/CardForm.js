@@ -109,6 +109,8 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
       other: other || '',
       isFullscreenMobile: !!card.isFullscreenMobile,
       loopingVideo: !!card.loopingVideo,
+      hidebuttons: !!card.hideButtons,
+      textAlign: card.textAlign || 'center',
     },
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
@@ -126,11 +128,13 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
   }
 
   const handleTextAlign = alignment => {
-    onSubmit({ textAlign: alignment })
+    formik.setFieldValue('textAlign', alignment)
+    formik.submitForm()
   }
 
   const handleHideButtons = async event => {
-    onSubmit({ hideButtons: event.target.checked })
+    formik.setFieldValue('hideButtons', event.target.checked)
+    formik.submitForm()
   }
 
   return (
