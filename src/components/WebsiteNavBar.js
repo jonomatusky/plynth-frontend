@@ -27,7 +27,7 @@ const StyledLogo = styled('img')({
 })
 
 const WebsiteNavBar = ({ left, right, position, opacity }) => {
-  const { user } = useSession()
+  const { user, initializing } = useSession()
 
   useEffect(() => {
     document.body.style.backgroundColor = '#000000'
@@ -61,16 +61,20 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
           {right ? (
             right
           ) : (
-            <Button
-              component={RouterLink}
-              to={user ? '/admin' : '/admin/login'}
-              size="small"
-              sx={{ textTransform: 'lowercase' }}
-            >
-              <Typography color="#BBBBBB">
-                <b>_</b>sign in
-              </Typography>
-            </Button>
+            <>
+              {!initializing && (
+                <Button
+                  component={RouterLink}
+                  to={user ? '/admin' : '/admin/login'}
+                  size="small"
+                  sx={{ textTransform: 'lowercase' }}
+                >
+                  <Typography color="#BBBBBB">
+                    <b>_</b>sign in
+                  </Typography>
+                </Button>
+              )}
+            </>
           )}
         </Grid>
       </Toolbar>
