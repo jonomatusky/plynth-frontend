@@ -31,7 +31,9 @@ export const useFetch = () => {
   }, [user, history, fetchUser, fetchUserStatus, clearError])
 
   useEffect(() => {
-    posthog.people.set({ username: storeUser.username })
+    if (!!storeUser.username) {
+      posthog.people.set({ username: storeUser.username })
+    }
   }, [storeUser.username])
 
   useEffect(() => {
