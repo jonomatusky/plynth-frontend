@@ -52,11 +52,9 @@ const CardImage = ({ card, style, increment, preview }) => {
     }
   }
 
-  const showFullscreen = !!isFullscreenMobile && (!!isMobile || !!preview)
-
   return (
     <>
-      {showFullscreen && (
+      {isFullscreenMobile && !preview && isMobile && (
         <Div100vh>
           {image && (
             <Box
@@ -72,7 +70,31 @@ const CardImage = ({ card, style, increment, preview }) => {
           )}
         </Div100vh>
       )}
-      {!showFullscreen && (
+      {isFullscreenMobile && preview && (
+        <Box height="100%" overflow="hidden">
+          <Box
+            height="100%"
+            display="flex"
+            justifyContent="center"
+            overflow="hidden"
+            bgcolor="black"
+          >
+            {image && (
+              <Box
+                width="100%"
+                height="100%"
+                sx={{
+                  backgroundImage: `url(${imageUrl})`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            )}
+          </Box>
+        </Box>
+      )}
+      {(!isFullscreenMobile || !isMobile) && (
         <Grid container justifyContent="center">
           <Grid item xs={10} container justifyContent="center">
             <Grid item container justifyContent="center" spacing={2}>

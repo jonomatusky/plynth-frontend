@@ -62,6 +62,7 @@ const PacksView = () => {
   const handleSubmitPackName = async values => {
     const createdPack = await createPack({
       name: values.name,
+      isPublic: true,
       style: { backgroundColor: '#FFF9F0', fontColor: '#333333' },
     })
     if (createdPack.id) {

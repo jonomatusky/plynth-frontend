@@ -80,6 +80,7 @@ const CardImage = ({ card, crop, pending, onSubmit }) => {
             onClick={handleRemove}
             size="small"
             endIcon={<Clear />}
+            type="button"
             fullWidth
           >
             Remove

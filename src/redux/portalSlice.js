@@ -6,6 +6,7 @@ let initialState = {
   status: 'idle',
   error: null,
   cameraError: false,
+  scanCount: null,
 }
 
 export const fetchPortal = createAsyncThunk(
@@ -16,7 +17,16 @@ export const fetchPortal = createAsyncThunk(
       url: `/users/${username}`,
       data: rest,
     })
-    return user
+
+    console.log(user)
+
+    const count = await client.request({
+      headers,
+      url: `/scans/count/${user.id}`,
+      data: rest,
+    })
+
+    return { user, scanCount: (count || {}).scans }
   }
 )
 
@@ -34,7 +44,8 @@ const portalSlice = createSlice({
     },
     [fetchPortal.fulfilled]: (state, action) => {
       state.status = 'succeeded'
-      state.portalUser = action.payload
+      state.portalUser = action.payload.user
+      state.scanCount = action.payload.scanCount
     },
     [fetchPortal.rejected]: (state, action) => {
       state.status = 'failed'

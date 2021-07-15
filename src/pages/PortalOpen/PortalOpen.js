@@ -12,10 +12,12 @@ import useScanStore from 'hooks/store/use-scan-store'
 import PortalCamera from './components/PortalCamera'
 import usePageTrack from 'hooks/use-page-track'
 import useAlertStore from 'hooks/store/use-alert-store'
+import PortalFull from './components/PortalFull'
 
 const PortalOpen = () => {
   const {
     portalUser,
+    scanCount,
     status: portalStatus,
     fetchPortal,
     setCameraError,
@@ -53,12 +55,6 @@ const PortalOpen = () => {
   const { style, instructions } = portal || {}
   const { fontColor, backgroundColor } = style || {}
 
-  useEffect(() => {
-    if (backgroundColor) {
-      document.body.style.backgroundColor = backgroundColor
-    }
-  }, [backgroundColor])
-
   const history = useHistory()
 
   const handleClose = () => {
@@ -83,6 +79,8 @@ const PortalOpen = () => {
     return <LoadingScreen />
   } else if (error) {
     return <ScanError fontColor={fontColor} onClose={handleClose} />
+  } else if (portalUser.scanLimit <= scanCount) {
+    return <PortalFull portalUser={portalUser} onClose={handleClose} />
   } else if (scanStatus === 'loading') {
     return <ProfileLoading portal={portal} />
   } else if (scanStatus === 'succeeded' && foundPack && foundPack.isPublic) {
@@ -101,6 +99,7 @@ const PortalOpen = () => {
         fontColor={fontColor}
         instructions={instructions}
         onClose={handleClose}
+        portal={username}
       />
     )
   }

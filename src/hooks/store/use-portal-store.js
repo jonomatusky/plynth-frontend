@@ -28,11 +28,14 @@ export const usePortalStore = () => {
     [dispatch]
   )
 
-  const { status, portalUser, cameraError } = useSelector(state => state.portal)
+  const { status, portalUser, cameraError, scanCount } = useSelector(
+    state => state.portal
+  )
 
   return {
     fetchPortal: _fetchPortal,
     setCameraError: _setCameraError,
+    scanCount,
     portalUser,
     status,
     cameraError,

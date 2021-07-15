@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import { Grid, Box } from '@material-ui/core'
 
 import CardText from './CardText'
 import CardVideo from './CardVideo'
@@ -83,12 +82,6 @@ const LivePreviewContent = ({ pack, index, setIndex, height }) => {
             )}
             {type === 'buttons' && <CardButtons card={card} style={style} />}
             {/* temp - adding extra space because live preview screen is still a little too long */}
-            <Grid item xs={12}>
-              <Box height="75px" />
-            </Grid>
-            <Grid item xs={12}>
-              <Box height="50px" />
-            </Grid>
           </div>
         )
       })}
