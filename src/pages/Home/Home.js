@@ -8,6 +8,8 @@ import {
   Button,
   useMediaQuery,
   Link,
+  Hidden,
+  TextField,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { HashLink } from 'react-router-hash-link'
@@ -16,10 +18,21 @@ import Emoji from 'components/Emoji'
 import WebsiteNavBar from 'components/WebsiteNavBar'
 import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
 import Div100vh from 'components/Div100vh'
-import { ArrowBack, ArrowForward, CameraAlt } from '@material-ui/icons'
+import {
+  ArrowBack,
+  ArrowForward,
+  CameraAlt,
+  CameraAltOutlined,
+  CropOriginal,
+  PhotoAlbum,
+  PhotoAlbumOutlined,
+  Portrait,
+} from '@material-ui/icons'
 import ReactPlayer from 'react-player'
 import HubspotForm from 'react-hubspot-form'
 import theme from 'theme'
+import Phone from 'components/Phone'
+import button from 'components/Button'
 
 const SmoothHashLink = React.forwardRef((props, ref) => (
   <HashLink smooth innerRef={ref} {...props} />
@@ -33,86 +46,172 @@ const Home = () => {
     history.push('/postcardmixtapes')
   }
 
-  const videoViewWidth =
-    25 +
-    useMediaQuery(theme.breakpoints.down('md')) * 20 +
-    useMediaQuery(theme.breakpoints.down('sm')) * 40
-
   return (
     <>
       <ScrollToTopOnMount />
       <Grid item xs={12}>
         <WebsiteNavBar />
       </Grid>
-      <Div100vh
-        style={{
-          backgroundColor: '#000000',
-        }}
-      >
-        <Box
-          height="100%"
-          width="100%"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Grid container justifyContent="center" spacing={2}>
-            <Grid item xs={12} container justifyContent="center">
-              <Typography variant="h6" color="white">
-                Take a photo to access your content
-              </Typography>
-            </Grid>
-            <Grid item xs={12} container justifyContent="center">
-              <Button
-                component={RouterLink}
-                color="secondary"
-                to="/pickup"
-                endIcon={<CameraAlt fontSize="large" sx={{ color: 'white' }} />}
-                size="large"
-                sx={{
-                  borderBottom: '2px solid black',
-                  borderRadius: '0px',
-                  ':hover': { borderBottom: '2px solid white' },
-                  ':focus': { borderBottom: '2px solid white' },
-                }}
-              >
-                <Typography variant="h6" sx={{ color: 'white' }}>
-                  <b>Open Camera</b>
-                </Typography>
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box
-          position="absolute"
-          bottom="0"
-          width="100%"
-          display="flex"
-          justifyContent="center"
-        >
-          <Button
-            component={SmoothHashLink}
-            to="#about"
-            style={{ textTransform: 'none' }}
-            disableRipple
-          >
-            <Grid container justifyContent="center" spacing={1}>
-              <Grid item xs={12} container justifyContent="center">
-                <Typography variant="h6" style={{ opacity: 0.8 }} color="white">
-                  learn more
-                </Typography>
-              </Grid>
-              <Grid item xs={12} container justifyContent="center">
-                <ExpandMoreIcon
-                  style={{ padding: 0, opacity: 0.8, color: 'white' }}
-                />
-              </Grid>
-            </Grid>
-          </Button>
-        </Box>
-      </Div100vh>
 
       <Container maxWidth={false} id="about">
+        <Grid container>
+          <Grid item xs={12}>
+            <Box height="4rem" mt={4} />
+          </Grid>
+          <Grid item xs={12} md={1} />
+          <Grid item xs={12} md={5}>
+            <Grid
+              container
+              sx={{ height: '100%' }}
+              justifyContent="flex-start"
+              alignItems="center"
+            >
+              <Grid item xs={12}>
+                <Typography
+                  color="white"
+                  variant="h3"
+                  letterSpacing={1}
+                  style={{ fontWeight: 800 }}
+                  pb={3}
+                >
+                  Connect Physical and Digital
+                </Typography>
+                <Typography color="white" variant="h5" pb={3}>
+                  Link physical artwork to digital content. It’s a QR code
+                  without the QR code.
+                </Typography>
+                <Button
+                  variant="contained"
+                  endIcon={<ArrowForward />}
+                  size="large"
+                >
+                  Get Early Access
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={6} container justifyContent="center">
+            <Phone>
+              <ReactPlayer
+                url="https://vimeo.com/575488337"
+                height="100%"
+                width="100%"
+                overflow="hidden"
+                playsinline={true}
+                loop={true}
+                playing={true}
+                config={{ vimeo: { playerOptions: { background: 1 } } }}
+              />
+            </Phone>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container justifyContent="center" alignItems="top">
+              <Grid item xs={12} pb={2}>
+                <Hidden smDown>
+                  <Box height="100px" />
+                </Hidden>
+              </Grid>
+              <Grid item xs={12} pb={2}>
+                <Typography
+                  color="white"
+                  variant="h4"
+                  letterSpacing={1}
+                  style={{ fontWeight: 800 }}
+                  pb={3}
+                  mt={2}
+                  textAlign="center"
+                >
+                  How it works
+                </Typography>
+              </Grid>
+              <Grid item xs={2} container justifyContent="center">
+                <Portrait sx={{ color: 'white', fontSize: '80px' }} />
+                <Typography color="white" textAlign="center" mt={1}>
+                  Claim your portal at plynth.com/yourname
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={1}
+                container
+                justifyContent="center"
+                alignItems="center"
+              >
+                <ArrowForward sx={{ color: 'white', fontSize: '36px' }} />
+              </Grid>
+              <Grid item xs={2} container justifyContent="center">
+                <PhotoAlbumOutlined sx={{ color: 'white', fontSize: '80px' }} />
+                <Typography color="white" textAlign="center" mt={1}>
+                  Add images link them to your content
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={1}
+                container
+                justifyContent="center"
+                alignItems="center"
+              >
+                <ArrowForward sx={{ color: 'white', fontSize: '36px' }} />
+              </Grid>
+              <Grid item xs={2} container justifyContent="center">
+                <CameraAltOutlined sx={{ color: 'white', fontSize: '80px' }} />
+                <Typography color="white" textAlign="center" mt={1}>
+                  Fans visit your portal to snap a photo and access your content
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} container justifyContent="center">
+            <Grid item xs={12} pb={2}>
+              <Hidden smDown>
+                <Box height="100px" />
+              </Hidden>
+            </Grid>
+            <Grid item xs={12} pb={2}>
+              <Typography
+                color="white"
+                variant="h4"
+                letterSpacing={1}
+                style={{ fontWeight: 800 }}
+                textAlign="center"
+              >
+                Claim Your Portal
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={7} pb={2}>
+              <Typography
+                color="white"
+                letterSpacing={1}
+                pb={3}
+                textAlign="center"
+              >
+                Fans visit your portal to snap a photo and unlock your content.
+              </Typography>
+            </Grid>
+            <Grid item md={8}>
+              <Box display="flex">
+                <Box>
+                  <TextField
+                    variant="outlined"
+                    defaultValue="plynth.com/"
+                    fullWidth
+                    InputProps={{
+                      sx: {
+                        backgroundColor: '#444444',
+                        borderColor: 'white',
+                        color: 'white',
+                        fontWeight: 900,
+                      },
+                    }}
+                  />
+                </Box>
+                <Box></Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Grid>
+
         <Grid container justifyContent="center">
           <Grid item xs={12}>
             <Box height="4rem" mt={4} />
@@ -197,20 +296,7 @@ const Home = () => {
               <Box pb={10} />
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6} container justifyContent="center">
-            <Box
-              width={`${videoViewWidth}vw`}
-              height={`${1.8 * videoViewWidth}vw`}
-            >
-              <ReactPlayer
-                url="https://www.youtube.com/watch?v=Q6QvQvZsJJU"
-                height="100%"
-                width="100%"
-                overflow="hidden"
-                playsinline={true}
-              />
-            </Box>
-          </Grid>
+          <Grid item xs={12} md={6} container justifyContent="center"></Grid>
 
           <Grid item xs={12}>
             <Box pt={10} pb={2}>
