@@ -64,6 +64,8 @@ const PacksView = () => {
       name: values.name,
       isPublic: true,
       style: { backgroundColor: '#FFF9F0', fontColor: '#333333' },
+      isPublic: true,
+      shareWithLink: true,
     })
     if (createdPack.id) {
       history.push(`admin/packs/${createdPack.id}/edit/cards`)
