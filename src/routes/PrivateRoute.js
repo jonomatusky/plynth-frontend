@@ -2,20 +2,16 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useSession } from 'hooks/use-session'
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ children, ...rest }) => {
   const { user, initializing } = useSession()
+
+  console.log(initializing)
 
   return (
     <Route
       {...rest}
-      render={props =>
-        initializing ? (
-          <></>
-        ) : !!user ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/" />
-        )
+      render={() =>
+        initializing ? <></> : !!user ? children : <Redirect to="/" />
       }
     />
   )
