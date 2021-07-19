@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
 import {
   Grid,
@@ -10,6 +10,7 @@ import {
   Link,
   Hidden,
   TextField,
+  InputAdornment,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { HashLink } from 'react-router-hash-link'
@@ -33,6 +34,7 @@ import HubspotForm from 'react-hubspot-form'
 import theme from 'theme'
 import Phone from 'components/Phone'
 import button from 'components/Button'
+import TextFieldWebsite from 'components/TextFieldWebsite'
 
 const SmoothHashLink = React.forwardRef((props, ref) => (
   <HashLink smooth innerRef={ref} {...props} />
@@ -42,8 +44,19 @@ const Home = () => {
   const { search } = useLocation()
   const history = useHistory()
 
+  const [username, setUsername] = useState('')
+
   if (search === '?utm_source=qr') {
     history.push('/postcardmixtapes')
+  }
+
+  const handleChange = event => {
+    setUsername(encodeURI(event.target.value))
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    history.push(`/s/new-portal?username=${username}`)
   }
 
   return (
@@ -81,6 +94,8 @@ const Home = () => {
                   without the QR code.
                 </Typography>
                 <Button
+                  component={RouterLink}
+                  to={'/s/new-portal'}
                   variant="contained"
                   endIcon={<ArrowForward />}
                   size="large"
@@ -108,7 +123,7 @@ const Home = () => {
             <Grid container justifyContent="center" alignItems="top">
               <Grid item xs={12} pb={2}>
                 <Hidden smDown>
-                  <Box height="100px" />
+                  <Box height="200px" />
                 </Hidden>
               </Grid>
               <Grid item xs={12} pb={2}>
@@ -165,7 +180,7 @@ const Home = () => {
           <Grid item xs={12} container justifyContent="center">
             <Grid item xs={12} pb={2}>
               <Hidden smDown>
-                <Box height="100px" />
+                <Box height="200px" />
               </Hidden>
             </Grid>
             <Grid item xs={12} pb={2}>
@@ -189,30 +204,49 @@ const Home = () => {
                 Fans visit your portal to snap a photo and unlock your content.
               </Typography>
             </Grid>
-            <Grid item md={8}>
-              <Box display="flex">
-                <Box>
-                  <TextField
-                    variant="outlined"
-                    defaultValue="plynth.com/"
-                    fullWidth
-                    InputProps={{
-                      sx: {
-                        backgroundColor: '#444444',
-                        borderColor: 'white',
-                        color: 'white',
-                        fontWeight: 900,
-                      },
-                    }}
-                  />
+            <Grid item md={8} container justifyContent="center">
+              <form onSubmit={handleSubmit}>
+                <Box display="flex" justifyContent="center">
+                  <Box mr={1}>
+                    <TextFieldWebsite
+                      variant="outlined"
+                      placeholder="yourname"
+                      size="medium"
+                      fullWidth
+                      InputProps={{
+                        startAdornment: 'plynth.com/',
+                      }}
+                      onChange={handleChange}
+                      value={username}
+                    />
+                  </Box>
+                  <Box flexGrow={1}>
+                    <Button
+                      type="submit"
+                      // component={RouterLink}
+                      // to={`/s/new-portal?username=${username}`}
+                      variant="contained"
+                      endIcon={<ArrowForward />}
+                      size="large"
+                      sx={{ height: '68px', width: '250px' }}
+                    >
+                      <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
+                        Claim My Portal
+                      </Typography>
+                    </Button>
+                  </Box>
                 </Box>
-                <Box></Box>
-              </Box>
+              </form>
             </Grid>
           </Grid>
         </Grid>
 
         <Grid container justifyContent="center">
+          <Grid item xs={12} pb={2}>
+            <Hidden smDown>
+              <Box height="200px" />
+            </Hidden>
+          </Grid>
           <Grid item xs={12}>
             <Box height="4rem" mt={4} />
           </Grid>

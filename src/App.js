@@ -35,6 +35,7 @@ import MyAccount from 'pages/MyAccount/MyAccount'
 import Portal from 'pages/Portal/Portal'
 import EditPortalAnimation from 'pages/EditPortalAnimation/EditPortalAnimation'
 import PortalOpen from 'pages/PortalOpen/PortalOpen'
+import NewPortalSignUp from 'pages/NewPortalSignUp/NewPortalSignUp'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -53,64 +54,84 @@ const App = () => {
     <Switch>
       <Route component={ViewPack} path="/p/:packId" />
 
-      <Route component={Signup} path="/signup" />
-      <Route component={Signup} path="/admin/signup" />
-      <Route component={Login} path="/admin/login" />
+      <Route path="/signup">
+        <Signup />
+      </Route>
+      <Route path="/admin/signup">
+        <Signup />
+      </Route>
+      <Route path="/admin/login">
+        <Login />
+      </Route>
 
-      <PrivateRoute
-        component={EditCards}
-        path="/admin/packs/:packId/edit/cards"
-      />
-      <PrivateRoute
-        component={EditAppearance}
-        path="/admin/packs/:packId/edit/appearance"
-      />
-      <PrivateRoute
-        component={EditAccess}
-        path="/admin/packs/:packId/edit/access"
-      />
-      <PrivateRoute
-        component={EditSettings}
-        path="/admin/packs/:packId/edit/settings"
-      />
-      <PrivateRoute
-        component={EditPortalAppearance}
-        path="/admin/portal/appearance"
-      />
-      <PrivateRoute
-        component={EditPortalAnimation}
-        path="/admin/portal/animation"
-      />
-      <PrivateRoute component={MyAccount} path="/admin/account" />
-      <PrivateRoute component={Register} path="/admin/register" />
+      <PrivateRoute path="/admin/packs/:packId/edit/cards">
+        <EditCards />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/packs/:packId/edit/appearance">
+        <EditAppearance />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/packs/:packId/edit/access">
+        <EditAccess />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/packs/:packId/edit/settings">
+        <EditSettings />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/portal/appearance">
+        <EditPortalAppearance />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/portal/animation">
+        <EditPortalAnimation />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/account">
+        <MyAccount />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/register">
+        <Register />
+      </PrivateRoute>
       <Redirect path="/admin/packs" to="/admin" />
-      <PrivateRoute component={MyPacks} path="/admin" />
+      <PrivateRoute path="/admin">
+        <MyPacks />
+      </PrivateRoute>
 
-      <Route publicRoute={true} component={NewPickup} path="/pickup" exact />
-      <Route component={Waitlist} path="/s/waitlist" />
-      <Route component={Contact} path="/s/contact" />
-      <Route component={TestLoading} path="/test/loading" />
-      <Route component={TestNoMatch} path="/test/nomatch" />
-      <Route component={Register} path="/test/register" />
-      <Route component={GroundUP} path="/groundup" />
-      <Route component={Home} path="/" exact />
+      <Route path="/pickup" exact>
+        <NewPickup />
+      </Route>
+      <Route path="/s/waitlist">
+        <Waitlist />
+      </Route>
+      <Route path="/s/contact">
+        <Contact />
+      </Route>
+      <Route path="/s/new-portal">
+        <NewPortalSignUp />
+      </Route>
+      <Route path="/test/loading">
+        <TestLoading />
+      </Route>
+      <Route path="/test/nomatch">
+        <TestNoMatch />
+      </Route>
+      <Route path="/test/register">
+        <Register />
+      </Route>
+      <Route path="/groundup">
+        <GroundUP />
+      </Route>
+      <Route path="/" exact>
+        <Home />
+      </Route>
 
-      <Route
-        publicRoute={true}
-        restricted={false}
-        component={PortalOpen}
-        path="/:username/open"
-        exact
-      />
+      <Route restricted={false} path="/:username/open" exact>
+        <PortalOpen />
+      </Route>
 
-      <Route
-        publicRoute={true}
-        restricted={false}
-        component={Portal}
-        path="/:username"
-      />
+      <Route restricted={false} path="/:username">
+        <Portal />
+      </Route>
 
-      <Route component={NotFoundPage} />
+      <Route>
+        <NotFoundPage />
+      </Route>
     </Switch>
   )
 
