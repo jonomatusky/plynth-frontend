@@ -1,10 +1,5 @@
-import * as React from 'react'
-import { alpha, styled } from '@material-ui/core/styles'
-import InputBase from '@material-ui/core/InputBase'
-import Box from '@material-ui/core/Box'
-import InputLabel from '@material-ui/core/InputLabel'
+import { styled } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import FormControl from '@material-ui/core/FormControl'
 
 const TextFieldWebsite = styled(TextField)({
   '& .MuiOutlinedInput-root': {
@@ -24,14 +19,14 @@ const TextFieldWebsite = styled(TextField)({
     borderColor: 'white',
     borderWidth: 0,
   },
-  '& input:invalid + fieldset': {
-    borderColor: 'white',
-    borderWidth: 0,
-  },
-  '& input:invalid:hover + fieldset': {
-    borderColor: 'white',
-    borderWidth: 0,
-  },
+  // '& input:invalid + fieldset': {
+  //   borderColor: 'white',
+  //   borderWidth: 0,
+  // },
+  // '& input:invalid:hover + fieldset': {
+  //   borderColor: 'white',
+  //   borderWidth: 0,
+  // },
 })
 
 export default TextFieldWebsite

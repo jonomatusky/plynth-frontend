@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { unwrapResult } from '@reduxjs/toolkit'
 
-import { setError } from 'redux/alertSlice'
+// import { setError } from 'redux/alertSlice'
 import { useSession } from './use-session'
 
 export const useThunk = () => {
@@ -29,12 +29,12 @@ export const useThunk = () => {
 
         return result
       } catch (err) {
-        dispatch(
-          setError({
-            message:
-              err.message || 'An unknown error occured. Please try again.',
-          })
-        )
+        // dispatch(
+        //   setError({
+        //     message:
+        //       err.message || 'An unknown error occured. Please try again.',
+        //   })
+        // )
         throw err
       }
     },

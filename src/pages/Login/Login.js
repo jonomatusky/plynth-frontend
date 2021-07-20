@@ -1,68 +1,232 @@
-import React from 'react'
-import { Container, Box, Grid, Typography, Link } from '@material-ui/core'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import React, { useState } from 'react'
+import {
+  Link,
+  Container,
+  Box,
+  Grid,
+  Typography,
+  Button,
+  Divider,
+} from '@material-ui/core'
+import * as yup from 'yup'
+import LoadingButton from '@material-ui/lab/LoadingButton'
 
 import firebase from 'config/firebase'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
 import WebsiteNavBar from 'components/WebsiteNavBar'
+import TextFieldWebsite from 'components/TextFieldWebsite'
+import { useFormik } from 'formik'
+import useAlertStore from 'hooks/store/use-alert-store'
+import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
 
-const Login = () => {
-  var uiConfig = {
-    callbacks: {
-      signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-        console.log(authResult)
-        return true
-      },
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password must be at least 6 characters')
+    .required('Password is required'),
+})
 
-      signInFailure: function (error) {
-        console.log(error)
-      },
+const NewPortalSignUp = ({ title, text }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const history = useHistory()
+
+  const { setError, clearError } = useAlertStore()
+
+  const handleSubmit = async ({ email, password }) => {
+    setIsLoading(true)
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password)
+      history.push(`/admin`)
+    } catch (err) {
+      if (err.code === 'auth/wrong-password') {
+        try {
+          let signInMethods = await firebase
+            .auth()
+            .fetchSignInMethodsForEmail(email)
+
+          if (
+            signInMethods.length !== 0 &&
+            !signInMethods.includes('password')
+          ) {
+            setError({
+              message:
+                'No password found for this account. Try a different login method.',
+            })
+          } else {
+            setError({
+              message: `Incorrect email or password. Please try again.`,
+            })
+          }
+        } catch (err) {
+          setError({
+            message: `Incorrect email or password. Please try again.`,
+          })
+        }
+      } else if (err.code === 'auth/invalid-email') {
+        setError({ message: 'Please enter a valid email address' })
+      } else if (err.code === 'auth/user-not-found') {
+        setError({
+          message: `Incorrect email or password. Please try again.`,
+        })
+      } else {
+        setError({
+          message: `Incorrect email or password. Please try again.`,
+        })
+      }
+    }
+    setIsLoading(false)
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
     },
-    signInFlow: 'popup',
-    signInSuccessUrl: '/admin',
-    signInOptions: [
-      {
-        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        requireDisplayName: false,
-        buttonColor: '#CD0A64',
-      },
-      {
-        provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      },
-    ],
+    validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: handleSubmit,
+  })
+
+  var provider = new firebase.auth.GoogleAuthProvider()
+
+  const handleSignInWithGoogle = async () => {
+    clearError()
+    try {
+      await firebase.auth().signInWithPopup(provider)
+      history.push('/admin')
+    } catch (err) {
+      setError({ message: 'Unable to sign in' })
+    }
   }
 
   return (
     <PublicNav>
       <WebsiteNavBar right={<></>} />
       <Container maxWidth="xs">
-        <Box pt={20}>
-          <Grid container justifyContent="center" spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" align="center" color="white">
-                <b>sign in</b>
-              </Typography>
+        <Box mt={20}>
+          <form onSubmit={formik.handleSubmit}>
+            <Grid container justifyContent="flex-start" spacing={3}>
+              <Grid item xs={12} mb={2}>
+                <Typography variant="h4" color="white">
+                  <b>{title || 'Sign In'}</b>
+                </Typography>
+              </Grid>
+              {text && (
+                <Grid item xs={12} mb={2}>
+                  <Typography variant="h6" color="white">
+                    <b>{text}</b>
+                  </Typography>
+                </Grid>
+              )}
+              <Grid item xs={12}>
+                <TextFieldWebsite
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  placeholder="email"
+                  {...formik.getFieldProps('email')}
+                  FormHelperTextProps={{ sx: { fontSize: '16px' } }}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextFieldWebsite
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  placeholder="password"
+                  {...formik.getFieldProps('password')}
+                  FormHelperTextProps={{ sx: { fontSize: '16px' } }}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  sx={{ height: '51.5px' }}
+                  pending={isLoading}
+                >
+                  <Typography
+                    letterSpacing={1}
+                    style={{ fontWeight: 900, fontSize: '18px' }}
+                  >
+                    Sign In
+                  </Typography>
+                </LoadingButton>
+              </Grid>
+              <Grid item xs={12} container alignItems="center" spacing={1}>
+                <Grid item xs>
+                  <Divider color="#999999" />
+                </Grid>
+                <Grid item>
+                  <Typography color="#999999" variant="body2">
+                    or
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <Divider color="#999999" />
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  size="large"
+                  color="secondary"
+                  fullWidth
+                  sx={{
+                    height: '51.5px',
+                    textTransform: 'none',
+                    backgroundColor: '#ffffff',
+                    '&:hover': {
+                      backgroundColor: '#ffffff',
+                    },
+                  }}
+                  pending={isLoading}
+                  onClick={handleSignInWithGoogle}
+                >
+                  <Box display="flex" mr="24px">
+                    <img src={GoogleLogo} alt="Google Logo" />
+                  </Box>
+                  <Typography letterSpacing={1} style={{ fontWeight: 500 }}>
+                    Sign in with Google
+                  </Typography>
+                </Button>
+              </Grid>
+              <Grid item container justifyContent="center">
+                <Typography variant="body2" color="white">
+                  Don't have an account?{' '}
+                  <Link
+                    component={RouterLink}
+                    color="white"
+                    to={'/s/sign-up'}
+                    size="small"
+                  >
+                    <b>Sign Up</b>
+                  </Link>
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography textAlign="center" variant="body2" color="white">
-                Don't have an account yet?{' '}
-                <Link component={RouterLink} to="/s/waitlist">
-                  <b>Join the waitlist</b>
-                </Link>
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <StyledFirebaseAuth
-                uiConfig={uiConfig}
-                firebaseAuth={firebase.auth()}
-              />
-            </Grid>
-          </Grid>
+          </form>
         </Box>
       </Container>
     </PublicNav>
   )
 }
 
-export default Login
+export default NewPortalSignUp

@@ -6,39 +6,29 @@ import {
   Container,
   Box,
   Button,
-  useMediaQuery,
   Link,
   Hidden,
-  TextField,
-  InputAdornment,
 } from '@material-ui/core'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { HashLink } from 'react-router-hash-link'
+// import { HashLink } from 'react-router-hash-link'
 
 import Emoji from 'components/Emoji'
 import WebsiteNavBar from 'components/WebsiteNavBar'
 import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
-import Div100vh from 'components/Div100vh'
 import {
   ArrowBack,
   ArrowForward,
-  CameraAlt,
   CameraAltOutlined,
-  CropOriginal,
-  PhotoAlbum,
   PhotoAlbumOutlined,
   Portrait,
 } from '@material-ui/icons'
 import ReactPlayer from 'react-player'
 import HubspotForm from 'react-hubspot-form'
-import theme from 'theme'
 import Phone from 'components/Phone'
-import button from 'components/Button'
 import TextFieldWebsite from 'components/TextFieldWebsite'
 
-const SmoothHashLink = React.forwardRef((props, ref) => (
-  <HashLink smooth innerRef={ref} {...props} />
-))
+// const SmoothHashLink = React.forwardRef((props, ref) => (
+//   <HashLink smooth innerRef={ref} {...props} />
+// ))
 
 const Home = () => {
   const { search } = useLocation()

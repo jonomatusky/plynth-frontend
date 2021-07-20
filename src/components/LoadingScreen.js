@@ -4,7 +4,7 @@ import { Box, CircularProgress } from '@material-ui/core'
 import Div100vh from 'components/Div100vh'
 import PublicNav from 'layouts/PublicNav'
 
-const LoadingScreen = ({ color }) => {
+const LoadingScreen = ({ backgroundColor, color }) => {
   return (
     <PublicNav>
       <Div100vh width="100%">
@@ -16,7 +16,7 @@ const LoadingScreen = ({ color }) => {
           alignItems="center"
           position="absolute"
           zIndex="20"
-          backgroundColor="black"
+          backgroundColor={backgroundColor || 'black'}
           textAlign="center"
         >
           <CircularProgress sx={{ color: color }} />

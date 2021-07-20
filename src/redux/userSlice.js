@@ -50,6 +50,19 @@ export const updateUser = createAsyncThunk(
   }
 )
 
+export const acceptInvite = createAsyncThunk(
+  'user/acceptInvite',
+  async ({ headers, ...inputs }) => {
+    const { user } = await client.request({
+      headers,
+      url: `/users/invite`,
+      method: 'POST',
+      data: inputs,
+    })
+    return user
+  }
+)
+
 export const fetchUserList = createAsyncThunk(
   'user/fetchUserList',
   async ({ headers }) => {
@@ -130,14 +143,13 @@ const userSlice = createSlice({
       state.userListStatus = 'failed'
       state.error = action.error.message
     },
+    [acceptInvite.fulfilled]: (state, action) => {
+      state.user = action.payload
+    },
   },
 })
 
-export const {
-  setUser,
-  pushLocation,
-  clearError,
-  clearUser,
-} = userSlice.actions
+export const { setUser, pushLocation, clearError, clearUser } =
+  userSlice.actions
 
 export default userSlice.reducer

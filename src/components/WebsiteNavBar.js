@@ -5,7 +5,7 @@ import {
   Box,
   AppBar,
   Toolbar,
-  Button,
+  Button as MuiButton,
   styled,
   Typography,
 } from '@material-ui/core'
@@ -63,16 +63,29 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
           ) : (
             <>
               {!initializing && (
-                <Button
-                  component={RouterLink}
-                  to={user ? '/admin' : '/admin/login'}
-                  size="small"
-                  sx={{ textTransform: 'lowercase' }}
-                >
-                  <Typography color="#BBBBBB">
-                    <b>_</b>sign in
-                  </Typography>
-                </Button>
+                <Box display="flex">
+                  <Box mr={1}>
+                    <MuiButton
+                      component={RouterLink}
+                      to={user ? '/admin' : '/admin/login'}
+                      size="small"
+                      sx={{ textTransform: 'none' }}
+                    >
+                      <Typography color="#BBBBBB">_sign in</Typography>
+                    </MuiButton>
+                  </Box>
+
+                  <MuiButton
+                    component={RouterLink}
+                    to="/s/new-portal"
+                    size="small"
+                    sx={{ textTransform: 'none' }}
+                  >
+                    <Typography>
+                      <b>Get Early Access</b>
+                    </Typography>
+                  </MuiButton>
+                </Box>
               )}
             </>
           )}

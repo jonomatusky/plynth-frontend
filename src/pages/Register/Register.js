@@ -63,7 +63,7 @@ const Register = () => {
   }, [history, user])
 
   return (
-    <PublicNav>
+    <PublicNav right={<Button>Cancel</Button>}>
       <Container>
         <Grid container justifyContent="center">
           <Grid item xs={11} sm={8} md={6} lg={4}>

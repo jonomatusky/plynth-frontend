@@ -5,8 +5,6 @@ import { useSession } from 'hooks/use-session'
 const PrivateRoute = ({ children, ...rest }) => {
   const { user, initializing } = useSession()
 
-  console.log(initializing)
-
   return (
     <Route
       {...rest}

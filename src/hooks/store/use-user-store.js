@@ -8,6 +8,7 @@ import {
   updateUser,
   clearUser,
   fetchUserList,
+  acceptInvite,
 } from 'redux/userSlice'
 
 export const useUserStore = () => {
@@ -36,6 +37,13 @@ export const useUserStore = () => {
     [dispatchThunk]
   )
 
+  const _acceptInvite = useCallback(
+    async code => {
+      await dispatchThunk(acceptInvite, { code })
+    },
+    [dispatchThunk]
+  )
+
   const _clearUser = useCallback(() => {
     dispatch(clearUser)
   }, [dispatch])
@@ -58,6 +66,7 @@ export const useUserStore = () => {
     createUser: _createUser,
     updateUser: _updateUser,
     clearUser: _clearUser,
+    acceptInvite: _acceptInvite,
     user,
     users,
     status,

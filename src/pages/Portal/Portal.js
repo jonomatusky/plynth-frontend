@@ -8,6 +8,8 @@ import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
 import useScanStore from 'hooks/store/use-scan-store'
 import PortalContent from './components/PortalContent'
 import PortalCamera from 'pages/PortalOpen/components/PortalCamera'
+import Div100vh from 'components/Div100vh'
+import { Box, Grid, Link, Typography } from '@material-ui/core'
 
 const Portal = () => {
   const { clearScan } = useScanStore()
@@ -62,12 +64,67 @@ const Portal = () => {
     setTestCameraIsOpen(false)
   }
 
+  console.log(portalUser)
+
   return (
     <>
       {status !== 'succeeded' && status !== 'failed' && <LoadingScreen />}
       {status === 'failed' && <NotFoundPage />}
       {status === 'succeeded' && !portalUser && <NotFoundPage />}
-      {status === 'succeeded' && portalUser && (
+      {status === 'succeeded' && portalUser.tier === 'trial' && (
+        <Div100vh>
+          <Box
+            height="100%"
+            width="100%"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid container justifyContent="center" alignItems="center">
+              <Grid item xs={11}>
+                <Typography variant="h4" color="black" textAlign="center">
+                  <b>Coming Soon</b>
+                </Typography>
+              </Grid>
+              <Grid item xs={11}>
+                <Typography variant="h6" color="black" textAlign="center">
+                  This portal has been reserved
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box
+            bottom="0"
+            position="absolute"
+            top="auto"
+            display="flex"
+            justifyContent="center"
+            paddingBottom="0.25rem"
+            left="0"
+            right="0"
+            zIndex="30"
+          >
+            <Box
+              color={'#000000'}
+              sx={{
+                opacity: '0.6',
+              }}
+            >
+              <Typography variant="subtitle2">
+                <Link
+                  href="/"
+                  color="inherit"
+                  underline="always"
+                  target="_blank"
+                >
+                  Powered by Plynth
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+        </Div100vh>
+      )}
+      {status === 'succeeded' && portalUser.tier !== 'trial' && (
         <>
           <CameraDialog
             open={cameraError}

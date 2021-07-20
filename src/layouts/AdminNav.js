@@ -20,7 +20,10 @@ import { useFetch } from 'hooks/use-fetch'
 import { useSession } from 'hooks/use-session'
 import logo from 'images/plynth_logo_simple.svg'
 import usePageTrack from 'hooks/use-page-track'
-import useAlertStore from 'hooks/store/use-alert-store'
+import useUserStore from 'hooks/store/use-user-store'
+import LoadingScreen from 'components/LoadingScreen'
+import SomethingWentWrong from 'components/SomethingWentWrong'
+// import useAlertStore from 'hooks/store/use-alert-store'
 
 export const drawerWidth = 70
 
@@ -51,14 +54,12 @@ const useStyles = makeStyles(theme => ({
 
 const AdminNav = ({ children }) => {
   const history = useHistory()
+  const { user, status } = useUserStore()
+
+  console.log(status)
+
   useFetch()
   usePageTrack()
-  const { error, clearError } = useAlertStore()
-
-  if (error === 'Please complete your registration to continue.') {
-    history.push('/admin/register')
-    clearError()
-  }
 
   const { logout } = useSession()
   const classes = useStyles()
@@ -82,117 +83,122 @@ const AdminNav = ({ children }) => {
     logout()
   }
 
+  useEffect(() => {
+    if (status === 'succeeded') {
+      if (!user.username) {
+        if (user.tier === 'trial') {
+          history.push('/s/new-portal/username')
+        } else {
+          history.push('/s/register')
+        }
+      } else if (user.tier === 'trial') {
+        history.push('/s/on-the-waitlist')
+      }
+    }
+  }, [user.tier, history, status, user.username])
+
   return (
     <>
-      <Hidden smDown>
-        <div className={classes.root}>
-          <Drawer
-            className={classes.drawer}
-            variant="permanent"
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            anchor="left"
-          >
-            {/* <div className={classes.toolbar} /> */}
-            <Grid
-              container
-              direction="column"
-              justifyContent="space-between"
-              alignItems="center"
-              style={{ height: '100%' }}
-            >
-              <Grid item>
-                <Box width={25} pt={2}>
-                  <Link to="/admin">
-                    <img src={logo} alt="logo" style={{ maxWidth: '100%' }} />
-                  </Link>
-                </Box>
-              </Grid>
-              <Grid item container justifyContent="center">
-                {/* <Grid item>
-                  <Box paddingBottom={2}>
-                  <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
-
-                    <IconButton
-                      component={MuiLink}
-                      href="https://www.notion.so/Plynth-Customer-Success-15a675424a724de3bf6f703019a52aaf"
-                      target="_blank"
-                    >
-                      <HelpOutline />
-                    </IconButton>
-                    <Menu
-                          id="simple-menu"
-                          anchorEl={anchorEl}
-                          open={Boolean(anchorEl)}
-                          transitionDuration={0}
-                          anchorOrigin={{
-                            horizontal: 'right',
-                            vertical: 'top',
-                          }}
-                          anchorPosition={{ left: 0, top: -20 }}
-                          onClose={handleClose}
-                        >
-                          <MenuItem component={Link} to="/admin/account">
-                            My Account
-                          </MenuItem>
-                          <Divider />
-                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                        </Menu>
-                    </div>
-
-                  </Box>
-                </Grid> */}
-                <Grid item xs={12} container justifyContent="center">
+      {(status === 'idle' || status === 'loading') && (
+        <LoadingScreen backgroundColor={'theme.palette.background.card'} />
+      )}
+      {(status === 'succeeded' || status === 'failed') && (
+        <>
+          <Hidden smDown>
+            <div className={classes.root}>
+              <Drawer
+                className={classes.drawer}
+                variant="permanent"
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                anchor="left"
+              >
+                {/* <div className={classes.toolbar} /> */}
+                <Grid
+                  container
+                  direction="column"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  style={{ height: '100%' }}
+                >
                   <Grid item>
-                    <Box paddingBottom={2}>
-                      <IconButton onClick={handleOpen} onMouseOver={handleOpen}>
-                        <Portrait fontSize="large" />
-                      </IconButton>
-                      <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        transitionDuration={0}
-                        anchorOrigin={{
-                          horizontal: 'right',
-                          vertical: 'top',
-                        }}
-                        anchorPosition={{ left: 0, top: -20 }}
-                        onClose={handleClose}
-                        MenuListProps={{ onMouseLeave: handleClose }}
-                      >
-                        <MenuItem
-                          component={Link}
-                          to="/admin/portal/appearance"
-                        >
-                          My Portal
-                        </MenuItem>
-                        <MenuItem component={Link} to="/admin/account">
-                          My Account
-                        </MenuItem>
-                        <MenuItem
-                          component={MuiLink}
-                          href="https://help.plynth.com"
-                          target="_blank"
-                        >
-                          Get Help
-                        </MenuItem>
-                        <Divider />
-                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                      </Menu>
+                    <Box width={25} pt={2}>
+                      <Link to="/admin">
+                        <img
+                          src={logo}
+                          alt="logo"
+                          style={{ maxWidth: '100%' }}
+                        />
+                      </Link>
                     </Box>
                   </Grid>
+                  <Grid item container justifyContent="center">
+                    <Grid item xs={12} container justifyContent="center">
+                      <Grid item>
+                        <Box paddingBottom={2}>
+                          <IconButton
+                            onClick={handleOpen}
+                            onMouseOver={handleOpen}
+                          >
+                            <Portrait fontSize="large" />
+                          </IconButton>
+                          <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            transitionDuration={0}
+                            anchorOrigin={{
+                              horizontal: 'right',
+                              vertical: 'top',
+                            }}
+                            anchorPosition={{ left: 0, top: -20 }}
+                            onClose={handleClose}
+                            MenuListProps={{ onMouseLeave: handleClose }}
+                          >
+                            {user.admin && (
+                              <MenuItem component={Link} to="/admin/super">
+                                🦸🏾‍♀️ Super Admin
+                              </MenuItem>
+                            )}
+                            <MenuItem
+                              component={Link}
+                              to="/admin/portal/appearance"
+                            >
+                              My Portal
+                            </MenuItem>
+                            <MenuItem component={Link} to="/admin/account">
+                              My Account
+                            </MenuItem>
+                            <MenuItem
+                              component={MuiLink}
+                              href="https://help.plynth.com"
+                              target="_blank"
+                            >
+                              Get Help
+                            </MenuItem>
+                            <Divider />
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                          </Menu>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Grid>
-          </Drawer>
-          <main className={classes.content}>{children}</main>
-        </div>
-      </Hidden>
-      <Hidden smUp>
-        <main className={classes.content}>{children}</main>
-      </Hidden>
+              </Drawer>
+              <main className={classes.content}>
+                {status === 'failed' && (
+                  <SomethingWentWrong fontColor={'#555555'} />
+                )}
+                {status === 'succeeded' && children}
+              </main>
+            </div>
+          </Hidden>
+          <Hidden smUp>
+            <main className={classes.content}>{children}</main>
+          </Hidden>
+        </>
+      )}
     </>
   )
 }
