@@ -11,9 +11,7 @@ import firebase from 'config/firebase'
 import posthog from 'posthog-js'
 
 import PrivateRoute from 'routes/PrivateRoute'
-import Signup from 'pages/SignUp/SignUp'
 import Login from 'pages/Login/Login'
-import Register from 'pages/Register/Register'
 import MyPacks from 'pages/PacksView/PacksView'
 
 import EditCards from 'pages/EditCards/EditCards'
@@ -22,7 +20,6 @@ import EditAccess from 'pages/EditAccess.js/EditAccess'
 import ViewPack from 'pages/ViewPack/ViewPack'
 import AlertBar from 'components/AlertBar'
 import EditSettings from 'pages/EditSettings/EditSettings'
-import NewPickup from 'pages/Pickup/Pickup'
 import Home from 'pages/Home/Home'
 import TestLoading from 'pages/TestLoading/TestLoading'
 import TestNoMatch from 'pages/TestNoMatch/TestNoMatch'
@@ -34,12 +31,14 @@ import MyAccount from 'pages/MyAccount/MyAccount'
 import Portal from 'pages/Portal/Portal'
 import EditPortalAnimation from 'pages/EditPortalAnimation/EditPortalAnimation'
 import PortalOpen from 'pages/PortalOpen/PortalOpen'
-import NewPortalSignUp from 'pages/NewPortalSignUp/NewPortalSignUp'
-import NewPortalUsername from 'pages/NewPortalUsername/NewPortalUsername'
+import Register from 'pages/Register/Register'
+import RegisterUsername from 'pages/RegisterUsername/RegisterUsername'
 import SuperRoute from 'routes/SuperRoute'
 import SuperAdmin from 'pages/SuperAdmin/SuperAdmin'
 import SignUpWithCode from 'pages/SignUpWithCode/SignUpWithCode'
 import OnTheWaitlist from 'pages/OnTheWaitlist/OnTheWaitlist'
+import Recover from 'pages/Recover/Recover'
+import { Help } from '@material-ui/icons'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -60,45 +59,40 @@ const App = () => {
         <ViewPack />
       </Route>
 
-      <Route path="/signup">
-        <Signup />
-      </Route>
-      <Route path="/admin/signup">
-        <Signup />
-      </Route>
-      <Route path="/s/signup">
-        <Signup />
-      </Route>
-      <Route path="/admin/login">
+      <Route path="/login">
         <Login />
       </Route>
-      <Route path="/s/login">
-        <Login />
+      <Route path="/recover">
+        <Recover />
       </Route>
-      <PrivateRoute path="/s/register">
-        <NewPortalUsername />
+
+      <PrivateRoute path="/register/username">
+        <RegisterUsername />
       </PrivateRoute>
-      <Route path="/s/waitlist">
-        <NewPortalSignUp
-          title="Join the Waitlist"
-          text="We're currently in a closed beta and adding new users as quickly as possible. Sign up here to reserve your portal and we'll let you know when new spots open up 👍"
-        />
+
+      <Route path="/register">
+        <Register />
       </Route>
+      <Redirect path="/signup" exact to="/register" />
+
       <Route path="/s/contact">
         <Contact />
       </Route>
-      <PrivateRoute path="/s/new-portal/username">
-        <NewPortalUsername />
-      </PrivateRoute>
-      <PrivateRoute path="/s/on-the-waitlist">
-        <OnTheWaitlist />
-      </PrivateRoute>
-      <Route path="/s/new-portal" exact>
-        <NewPortalSignUp />
+      <Route path="/s/help">
+        <Help />
       </Route>
       <Route path="/s/invite-code" exact>
         <SignUpWithCode />
       </Route>
+      <Route path="/s/waitlist">
+        <Register
+          title="Join the Waitlist"
+          text="We're currently in a closed beta and adding new users as quickly as possible. Sign up here to reserve your portal and we'll let you know when new spots open up 👍"
+        />
+      </Route>
+      <PrivateRoute path="/s/on-the-waitlist">
+        <OnTheWaitlist />
+      </PrivateRoute>
 
       <PrivateRoute path="/admin/packs/:packId/edit/cards">
         <EditCards />
@@ -131,18 +125,15 @@ const App = () => {
         <MyPacks />
       </PrivateRoute>
 
-      <Route path="/pickup" exact>
+      {/* <Route path="/pickup" exact>
         <NewPickup />
-      </Route>
+      </Route> */}
 
       <Route path="/test/loading">
         <TestLoading />
       </Route>
       <Route path="/test/nomatch">
         <TestNoMatch />
-      </Route>
-      <Route path="/test/register">
-        <Register />
       </Route>
       <Route path="/groundup">
         <GroundUP />

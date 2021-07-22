@@ -5,8 +5,8 @@ import useUserStore from 'hooks/store/use-user-store'
 import usePackStore from 'hooks/store/use-pack-store'
 
 export const useAuth = () => {
-  const clearUser = useUserStore()
-  const clearPacks = usePackStore()
+  const { clearUser } = useUserStore()
+  const { clearPacks } = usePackStore()
 
   const [state, setState] = useState(() => {
     const user = firebase.auth().currentUser
@@ -22,7 +22,9 @@ export const useAuth = () => {
       await clearUser()
       await clearPacks()
       posthog.reset()
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
   }, [clearPacks, clearUser])
 
   useEffect(() => {

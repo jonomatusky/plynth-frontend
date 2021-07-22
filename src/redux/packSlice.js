@@ -137,13 +137,8 @@ const packsSlice = createSlice({
   },
 })
 
-export const {
-  setPacks,
-  setPack,
-  setNewPackImage,
-  clearPacks,
-  setFilter,
-} = packsSlice.actions
+export const { setPacks, setPack, setNewPackImage, clearPacks, setFilter } =
+  packsSlice.actions
 
 export default packsSlice.reducer
 

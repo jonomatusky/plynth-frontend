@@ -1,14 +1,24 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Container, Grid, Typography, Box, IconButton } from '@material-ui/core'
-import WebsiteNavBar from 'components/WebsiteNavBar'
+import {
+  Container,
+  Grid,
+  Typography,
+  Box,
+  IconButton,
+  Button,
+  CircularProgress,
+} from '@material-ui/core'
 import useUserStore from 'hooks/store/use-user-store'
-import LoadingScreen from 'components/LoadingScreen'
 import { faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSession } from 'hooks/use-session'
+import { Close } from '@material-ui/icons'
+import PublicNav from 'layouts/PublicNav'
 
 const OnTheWaitlist = () => {
   const { user, status } = useUserStore()
+  const { logout } = useSession()
   const history = useHistory()
 
   useEffect(() => {
@@ -20,11 +30,33 @@ const OnTheWaitlist = () => {
     }
   }, [history, status, user])
 
-  console.log(status)
   return (
-    <>
-      <WebsiteNavBar />
-      {(!user || user.tier !== 'trial') && <LoadingScreen />}
+    <PublicNav
+      hideFooter
+      right={
+        <Button
+          type="button"
+          onClick={logout}
+          size="small"
+          sx={{ textTransform: 'lowercase' }}
+          endIcon={<Close color="secondary" />}
+        >
+          <Typography color="#BBBBBB">close</Typography>
+        </Button>
+      }
+    >
+      {(!user || user.tier !== 'trial') && (
+        <Box
+          height="400px"
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          textAlign="center"
+        >
+          <CircularProgress color="secondary" />
+        </Box>
+      )}
       {user && user.tier === 'trial' && (
         <Container maxWidth="sm">
           <Grid
@@ -39,7 +71,7 @@ const OnTheWaitlist = () => {
               <Box mt="20vh" mb={1} maxWidth="80px" />
             </Grid>
             <Grid item>
-              <Typography variant="h4" align="center" color={'white'}>
+              <Typography variant="h4" align="center" color={'white'} mb={2}>
                 <b>You're on the Waitlist</b>
               </Typography>
             </Grid>
@@ -91,7 +123,7 @@ const OnTheWaitlist = () => {
           </Grid>
         </Container>
       )}
-    </>
+    </PublicNav>
   )
 }
 

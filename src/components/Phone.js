@@ -44,6 +44,7 @@ const Phone = ({ children }) => {
         height="800px"
         border={20}
         borderRadius="40px"
+        backgroundColor="#999999"
         position="relative"
         className={classes.phone}
         overflow="hidden"

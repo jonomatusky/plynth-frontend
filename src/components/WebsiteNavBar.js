@@ -67,17 +67,19 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                   <Box mr={1}>
                     <MuiButton
                       component={RouterLink}
-                      to={user ? '/admin' : '/admin/login'}
+                      to={user ? '/admin' : '/login'}
                       size="small"
                       sx={{ textTransform: 'none' }}
                     >
-                      <Typography color="#BBBBBB">_sign in</Typography>
+                      <Typography color="#BBBBBB">
+                        <b>_</b>sign in
+                      </Typography>
                     </MuiButton>
                   </Box>
 
                   <MuiButton
                     component={RouterLink}
-                    to="/s/new-portal"
+                    to="/register"
                     size="small"
                     sx={{ textTransform: 'none' }}
                   >

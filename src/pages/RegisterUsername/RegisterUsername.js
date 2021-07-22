@@ -9,19 +9,16 @@ import { useSession } from 'hooks/use-session'
 import PublicNav from 'layouts/PublicNav'
 import { ArrowForward, Close } from '@material-ui/icons'
 import TextFieldWebsite from 'components/TextFieldWebsite'
-import WebsiteNavBar from 'components/WebsiteNavBar'
-import LoadingButton from '@material-ui/lab/LoadingButton'
 import { useFetch } from 'hooks/use-fetch'
 import useAlertStore from 'hooks/store/use-alert-store'
 
 const NewPortalUsername = () => {
   const history = useHistory()
-  const { user, updateUser, updateStatus } = useUserStore()
+  const { user, updateUser } = useUserStore()
   const { logout } = useSession()
   const { setError } = useAlertStore()
 
-  const location = useLocation()
-  const { username } = location.search
+  const username = new URLSearchParams(useLocation().search).get('username')
 
   useFetch()
 
@@ -53,6 +50,7 @@ const NewPortalUsername = () => {
     initialValues: {
       username: username || '',
     },
+    enableReinitialize: true,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
@@ -66,29 +64,27 @@ const NewPortalUsername = () => {
   }, [history, user])
 
   return (
-    <PublicNav>
-      <WebsiteNavBar
-        right={
-          <Button
-            type="button"
-            onClick={logout}
-            size="small"
-            sx={{ textTransform: 'lowercase' }}
-            endIcon={<Close color="secondary" />}
-          >
-            <Typography color="#BBBBBB">Cancel</Typography>
-          </Button>
-        }
-      />
+    <PublicNav
+      hideFooter
+      right={
+        <Button
+          type="button"
+          onClick={logout}
+          size="small"
+          sx={{ textTransform: 'lowercase' }}
+          endIcon={<Close color="secondary" />}
+        >
+          <Typography color="#BBBBBB">Cancel</Typography>
+        </Button>
+      }
+    >
       <Container maxWidth="xs">
         <Box mt={20}>
           <form onSubmit={formik.handleSubmit}>
             <Grid container justifyContent="flex-start" spacing={3}>
               <Grid item xs={12} mb={2}>
                 <Typography variant="h4" color="white">
-                  <b>
-                    {username ? 'Confirm your portal' : 'Claim your portal'}
-                  </b>
+                  <b>Claim your portal</b>
                 </Typography>
               </Grid>
               <Grid item xs={12} mb={2}>
@@ -114,19 +110,18 @@ const NewPortalUsername = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <LoadingButton
+                <Button
                   type="submit"
                   variant="contained"
                   endIcon={<ArrowForward />}
                   size="large"
                   fullWidth
                   sx={{ height: '51.5px' }}
-                  pending={updateStatus === 'loading'}
                 >
                   <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
                     Claim My Portal
                   </Typography>
-                </LoadingButton>
+                </Button>
               </Grid>
             </Grid>
           </form>

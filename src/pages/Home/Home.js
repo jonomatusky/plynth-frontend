@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
 import {
   Grid,
@@ -6,25 +6,24 @@ import {
   Container,
   Box,
   Button,
-  Link,
   Hidden,
 } from '@material-ui/core'
 // import { HashLink } from 'react-router-hash-link'
 
-import Emoji from 'components/Emoji'
-import WebsiteNavBar from 'components/WebsiteNavBar'
 import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
 import {
-  ArrowBack,
   ArrowForward,
   CameraAltOutlined,
+  MeetingRoom,
   PhotoAlbumOutlined,
-  Portrait,
+  // Portrait,
 } from '@material-ui/icons'
 import ReactPlayer from 'react-player'
-import HubspotForm from 'react-hubspot-form'
 import Phone from 'components/Phone'
 import TextFieldWebsite from 'components/TextFieldWebsite'
+import contentful from 'config/contentful'
+import PublicNav from 'layouts/PublicNav'
+import FormSubscribe from 'components/FormSubscribe'
 
 // const SmoothHashLink = React.forwardRef((props, ref) => (
 //   <HashLink smooth innerRef={ref} {...props} />
@@ -33,6 +32,9 @@ import TextFieldWebsite from 'components/TextFieldWebsite'
 const Home = () => {
   const { search } = useLocation()
   const history = useHistory()
+  const [highlights, setHighlights] = useState([])
+  const [content, setContent] = useState({})
+  const [videoIsReady, setVideoIsReady] = useState(false)
 
   const [username, setUsername] = useState('')
 
@@ -41,28 +43,44 @@ const Home = () => {
   }
 
   const handleChange = event => {
-    setUsername(encodeURI(event.target.value))
+    setUsername(event.target.value)
   }
 
   const handleSubmit = event => {
     event.preventDefault()
-    history.push(`/s/new-portal?username=${username}`)
+    history.push(`/register?username=${encodeURI(username)}`)
   }
 
+  useEffect(() => {
+    const getContent = async () => {
+      const contentResponse = await contentful.getEntry(
+        '6QV9CsiiyC8H7rti3qAmqd'
+      )
+      const highlightsResponse = await contentful.getEntries({
+        content_type: 'userHighlight',
+        'fields.active': true,
+        order: 'fields.order',
+      })
+
+      setContent(contentResponse.fields)
+      setHighlights(highlightsResponse.items)
+    }
+
+    getContent()
+  }, [])
+
   return (
-    <>
+    <PublicNav>
       <ScrollToTopOnMount />
-      <Grid item xs={12}>
-        <WebsiteNavBar />
-      </Grid>
 
       <Container maxWidth={false} id="about">
         <Grid container>
           <Grid item xs={12}>
-            <Box height="4rem" mt={4} />
+            <Box mt={12} />
           </Grid>
-          <Grid item xs={12} md={1} />
-          <Grid item xs={12} md={5}>
+
+          <Grid item xs={12} md={2} />
+          <Grid item xs={12} md={4}>
             <Grid
               container
               sx={{ height: '100%' }}
@@ -77,45 +95,57 @@ const Home = () => {
                   style={{ fontWeight: 800 }}
                   pb={3}
                 >
-                  Connect Physical and Digital
+                  {content.heading}
                 </Typography>
                 <Typography color="white" variant="h5" pb={3}>
-                  Link physical artwork to digital content. It’s a QR code
-                  without the QR code.
+                  {content.subheading}
                 </Typography>
                 <Button
                   component={RouterLink}
-                  to={'/s/new-portal'}
+                  to={'/register'}
                   variant="contained"
                   endIcon={<ArrowForward />}
                   size="large"
                 >
-                  Get Early Access
+                  <b>Get Early Access</b>
                 </Button>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6} container justifyContent="center">
+          <Grid item xs={12} md={5} container justifyContent="center">
             <Phone>
-              <ReactPlayer
-                url="https://vimeo.com/575488337"
+              <Box
                 height="100%"
                 width="100%"
-                overflow="hidden"
-                playsinline={true}
-                loop={true}
-                playing={true}
-                config={{ vimeo: { playerOptions: { background: 1 } } }}
-              />
+                display={videoIsReady ? null : 'none'}
+              >
+                <ReactPlayer
+                  url={content.videoUrl}
+                  height="100%"
+                  width="100%"
+                  overflow="hidden"
+                  playsinline={true}
+                  loop={true}
+                  playing={true}
+                  config={{ vimeo: { playerOptions: { background: 1 } } }}
+                  onReady={() => setVideoIsReady(true)}
+                />
+              </Box>
+
+              {!videoIsReady && (
+                <Box backgroundColor="#999999" height="100%" width="100%" />
+              )}
             </Phone>
           </Grid>
+          <Grid item xs={12} md={1} />
+
           <Grid item xs={12}>
             <Grid container justifyContent="center" alignItems="top">
-              <Grid item xs={12} pb={2}>
-                <Hidden smDown>
+              <Hidden smDown>
+                <Grid item xs={12} pb={2}>
                   <Box height="200px" />
-                </Hidden>
-              </Grid>
+                </Grid>
+              </Hidden>
               <Grid item xs={12} pb={2}>
                 <Typography
                   color="white"
@@ -126,13 +156,13 @@ const Home = () => {
                   mt={2}
                   textAlign="center"
                 >
-                  How it works
+                  {content.howHeading}
                 </Typography>
               </Grid>
               <Grid item xs={2} container justifyContent="center">
-                <Portrait sx={{ color: 'white', fontSize: '80px' }} />
+                <PhotoAlbumOutlined sx={{ color: 'white', fontSize: '80px' }} />
                 <Typography color="white" textAlign="center" mt={1}>
-                  Claim your portal at plynth.com/yourname
+                  {content.step1}
                 </Typography>
               </Grid>
               <Grid
@@ -145,9 +175,9 @@ const Home = () => {
                 <ArrowForward sx={{ color: 'white', fontSize: '36px' }} />
               </Grid>
               <Grid item xs={2} container justifyContent="center">
-                <PhotoAlbumOutlined sx={{ color: 'white', fontSize: '80px' }} />
+                <MeetingRoom sx={{ color: 'white', fontSize: '80px' }} />
                 <Typography color="white" textAlign="center" mt={1}>
-                  Add images link them to your content
+                  {content.step2}
                 </Typography>
               </Grid>
               <Grid
@@ -162,7 +192,7 @@ const Home = () => {
               <Grid item xs={2} container justifyContent="center">
                 <CameraAltOutlined sx={{ color: 'white', fontSize: '80px' }} />
                 <Typography color="white" textAlign="center" mt={1}>
-                  Fans visit your portal to snap a photo and access your content
+                  {content.step3}
                 </Typography>
               </Grid>
             </Grid>
@@ -170,18 +200,21 @@ const Home = () => {
           <Grid item xs={12} container justifyContent="center">
             <Grid item xs={12} pb={2}>
               <Hidden smDown>
-                <Box height="200px" />
+                <Box height="250px" />
               </Hidden>
+            </Grid>
+            <Grid item>
+              <MeetingRoom sx={{ color: 'white', fontSize: '80px' }} />
             </Grid>
             <Grid item xs={12} pb={2}>
               <Typography
                 color="white"
-                variant="h4"
+                variant="h5"
                 letterSpacing={1}
                 style={{ fontWeight: 800 }}
                 textAlign="center"
               >
-                Claim Your Portal
+                {content.claimHeading}
               </Typography>
             </Grid>
             <Grid item xs={12} md={7} pb={2}>
@@ -191,7 +224,7 @@ const Home = () => {
                 pb={3}
                 textAlign="center"
               >
-                Fans visit your portal to snap a photo and unlock your content.
+                {content.claimSubheading}
               </Typography>
             </Grid>
             <Grid item md={8} container justifyContent="center">
@@ -213,8 +246,6 @@ const Home = () => {
                   <Box flexGrow={1}>
                     <Button
                       type="submit"
-                      // component={RouterLink}
-                      // to={`/s/new-portal?username=${username}`}
                       variant="contained"
                       endIcon={<ArrowForward />}
                       size="large"
@@ -229,154 +260,152 @@ const Home = () => {
               </form>
             </Grid>
           </Grid>
-        </Grid>
+          <Grid item xs={12} mt={20} pb={2}>
+            <Typography
+              color="white"
+              variant="h4"
+              letterSpacing={1}
+              style={{ fontWeight: 800 }}
+              textAlign="center"
+            >
+              {content.creatorHeading}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} mt={8} pb={2} container justifyContent="center">
+            <Box display="flex">
+              {highlights.map((highlight, index) => {
+                return (
+                  <Box
+                    key={highlight.sys.id}
+                    width="150px"
+                    textAlign="center"
+                    mt={index % 2 === 1 ? 6 : 0}
+                    mr={3}
+                    ml={3}
+                  >
+                    <img
+                      style={{
+                        height: '125px',
+                        width: '125px',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                      }}
+                      src={'https:' + highlight.fields.image.fields.file.url}
+                      alt={highlight.fields.title}
+                    />
+                    <Typography textAlign="center" color="white">
+                      <b>{highlight.fields.title}</b>
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      textAlign="center"
+                      color="white"
+                    >
+                      {highlight.fields.text}
+                    </Typography>
+                  </Box>
+                )
+              })}
+            </Box>
+          </Grid>
 
-        <Grid container justifyContent="center">
-          <Grid item xs={12} pb={2}>
-            <Hidden smDown>
+          <Hidden smDown>
+            <Grid item xs={12} pb={2}>
               <Box height="200px" />
-            </Hidden>
-          </Grid>
-          <Grid item xs={12}>
-            <Box height="4rem" mt={4} />
-          </Grid>
-          <Grid item xs={12} md={6} container justifyContent="center">
-            <Grid item xs={11} container spacing={2} justifyContent="center">
+            </Grid>
+          </Hidden>
+
+          <Grid item xs={12} container justifyContent="center">
+            <Grid item xs={12} md={5} container justifyContent="center">
+              <Grid item xs={11} container spacing={2} justifyContent="center">
+                <Grid item xs={12}>
+                  <Box color="white" pb={2}>
+                    <Typography variant="h4" letterSpacing={1}>
+                      <b>{content.useHeading}</b>
+                    </Typography>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12}>
+                  {(content.uses || []).map((use, index) => {
+                    return (
+                      <Box mb="1em" key={index}>
+                        <Typography variant="h6" color="white">
+                          {use}
+                        </Typography>
+                      </Box>
+                    )
+                  })}
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={1}></Grid>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              container
+              justifyContent="center"
+              alignContent="center"
+              spacing={1}
+            >
               <Grid item xs={12}>
-                <Box color="white" pb={2}>
-                  <Typography variant="h3" letterSpacing={1}>
-                    <b>Connect Physical and Digital</b>
-                  </Typography>
-                </Box>
+                <Typography variant="h5" textAlign="center" color="white">
+                  <b>Try It Out</b>
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Box mb="1em">
-                  <Typography color="white" variant="h5">
-                    Link your content to any piece of artwork. Fans snap a photo
-                    to access.
-                  </Typography>
-                </Box>
+                <Typography
+                  textAlign="center"
+                  color="white"
+                  variant="h6"
+                  mb={2}
+                >
+                  Sign up for early access
+                </Typography>
               </Grid>
-              <Grid item xs={12}>
-                <Box mb="1em">
-                  <Typography variant="h6" color="white">
-                    <Emoji symbol="🤝" label="headphones" /> Bundle physical and
-                    digital
-                  </Typography>
-                </Box>
-                <Box mb="1em">
-                  <Typography variant="h6" color="white">
-                    <Emoji symbol="✨" label="handshake" /> Tell an interactive
-                    story
-                  </Typography>
-                </Box>
-                <Box mb="1em">
-                  <Typography variant="h6" color="white">
-                    <Emoji symbol="🔮" label="crystal-ball" /> Add meaning to
-                    your merch
-                  </Typography>
-                </Box>
-                <Box mb="1em">
-                  <Typography variant="h6" color="white">
-                    <Emoji symbol="🏷" label="cd" /> Encourage repeat purchases
-                  </Typography>
-                </Box>
-                <Box mb="1em">
-                  <Typography variant="h6" color="white">
-                    <Emoji symbol="💨" label="cd" /> No Download Required
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                <Box mb="1em" color="white">
-                  <Typography variant="h6">
-                    <b>Become a member of our private beta.</b>
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12} container justifyContent="center">
+              <Grid item xs={12} textAlign="center">
                 <Button
                   component={RouterLink}
-                  color="secondary"
-                  to="/s/waitlist"
-                  startIcon={<ArrowForward sx={{ color: 'white' }} />}
-                  endIcon={<ArrowBack sx={{ color: 'white' }} />}
+                  to={'/register'}
+                  variant="contained"
+                  endIcon={<ArrowForward />}
                   size="large"
+                  sx={{ height: '48px' }}
                 >
-                  <Typography
-                    sx={{
-                      color: 'white',
-                      textDecoration: 'underline',
-                      ':hover': { textDecoration: 'none' },
-                    }}
-                    variant="h6"
-                  >
-                    <b>Join the Waitlist</b>
-                  </Typography>
+                  <b>Get Early Access</b>
                 </Button>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Box pb={10} />
-            </Grid>
           </Grid>
-          <Grid item xs={12} md={6} container justifyContent="center"></Grid>
-
+          <Hidden smDown>
+            <Grid item xs={12} pb={2}>
+              <Box height="200px" />
+            </Grid>
+          </Hidden>
           <Grid item xs={12}>
-            <Box pt={10} pb={2}>
+            <Box pt={8} pb={8}>
               <Grid container justifyContent="center" alignItems="center">
-                <Grid item md={3} sm={5} xs={10}>
+                <Grid item lg={3} md={4} sm={6} xs={10}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <Box pb={2}>
                         <Typography variant="h5" color="white">
-                          <b>Get the latest updates</b>
+                          <b>Sign up for updates</b>
                         </Typography>
                       </Box>
                     </Grid>
                     <Grid item xs={12}>
-                      <HubspotForm
-                        portalId="5609139"
-                        formId="522ea516-b5f4-49f4-8285-a61ad49fd705"
-                        loading={
-                          <Typography variant="h5" color="white">
-                            <b>Thanks, you're subscribed!</b>
-                          </Typography>
-                        }
-                      />
+                      <FormSubscribe />
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={12}>
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
-              alignContent="center"
-              spacing={2}
-            >
-              <Grid item xs={7} container justifyContent="center">
-                <Typography color="white">
-                  <Link component={RouterLink} to="/s/contact" color="inherit">
-                    <b>Contact Us</b>
-                  </Link>
-                </Typography>
-              </Grid>
-              <Grid item xs={7} container justifyContent="center">
-                <Box pt={1} pb={1}>
-                  <Typography variant="body2" color="gray">
-                    Copyright © Plynth 2021
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
         </Grid>
       </Container>
-    </>
+    </PublicNav>
   )
 }
 

@@ -1,152 +1,217 @@
-import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
+import React from 'react'
 import {
   Container,
   Box,
   Grid,
   Typography,
-  Paper,
-  Button as MuiButton,
-  TextField,
+  Button,
+  Divider,
 } from '@material-ui/core'
+import * as yup from 'yup'
 
-import useUserStore from 'hooks/store/use-user-store'
-import { useSession } from 'hooks/use-session'
+import firebase from 'config/firebase'
+import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
-import Button from 'components/Button'
+import TextFieldWebsite from 'components/TextFieldWebsite'
+import { ArrowForward } from '@material-ui/icons'
+import { useFormik } from 'formik'
+import useAlertStore from 'hooks/store/use-alert-store'
+import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
+import { useSession } from 'hooks/use-session'
 
-const Register = () => {
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password must be at least 6 characters')
+    .required('Password is required'),
+})
+
+const Register = ({ title, text }) => {
   const history = useHistory()
-  const { user: authUser, logout } = useSession()
-  const { user, createUser, createStatus, fetchUser } = useUserStore()
+  const { logout } = useSession()
+  const { setError, clearError } = useAlertStore()
 
-  const handleSubmit = async values => {
+  const username = new URLSearchParams(useLocation().search).get('username')
+  const code = new URLSearchParams(useLocation().search).get('code')
+  const email = new URLSearchParams(useLocation().search).get('email')
+
+  const handleSubmit = async ({ email, password }) => {
     try {
-      values.email = authUser.email
-      values.fid = authUser.uid
-    } catch (err) {}
-
-    await createUser(values)
-    fetchUser()
+      await logout()
+      await firebase.auth().createUserWithEmailAndPassword(email, password)
+      history.push(
+        `/register/username` + (username ? `?username=${username}` : '')
+      )
+    } catch (err) {
+      if (err.code === 'auth/invalid-email') {
+        setError({ message: 'Please enter a valid email address' })
+      } else if (err.code === 'auth/email-already-in-use') {
+        setError({
+          message: `Another account is using ${email}. Please sign in instead.`,
+        })
+      } else {
+        setError({
+          message:
+            'There was an error creating your account. Please try again.',
+        })
+      }
+    }
   }
-
-  const validationSchema = Yup.object({
-    username: Yup.string()
-      .min(6, 'Username must be at least 6 characters long')
-      .max(30, 'Username must be no longer than 30 characters')
-      .matches(
-        /^[a-z0-9_.]*$/,
-        'Username must only contain lowercase characters a-z, numbers, . and _'
-      )
-      .matches(
-        /^(?!.*?\.\.).*?$/,
-        'Username cannot contain two consecutive (.)'
-      )
-      .matches(/^((?!\.).*(?!\.))$/, 'Username cannot start or end with (.)')
-      .required('Required'),
-  })
 
   const formik = useFormik({
     initialValues: {
-      username: '',
+      email: email || '',
+      password: '',
+      code: code || null,
     },
     validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: handleSubmit,
   })
 
-  useEffect(() => {
-    if (user.id) {
+  var provider = new firebase.auth.GoogleAuthProvider()
+
+  const handleSignUpWithGoogle = async () => {
+    clearError()
+    try {
+      await firebase.auth().signInWithPopup(provider)
       history.push('/admin')
+    } catch (err) {
+      setError({ message: 'Unable to sign in' })
     }
-  }, [history, user])
+  }
 
   return (
-    <PublicNav right={<Button>Cancel</Button>}>
-      <Container>
-        <Grid container justifyContent="center">
-          <Grid item xs={11} sm={8} md={6} lg={4}>
-            <Box pt={10}>
-              <Grid container justifyContent="center" spacing={3}>
-                <Grid item xs={12}>
-                  <Box pb={1} pt={2}>
-                    <Typography variant="h5">
-                      <b>Choose a username</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography>
-                    Users will go to plynth.com/username to visit your portal
-                    and access your content.
+    <PublicNav
+      right={
+        <>
+          <Typography variant="body2" color="white">
+            Already have an account?{' '}
+          </Typography>
+          <Button
+            component={RouterLink}
+            to={'/admin/login'}
+            size="small"
+            sx={{ textTransform: 'lowercase' }}
+          >
+            <Typography color="#BBBBBB">
+              <b>_sign in</b>
+            </Typography>
+          </Button>
+        </>
+      }
+      hideFooter
+    >
+      <Container maxWidth="xs">
+        <Box mt={10}>
+          <form onSubmit={formik.handleSubmit}>
+            <Grid container justifyContent="flex-start" spacing={3}>
+              <Grid item xs={12} mb={2}>
+                <Typography variant="h4" color="white">
+                  <b>{title || 'Sign Up'}</b>
+                </Typography>
+              </Grid>
+              {text && (
+                <Grid item xs={12} mb={2}>
+                  <Typography variant="h6" color="white">
+                    {text}
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography>
-                    <b>Your portal:</b> https://plynth.com/
-                    {formik.values.username}
+              )}
+              <Grid item xs={12}>
+                <TextFieldWebsite
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  placeholder="email"
+                  {...formik.getFieldProps('email')}
+                  FormHelperTextProps={{ sx: { fontSize: '16px' } }}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextFieldWebsite
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  placeholder="password"
+                  {...formik.getFieldProps('password')}
+                  FormHelperTextProps={{ sx: { fontSize: '16px' } }}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  endIcon={<ArrowForward />}
+                  size="large"
+                  fullWidth
+                  sx={{ height: '51.5px' }}
+                >
+                  <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
+                    Continue
+                  </Typography>
+                </Button>
+              </Grid>
+              <Grid item xs={12} container alignItems="center" spacing={1}>
+                <Grid item xs>
+                  <Divider color="#999999" />
+                </Grid>
+                <Grid item>
+                  <Typography color="#999999" variant="body2">
+                    or
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
-                  <Paper>
-                    <Box p={4}>
-                      <Grid container justifyContent="center" spacing={3}>
-                        <Grid item xs={12}>
-                          <form onSubmit={formik.handleSubmit}>
-                            <Grid container spacing={3}>
-                              <Grid item xs={12}>
-                                <TextField
-                                  variant="outlined"
-                                  fullWidth
-                                  name="username"
-                                  label="Username"
-                                  placeholder="username"
-                                  {...formik.getFieldProps('username')}
-                                  error={
-                                    formik.touched.username &&
-                                    Boolean(formik.errors.username)
-                                  }
-                                  helperText={
-                                    formik.touched.username &&
-                                    formik.errors.username
-                                  }
-                                  autoComplete="off"
-                                  InputLabelProps={{
-                                    shrink: true,
-                                  }}
-                                />
-                              </Grid>
-                              <Grid item xs={12}>
-                                <Button
-                                  fullWidth
-                                  type="submit"
-                                  variant="contained"
-                                  size="large"
-                                  disabled={!(formik.isValid && formik.dirty)}
-                                  loading={createStatus === 'loading'}
-                                >
-                                  Create Account
-                                </Button>
-                              </Grid>
-                            </Grid>
-                          </form>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} container justifyContent="center">
-                  <Box>
-                    <MuiButton onClick={logout} color="secondary">
-                      Cancel X
-                    </MuiButton>
-                  </Box>
+                <Grid item xs>
+                  <Divider color="#999999" />
                 </Grid>
               </Grid>
-            </Box>
-          </Grid>
-        </Grid>
+
+              <Grid item xs={12}>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  size="large"
+                  color="secondary"
+                  fullWidth
+                  sx={{
+                    height: '51.5px',
+                    textTransform: 'none',
+                    backgroundColor: '#ffffff',
+                    '&:hover': {
+                      backgroundColor: '#ffffff',
+                    },
+                  }}
+                  onClick={handleSignUpWithGoogle}
+                >
+                  <Box display="flex" mr="24px">
+                    <img src={GoogleLogo} alt="Google Logo" />
+                  </Box>
+                  <Typography letterSpacing={1} style={{ fontWeight: 500 }}>
+                    Sign up with Google
+                  </Typography>
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body2" color="#ffffffcc">
+                  By signing up, you agree to our terms of service and privacy
+                  policy.
+                </Typography>
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
       </Container>
     </PublicNav>
   )

@@ -65,10 +65,6 @@ const AdminNav = ({ children }) => {
   const classes = useStyles()
   const theme = useTheme()
 
-  useEffect(() => {
-    document.body.style.backgroundColor = theme.palette.background.default
-  }, [theme.palette.background.default])
-
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleOpen = event => {
@@ -87,15 +83,23 @@ const AdminNav = ({ children }) => {
     if (status === 'succeeded') {
       if (!user.username) {
         if (user.tier === 'trial') {
-          history.push('/s/new-portal/username')
+          history.push('/register/username')
         } else {
-          history.push('/s/register')
+          history.push('/register/username')
         }
       } else if (user.tier === 'trial') {
         history.push('/s/on-the-waitlist')
+      } else {
+        document.body.style.backgroundColor = theme.palette.background.default
       }
     }
-  }, [user.tier, history, status, user.username])
+  }, [
+    user.tier,
+    history,
+    status,
+    user.username,
+    theme.palette.background.default,
+  ])
 
   return (
     <>

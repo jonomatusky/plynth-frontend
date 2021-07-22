@@ -5,7 +5,6 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'config/firebase'
 import { Link as RouterLink } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
-import WebsiteNavBar from 'components/WebsiteNavBar'
 
 const Login = () => {
   var uiConfig = {
@@ -35,10 +34,9 @@ const Login = () => {
   }
 
   return (
-    <PublicNav>
-      <WebsiteNavBar right={<></>} />
+    <PublicNav right={<></>}>
       <Container maxWidth="xs">
-        <Box pt={20}>
+        <Box pt={10}>
           <Grid container justifyContent="center" spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h5" align="center" color="white">

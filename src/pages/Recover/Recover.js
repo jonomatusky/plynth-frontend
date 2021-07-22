@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {
+  Link,
   Container,
   Box,
   Grid,
@@ -8,14 +9,11 @@ import {
   Divider,
 } from '@material-ui/core'
 import * as yup from 'yup'
-import LoadingButton from '@material-ui/lab/LoadingButton'
 
 import firebase from 'config/firebase'
-import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
-import WebsiteNavBar from 'components/WebsiteNavBar'
 import TextFieldWebsite from 'components/TextFieldWebsite'
-import { ArrowForward } from '@material-ui/icons'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
@@ -25,40 +23,53 @@ const validationSchema = yup.object({
     .string('Enter your email')
     .email('Enter a valid email')
     .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password must be at least 6 characters')
-    .required('Password is required'),
 })
 
-const NewPortalSignUp = ({ title, text }) => {
+const Recover = ({ title, text }) => {
   const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()
 
   const { setError, clearError } = useAlertStore()
 
-  const username = new URLSearchParams(useLocation().search).get('username')
-  const code = new URLSearchParams(useLocation().search).get('code')
-  const email = new URLSearchParams(useLocation().search).get('email')
-
   const handleSubmit = async ({ email, password }) => {
     setIsLoading(true)
     try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password)
-      history.push(
-        `/s/new-portal/username` + (username ? `?username=${username}` : '')
-      )
+      await firebase.auth().signInWithEmailAndPassword(email, password)
+      history.push(`/admin`)
     } catch (err) {
-      if (err.code === 'auth/invalid-email') {
+      if (err.code === 'auth/wrong-password') {
+        try {
+          let signInMethods = await firebase
+            .auth()
+            .fetchSignInMethodsForEmail(email)
+
+          if (
+            signInMethods.length !== 0 &&
+            !signInMethods.includes('password')
+          ) {
+            setError({
+              message:
+                'No password found for this account. Try a different login method.',
+            })
+          } else {
+            setError({
+              message: `Incorrect email or password. Please try again.`,
+            })
+          }
+        } catch (err) {
+          setError({
+            message: `Incorrect email or password. Please try again.`,
+          })
+        }
+      } else if (err.code === 'auth/invalid-email') {
         setError({ message: 'Please enter a valid email address' })
-      } else if (err.code === 'auth/email-already-in-use') {
+      } else if (err.code === 'auth/user-not-found') {
         setError({
-          message: `Another account is using ${email}. Please sign in instead.`,
+          message: `Incorrect email or password. Please try again.`,
         })
       } else {
         setError({
-          message:
-            'There was an error creating your account. Please try again.',
+          message: `Incorrect email or password. Please try again.`,
         })
       }
     }
@@ -67,9 +78,8 @@ const NewPortalSignUp = ({ title, text }) => {
 
   const formik = useFormik({
     initialValues: {
-      email: email || '',
+      email: '',
       password: '',
-      code: code || null,
     },
     validationSchema: validationSchema,
     validateOnBlur: false,
@@ -79,7 +89,7 @@ const NewPortalSignUp = ({ title, text }) => {
 
   var provider = new firebase.auth.GoogleAuthProvider()
 
-  const handleSignUpWithGoogle = async () => {
+  const handleSignInWithGoogle = async () => {
     clearError()
     try {
       await firebase.auth().signInWithPopup(provider)
@@ -90,42 +100,21 @@ const NewPortalSignUp = ({ title, text }) => {
   }
 
   return (
-    <PublicNav>
-      <WebsiteNavBar
-        right={
-          <>
-            <Typography variant="body2" color="white">
-              Already have an account?{' '}
-            </Typography>
-            <Button
-              component={RouterLink}
-              to={'/admin/login'}
-              size="small"
-              sx={{ textTransform: 'lowercase' }}
-            >
-              <Typography color="#BBBBBB">
-                <b>_sign in</b>
-              </Typography>
-            </Button>
-          </>
-        }
-      />
+    <PublicNav right={<></>}>
       <Container maxWidth="xs">
-        <Box mt={20}>
+        <Box mt={10}>
           <form onSubmit={formik.handleSubmit}>
             <Grid container justifyContent="flex-start" spacing={3}>
               <Grid item xs={12} mb={2}>
                 <Typography variant="h4" color="white">
-                  <b>{title || 'Sign Up'}</b>
+                  <b>Password recovery</b>
                 </Typography>
               </Grid>
-              {text && (
-                <Grid item xs={12} mb={2}>
-                  <Typography variant="h6" color="white">
-                    {text}
-                  </Typography>
-                </Grid>
-              )}
+              <Grid item xs={12} mb={2}>
+                <Typography variant="h6" color="white">
+                  Enter the email you're using for your account.
+                </Typography>
+              </Grid>
               <Grid item xs={12}>
                 <TextFieldWebsite
                   variant="outlined"
@@ -139,34 +128,21 @@ const NewPortalSignUp = ({ title, text }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextFieldWebsite
-                  type="password"
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  placeholder="password"
-                  {...formik.getFieldProps('password')}
-                  FormHelperTextProps={{ sx: { fontSize: '16px' } }}
-                  error={
-                    formik.touched.password && Boolean(formik.errors.password)
-                  }
-                  helperText={formik.touched.password && formik.errors.password}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <LoadingButton
+                <Button
                   type="submit"
                   variant="contained"
-                  endIcon={<ArrowForward />}
                   size="large"
                   fullWidth
                   sx={{ height: '51.5px' }}
                   pending={isLoading}
                 >
-                  <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
+                  <Typography
+                    letterSpacing={1}
+                    style={{ fontWeight: 900, fontSize: '18px' }}
+                  >
                     Continue
                   </Typography>
-                </LoadingButton>
+                </Button>
               </Grid>
               <Grid item xs={12} container alignItems="center" spacing={1}>
                 <Grid item xs>
@@ -197,20 +173,28 @@ const NewPortalSignUp = ({ title, text }) => {
                       backgroundColor: '#ffffff',
                     },
                   }}
-                  onClick={handleSignUpWithGoogle}
+                  pending={isLoading}
+                  onClick={handleSignInWithGoogle}
                 >
                   <Box display="flex" mr="24px">
                     <img src={GoogleLogo} alt="Google Logo" />
                   </Box>
                   <Typography letterSpacing={1} style={{ fontWeight: 500 }}>
-                    Sign up with Google
+                    Sign in with Google
                   </Typography>
                 </Button>
               </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body2" color="#ffffffcc">
-                  By signing up, you agree to our terms of service and privacy
-                  policy.
+              <Grid item container justifyContent="center">
+                <Typography variant="body2" color="white">
+                  Don't have an account?{' '}
+                  <Link
+                    component={RouterLink}
+                    color="white"
+                    to={'register'}
+                    size="small"
+                  >
+                    <b>Sign Up</b>
+                  </Link>
                 </Typography>
               </Grid>
             </Grid>
@@ -221,4 +205,4 @@ const NewPortalSignUp = ({ title, text }) => {
   )
 }
 
-export default NewPortalSignUp
+export default Recover

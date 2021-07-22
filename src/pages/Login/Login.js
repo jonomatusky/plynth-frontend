@@ -9,12 +9,10 @@ import {
   Divider,
 } from '@material-ui/core'
 import * as yup from 'yup'
-import LoadingButton from '@material-ui/lab/LoadingButton'
 
 import firebase from 'config/firebase'
 import { Link as RouterLink, useHistory } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
-import WebsiteNavBar from 'components/WebsiteNavBar'
 import TextFieldWebsite from 'components/TextFieldWebsite'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
@@ -106,10 +104,9 @@ const NewPortalSignUp = ({ title, text }) => {
   }
 
   return (
-    <PublicNav>
-      <WebsiteNavBar right={<></>} />
+    <PublicNav right={<></>} hideFooter>
       <Container maxWidth="xs">
-        <Box mt={20}>
+        <Box mt={10}>
           <form onSubmit={formik.handleSubmit}>
             <Grid container justifyContent="flex-start" spacing={3}>
               <Grid item xs={12} mb={2}>
@@ -150,15 +147,24 @@ const NewPortalSignUp = ({ title, text }) => {
                   }
                   helperText={formik.touched.password && formik.errors.password}
                 />
+                <Typography color="#cccccc" mt={1}>
+                  <Link
+                    component={RouterLink}
+                    to="/recover"
+                    color="inherit"
+                    underline="hover"
+                  >
+                    Forgot password?
+                  </Link>
+                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <LoadingButton
+                <Button
                   type="submit"
                   variant="contained"
                   size="large"
                   fullWidth
                   sx={{ height: '51.5px' }}
-                  pending={isLoading}
                 >
                   <Typography
                     letterSpacing={1}
@@ -166,7 +172,7 @@ const NewPortalSignUp = ({ title, text }) => {
                   >
                     Sign In
                   </Typography>
-                </LoadingButton>
+                </Button>
               </Grid>
               <Grid item xs={12} container alignItems="center" spacing={1}>
                 <Grid item xs>
@@ -214,7 +220,7 @@ const NewPortalSignUp = ({ title, text }) => {
                   <Link
                     component={RouterLink}
                     color="white"
-                    to={'/s/sign-up'}
+                    to={'/register'}
                     size="small"
                   >
                     <b>Sign Up</b>

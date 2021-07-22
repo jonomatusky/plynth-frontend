@@ -45,7 +45,7 @@ export const useUserStore = () => {
   )
 
   const _clearUser = useCallback(() => {
-    dispatch(clearUser)
+    dispatch(clearUser())
   }, [dispatch])
 
   const {

@@ -8,6 +8,7 @@ import {
   updatePack,
   deletePack,
   setNewPackImage,
+  clearPacks,
 } from 'redux/packSlice'
 
 export const usePackStore = () => {
@@ -47,6 +48,13 @@ export const usePackStore = () => {
     [dispatch]
   )
 
+  const _clearPacks = useCallback(
+    image => {
+      dispatch(clearPacks())
+    },
+    [dispatch]
+  )
+
   const {
     packs,
     newPackImage,
@@ -73,6 +81,7 @@ export const usePackStore = () => {
     updatePack: _updatePack,
     deletePack: _deletePack,
     setNewPackImage: _setPackImage,
+    clearPacks: _clearPacks,
     selectPack,
     addCard,
     filter,
