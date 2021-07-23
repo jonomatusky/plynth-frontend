@@ -16,7 +16,7 @@ const PublicNav = ({ children, hideFooter, hideNavBar, ...props }) => {
   const height = use100vh()
 
   return (
-    <Box minHeight={height} position="relative">
+    <Box minHeight={height} position="relative" width="100%">
       {!hideNavBar && <WebsiteNavBar {...props} />}
 
       <Box height="64px" width="100%" />

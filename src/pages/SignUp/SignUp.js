@@ -46,7 +46,7 @@ const Login = () => {
             <Grid item xs={12}>
               <Typography textAlign="center" variant="body2" color="white">
                 Already have an account?{' '}
-                <Link component={RouterLink} to="/admin/login">
+                <Link component={RouterLink} to="/login">
                   <b>Sign In</b>
                 </Link>
                 <Link to="/">

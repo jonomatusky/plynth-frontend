@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Link,
   Container,
@@ -30,13 +30,11 @@ const validationSchema = yup.object({
 })
 
 const NewPortalSignUp = ({ title, text }) => {
-  const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()
 
   const { setError, clearError } = useAlertStore()
 
   const handleSubmit = async ({ email, password }) => {
-    setIsLoading(true)
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password)
       history.push(`/admin`)
@@ -77,7 +75,6 @@ const NewPortalSignUp = ({ title, text }) => {
         })
       }
     }
-    setIsLoading(false)
   }
 
   const formik = useFormik({
@@ -203,7 +200,6 @@ const NewPortalSignUp = ({ title, text }) => {
                       backgroundColor: '#ffffff',
                     },
                   }}
-                  pending={isLoading}
                   onClick={handleSignInWithGoogle}
                 >
                   <Box display="flex" mr="24px">

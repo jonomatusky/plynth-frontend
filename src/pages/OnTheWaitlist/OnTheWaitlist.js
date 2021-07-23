@@ -25,7 +25,6 @@ const OnTheWaitlist = () => {
     if (status === 'succeeded' && user && user.tier !== 'trial') {
       history.push('/admin')
     } else if (status === 'failed') {
-      console.log('pushing to home')
       history.push('/')
     }
   }, [history, status, user])

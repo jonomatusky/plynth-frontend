@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Button } from '@material-ui/core'
+import { Grid, Typography, Button, Box } from '@material-ui/core'
 import * as yup from 'yup'
 
 import TextFieldWebsite from 'components/TextFieldWebsite'
@@ -15,22 +15,24 @@ const validationSchema = yup.object({
 })
 
 const FormSubscribe = ({ title, text }) => {
-  const { request } = useRequest()
+  const { status, request } = useRequest()
 
   const { setError } = useAlertStore()
 
   const handleSubmit = async values => {
     const userData = { user: values }
-    try {
-      await request({
-        url: `/users/subscribe`,
-        method: 'POST',
-        data: userData,
-      })
-    } catch (err) {
-      setError({
-        message: 'There was an error submitting the form. Please try again.',
-      })
+    if (status !== 'loading') {
+      try {
+        await request({
+          url: `/users/subscribe`,
+          method: 'POST',
+          data: userData,
+        })
+      } catch (err) {
+        setError({
+          message: 'There was an error submitting the form. Please try again.',
+        })
+      }
     }
   }
 
@@ -45,35 +47,50 @@ const FormSubscribe = ({ title, text }) => {
   })
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Grid container justifyContent="flex-start" spacing={3}>
-        <Grid item xs={12}>
-          <TextFieldWebsite
-            variant="outlined"
-            fullWidth
-            size="small"
-            placeholder="email"
-            {...formik.getFieldProps('email')}
-            FormHelperTextProps={{ sx: { fontSize: '16px' } }}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            fullWidth
-            sx={{ height: '51.5px' }}
-          >
-            <Typography letterSpacing={1} style={{ fontWeight: 600 }}>
-              Submit
-            </Typography>
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
+    <>
+      {status === 'succeeded' && (
+        <Box height="151px">
+          <Grid container justifyContent="flex-start" spacing={3}>
+            <Grid item xs={12}>
+              <Typography variant="h6" color="white">
+                You're subscribed!
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+      )}
+      {status !== 'succeeded' && (
+        <form onSubmit={formik.handleSubmit}>
+          <Grid container justifyContent="flex-start" spacing={3}>
+            <Grid item xs={12}>
+              <TextFieldWebsite
+                variant="outlined"
+                fullWidth
+                size="small"
+                placeholder="email"
+                {...formik.getFieldProps('email')}
+                FormHelperTextProps={{ sx: { fontSize: '16px' } }}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                fullWidth
+                sx={{ height: '51.5px' }}
+              >
+                <Typography letterSpacing={1} style={{ fontWeight: 600 }}>
+                  Submit
+                </Typography>
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      )}
+    </>
   )
 }
 

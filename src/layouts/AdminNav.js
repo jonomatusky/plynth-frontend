@@ -56,8 +56,6 @@ const AdminNav = ({ children }) => {
   const history = useHistory()
   const { user, status } = useUserStore()
 
-  console.log(status)
-
   useFetch()
   usePageTrack()
 
@@ -82,11 +80,7 @@ const AdminNav = ({ children }) => {
   useEffect(() => {
     if (status === 'succeeded') {
       if (!user.username) {
-        if (user.tier === 'trial') {
-          history.push('/register/username')
-        } else {
-          history.push('/register/username')
-        }
+        history.push('/register/username')
       } else if (user.tier === 'trial') {
         history.push('/s/on-the-waitlist')
       } else {

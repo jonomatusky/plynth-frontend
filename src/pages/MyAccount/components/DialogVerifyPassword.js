@@ -33,7 +33,6 @@ const DialogVerifyPassword = ({ user, email, onError, open, onClose }) => {
       if (err.code === 'auth/invalid-email') {
         setError({ message: 'Please enter a valid email address' })
       } else if (err.code === 'auth/email-already-in-use') {
-        console.log('already in use')
         setError({ message: `Another account is using ${email}` })
       } else {
         setError({ message: 'An error occurred. Please try again.' })

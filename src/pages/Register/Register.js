@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Divider,
+  Hidden,
 } from '@material-ui/core'
 import * as yup from 'yup'
 
@@ -80,7 +81,9 @@ const Register = ({ title, text }) => {
     clearError()
     try {
       await firebase.auth().signInWithPopup(provider)
-      history.push('/admin')
+      history.push(
+        `/register/username` + (username ? `?username=${username}` : '')
+      )
     } catch (err) {
       setError({ message: 'Unable to sign in' })
     }
@@ -90,12 +93,15 @@ const Register = ({ title, text }) => {
     <PublicNav
       right={
         <>
-          <Typography variant="body2" color="white">
-            Already have an account?{' '}
-          </Typography>
+          <Hidden smDown>
+            <Typography variant="body2" color="white">
+              Already have an account?{' '}
+            </Typography>
+          </Hidden>
           <Button
+            color="secondary"
             component={RouterLink}
-            to={'/admin/login'}
+            to={'/login'}
             size="small"
             sx={{ textTransform: 'lowercase' }}
           >

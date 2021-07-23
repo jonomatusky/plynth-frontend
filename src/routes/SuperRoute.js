@@ -6,8 +6,6 @@ import LoadingScreen from 'components/LoadingScreen'
 const SuperRoute = ({ children, ...rest }) => {
   const { user, status } = useUserStore()
 
-  console.log(status)
-
   return (
     <Route
       {...rest}

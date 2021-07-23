@@ -66,7 +66,7 @@ const packsSlice = createSlice({
       state.newPackImage = action.payload
     },
     clearPacks(state, action) {
-      state.packs = null
+      state.packs = []
       state.newPackImage = null
       state.status = 'idle'
       state.error = null

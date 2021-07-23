@@ -8,7 +8,12 @@ import {
   Button as MuiButton,
   styled,
   Typography,
+  Hidden,
+  Menu,
+  MenuItem,
+  IconButton,
 } from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
 
 import { HashLink } from 'react-router-hash-link'
 import plynthLogoWhite from 'images/plynth_logo_white.svg'
@@ -33,10 +38,25 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
     document.body.style.backgroundColor = '#000000'
   }, [])
 
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <AppBar position="absolute" top="0" color="transparent" elevation={0}>
-      <Toolbar>
-        <Grid container justify="space-between" alignItems="center">
+      <Toolbar padd>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          alignContent="center"
+        >
           {left}
           <Box flexGrow={1}>
             <Grid container justify="center">
@@ -63,30 +83,75 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
           ) : (
             <>
               {!initializing && (
-                <Box display="flex">
-                  <Box mr={1}>
+                <Box color="white">
+                  <Hidden mdUp>
                     <MuiButton
+                      variant="contained"
                       component={RouterLink}
-                      to={user ? '/admin' : '/login'}
+                      to="/register"
                       size="small"
                       sx={{ textTransform: 'none' }}
                     >
-                      <Typography color="#BBBBBB">
-                        <b>_</b>sign in
+                      <Typography>
+                        <b>Get Access</b>
                       </Typography>
                     </MuiButton>
-                  </Box>
+                    <IconButton
+                      edge="end"
+                      aria-controls="menu"
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                      color="inherit"
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                    <Menu
+                      id="menu"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem component={RouterLink} to="/register">
+                        Sign Up
+                      </MenuItem>
+                      <MenuItem
+                        component={RouterLink}
+                        to={user ? '/admin' : '/login'}
+                      >
+                        Sign In
+                      </MenuItem>
+                    </Menu>
+                  </Hidden>
 
-                  <MuiButton
-                    component={RouterLink}
-                    to="/register"
-                    size="small"
-                    sx={{ textTransform: 'none' }}
-                  >
-                    <Typography>
-                      <b>Get Early Access</b>
-                    </Typography>
-                  </MuiButton>
+                  <Hidden mdDown>
+                    <Box display="flex">
+                      <Box mr={1}>
+                        <MuiButton
+                          component={RouterLink}
+                          to={user ? '/admin' : '/login'}
+                          size="small"
+                          sx={{ textTransform: 'none' }}
+                        >
+                          <Typography color="#BBBBBB">
+                            <b>_</b>sign in
+                          </Typography>
+                        </MuiButton>
+                      </Box>
+
+                      <MuiButton
+                        component={RouterLink}
+                        to="/register"
+                        size="small"
+                        sx={{ textTransform: 'none' }}
+                      >
+                        <Typography>
+                          <b>Get Early Access</b>
+                        </Typography>
+                      </MuiButton>
+                    </Box>
+                  </Hidden>
                 </Box>
               )}
             </>

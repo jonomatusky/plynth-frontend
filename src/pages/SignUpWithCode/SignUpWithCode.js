@@ -7,6 +7,7 @@ import {
   Button,
   Divider,
   Link,
+  Hidden,
 } from '@material-ui/core'
 import * as yup from 'yup'
 
@@ -22,15 +23,16 @@ import { useRequest } from 'hooks/use-request'
 import LoadingScreen from 'components/LoadingScreen'
 import SomethingWentWrong from 'components/SomethingWentWrong'
 import useUserStore from 'hooks/store/use-user-store'
+import { useSession } from 'hooks/use-session'
 
 const validationSchema = yup.object({
   email: yup
     .string('Enter your email')
     .email('Enter a valid email')
     .required('Email is required'),
-  code: yup
-    .string('Enter your invite code')
-    .required('Invite code is required'),
+  // code: yup
+  //   .string('Enter your invite code')
+  //   .required('Invite code is required'),
   password: yup
     .string('Enter your password')
     .min(8, 'Password must be at least 6 characters')
@@ -39,13 +41,17 @@ const validationSchema = yup.object({
 
 const SignUpWithCode = () => {
   const [inviteState, setInviteState] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(null)
+  const [code, setCode] = useState(
+    new URLSearchParams(useLocation().search).get('code')
+  )
   const history = useHistory()
 
+  const { user, logout } = useSession()
   const { acceptInvite } = useUserStore()
   const { setError, clearError } = useAlertStore()
   const { status, request } = useRequest()
 
-  const code = new URLSearchParams(useLocation().search).get('code')
   const email = decodeURIComponent(
     new URLSearchParams(useLocation().search).get('email') || ''
   )
@@ -82,7 +88,6 @@ const SignUpWithCode = () => {
             .auth()
             .fetchSignInMethodsForEmail(email)
 
-          console.log(signInMethods)
           if (
             signInMethods.length !== 0 &&
             !signInMethods.includes('password')
@@ -134,8 +139,8 @@ const SignUpWithCode = () => {
     }
   }
 
-  const handleSubmit = async ({ code: enteredCode, email, password }) => {
-    if (status !== 'idle') {
+  const handleSubmit = async ({ email, password }) => {
+    if (status === 'loading') {
       return
     }
 
@@ -143,17 +148,14 @@ const SignUpWithCode = () => {
       try {
         await signUp(email, password)
 
-        await acceptInvite(enteredCode)
-        history.push(`/admin`)
+        setLoggedIn(true)
       } catch (err) {
         setError({ message: err.message })
       }
     } else {
       try {
         await signIn(email, password)
-
-        await acceptInvite(enteredCode)
-        history.push(`/admin`)
+        setLoggedIn(true)
       } catch (err) {
         setError({ message: err.message })
       }
@@ -164,7 +166,6 @@ const SignUpWithCode = () => {
     initialValues: {
       email: email || '',
       password: '',
-      code: code || '',
     },
     validationSchema: validationSchema,
     validateOnBlur: false,
@@ -178,23 +179,43 @@ const SignUpWithCode = () => {
     clearError()
     try {
       await firebase.auth().signInWithPopup(provider)
-      history.push('/admin')
+      setLoggedIn(true)
     } catch (err) {
       setError({ message: 'Unable to sign in' })
     }
   }
+
+  useEffect(() => {
+    const handleLoggedIn = async () => {
+      // if (!loggedIn) {
+      //   logout()
+      // } else
+
+      if (loggedIn) {
+        await acceptInvite(code)
+        history.push(`/admin`)
+      }
+    }
+
+    if (user) {
+      handleLoggedIn()
+    }
+  }, [acceptInvite, code, history, loggedIn, logout, user])
 
   return (
     <PublicNav
       hideFooter
       right={
         <>
-          <Typography variant="body2" color="white">
-            Already have an account?{' '}
-          </Typography>
+          <Hidden smDown>
+            <Typography variant="body2" color="white">
+              Already have an account?{' '}
+            </Typography>
+          </Hidden>
           <Button
+            color="secondary"
             component={RouterLink}
-            to={'/admin/login'}
+            to={'/login'}
             size="small"
             sx={{ textTransform: 'lowercase' }}
           >
@@ -274,10 +295,10 @@ const SignUpWithCode = () => {
                       fullWidth
                       size="small"
                       placeholder="invite code"
-                      {...formik.getFieldProps('code')}
+                      name="code"
+                      onChange={value => setCode(value)}
+                      value={code}
                       FormHelperTextProps={{ sx: { fontSize: '16px' } }}
-                      error={formik.touched.code && Boolean(formik.errors.code)}
-                      helperText={formik.touched.code && formik.errors.code}
                     />
                   </Grid>
                 )}

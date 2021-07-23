@@ -52,8 +52,6 @@ const NewPortalUsername = () => {
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
-    validateOnBlur: false,
-    validateOnChange: false,
     onSubmit: handleSubmit,
   })
 
@@ -103,10 +101,8 @@ const NewPortalUsername = () => {
                     startAdornment: 'plynth.com/',
                   }}
                   {...formik.getFieldProps('username')}
-                  error={
-                    formik.touched.username && Boolean(formik.errors.username)
-                  }
-                  helperText={formik.touched.username && formik.errors.username}
+                  error={Boolean(formik.errors.username)}
+                  helperText={formik.errors.username}
                 />
               </Grid>
               <Grid item xs={12}>

@@ -18,8 +18,6 @@ export const fetchPortal = createAsyncThunk(
       data: rest,
     })
 
-    console.log(user)
-
     const count = await client.request({
       headers,
       url: `/scans/count/${user.id}`,

@@ -22,9 +22,7 @@ export const useAuth = () => {
       await clearUser()
       await clearPacks()
       posthog.reset()
-    } catch (err) {
-      console.log(err)
-    }
+    } catch (err) {}
   }, [clearPacks, clearUser])
 
   useEffect(() => {

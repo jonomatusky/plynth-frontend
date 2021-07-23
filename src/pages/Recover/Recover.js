@@ -1,22 +1,14 @@
 import React, { useState } from 'react'
-import {
-  Link,
-  Container,
-  Box,
-  Grid,
-  Typography,
-  Button,
-  Divider,
-} from '@material-ui/core'
+import { Container, Box, Grid, Typography, Button } from '@material-ui/core'
 import * as yup from 'yup'
 
 import firebase from 'config/firebase'
-import { Link as RouterLink, useHistory } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
 import TextFieldWebsite from 'components/TextFieldWebsite'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
-import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
+import { Close } from '@material-ui/icons'
 
 const validationSchema = yup.object({
   email: yup
@@ -26,179 +18,131 @@ const validationSchema = yup.object({
 })
 
 const Recover = ({ title, text }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const history = useHistory()
+  const [isSent, setIsSent] = useState(false)
 
-  const { setError, clearError } = useAlertStore()
+  const { setError } = useAlertStore()
 
-  const handleSubmit = async ({ email, password }) => {
-    setIsLoading(true)
+  const handleSubmit = async ({ email }) => {
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password)
-      history.push(`/admin`)
+      await firebase.auth().sendPasswordResetEmail(email)
+      setIsSent(true)
     } catch (err) {
-      if (err.code === 'auth/wrong-password') {
-        try {
-          let signInMethods = await firebase
-            .auth()
-            .fetchSignInMethodsForEmail(email)
-
-          if (
-            signInMethods.length !== 0 &&
-            !signInMethods.includes('password')
-          ) {
-            setError({
-              message:
-                'No password found for this account. Try a different login method.',
-            })
-          } else {
-            setError({
-              message: `Incorrect email or password. Please try again.`,
-            })
-          }
-        } catch (err) {
-          setError({
-            message: `Incorrect email or password. Please try again.`,
-          })
-        }
-      } else if (err.code === 'auth/invalid-email') {
+      console.log(err)
+      if (err.code === 'auth/invalid-email') {
         setError({ message: 'Please enter a valid email address' })
-      } else if (err.code === 'auth/user-not-found') {
+      } else if (err.code !== 'auth/user-not-found') {
         setError({
-          message: `Incorrect email or password. Please try again.`,
-        })
-      } else {
-        setError({
-          message: `Incorrect email or password. Please try again.`,
+          message: 'Unable to send password reset email. Please try again.',
         })
       }
     }
-    setIsLoading(false)
   }
 
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
     },
     validationSchema: validationSchema,
-    validateOnBlur: false,
-    validateOnChange: false,
     onSubmit: handleSubmit,
   })
 
-  var provider = new firebase.auth.GoogleAuthProvider()
-
-  const handleSignInWithGoogle = async () => {
-    clearError()
-    try {
-      await firebase.auth().signInWithPopup(provider)
-      history.push('/admin')
-    } catch (err) {
-      setError({ message: 'Unable to sign in' })
-    }
-  }
-
   return (
-    <PublicNav right={<></>}>
+    <PublicNav
+      right={
+        <Button
+          type="button"
+          component={RouterLink}
+          to="/login"
+          size="small"
+          sx={{ textTransform: 'lowercase' }}
+          endIcon={<Close color="secondary" />}
+        >
+          <Typography color="#BBBBBB">{isSent ? 'close' : 'cancel'}</Typography>
+        </Button>
+      }
+      hideFooter
+    >
       <Container maxWidth="xs">
         <Box mt={10}>
-          <form onSubmit={formik.handleSubmit}>
-            <Grid container justifyContent="flex-start" spacing={3}>
-              <Grid item xs={12} mb={2}>
+          {isSent && (
+            <Grid container justifyContent="flex-start" spacing={4}>
+              <Grid item xs={12}>
                 <Typography variant="h4" color="white">
-                  <b>Password recovery</b>
+                  <b>Check your email</b>
                 </Typography>
               </Grid>
-              <Grid item xs={12} mb={2}>
+              <Grid item xs={12}>
                 <Typography variant="h6" color="white">
-                  Enter the email you're using for your account.
+                  If an account exists, we've sent a reset link to the email
+                  address provided.
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
-                <TextFieldWebsite
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  placeholder="email"
-                  {...formik.getFieldProps('email')}
-                  FormHelperTextProps={{ sx: { fontSize: '16px' } }}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  fullWidth
-                  sx={{ height: '51.5px' }}
-                  pending={isLoading}
-                >
-                  <Typography
-                    letterSpacing={1}
-                    style={{ fontWeight: 900, fontSize: '18px' }}
-                  >
-                    Continue
-                  </Typography>
-                </Button>
-              </Grid>
-              <Grid item xs={12} container alignItems="center" spacing={1}>
-                <Grid item xs>
-                  <Divider color="#999999" />
-                </Grid>
-                <Grid item>
-                  <Typography color="#999999" variant="body2">
-                    or
-                  </Typography>
-                </Grid>
-                <Grid item xs>
-                  <Divider color="#999999" />
-                </Grid>
-              </Grid>
-
               <Grid item xs={12}>
                 <Button
                   type="button"
-                  variant="outlined"
-                  size="large"
-                  color="secondary"
-                  fullWidth
-                  sx={{
-                    height: '51.5px',
-                    textTransform: 'none',
-                    backgroundColor: '#ffffff',
-                    '&:hover': {
-                      backgroundColor: '#ffffff',
-                    },
-                  }}
-                  pending={isLoading}
-                  onClick={handleSignInWithGoogle}
+                  component={RouterLink}
+                  to="/login"
+                  endIcon={<Close color="secondary" />}
                 >
-                  <Box display="flex" mr="24px">
-                    <img src={GoogleLogo} alt="Google Logo" />
-                  </Box>
-                  <Typography letterSpacing={1} style={{ fontWeight: 500 }}>
-                    Sign in with Google
-                  </Typography>
+                  <Typography color="white">Close</Typography>
                 </Button>
               </Grid>
-              <Grid item container justifyContent="center">
-                <Typography variant="body2" color="white">
-                  Don't have an account?{' '}
-                  <Link
-                    component={RouterLink}
-                    color="white"
-                    to={'register'}
-                    size="small"
-                  >
-                    <b>Sign Up</b>
-                  </Link>
-                </Typography>
-              </Grid>
             </Grid>
-          </form>
+          )}
+          {!isSent && (
+            <form onSubmit={formik.handleSubmit}>
+              <Grid container justifyContent="flex-start" spacing={3}>
+                <Grid item xs={12} mb={2}>
+                  <Typography variant="h4" color="white">
+                    <b>Password recovery</b>
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} mb={2}>
+                  <Typography variant="h6" color="white">
+                    Enter the email you're using for your account.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextFieldWebsite
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    placeholder="email"
+                    {...formik.getFieldProps('email')}
+                    FormHelperTextProps={{ sx: { fontSize: '16px' } }}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    sx={{ height: '51.5px' }}
+                  >
+                    <Typography
+                      letterSpacing={1}
+                      style={{ fontWeight: 900, fontSize: '18px' }}
+                    >
+                      Continue
+                    </Typography>
+                  </Button>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="button"
+                    component={RouterLink}
+                    to="/login"
+                    fullWidth
+                  >
+                    <Typography color="white">Cancel</Typography>
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          )}
         </Box>
       </Container>
     </PublicNav>

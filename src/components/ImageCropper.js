@@ -64,7 +64,6 @@ const ImageCropper = ({ imageSrc, resolution, onSubmit, onCancel, round }) => {
       )
     } catch (err) {
       // setError({ message: err.message })
-      console.log(err.message)
     }
 
     try {

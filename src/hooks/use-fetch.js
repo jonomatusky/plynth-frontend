@@ -17,7 +17,11 @@ export const useFetch = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      await fetchUser()
+      try {
+        await fetchUser()
+      } catch (err) {
+        setError({ message: err.message })
+      }
     }
     if (!!user && fetchUserStatus === 'idle') {
       fetch()

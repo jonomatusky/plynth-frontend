@@ -64,8 +64,6 @@ const Portal = () => {
     setTestCameraIsOpen(false)
   }
 
-  console.log(portalUser)
-
   return (
     <>
       {status !== 'succeeded' && status !== 'failed' && <LoadingScreen />}

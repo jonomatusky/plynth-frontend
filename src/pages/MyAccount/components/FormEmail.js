@@ -25,7 +25,6 @@ const FormEmail = () => {
       if (err.code === 'auth/invalid-email') {
         setError({ message: 'Please enter a valid email address' })
       } else if (err.code === 'auth/email-already-in-use') {
-        console.log('already in use')
         setError({ message: `Another account is using ${values.email}` })
         resetForm()
       } else if (err.code === 'auth/requires-recent-login') {

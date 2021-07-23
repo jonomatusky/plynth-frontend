@@ -41,7 +41,6 @@ const SuperAdmin = () => {
           email,
         },
       })
-      console.log(message)
       setMessage({ message })
     } catch (err) {
       setError({ message: err.message })
