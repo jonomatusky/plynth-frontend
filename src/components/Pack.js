@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 import { Container, Hidden } from '@material-ui/core'
-import PublicNav from 'layouts/PublicNav'
 import PackButtonsDesktop from './PackButtonsDesktop'
 import PackButtonsMobile from './PackButtonsMobile'
 import PackContent from './PackContent'
@@ -28,13 +27,13 @@ const Pack = ({ pack }) => {
     window.history.replaceState(
       null,
       null,
-      `#pack=${pack.id}&card=${index}_${cards[index].id}`
+      `#pack=${pack.id}&card=${index}_${(cards[index] || {}).id}`
     )
     posthog.capture('$pageview')
   }, [index, cards, pack.id])
 
   return (
-    <PublicNav>
+    <>
       <PaginationDots
         count={(cards || []).length}
         index={index}
@@ -62,7 +61,7 @@ const Pack = ({ pack }) => {
           />
         )}
       </Hidden>
-    </PublicNav>
+    </>
   )
 }
 

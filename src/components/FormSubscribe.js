@@ -52,7 +52,7 @@ const FormSubscribe = ({ title, text }) => {
         <Box height="151px">
           <Grid container justifyContent="flex-start" spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h6" color="white">
+              <Typography variant="h6" color="white" textAlign="center">
                 You're subscribed!
               </Typography>
             </Grid>

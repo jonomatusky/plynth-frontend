@@ -50,7 +50,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
 
   return (
     <AppBar position="absolute" top="0" color="transparent" elevation={0}>
-      <Toolbar padd>
+      <Toolbar>
         <Grid
           container
           justify="space-between"
@@ -133,6 +133,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                           to={user ? '/admin' : '/login'}
                           size="small"
                           sx={{ textTransform: 'none' }}
+                          color="secondary"
                         >
                           <Typography color="#BBBBBB">
                             <b>_</b>sign in

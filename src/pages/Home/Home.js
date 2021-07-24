@@ -83,10 +83,7 @@ const Home = () => {
               justifyContent="center"
               alignItems="center"
             >
-              <Grid item xs={12}>
-                <Box mt={6} />
-              </Grid>
-              <Grid item xs={11}>
+              <Grid item xs={11} mt={6}>
                 <Typography
                   color="white"
                   variant="h3"

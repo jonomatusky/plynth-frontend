@@ -35,7 +35,7 @@ const validationSchema = yup.object({
   //   .required('Invite code is required'),
   password: yup
     .string('Enter your password')
-    .min(8, 'Password must be at least 6 characters')
+    .min(8, 'Password must be at least 8 characters')
     .required('Password is required'),
 })
 

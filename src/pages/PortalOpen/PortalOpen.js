@@ -13,6 +13,7 @@ import PortalCamera from './components/PortalCamera'
 import usePageTrack from 'hooks/use-page-track'
 import useAlertStore from 'hooks/store/use-alert-store'
 import PortalFull from './components/PortalFull'
+import { useFetch } from 'hooks/use-fetch'
 
 const PortalOpen = () => {
   const {
@@ -24,6 +25,7 @@ const PortalOpen = () => {
   } = usePortalStore()
   const { foundPack, error, status: scanStatus } = useScanStore()
 
+  useFetch()
   usePageTrack()
 
   const { error: alertError, clearError } = useAlertStore()
@@ -72,6 +74,9 @@ const PortalOpen = () => {
     history.push(`/${portalUser.username}`)
     setCameraError(true)
   }
+
+  console.log('user scan limit: ' + portalUser.scanLimit)
+  console.log('scan count: ' + scanCount)
 
   if (portalStatus === 'failed') {
     return <NotFoundPage />

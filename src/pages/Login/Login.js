@@ -23,10 +23,7 @@ const validationSchema = yup.object({
     .string('Enter your email')
     .email('Enter a valid email')
     .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password must be at least 6 characters')
-    .required('Password is required'),
+  password: yup.string('Enter your password').required('Password is required'),
 })
 
 const NewPortalSignUp = ({ title, text }) => {

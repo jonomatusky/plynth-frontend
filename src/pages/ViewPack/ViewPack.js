@@ -8,8 +8,9 @@ import PackButtonsMobile from 'components/PackButtonsMobile'
 import PackButtonsDesktop from 'components/PackButtonsDesktop'
 import PaginationDots from 'components/PaginationDots'
 import NotFound from 'components/NotFound'
-import PublicNav from 'layouts/PublicNav'
 import LoadingScreen from 'components/LoadingScreen'
+import usePageTrack from 'hooks/use-page-track'
+import { useFetch } from 'hooks/use-fetch'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -19,6 +20,9 @@ const ViewPack = () => {
 
   const { style, cards } = pack || {}
   const { fontColor } = style || {}
+
+  useFetch()
+  usePageTrack()
 
   useEffect(() => {
     const getPack = async () => {
@@ -45,7 +49,8 @@ const ViewPack = () => {
   }, [packId, request, status])
 
   return (
-    <PublicNav>
+    <>
+      {' '}
       {(status === 'idle' || status === 'loading') && <LoadingScreen />}
       {status === 'failed' && <NotFound />}
       {status === 'succeeded' && !pack && <NotFound />}
@@ -82,7 +87,7 @@ const ViewPack = () => {
           </Hidden>
         </>
       )}
-    </PublicNav>
+    </>
   )
 }
 

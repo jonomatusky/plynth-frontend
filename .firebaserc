@@ -13,6 +13,13 @@
           "plynth-staging"
         ]
       }
+    },
+    "plynth-test": {
+      "hosting": {
+        "staging": [
+          "plynth-test"
+        ]
+      }
     }
   }
 }
