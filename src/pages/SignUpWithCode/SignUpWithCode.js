@@ -20,10 +20,10 @@ import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
 import { useRequest } from 'hooks/use-request'
-import LoadingScreen from 'components/LoadingScreen'
 import SomethingWentWrong from 'components/SomethingWentWrong'
 import useUserStore from 'hooks/store/use-user-store'
 import { useSession } from 'hooks/use-session'
+import Loading from 'components/Loading'
 
 const validationSchema = yup.object({
   email: yup
@@ -226,7 +226,7 @@ const SignUpWithCode = () => {
         </>
       }
     >
-      {status === 'loading' && <LoadingScreen />}
+      {status === 'loading' && <Loading />}
       {status === 'failed' && <SomethingWentWrong />}
       {status === 'succeeded' && inviteState === 'INVALID' && (
         <Container maxWidth="xs">
