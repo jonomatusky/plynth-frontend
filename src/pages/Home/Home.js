@@ -53,17 +53,19 @@ const Home = () => {
 
   useEffect(() => {
     const getContent = async () => {
-      const contentResponse = await contentful.getEntry(
-        '6QV9CsiiyC8H7rti3qAmqd'
-      )
-      const highlightsResponse = await contentful.getEntries({
-        content_type: 'userHighlight',
-        'fields.active': true,
-        order: 'fields.order',
-      })
+      try {
+        const contentResponse = await contentful.getEntry(
+          '6QV9CsiiyC8H7rti3qAmqd'
+        )
+        const highlightsResponse = await contentful.getEntries({
+          content_type: 'userHighlight',
+          'fields.active': true,
+          order: 'fields.order',
+        })
 
-      setContent(contentResponse.fields)
-      setHighlights(highlightsResponse.items)
+        setContent(contentResponse.fields)
+        setHighlights(highlightsResponse.items)
+      } catch (err) {}
     }
 
     getContent()
@@ -320,16 +322,18 @@ const Home = () => {
                       mr={3}
                       ml={3}
                     >
-                      <img
-                        style={{
-                          height: '125px',
-                          width: '125px',
-                          borderRadius: '50%',
-                          objectFit: 'cover',
-                        }}
-                        src={'https:' + highlight.fields.image.fields.file.url}
-                        alt={highlight.fields.title}
-                      />
+                      {highlight.fields.image && (
+                        <Image
+                          height="125px"
+                          width="125px"
+                          sx={{ borderRadius: '50%', objectFit: 'cover' }}
+                          src={
+                            'https:' + highlight.fields.image.fields.file.url
+                          }
+                          alt={highlight.fields.title}
+                        />
+                      )}
+
                       <Typography textAlign="center" color="white">
                         <b>{highlight.fields.title}</b>
                       </Typography>

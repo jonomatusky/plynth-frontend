@@ -23,6 +23,7 @@ import usePageTrack from 'hooks/use-page-track'
 import useUserStore from 'hooks/store/use-user-store'
 import LoadingScreen from 'components/LoadingScreen'
 import SomethingWentWrong from 'components/SomethingWentWrong'
+import Onboarding from 'components/Onboarding'
 // import useAlertStore from 'hooks/store/use-alert-store'
 
 export const drawerWidth = 70
@@ -55,6 +56,7 @@ const useStyles = makeStyles(theme => ({
 const AdminNav = ({ children }) => {
   const history = useHistory()
   const { user, status } = useUserStore()
+  const [onboardingIsOpen, setOnboardingIsOpen] = useState()
 
   useFetch()
   usePageTrack()
@@ -95,6 +97,16 @@ const AdminNav = ({ children }) => {
     theme.palette.background.default,
   ])
 
+  const openOnboarding = () => {
+    setOnboardingIsOpen(true)
+  }
+
+  useEffect(() => {
+    if (user.tier !== 'trial' && !user.hideOnboarding) {
+      setOnboardingIsOpen(true)
+    }
+  }, [user])
+
   return (
     <>
       {(status === 'idle' || status === 'loading') && (
@@ -102,6 +114,7 @@ const AdminNav = ({ children }) => {
       )}
       {(status === 'succeeded' || status === 'failed') && (
         <>
+          <Onboarding setIsOpen={onboardingIsOpen} />
           <Hidden smDown>
             <div className={classes.root}>
               <Drawer
@@ -167,6 +180,9 @@ const AdminNav = ({ children }) => {
                             </MenuItem>
                             <MenuItem component={Link} to="/admin/account">
                               My Account
+                            </MenuItem>
+                            <MenuItem onClick={openOnboarding}>
+                              Onboarding
                             </MenuItem>
                             <MenuItem
                               component={MuiLink}
