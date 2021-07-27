@@ -24,6 +24,7 @@ import TextFieldWebsite from 'components/TextFieldWebsite'
 import contentful from 'config/contentful'
 import PublicNav from 'layouts/PublicNav'
 import FormSubscribe from 'components/FormSubscribe'
+import Image from 'components/Image'
 
 // const SmoothHashLink = React.forwardRef((props, ref) => (
 //   <HashLink smooth innerRef={ref} {...props} />
@@ -322,18 +323,17 @@ const Home = () => {
                       mr={3}
                       ml={3}
                     >
-                      {highlight.fields.image && (
-                        <Image
-                          height="125px"
-                          width="125px"
-                          sx={{ borderRadius: '50%', objectFit: 'cover' }}
-                          src={
-                            'https:' + highlight.fields.image.fields.file.url
-                          }
-                          alt={highlight.fields.title}
-                        />
-                      )}
-
+                      <Image
+                        height="125px"
+                        width="125px"
+                        style={{ borderRadius: '50%', objectFit: 'cover' }}
+                        src={
+                          highlight.fields.image
+                            ? 'https:' + highlight.fields.image.fields.file.url
+                            : null
+                        }
+                        alt={highlight.fields.title}
+                      />
                       <Typography textAlign="center" color="white">
                         <b>{highlight.fields.title}</b>
                       </Typography>

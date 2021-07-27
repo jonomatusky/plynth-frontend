@@ -5,13 +5,15 @@ const Image = ({ alt, src, height, width, style, ...props }) => {
 
   return (
     <>
-      <img
-        alt={alt}
-        src={src}
-        style={{ height, width, ...style }}
-        {...props}
-        onLoad={() => setImageIsLoaded(true)}
-      />
+      {!!src && (
+        <img
+          alt={alt}
+          src={src}
+          style={{ height, width, ...style }}
+          {...props}
+          onLoad={() => setImageIsLoaded(true)}
+        />
+      )}
       {!imageIsLoaded && (
         <div
           style={{
