@@ -14,6 +14,8 @@ import useUserStore from 'hooks/store/use-user-store'
 import PortalBar from 'components/PortalBar'
 import PortalLoadingUpload from './components/PortalLoadingUpload'
 import LivePreviewPortalLoading from './components/LivePreviewPortalLoading'
+import BarAccount from 'layouts/BarAccount'
+import PreviewLayout from 'layouts/PreviewLayout'
 
 const EditPortalAnimation = () => {
   const { user, status, updateUser, updateStatus } = useUserStore()
@@ -69,85 +71,34 @@ const EditPortalAnimation = () => {
 
   return (
     <AdminNav>
-      <PortalBar />
-      {status === 'succeeded' && (
-        <>
-          <Grid container justifyContent="flex-start">
-            <Grid item sm={12} md={7}>
-              <Box
-                height="calc(100vh - 48px)"
-                marginTop="48px"
-                overflow="scroll"
-              >
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Box display="flex" alignContent="center" pb={1}>
-                      <Grid container justifyContent="center">
-                        <Grid item xs={9}>
-                          <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                              <Box minHeight="24px" />
-
-                              <Typography variant="h6" fontWeight={900}>
-                                Your Portal
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Paper>
-                                <Box padding={3}>
-                                  <Grid container spacing={3}>
-                                    <Grid
-                                      item
-                                      xs={12}
-                                      container
-                                      justifyContent="center"
-                                    >
-                                      <Grid item>
-                                        <PortalLoadingUpload
-                                          onSubmit={handleUpdatePortal}
-                                          portal={portal}
-                                          crop
-                                        />
-                                      </Grid>
-                                    </Grid>
-                                    <Grid
-                                      item
-                                      xs={12}
-                                      container
-                                      alignItems="center"
-                                      spacing={1}
-                                    >
-                                      <Grid item>
-                                        <Box minWidth="200px">
-                                          <Typography
-                                            variant="h6"
-                                            fontWeight={900}
-                                          >
-                                            Colors
-                                          </Typography>
-                                        </Box>
-                                      </Grid>
+      <BarAccount>
+        {status === 'succeeded' && (
+          <Box height="calc(100vh - 48px)" overflow="hidden">
+            <Grid container justifyContent="flex-start">
+              <Grid item sm={12} md={7}>
+                <PortalBar />
+                <Box height="calc(100vh - 96px)" overflow="scroll">
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <Box display="flex" alignContent="center" pb={1}>
+                        <Grid container justifyContent="center">
+                          <Grid item xs={9}>
+                            <Grid container spacing={2}>
+                              <Grid item xs={12}>
+                                <Paper>
+                                  <Box padding={3} mt={3}>
+                                    <Grid container spacing={3}>
                                       <Grid
                                         item
                                         xs={12}
                                         container
-                                        alignItems="center"
-                                        spacing={3}
+                                        justifyContent="center"
                                       >
                                         <Grid item>
-                                          <Box minWidth="200px">
-                                            <Typography>
-                                              Background Color
-                                            </Typography>
-                                          </Box>
-                                        </Grid>
-                                        <Grid item>
-                                          <ButtonColorPicker
-                                            color={
-                                              animationBackgroundColor ||
-                                              '#ffffff'
-                                            }
-                                            onChange={handleColorChange}
+                                          <PortalLoadingUpload
+                                            onSubmit={handleUpdatePortal}
+                                            portal={portal}
+                                            crop
                                           />
                                         </Grid>
                                       </Grid>
@@ -156,64 +107,95 @@ const EditPortalAnimation = () => {
                                         xs={12}
                                         container
                                         alignItems="center"
-                                        spacing={3}
+                                        spacing={1}
                                       >
                                         <Grid item>
                                           <Box minWidth="200px">
-                                            <Typography>
-                                              Animation Color
+                                            <Typography
+                                              variant="h6"
+                                              fontWeight={900}
+                                            >
+                                              Colors
                                             </Typography>
                                           </Box>
                                         </Grid>
-                                        <Grid item>
-                                          <ButtonColorPicker
-                                            color={animationColor || '#ffffff'}
-                                            onChange={
-                                              handleAnimationColorChange
-                                            }
-                                          />
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          container
+                                          alignItems="center"
+                                          spacing={3}
+                                        >
+                                          <Grid item>
+                                            <Box minWidth="200px">
+                                              <Typography>
+                                                Background Color
+                                              </Typography>
+                                            </Box>
+                                          </Grid>
+                                          <Grid item>
+                                            <ButtonColorPicker
+                                              color={
+                                                animationBackgroundColor ||
+                                                '#ffffff'
+                                              }
+                                              onChange={handleColorChange}
+                                            />
+                                          </Grid>
+                                        </Grid>
+                                        <Grid
+                                          item
+                                          xs={12}
+                                          container
+                                          alignItems="center"
+                                          spacing={3}
+                                        >
+                                          <Grid item>
+                                            <Box minWidth="200px">
+                                              <Typography>
+                                                Animation Color
+                                              </Typography>
+                                            </Box>
+                                          </Grid>
+                                          <Grid item>
+                                            <ButtonColorPicker
+                                              color={
+                                                animationColor || '#ffffff'
+                                              }
+                                              onChange={
+                                                handleAnimationColorChange
+                                              }
+                                            />
+                                          </Grid>
                                         </Grid>
                                       </Grid>
                                     </Grid>
-                                  </Grid>
-                                </Box>
-                              </Paper>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Box minHeight="24px" />
+                                  </Box>
+                                </Paper>
+                              </Grid>
+                              <Grid item xs={12}>
+                                <Box minHeight="24px" />
+                              </Grid>
                             </Grid>
                           </Grid>
                         </Grid>
-                      </Grid>
-                    </Box>
+                      </Box>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-            <Hidden mdDown>
-              <Grid item md={5}>
-                <Box
-                  borderLeft={1}
-                  borderColor="divider"
-                  height="calc(100vh - 48px)"
-                  marginTop="48px"
-                  paddingTop="24px"
-                  overflow="hidden"
-                >
-                  <Box width="100%">
-                    <Grid container justifyContent="center">
-                      <Grid item xs={12}>
-                        <Box paddingBottom={2}>
-                          <Typography align="center" color="textSecondary">
-                            LIVE PREVIEW
-                          </Typography>
-                        </Box>
-                      </Grid>
+                </Box>
+              </Grid>
+
+              <Hidden mdDown>
+                <Grid item md={5}>
+                  <PreviewLayout>
+                    <Grid container justifyContent="center" spacing={3}>
                       <Grid item xs={12} container justifyContent="center">
-                        <LivePreviewPortalLoading
-                          portal={user.portal}
-                          isLoading={updateStatus === 'loading'}
-                        />
+                        <Box position="fixed">
+                          <LivePreviewPortalLoading
+                            portal={user.portal}
+                            isLoading={updateStatus === 'loading'}
+                          />
+                        </Box>
                       </Grid>
                       <Grid item container xs={12} justifyContent="center">
                         <Box paddingTop={4}>
@@ -227,13 +209,13 @@ const EditPortalAnimation = () => {
                         </Box>
                       </Grid>
                     </Grid>
-                  </Box>
-                </Box>
-              </Grid>
-            </Hidden>
-          </Grid>
-        </>
-      )}
+                  </PreviewLayout>
+                </Grid>
+              </Hidden>
+            </Grid>
+          </Box>
+        )}
+      </BarAccount>
     </AdminNav>
   )
 }

@@ -7,7 +7,7 @@ import {
   Button as MuiButton,
 } from '@material-ui/core'
 
-import { cardTypes } from 'components/CardCard'
+import { cardTypes } from 'pages/EditCards/components/CardCard'
 import { DeleteOutline } from '@material-ui/icons'
 import CardForm from './CardForm'
 

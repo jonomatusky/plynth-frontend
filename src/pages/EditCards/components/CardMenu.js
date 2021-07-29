@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Typography, Box } from '@material-ui/core'
 
 import { usePackStore } from 'hooks/store/use-pack-store'
-import CardCard, { cardTypes } from 'components/CardCard'
+import CardCard, { cardTypes } from 'pages/EditCards/components/CardCard'
 
 const CardMenu = ({ packId }) => {
   const { addCard } = usePackStore()
@@ -23,7 +23,7 @@ const CardMenu = ({ packId }) => {
       </Grid>
       {cardTypes.map((cardType, index) => {
         return (
-          <Grid item xs={4} lg={3} key={index}>
+          <Grid item xs={4} md={6} lg={4} key={index}>
             <CardCard
               type={cardType.type}
               onSelect={() => handleSelect(cardType.type)}

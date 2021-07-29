@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 const AdminNav = ({ children }) => {
   const history = useHistory()
-  const { user, status } = useUserStore()
+  const { user, status, updateUser } = useUserStore()
   const [onboardingIsOpen, setOnboardingIsOpen] = useState()
 
   useFetch()
@@ -101,11 +101,22 @@ const AdminNav = ({ children }) => {
     setOnboardingIsOpen(true)
   }
 
+  const handleCloseOnboarding = () => {
+    if (!user.hideOnboarding) {
+      updateUser({ hideOnboarding: true })
+    }
+    setOnboardingIsOpen(false)
+  }
+
   useEffect(() => {
-    if (user.tier !== 'trial' && !user.hideOnboarding) {
+    if (
+      status === 'succeeded' &&
+      user.tier !== 'trial' &&
+      !user.hideOnboarding
+    ) {
       setOnboardingIsOpen(true)
     }
-  }, [user])
+  }, [user, status])
 
   return (
     <>
@@ -114,7 +125,10 @@ const AdminNav = ({ children }) => {
       )}
       {(status === 'succeeded' || status === 'failed') && (
         <>
-          <Onboarding setIsOpen={onboardingIsOpen} />
+          <Onboarding
+            setIsOpen={onboardingIsOpen}
+            onClose={handleCloseOnboarding}
+          />
           <Hidden smDown>
             <div className={classes.root}>
               <Drawer
@@ -172,17 +186,11 @@ const AdminNav = ({ children }) => {
                                 🦸🏾‍♀️ Super Admin
                               </MenuItem>
                             )}
-                            <MenuItem
-                              component={Link}
-                              to="/admin/portal/appearance"
-                            >
-                              My Portal
-                            </MenuItem>
                             <MenuItem component={Link} to="/admin/account">
                               My Account
                             </MenuItem>
                             <MenuItem onClick={openOnboarding}>
-                              Onboarding
+                              Show Onboarding
                             </MenuItem>
                             <MenuItem
                               component={MuiLink}

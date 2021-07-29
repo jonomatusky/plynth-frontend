@@ -1,25 +1,19 @@
 import React from 'react'
 import {
-  AppBar,
   makeStyles,
-  Divider,
   Tabs,
   Tab,
   Box,
   Grid,
-  Hidden,
   Typography,
-  Link,
+  Paper,
 } from '@material-ui/core'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import theme from 'theme'
-import useUserStore from 'hooks/store/use-user-store'
-import ButtonSharePortal from './ButtonSharePortal'
+import { MovieFilter, Palette } from '@material-ui/icons'
 
 const drawerWidth = 70
-
-const { REACT_APP_PUBLIC_URL } = process.env
 
 const useStyles = makeStyles({
   appBar: {
@@ -34,37 +28,66 @@ const useStyles = makeStyles({
 })
 
 const PortalBar = () => {
-  const { user } = useUserStore()
   const classes = useStyles()
   const location = useLocation()
-
-  const { username } = user || {}
-
-  const portalUrl = REACT_APP_PUBLIC_URL + '/' + username
 
   const urlElements = location.pathname.split('/')
   const value = urlElements[urlElements.length - 1]
 
   return (
-    <AppBar position="fixed" className={classes.appBar} elevation={0}>
+    // <AppBar className={classes.appBar} elevation={0} top="48px">
+    <Paper
+      square
+      elevation={0}
+      variant="outlined"
+      sx={{ borderRight: 0, borderLeft: 0, backgroundColor: '#FDFDFD' }}
+    >
       <div style={{ width: '100%' }}>
         <Grid container>
           <Grid item sm={12} md={7}>
             <Tabs
               value={value}
-              indicatorColor="primary"
-              textColor="primary"
+              indicatorColor="secondary"
+              textColor="secondary"
               // onChange={handleChange}
             >
               <Tab
-                label="Appearance"
+                label={
+                  <Box display="flex" alignItems="center">
+                    <Box
+                      mr={1}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Palette fontSize="small" />
+                    </Box>
+                    <Box>
+                      <Typography variant="body2">Appearance</Typography>
+                    </Box>
+                  </Box>
+                }
                 component={RouterLink}
                 to="appearance"
                 value="appearance"
                 classes={{ root: classes.tabRoot }}
               />
               <Tab
-                label="Animation"
+                label={
+                  <Box display="flex" alignItems="center">
+                    <Box
+                      mr={1}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <MovieFilter fontSize="small" />
+                    </Box>
+                    <Box>
+                      <Typography variant="body2">Animation</Typography>
+                    </Box>
+                  </Box>
+                }
                 component={RouterLink}
                 to="animation"
                 value="animation"
@@ -72,7 +95,7 @@ const PortalBar = () => {
               />
             </Tabs>
           </Grid>
-          <Hidden mdDown>
+          {/* <Hidden mdDown>
             <Grid item md={5}>
               <Box
                 borderLeft={1}
@@ -102,7 +125,7 @@ const PortalBar = () => {
                 )}
               </Box>
             </Grid>
-          </Hidden>
+          </Hidden> */}
         </Grid>
 
         {/* <Box display="flex" flexDirection="row" alignItems="center">
@@ -126,9 +149,10 @@ const PortalBar = () => {
           </Box>
         </Box> */}
       </div>
+    </Paper>
 
-      <Divider />
-    </AppBar>
+    // <Divider />
+    // </AppBar>
   )
 }
 

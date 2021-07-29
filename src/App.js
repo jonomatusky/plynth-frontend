@@ -112,18 +112,20 @@ const App = () => {
       <PrivateRoute path="/admin/portal/animation">
         <EditPortalAnimation />
       </PrivateRoute>
+      <Redirect path="/admin/portal" to="/admin/portal/appearance" />
+
       <PrivateRoute path="/admin/account">
         <MyAccount />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/packs">
+        <MyPacks />
       </PrivateRoute>
 
       <SuperRoute path="/admin/super">
         <SuperAdmin />
       </SuperRoute>
 
-      <Redirect path="/admin/packs" to="/admin" />
-      <PrivateRoute path="/admin">
-        <MyPacks />
-      </PrivateRoute>
+      <Redirect path="/admin" to="/admin/packs" />
 
       {/* <Route path="/pickup" exact>
         <NewPickup />

@@ -10,18 +10,22 @@ import {
   Menu,
   MenuItem,
   Divider,
+  Button,
+  Card,
+  CardContent,
 } from '@material-ui/core'
 import { Add, ArrowForwardIos, Person } from '@material-ui/icons'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
 import AdminNav from 'layouts/AdminNav'
-import Button from 'components/Button'
 import PackListItem from './components/PackListItem'
 import Emoji from 'components/Emoji'
-import PackNameForm from 'components/PackNameForm'
+import PackNameForm from 'pages/PacksView/components/PackNameForm'
 import { useHistory } from 'react-router'
 import { useSession } from 'hooks/use-session'
+import BarAccount from 'layouts/BarAccount'
+import PreviewLayout from 'layouts/PreviewLayout'
 
 const PacksView = () => {
   const history = useHistory()
@@ -67,7 +71,7 @@ const PacksView = () => {
       shareWithLink: true,
     })
     if (createdPack.id) {
-      history.push(`admin/packs/${createdPack.id}/edit/cards`)
+      history.push(`packs/${createdPack.id}/edit/cards`)
     } else {
       setNewPack(null)
     }
@@ -75,98 +79,13 @@ const PacksView = () => {
 
   return (
     <AdminNav>
-      {newPack && !newPack.name && (
-        <Container maxWidth="sm">
-          <Box paddingTop={12} />
-          <Grid container justifyContent="center" spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5">Name your new pack</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>(You can always change this later)</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <PackNameForm
-                onSubmit={handleSubmitPackName}
-                onCancel={handleCancel}
-                buttonText="Get started"
-              />
-            </Grid>
-          </Grid>
-        </Container>
-      )}
-      {!newPack && (
-        <Container disableGutters maxWidth={false}>
-          <Grid container justifyContent="center">
-            <Grid item xs={12} md={7}>
-              {/* fix viewheight on mobile */}
-              <Box minHeight="100vh">
-                <Grid container justifyContent="center" spacing={3}>
-                  <Grid
-                    item
-                    container
-                    justifyContent="space-between"
-                    xs={11}
-                    sm={10}
-                    spacing={2}
-                    style={{ marginTop: '30px' }}
-                  >
-                    <Grid item>
-                      <Typography variant="h4" align="center">
-                        <b>Your Packs</b>
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Hidden smDown>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="large"
-                          onClick={handleClick}
-                          endIcon={<Add />}
-                        >
-                          <b>Create New Pack</b>
-                        </Button>
-                      </Hidden>
-                      <Hidden smUp>
-                        <IconButton onClick={handleOpen}>
-                          <Person />
-                        </IconButton>
-
-                        <Menu
-                          id="simple-menu"
-                          anchorEl={anchorEl}
-                          open={Boolean(anchorEl)}
-                          transitionDuration={0}
-                          onClose={handleClose}
-                        >
-                          <MenuItem component={Link} to="/admin/account">
-                            My account
-                          </MenuItem>
-                          <Divider />
-                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                        </Menu>
-                      </Hidden>
-                    </Grid>
-                  </Grid>
-                  {status === 'succeeded' && (packs || []).length === 0 && (
-                    <Grid item xs={10}>
-                      <Hidden smDown>
-                        <Typography align="center">
-                          You don't have any packs yet! Create a new one to get
-                          started <Emoji symbol="👆" label="up" />
-                        </Typography>
-                      </Hidden>
-                      <Hidden smUp>
-                        <Typography align="center">
-                          You don't have any packs yet! Switch over to desktop
-                          to start creating{' '}
-                          <Emoji symbol="💻" label="desktop" />
-                        </Typography>
-                      </Hidden>
-                    </Grid>
-                  )}
-                  {(packs || []).length > 0 && (
+      <BarAccount>
+        <Box height="calc(100vh - 48px)" overflow="hidden">
+          <Container disableGutters maxWidth={false}>
+            <Grid container justifyContent="center">
+              <Grid item xs={12} md={7}>
+                <Box height="calc(100vh - 48px)" overflow="scroll" pt={3}>
+                  <Grid container justifyContent="center" spacing={3}>
                     <Grid
                       item
                       xs={12}
@@ -174,8 +93,110 @@ const PacksView = () => {
                       spacing={1}
                       justifyContent="center"
                     >
+                      <Grid
+                        item
+                        xs={12}
+                        container
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <Grid item xs={false} sm={1}></Grid>
+                        {/* <Grid item xs={false} sm={1} /> */}
+                        <Grid item xs={11} sm={9}>
+                          <Hidden smDown>
+                            <Box mb={1} mt={1}>
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                onClick={handleClick}
+                                endIcon={<Add />}
+                                fullWidth
+                              >
+                                <b>Create New Pack</b>
+                              </Button>
+                            </Box>
+                          </Hidden>
+                          <Hidden smUp>
+                            <IconButton onClick={handleOpen}>
+                              <Person />
+                            </IconButton>
+
+                            <Menu
+                              id="simple-menu"
+                              anchorEl={anchorEl}
+                              open={Boolean(anchorEl)}
+                              transitionDuration={0}
+                              onClose={handleClose}
+                            >
+                              <MenuItem component={Link} to="/admin/account">
+                                My account
+                              </MenuItem>
+                              <Divider />
+                              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                            </Menu>
+                          </Hidden>
+                        </Grid>
+                        <Grid item xs={false} sm={1}></Grid>
+                      </Grid>
+
+                      {status === 'succeeded' && (packs || []).length === 0 && (
+                        <Grid item xs={11} sm={9}>
+                          <Hidden smDown>
+                            <Typography align="center">
+                              You don't have any packs yet! Create a new one to
+                              get started <Emoji symbol="👆" label="up" />
+                            </Typography>
+                          </Hidden>
+                          <Hidden smUp>
+                            <Typography align="center">
+                              You don't have any packs yet! Switch over to
+                              desktop to start creating{' '}
+                              <Emoji symbol="💻" label="desktop" />
+                            </Typography>
+                          </Hidden>
+                        </Grid>
+                      )}
+                      {newPack && (
+                        <Grid
+                          item
+                          xs={12}
+                          container
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Grid item xs={false} sm={1}></Grid>
+                          {/* <Grid item xs={false} sm={1} /> */}
+                          <Grid item xs={11} sm={9}>
+                            <Card>
+                              <CardContent>
+                                <Grid
+                                  container
+                                  justifyContent="center"
+                                  spacing={1}
+                                >
+                                  <Grid item xs={12}>
+                                    <Typography variant="h5">
+                                      New Pack
+                                    </Typography>
+                                  </Grid>
+
+                                  <Grid item xs={12}>
+                                    <PackNameForm
+                                      onSubmit={handleSubmitPackName}
+                                      onCancel={handleCancel}
+                                      buttonText="Get started"
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </CardContent>
+                            </Card>
+                          </Grid>
+                          <Grid item xs={false} sm={1}></Grid>
+                        </Grid>
+                      )}
                       <>
-                        {packs.map((pack, index) => {
+                        {(packs || []).map((pack, index) => {
                           return (
                             <Grid
                               item
@@ -186,7 +207,7 @@ const PacksView = () => {
                               key={pack.id}
                             >
                               <Grid item xs={false} sm={1} />
-                              <Grid item xs={11} sm={10}>
+                              <Grid item xs={11} sm={9}>
                                 <PackListItem
                                   pack={pack}
                                   isSelected={index === selectedPackIndex}
@@ -210,15 +231,12 @@ const PacksView = () => {
                         </Grid>
                       </>
                     </Grid>
-                  )}
-                </Grid>
-              </Box>
-            </Grid>
-            <Hidden mdDown>
-              <Grid item md={5}>
-                <Box borderLeft={1} borderColor="divider" height="100vh">
-                  <Box minHeight="96px" />
-                  <Box>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Hidden mdDown>
+                <Grid item md={5}>
+                  <PreviewLayout>
                     <Grid container justifyContent="center" spacing={3}>
                       <Grid item xs={12} container justifyContent="center">
                         <Box position="fixed">
@@ -227,45 +245,14 @@ const PacksView = () => {
                           )}
                         </Box>
                       </Grid>
-                      {/* <Grid
-                        item
-                        xs={8}
-                        container
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <Box minHeight="25px" maxWidth="300px">
-                          <Grid
-                            container
-                            spacing={1}
-                            alignItems="center"
-                            justifyContent="center"
-                          >
-                            {(selectedPack.cards || []).map((card, index) => {
-                              const type = card.type
-                              const cardInfo = cardTypes.find(
-                                cardType => cardType.type === type
-                              )
-
-                              return (
-                                <Grid item key={card.id || index}>
-                                  <Icon color="secondary" fontSize="small">
-                                    {cardInfo.icon}
-                                  </Icon>
-                                </Grid>
-                              )
-                            })}
-                          </Grid>
-                        </Box>
-                      </Grid> */}
                     </Grid>
-                  </Box>
-                </Box>
-              </Grid>
-            </Hidden>
-          </Grid>
-        </Container>
-      )}
+                  </PreviewLayout>
+                </Grid>
+              </Hidden>
+            </Grid>
+          </Container>
+        </Box>
+      </BarAccount>
     </AdminNav>
   )
 }

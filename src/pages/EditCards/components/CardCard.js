@@ -118,13 +118,15 @@ const CardCard = ({ type, onSelect }) => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <MuiIcon icon={cardInfo.icon} fontSize="large" />
+                  <Box fontSize="48px">
+                    <MuiIcon icon={cardInfo.icon} fontSize="inherit" />
+                  </Box>
                 </Box>
               </Box>
             </Grid>
             <Grid item xs={12}>
               <Box height="30px">
-                <Typography variant="h5">{cardInfo.title}</Typography>
+                <Typography variant="h6">{cardInfo.title}</Typography>
               </Box>
             </Grid>
             <Grid item xs={12}>

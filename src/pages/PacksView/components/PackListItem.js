@@ -52,7 +52,15 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
               <Box flexBasis={0} minWidth="80px">
                 <Grid container justifyContent="center">
                   <Grid item xs={12}>
-                    <Typography variant="body2" align="center">
+                    <Typography
+                      variant="body2"
+                      align="center"
+                      color={
+                        !pack.shareWithLink || !pack.isPublic
+                          ? 'text.disabled'
+                          : 'inherit'
+                      }
+                    >
                       Copy Link
                     </Typography>
                   </Grid>
@@ -69,7 +77,9 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                           title="Copied to clipboard!"
                           color="secondary"
                         >
-                          <IconButton>
+                          <IconButton
+                            disabled={!pack.shareWithLink || !pack.isPublic}
+                          >
                             <LinkIcon aria-label="copy" />
                           </IconButton>
                         </Tooltip>
@@ -102,7 +112,11 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                 <Box flexBasis={0} minWidth="80px">
                   <Grid container justifyContent="center">
                     <Grid item xs={12}>
-                      <Typography variant="body2" align="center">
+                      <Typography
+                        variant="body2"
+                        align="center"
+                        color={isSelected ? 'primary.main' : 'inherit'}
+                      >
                         Show
                       </Typography>
                     </Grid>

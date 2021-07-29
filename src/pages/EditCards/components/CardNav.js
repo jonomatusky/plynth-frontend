@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 import { Add, DragIndicator } from '@material-ui/icons'
 
-import { cardTypes } from 'components/CardCard'
+import { cardTypes } from 'pages/EditCards/components/CardCard'
 
 // const useStyles = makeStyles(theme => ({
 //   barPadding: {

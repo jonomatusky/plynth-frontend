@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  Grid,
   Typography,
 } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
@@ -18,10 +19,10 @@ const Onboarding = ({ setIsOpen, onClose }) => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
 
   useEffect(() => {
-    if (setIsOpen) {
+    if (setIsOpen && content.length > 0) {
       setDialogIsOpen(true)
     }
-  }, [setIsOpen])
+  }, [setIsOpen, content])
 
   useEffect(() => {
     const getContent = async () => {
@@ -53,23 +54,34 @@ const Onboarding = ({ setIsOpen, onClose }) => {
   }
 
   return (
-    <Dialog open={dialogIsOpen} onClose={handleClose}>
+    <Dialog open={dialogIsOpen}>
       <DialogContent>
-        <SwipeableViews
-          index={index}
-          onChangeIndex={setIndex}
-          containerStyle={{
-            height: '100%',
-          }}
-        >
-          <Box height="400px" width="500px" pr={2} pl={2}>
+        <Box height="400px" width="500px" pr={2} pl={2}>
+          <SwipeableViews
+            index={index}
+            onChangeIndex={setIndex}
+            containerStyle={{
+              height: '100%',
+            }}
+          >
             {content.map(step => {
               const fields = step.fields
 
               return (
                 <Box key={fields.order}>
                   <Box
-                    height="325px"
+                    height="50px"
+                    padding="25px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Typography variant="h5">
+                      <b>{fields.showTitle && fields.title}</b>
+                    </Typography>
+                  </Box>
+                  <Box
+                    height="275px"
                     padding="25px"
                     display="flex"
                     justifyContent="center"
@@ -95,34 +107,60 @@ const Onboarding = ({ setIsOpen, onClose }) => {
                 </Box>
               )
             })}
-          </Box>
-        </SwipeableViews>
+          </SwipeableViews>
+        </Box>
       </DialogContent>
       <DialogActions>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          width="100%"
-          pr={2}
-          pl={2}
-        >
-          <Box>
-            {index !== 0 && (
-              <Button startIcon={<ArrowBackIos />} onClick={decrement}>
-                Prev
-              </Button>
-            )}
-          </Box>
-          <Box>
+        <Grid container>
+          <Grid
+            item
+            xs={4}
+            container
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <Grid item xs={12}>
+              {index !== 0 && (
+                <Button startIcon={<ArrowBackIos />} onClick={decrement}>
+                  Prev
+                </Button>
+              )}
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            container
+            justifyContent="center"
+            alignItems="center"
+          >
+            {content.length > 1 &&
+              content.map((dot, i) => {
+                return (
+                  <Box
+                    key={i}
+                    bgcolor="primary.main"
+                    borderRadius="50%"
+                    width="7px"
+                    height="7px"
+                    mr="5px"
+                    style={i !== index ? { opacity: '30%' } : null}
+                  />
+                )
+              })}
+          </Grid>
+          <Grid item xs={4} container justifyContent="flex-end">
             {index < content.length - 1 ? (
               <Button endIcon={<ArrowForwardIos />} onClick={increment}>
                 Next
               </Button>
             ) : (
-              <Button endIcon={<Check />}>Get Started</Button>
+              <Button endIcon={<Check />} onClick={handleClose}>
+                Get Started
+              </Button>
             )}
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
       </DialogActions>
     </Dialog>
   )

@@ -35,7 +35,7 @@ const FormPortalAppearance = ({ portal, onSubmit, pending, onRemove }) => {
             fullWidth
             name="title"
             label="Title"
-            placeholder="Thanks for the support!"
+            placeholder={`eg, @username`}
             {...formik.getFieldProps('title')}
             autoComplete="off"
             InputLabelProps={{
@@ -50,7 +50,7 @@ const FormPortalAppearance = ({ portal, onSubmit, pending, onRemove }) => {
             fullWidth
             name="text"
             label="Welcome message"
-            placeholder="Get a sneak peak at our latest video..."
+            placeholder="eg, Take a photo of the artwork to learn more"
             {...formik.getFieldProps('text')}
             autoComplete="off"
             InputLabelProps={{
@@ -66,7 +66,7 @@ const FormPortalAppearance = ({ portal, onSubmit, pending, onRemove }) => {
               fullWidth
               name="instructions"
               label="Instructions"
-              placeholder="Add a link to your video"
+              placeholder="eg, Take a photo of the artwork"
               {...formik.getFieldProps('instructions')}
               autoComplete="off"
               InputLabelProps={{
@@ -76,10 +76,12 @@ const FormPortalAppearance = ({ portal, onSubmit, pending, onRemove }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Box pl={1} pr={1}>
-              <Typography variant="subtitle2">
-                These instructions will be overlayed on their camera feed while
-                they're taking a photo
+            <Box pl={1} pr={1} mt={1}>
+              <Typography variant="body2">
+                <i>
+                  These instructions will be overlayed on their camera feed
+                  while they're taking a photo
+                </i>
               </Typography>
             </Box>
           </Grid>

@@ -6,8 +6,6 @@ import {
   Tabs,
   Tab,
   Box,
-  Button as MuiButton,
-  Grid,
   Typography,
 } from '@material-ui/core'
 import { Link, Link as RouterLink, useLocation } from 'react-router-dom'
@@ -30,7 +28,7 @@ const useStyles = makeStyles({
   },
 })
 
-const EditBar = () => {
+const EditBar = ({ children }) => {
   const classes = useStyles()
   const location = useLocation()
 
@@ -44,118 +42,117 @@ const EditBar = () => {
   }
 
   return (
-    <AppBar position="fixed" className={classes.appBar} elevation={0}>
-      <div style={{ width: '100%' }}>
-        <Box display="flex" flexDirection="row" alignItems="center">
-          <Box flexGrow={1}>
-            <Tabs
-              value={value}
-              indicatorColor="primary"
-              textColor="primary"
-              // onChange={handleChange}
+    <>
+      <AppBar position="fixed" className={classes.appBar} elevation={0}>
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            textColor="primary"
+            // onChange={handleChange}
+          >
+            <Tab
+              label={
+                <Box display="flex" alignItems="center">
+                  <Box
+                    mr={1}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Style
+                      style={{ transform: 'rotate(180deg)' }}
+                      fontSize="small"
+                    />
+                  </Box>
+                  <Box>
+                    <Typography>Cards</Typography>
+                  </Box>
+                </Box>
+              }
+              component={RouterLink}
+              to="cards"
+              value="cards"
+              classes={{ root: classes.tabRoot }}
+            />
+            <Tab
+              label={
+                <Box display="flex" alignItems="center">
+                  <Box
+                    mr={1}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Palette fontSize="small" />
+                  </Box>
+                  <Box>
+                    <Typography>Style</Typography>
+                  </Box>
+                </Box>
+              }
+              component={RouterLink}
+              to="appearance"
+              value="appearance"
+              classes={{ root: classes.tabRoot }}
+            />
+            <Tab
+              label={
+                <Box display="flex" alignItems="center">
+                  <Box
+                    mr={1}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <CameraAlt fontSize="small" />
+                  </Box>
+                  <Box>
+                    <Typography>Share</Typography>
+                  </Box>
+                </Box>
+              }
+              component={RouterLink}
+              to="access"
+              value="access"
+              classes={{ root: classes.tabRoot }}
+            />
+
+            <Tab
+              component={RouterLink}
+              to="settings"
+              value="settings"
+              classes={{ root: classes.tabRoot }}
+              label={<Typography variant="body2">Settings</Typography>}
+            />
+          </Tabs>
+          <Box mr={1}>
+            <Button
+              size="small"
+              endIcon={<Check />}
+              onClick={handleSave}
+              pending={isSaving}
+              disableElevation
+              component={Link}
+              to="/admin"
             >
-              <Tab
-                label={
-                  <Box display="flex" alignItems="center">
-                    <Box
-                      mr={1}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Style
-                        style={{ transform: 'rotate(180deg)' }}
-                        fontSize="small"
-                      />
-                    </Box>
-                    <Box>
-                      <Typography>Cards</Typography>
-                    </Box>
-                  </Box>
-                }
-                component={RouterLink}
-                to="cards"
-                value="cards"
-                classes={{ root: classes.tabRoot }}
-              />
-              <Tab
-                label={
-                  <Box display="flex" alignItems="center">
-                    <Box
-                      mr={1}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Palette fontSize="small" />
-                    </Box>
-                    <Box>
-                      <Typography>Style</Typography>
-                    </Box>
-                  </Box>
-                }
-                component={RouterLink}
-                to="appearance"
-                value="appearance"
-                classes={{ root: classes.tabRoot }}
-              />
-              <Tab
-                label={
-                  <Box display="flex" alignItems="center">
-                    <Box
-                      mr={1}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <CameraAlt fontSize="small" />
-                    </Box>
-                    <Box>
-                      <Typography>Share</Typography>
-                    </Box>
-                  </Box>
-                }
-                component={RouterLink}
-                to="access"
-                value="access"
-                classes={{ root: classes.tabRoot }}
-              />
-            </Tabs>
-          </Box>
-          <Box paddingRight={1}>
-            <Grid container spacing={1}>
-              <Grid item>
-                <MuiButton
-                  color="secondary"
-                  component={RouterLink}
-                  to="settings"
-                  value="settings"
-                >
-                  Settings
-                </MuiButton>
-              </Grid>
-              <Grid item>
-                <Button
-                  size="small"
-                  endIcon={<Check />}
-                  onClick={handleSave}
-                  pending={isSaving}
-                  disableElevation
-                  component={Link}
-                  to="/admin"
-                >
-                  <Box paddingLeft={0.5}>
-                    <b>{`Done`}</b>
-                  </Box>
-                </Button>
-              </Grid>
-            </Grid>
+              <Box paddingLeft={0.5}>
+                <b>{`Done`}</b>
+              </Box>
+            </Button>
           </Box>
         </Box>
-      </div>
-
-      <Divider />
-    </AppBar>
+        <Divider />
+      </AppBar>
+      <Box height="calc(100vh - 48px)" overflow="hidden" mt="48px">
+        {children}
+      </Box>
+    </>
   )
 }
 

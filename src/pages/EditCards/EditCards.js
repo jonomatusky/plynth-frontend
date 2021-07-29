@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogActions,
   Button as MuiButton,
-  Typography,
   Hidden,
 } from '@material-ui/core'
 import { ArrowForward, ArrowBack, Add } from '@material-ui/icons'
@@ -24,6 +23,7 @@ import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 
 import { drawerWidth } from 'layouts/AdminNav'
+import PreviewLayout from 'layouts/PreviewLayout'
 
 const EditCards = () => {
   const { packId } = useParams()
@@ -108,150 +108,138 @@ const EditCards = () => {
   return (
     <>
       <AdminNav>
-        <EditBar />
-        {pack && (
-          <>
-            <div
-              style={{
-                width: `calc(100vw - ${drawerWidth}px`,
-                position: 'absolute',
-                top: '48px',
-                zIndex: '15',
-              }}
-            >
-              <Grid container justifyContent="flex-start">
-                <Grid item sm={12} md={8}>
-                  <Box overflow="auto">
-                    {cards && cards.length > 0 && (
-                      <Box
-                        border={1}
-                        borderTop={0}
-                        borderLeft={0}
-                        borderRight={0}
-                        borderColor="divider"
-                        // padding={1}
-                        paddingLeft={1}
-                        overflow="auto"
-                      >
-                        <CardNav
-                          cards={cards}
-                          cardIndex={cardIndex}
-                          setCardIndex={setCardIndex}
-                          updatePack={updatePack}
-                        />
-                      </Box>
-                    )}
-                  </Box>
-                </Grid>
-              </Grid>
-            </div>
-            <Grid container justifyContent="flex-start">
-              <Grid item sm={12} md={8}>
-                <Box
-                  maxHeight="calc(100vh - 127px)"
-                  marginTop="127px"
-                  overflow="scroll"
+        <EditBar>
+          {pack && (
+            <>
+              {cards && cards.length > 0 && (
+                <div
+                  style={{
+                    width: `calc(100vw - ${drawerWidth}px`,
+                    position: 'absolute',
+                    top: '48px',
+                    zIndex: '15',
+                  }}
                 >
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <Grid container>
-                        <Grid item xs={12}>
-                          <Box display="flex" alignContent="center" pb={1}>
-                            <Grid container justifyContent="center">
-                              <Grid item xs={2}>
-                                <Grid container justifyContent="center">
-                                  <Box paddingTop={30} position="absolute">
-                                    {cardIndex !== 0 && (
-                                      <CircleButton
-                                        onClick={() =>
-                                          setCardIndex(cardIndex - 1)
-                                        }
-                                      >
-                                        <ArrowBack />
-                                      </CircleButton>
-                                    )}
-                                  </Box>
+                  <Grid container justifyContent="flex-start">
+                    <Grid item sm={12} md={7}>
+                      <Box overflow="auto">
+                        <Box
+                          border={1}
+                          borderTop={0}
+                          borderLeft={0}
+                          borderRight={0}
+                          borderColor="divider"
+                          paddingLeft={1}
+                          overflow="auto"
+                        >
+                          <CardNav
+                            cards={cards}
+                            cardIndex={cardIndex}
+                            setCardIndex={setCardIndex}
+                            updatePack={updatePack}
+                          />
+                        </Box>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </div>
+              )}
+              <Grid container justifyContent="flex-start">
+                <Grid item sm={12} md={7}>
+                  <Box
+                    maxHeight={
+                      cards && cards.length > 0
+                        ? 'calc(100vh - 127px)'
+                        : 'calc(100vh - 48px)'
+                    }
+                    marginTop={cards && cards.length > 0 ? '79px' : '0px'}
+                    overflow="scroll"
+                  >
+                    <Grid container>
+                      <Grid item xs={12}>
+                        <Grid container>
+                          <Grid item xs={12}>
+                            <Box display="flex" alignContent="center" pb={1}>
+                              <Grid container justifyContent="center">
+                                <Grid item xs={2}>
+                                  <Grid container justifyContent="center">
+                                    <Box paddingTop={30} position="absolute">
+                                      {cardIndex !== 0 && (
+                                        <CircleButton
+                                          onClick={() =>
+                                            setCardIndex(cardIndex - 1)
+                                          }
+                                        >
+                                          <ArrowBack />
+                                        </CircleButton>
+                                      )}
+                                    </Box>
+                                  </Grid>
                                 </Grid>
-                              </Grid>
-                              <Grid item xs={8}>
-                                <Grid container>
-                                  <Grid item xs={12}>
-                                    <Box minHeight="24px" />
+                                <Grid item xs={8}>
+                                  <Grid container>
+                                    <Grid item xs={12}>
+                                      <Box minHeight="24px" />
 
-                                    {pack &&
-                                      cardIndex < (cards || []).length && (
-                                        <CardPanel
-                                          card={currentCard}
-                                          onSubmit={handleCardSubmit}
-                                          onRemove={handleRemoveOpen}
-                                          pending={updateStatus === 'loading'}
-                                        />
-                                      )}
-                                    {pack &&
-                                      cardIndex >= (cards || []).length && (
-                                        <CardMenu packId={packId} />
-                                      )}
-                                    {(status === 'loading' ||
-                                      status === 'idle') && (
-                                      <Grid container justifyContent="center">
-                                        <Grid item>
-                                          <CircularProgress color="secondary" />
+                                      {pack &&
+                                        cardIndex < (cards || []).length && (
+                                          <CardPanel
+                                            card={currentCard}
+                                            onSubmit={handleCardSubmit}
+                                            onRemove={handleRemoveOpen}
+                                            pending={updateStatus === 'loading'}
+                                          />
+                                        )}
+                                      {pack &&
+                                        cardIndex >= (cards || []).length && (
+                                          <CardMenu packId={packId} />
+                                        )}
+                                      {(status === 'loading' ||
+                                        status === 'idle') && (
+                                        <Grid container justifyContent="center">
+                                          <Grid item>
+                                            <CircularProgress color="secondary" />
+                                          </Grid>
                                         </Grid>
-                                      </Grid>
-                                    )}
-                                    <Box minHeight="24px" />
+                                      )}
+                                      <Box minHeight="24px" />
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                                <Grid item xs={2}>
+                                  <Grid container justifyContent="center">
+                                    <Box paddingTop={30} position="absolute">
+                                      {cardIndex < (cards || []).length && (
+                                        <CircleButton
+                                          type="submit"
+                                          form="card-form"
+                                          onClick={() =>
+                                            setCardIndex(cardIndex + 1)
+                                          }
+                                        >
+                                          {cardIndex <
+                                            (cards || []).length - 1 && (
+                                            <ArrowForward />
+                                          )}
+                                          {cardIndex ===
+                                            (cards || []).length - 1 && <Add />}
+                                        </CircleButton>
+                                      )}
+                                    </Box>
                                   </Grid>
                                 </Grid>
                               </Grid>
-                              <Grid item xs={2}>
-                                <Grid container justifyContent="center">
-                                  <Box paddingTop={30} position="absolute">
-                                    {cardIndex < (cards || []).length && (
-                                      <CircleButton
-                                        type="submit"
-                                        form="card-form"
-                                        onClick={() =>
-                                          setCardIndex(cardIndex + 1)
-                                        }
-                                      >
-                                        {cardIndex <
-                                          (cards || []).length - 1 && (
-                                          <ArrowForward />
-                                        )}
-                                        {cardIndex ===
-                                          (cards || []).length - 1 && <Add />}
-                                      </CircleButton>
-                                    )}
-                                  </Box>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </Box>
+                            </Box>
+                          </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Hidden mdDown>
-                <Grid item md={4}>
-                  <Box
-                    borderLeft={1}
-                    borderColor="divider"
-                    height="calc(100vh - 48px)"
-                    marginTop="48px"
-                    paddingTop="24px"
-                    overflow="hidden"
-                  >
-                    <Box width="100%">
+                  </Box>
+                </Grid>
+                <Hidden mdDown>
+                  <Grid item md={5}>
+                    <PreviewLayout>
                       <Grid container justifyContent="center">
-                        <Grid item xs={12}>
-                          <Box paddingBottom={2}>
-                            <Typography align="center" color="textSecondary">
-                              LIVE PREVIEW
-                            </Typography>
-                          </Box>
-                        </Grid>
                         <Grid item xs={12} container justifyContent="center">
                           <LivePreview
                             pack={pack}
@@ -272,13 +260,13 @@ const EditCards = () => {
                           </Box>
                         </Grid>
                       </Grid>
-                    </Box>
-                  </Box>
-                </Grid>
-              </Hidden>
-            </Grid>
-          </>
-        )}
+                    </PreviewLayout>
+                  </Grid>
+                </Hidden>
+              </Grid>
+            </>
+          )}
+        </EditBar>
       </AdminNav>
       <Dialog
         onClose={handleRemoveClose}

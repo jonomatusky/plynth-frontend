@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 const LoadingIcon = ({ color }) => {
   return (
     <CircularProgress
-      sx={{ color: color || 'white' }}
+      sx={{ color: color || 'black' }}
       size={60}
       thickness={5}
     />

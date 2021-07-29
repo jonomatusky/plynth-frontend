@@ -10,8 +10,8 @@ import {
 } from '@material-ui/core'
 import { ArrowForward, Close } from '@material-ui/icons'
 
-import { cardTypes } from 'components/CardCard'
-import CardCard from 'components/CardCard'
+import { cardTypes } from 'pages/EditCards/components/CardCard'
+import CardCard from 'pages/EditCards/components/CardCard'
 import Button from 'components/Button'
 
 const ChooseCards = (newPack, createPack, handleCancel) => {

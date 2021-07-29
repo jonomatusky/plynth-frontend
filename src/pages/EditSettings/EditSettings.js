@@ -13,8 +13,9 @@ import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
-import PackNameForm from 'components/PackNameForm'
+import PackNameForm from 'pages/PacksView/components/PackNameForm'
 import DangerZone from './components/DangerZone'
+import PreviewLayout from 'layouts/PreviewLayout'
 
 const EditSettings = () => {
   const { packId } = useParams()
@@ -49,18 +50,10 @@ const EditSettings = () => {
 
   return (
     <AdminNav>
-      <EditBar />
-      {pack && (
-        <Box height="100vh">
-          <Grid
-            container
-            justifyContent="center"
-            alignItems="stretch"
-            style={{ height: `100vh` }}
-          >
-            <Grid item sm={12} md={8}>
-              <Box minHeight="48px" />
-
+      <EditBar>
+        {pack && (
+          <Grid container justifyContent="center" alignItems="stretch">
+            <Grid item sm={12} md={7}>
               <Box minHeight="48px" />
               {pack && (
                 <Grid container justifyContent="center" spacing={2}>
@@ -98,51 +91,35 @@ const EditSettings = () => {
               )}
             </Grid>
             <Hidden mdDown>
-              <Grid item md={4}>
-                <Box
-                  borderLeft={1}
-                  borderColor="divider"
-                  height="calc(100vh - 48px)"
-                  marginTop="48px"
-                  paddingTop="24px"
-                  overflow="hidden"
-                >
-                  <Box width="100%">
-                    <Grid container justifyContent="center">
-                      <Grid item xs={12}>
-                        <Box paddingBottom={2}>
-                          <Typography align="center" color="textSecondary">
-                            LIVE PREVIEW
-                          </Typography>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} container justifyContent="center">
-                        <LivePreview
-                          pack={pack}
-                          cardIndex={cardIndex}
-                          isLoading={updateStatus === 'loading'}
-                          setIndex={setCardIndex}
-                        />
-                      </Grid>
-                      <Grid item container xs={12} justifyContent="center">
-                        <Box paddingTop={4}>
-                          {isSpinning && (
-                            <CircularProgress
-                              size="1.25rem"
-                              color="inherit"
-                              thickness={6}
-                            />
-                          )}
-                        </Box>
-                      </Grid>
+              <Grid item md={5}>
+                <PreviewLayout>
+                  <Grid container justifyContent="center">
+                    <Grid item xs={12} container justifyContent="center">
+                      <LivePreview
+                        pack={pack}
+                        cardIndex={cardIndex}
+                        isLoading={updateStatus === 'loading'}
+                        setIndex={setCardIndex}
+                      />
                     </Grid>
-                  </Box>
-                </Box>
+                    <Grid item container xs={12} justifyContent="center">
+                      <Box paddingTop={4}>
+                        {isSpinning && (
+                          <CircularProgress
+                            size="1.25rem"
+                            color="inherit"
+                            thickness={6}
+                          />
+                        )}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </PreviewLayout>
               </Grid>
             </Hidden>
           </Grid>
-        </Box>
-      )}
+        )}
+      </EditBar>
     </AdminNav>
   )
 }
