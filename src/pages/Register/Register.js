@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Container,
   Box,
@@ -19,6 +19,7 @@ import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
 import { useSession } from 'hooks/use-session'
+import useUserStore from 'hooks/store/use-user-store'
 
 const validationSchema = yup.object({
   email: yup
@@ -27,26 +28,25 @@ const validationSchema = yup.object({
     .required('Email is required'),
   password: yup
     .string('Enter your password')
-    .min(8, 'Password must be at least 6 characters')
+    .min(8, 'Password must be at least 8 characters')
     .required('Password is required'),
 })
 
 const Register = ({ title, text }) => {
   const history = useHistory()
-  const { logout } = useSession()
+  const { user, logout } = useSession()
+  const { createMe } = useUserStore()
   const { setError, clearError } = useAlertStore()
+  const [loggedIn, setLoggedIn] = useState(null)
 
   const username = new URLSearchParams(useLocation().search).get('username')
-  const code = new URLSearchParams(useLocation().search).get('code')
   const email = new URLSearchParams(useLocation().search).get('email')
 
   const handleSubmit = async ({ email, password }) => {
     try {
       await logout()
       await firebase.auth().createUserWithEmailAndPassword(email, password)
-      history.push(
-        `/register/username` + (username ? `?username=${username}` : '')
-      )
+      setLoggedIn(true)
     } catch (err) {
       if (err.code === 'auth/invalid-email') {
         setError({ message: 'Please enter a valid email address' })
@@ -67,7 +67,6 @@ const Register = ({ title, text }) => {
     initialValues: {
       email: email || '',
       password: '',
-      code: code || null,
     },
     validationSchema: validationSchema,
     validateOnBlur: false,
@@ -81,13 +80,30 @@ const Register = ({ title, text }) => {
     clearError()
     try {
       await firebase.auth().signInWithPopup(provider)
-      history.push(
-        `/register/username` + (username ? `?username=${username}` : '')
-      )
+      setLoggedIn(true)
     } catch (err) {
       setError({ message: 'Unable to sign in' })
     }
   }
+
+  useEffect(() => {
+    const handleLoggedIn = async () => {
+      // if (!loggedIn) {
+      //   logout()
+      // } else
+
+      if (loggedIn) {
+        await createMe()
+        // history.push(
+        //   `/register/username` + (username ? `?username=${username}` : '')
+        // )
+      }
+    }
+
+    if (user) {
+      handleLoggedIn()
+    }
+  }, [createMe, history, loggedIn, logout, user, username])
 
   return (
     <PublicNav

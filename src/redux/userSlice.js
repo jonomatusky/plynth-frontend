@@ -37,6 +37,19 @@ export const createUser = createAsyncThunk(
   }
 )
 
+export const createMe = createAsyncThunk(
+  'user/createMe',
+  async ({ headers, ...inputs }) => {
+    const { user } = await client.request({
+      headers,
+      url: '/users',
+      method: 'POST',
+      data: inputs,
+    })
+    return user
+  }
+)
+
 export const updateUser = createAsyncThunk(
   'user/updateUser',
   async ({ headers, ...inputs }) => {

@@ -14,7 +14,7 @@ import useAlertStore from 'hooks/store/use-alert-store'
 
 const NewPortalUsername = () => {
   const history = useHistory()
-  const { user, updateUser } = useUserStore()
+  const { user, createMe } = useUserStore()
   const { logout } = useSession()
   const { setError } = useAlertStore()
 
@@ -24,7 +24,7 @@ const NewPortalUsername = () => {
 
   const handleSubmit = async ({ username }) => {
     try {
-      await updateUser({ username })
+      await createMe({ username })
     } catch (err) {
       setError({ message: err.message })
     }

@@ -7,7 +7,7 @@ import { useSession } from './use-session'
 import posthog from 'posthog-js'
 import useAlertStore from './store/use-alert-store'
 
-export const useFetch = () => {
+export const useFetch = type => {
   const { user } = useSession()
   const history = useHistory()
   const { setError } = useAlertStore()
@@ -20,13 +20,20 @@ export const useFetch = () => {
       try {
         await fetchUser()
       } catch (err) {
-        setError({ message: err.message })
+        if (type !== 'public') {
+          if (err.message === 'NOT_REGISTERED') {
+            history.push('/register/username')
+          } else {
+            setError({ message: err.message })
+          }
+        }
       }
     }
+
     if (!!user && fetchUserStatus === 'idle') {
       fetch()
     }
-  }, [user, history, fetchUser, fetchUserStatus, setError])
+  }, [user, history, fetchUser, fetchUserStatus, setError, type])
 
   useEffect(() => {
     if (!!storeUser.username) {
