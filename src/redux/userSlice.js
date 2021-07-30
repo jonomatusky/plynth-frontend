@@ -5,6 +5,7 @@ let initialState = {
   user: {},
   status: 'idle',
   createStatus: 'idle',
+  createMeStatus: 'idle',
   updateStatus: 'idle',
   userListStatus: 'idle',
   error: null,
@@ -42,7 +43,7 @@ export const createMe = createAsyncThunk(
   async ({ headers, ...inputs }) => {
     const { user } = await client.request({
       headers,
-      url: '/users',
+      url: '/users/me',
       method: 'POST',
       data: inputs,
     })
@@ -132,6 +133,17 @@ const userSlice = createSlice({
     },
     [createUser.rejected]: (state, action) => {
       state.createStatus = 'failed'
+      state.error = action.error.message
+    },
+    [createMe.pending]: (state, action) => {
+      state.createMeStatus = 'loading'
+    },
+    [createMe.fulfilled]: (state, action) => {
+      state.createMeStatus = 'succeeded'
+      state.user = action.payload
+    },
+    [createMe.rejected]: (state, action) => {
+      state.createMeStatus = 'failed'
       state.error = action.error.message
     },
     [updateUser.pending]: (state, action) => {

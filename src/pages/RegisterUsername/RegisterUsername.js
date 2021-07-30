@@ -14,7 +14,8 @@ import useAlertStore from 'hooks/store/use-alert-store'
 
 const NewPortalUsername = () => {
   const history = useHistory()
-  const { user, createMe } = useUserStore()
+  const { user, createMe, createMeStatus, updateUser, updateStatus } =
+    useUserStore()
   const { logout } = useSession()
   const { setError } = useAlertStore()
 
@@ -23,10 +24,22 @@ const NewPortalUsername = () => {
   useFetch()
 
   const handleSubmit = async ({ username }) => {
-    try {
-      await createMe({ username })
-    } catch (err) {
-      setError({ message: err.message })
+    if (user._id) {
+      if (updateStatus !== 'loading') {
+        try {
+          await updateUser({ username })
+        } catch (err) {
+          setError({ message: err.message })
+        }
+      }
+    } else {
+      if (createMeStatus !== 'loading') {
+        try {
+          await createMe({ username })
+        } catch (err) {
+          setError({ message: err.message })
+        }
+      }
     }
   }
 
@@ -93,6 +106,7 @@ const NewPortalUsername = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextFieldWebsite
+                  autoFocus
                   variant="outlined"
                   placeholder="yourname"
                   size="small"

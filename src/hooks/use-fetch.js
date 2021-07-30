@@ -7,7 +7,7 @@ import { useSession } from './use-session'
 import posthog from 'posthog-js'
 import useAlertStore from './store/use-alert-store'
 
-export const useFetch = type => {
+export const useFetch = () => {
   const { user } = useSession()
   const history = useHistory()
   const { setError } = useAlertStore()
@@ -20,12 +20,10 @@ export const useFetch = type => {
       try {
         await fetchUser()
       } catch (err) {
-        if (type !== 'public') {
-          if (err.message === 'NOT_REGISTERED') {
-            history.push('/register/username')
-          } else {
-            setError({ message: err.message })
-          }
+        if (err.message === 'NOT_REGISTERED') {
+          history.push('/register/username')
+        } else {
+          setError({ message: err.message })
         }
       }
     }
@@ -33,7 +31,7 @@ export const useFetch = type => {
     if (!!user && fetchUserStatus === 'idle') {
       fetch()
     }
-  }, [user, history, fetchUser, fetchUserStatus, setError, type])
+  }, [user, history, fetchUser, fetchUserStatus, setError])
 
   useEffect(() => {
     if (!!storeUser.username) {
@@ -43,12 +41,18 @@ export const useFetch = type => {
 
   useEffect(() => {
     const fetch = async () => {
-      await fetchPacks()
+      try {
+        await fetchPacks()
+      } catch (err) {}
     }
-    if (fetchUserStatus === 'succeeded' && fetchPacksStatus === 'idle') {
+    if (
+      fetchUserStatus === 'succeeded' &&
+      fetchPacksStatus === 'idle' &&
+      storeUser._id
+    ) {
       fetch()
     }
-  }, [fetchUserStatus, fetchPacksStatus, fetchPacks])
+  }, [fetchUserStatus, fetchPacksStatus, fetchPacks, user, storeUser])
 
   return
 }

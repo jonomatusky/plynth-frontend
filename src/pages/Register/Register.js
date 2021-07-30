@@ -37,16 +37,17 @@ const Register = ({ title, text }) => {
   const { user, logout } = useSession()
   const { createMe } = useUserStore()
   const { setError, clearError } = useAlertStore()
-  const [loggedIn, setLoggedIn] = useState(null)
+  const [status, setStatus] = useState('idle')
 
   const username = new URLSearchParams(useLocation().search).get('username')
   const email = new URLSearchParams(useLocation().search).get('email')
 
   const handleSubmit = async ({ email, password }) => {
+    setStatus('loading')
     try {
       await logout()
       await firebase.auth().createUserWithEmailAndPassword(email, password)
-      setLoggedIn(true)
+      setStatus('succeeded')
     } catch (err) {
       if (err.code === 'auth/invalid-email') {
         setError({ message: 'Please enter a valid email address' })
@@ -80,7 +81,7 @@ const Register = ({ title, text }) => {
     clearError()
     try {
       await firebase.auth().signInWithPopup(provider)
-      setLoggedIn(true)
+      setStatus('succeeded')
     } catch (err) {
       setError({ message: 'Unable to sign in' })
     }
@@ -92,18 +93,17 @@ const Register = ({ title, text }) => {
       //   logout()
       // } else
 
-      if (loggedIn) {
-        await createMe()
-        // history.push(
-        //   `/register/username` + (username ? `?username=${username}` : '')
-        // )
+      if (status === 'succeeded') {
+        history.push(
+          `/register/username` + (username ? `?username=${username}` : '')
+        )
       }
     }
 
     if (user) {
       handleLoggedIn()
     }
-  }, [createMe, history, loggedIn, logout, user, username])
+  }, [createMe, history, logout, user, username, status])
 
   return (
     <PublicNav
@@ -147,6 +147,7 @@ const Register = ({ title, text }) => {
               )}
               <Grid item xs={12}>
                 <TextFieldWebsite
+                  autoFocus
                   variant="outlined"
                   fullWidth
                   size="small"
