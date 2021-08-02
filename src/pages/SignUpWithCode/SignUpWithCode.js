@@ -147,7 +147,6 @@ const SignUpWithCode = () => {
     if (inviteState === 'NEW' || !code) {
       try {
         await signUp(email, password)
-
         setLoggedIn(true)
       } catch (err) {
         setError({ message: err.message })
@@ -185,6 +184,8 @@ const SignUpWithCode = () => {
     }
   }
 
+  console.log(loggedIn)
+
   useEffect(() => {
     const handleLoggedIn = async () => {
       // if (!loggedIn) {
@@ -192,6 +193,7 @@ const SignUpWithCode = () => {
       // } else
 
       if (loggedIn) {
+        console.log('accepting invite')
         await acceptInvite(code)
         history.push(`/admin`)
       }

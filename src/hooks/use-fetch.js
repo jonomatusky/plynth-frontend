@@ -23,6 +23,7 @@ export const useFetch = () => {
         setError({ message: err.message })
       }
     }
+
     if (!!user && fetchUserStatus === 'idle') {
       fetch()
     }
@@ -36,12 +37,18 @@ export const useFetch = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      await fetchPacks()
+      try {
+        await fetchPacks()
+      } catch (err) {}
     }
-    if (fetchUserStatus === 'succeeded' && fetchPacksStatus === 'idle') {
+    if (
+      fetchUserStatus === 'succeeded' &&
+      fetchPacksStatus === 'idle' &&
+      storeUser._id
+    ) {
       fetch()
     }
-  }, [fetchUserStatus, fetchPacksStatus, fetchPacks])
+  }, [fetchUserStatus, fetchPacksStatus, fetchPacks, user, storeUser])
 
   return
 }

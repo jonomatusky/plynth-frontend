@@ -100,16 +100,7 @@ const EditPortalAppearance = () => {
             <Grid container justifyContent="flex-start">
               <Grid item sm={12} md={7}>
                 <PortalBar />
-                <Box height="calc(100vh - 96px)" overflow="scroll">
-                  {/* <div
-                    style={{
-                      width: `100%`,
-                      position: 'absolute',
-                      top: 'px',
-                      zIndex: '15',
-                    }}
-                    ></div> */}
-
+                <Box height="calc(100vh - 96px)" overflow="auto">
                   <Grid container>
                     <Grid item xs={12}>
                       <Box display="flex" alignContent="center" pb={1}>

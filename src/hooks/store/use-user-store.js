@@ -5,6 +5,7 @@ import { useThunk } from 'hooks/use-thunk'
 import {
   fetchUser,
   createUser,
+  createMe,
   updateUser,
   clearUser,
   fetchUserList,
@@ -26,6 +27,13 @@ export const useUserStore = () => {
   const _createUser = useCallback(
     async user => {
       await dispatchThunk(createUser, user)
+    },
+    [dispatchThunk]
+  )
+
+  const _createMe = useCallback(
+    async user => {
+      await dispatchThunk(createMe, user)
     },
     [dispatchThunk]
   )
@@ -53,6 +61,7 @@ export const useUserStore = () => {
     users,
     status,
     createStatus,
+    createMeStatus,
     updateStatus,
     userListStatus,
     error,
@@ -64,6 +73,7 @@ export const useUserStore = () => {
     fetchUser: _fetchUser,
     fetchUserList: _fetchUserList,
     createUser: _createUser,
+    createMe: _createMe,
     updateUser: _updateUser,
     clearUser: _clearUser,
     acceptInvite: _acceptInvite,
@@ -71,6 +81,7 @@ export const useUserStore = () => {
     users,
     status,
     createStatus,
+    createMeStatus,
     updateStatus,
     userListStatus,
     error,

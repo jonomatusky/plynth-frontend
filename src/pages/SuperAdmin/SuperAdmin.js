@@ -97,6 +97,7 @@ const SuperAdmin = () => {
                                 <Box display="flex" alignItems="center" mb={1}>
                                   <Box flexGrow={1}>
                                     <TextField
+                                      autoFocus
                                       variant="outlined"
                                       fullWidth
                                       size="small"

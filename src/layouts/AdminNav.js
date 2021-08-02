@@ -24,6 +24,9 @@ import useUserStore from 'hooks/store/use-user-store'
 import LoadingScreen from 'components/LoadingScreen'
 import SomethingWentWrong from 'components/SomethingWentWrong'
 import Onboarding from 'components/Onboarding'
+import useAlertStore from 'hooks/store/use-alert-store'
+import usePackStore from 'hooks/store/use-pack-store'
+
 // import useAlertStore from 'hooks/store/use-alert-store'
 
 export const drawerWidth = 70
@@ -58,6 +61,9 @@ const AdminNav = ({ children }) => {
   const { user, status, updateUser } = useUserStore()
   const [onboardingIsOpen, setOnboardingIsOpen] = useState()
 
+  const { status: packStatus } = usePackStore()
+  const { setError } = useAlertStore()
+
   useFetch()
   usePageTrack()
 
@@ -88,6 +94,10 @@ const AdminNav = ({ children }) => {
       } else {
         document.body.style.backgroundColor = theme.palette.background.default
       }
+    } else if (status === 'failed') {
+      setError({
+        message: 'Problem retrieving profile. Please refresh the page.',
+      })
     }
   }, [
     user.tier,
@@ -95,6 +105,7 @@ const AdminNav = ({ children }) => {
     status,
     user.username,
     theme.palette.background.default,
+    setError,
   ])
 
   const openOnboarding = () => {
@@ -117,6 +128,14 @@ const AdminNav = ({ children }) => {
       setOnboardingIsOpen(true)
     }
   }, [user, status])
+
+  useEffect(() => {
+    if (packStatus === 'failed') {
+      setError({
+        message: 'Unable to get your packs. Please refresh the page.',
+      })
+    }
+  })
 
   return (
     <>
@@ -210,7 +229,10 @@ const AdminNav = ({ children }) => {
               </Drawer>
               <main className={classes.content}>
                 {status === 'failed' && (
-                  <SomethingWentWrong fontColor={'#555555'} />
+                  <SomethingWentWrong
+                    backgroundColor={theme.palette.background.default}
+                    fontColor={'#555555'}
+                  />
                 )}
                 {status === 'succeeded' && children}
               </main>
