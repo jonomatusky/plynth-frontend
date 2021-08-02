@@ -74,11 +74,7 @@ const EditPortalAnimation = () => {
         <>
           <Grid container justifyContent="flex-start">
             <Grid item sm={12} md={7}>
-              <Box
-                height="calc(100vh - 48px)"
-                marginTop="48px"
-                overflow="scroll"
-              >
+              <Box height="calc(100vh - 48px)" marginTop="48px" overflow="auto">
                 <Grid container>
                   <Grid item xs={12}>
                     <Box display="flex" alignContent="center" pb={1}>

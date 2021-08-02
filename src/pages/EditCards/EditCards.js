@@ -150,7 +150,7 @@ const EditCards = () => {
                 <Box
                   maxHeight="calc(100vh - 127px)"
                   marginTop="127px"
-                  overflow="scroll"
+                  overflow="auto"
                 >
                   <Grid container>
                     <Grid item xs={12}>

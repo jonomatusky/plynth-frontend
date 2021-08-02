@@ -77,7 +77,7 @@ const Home = () => {
       <Container maxWidth={false} id="about" disableGutters>
         <Grid container justifyContent="center">
           <Grid item xs={12} md={2} />
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} sm={8} md={4}>
             <Grid
               container
               sx={{ height: '100%' }}
@@ -160,10 +160,16 @@ const Home = () => {
                 </Typography>
               </Grid>
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
-                <PhotoAlbumOutlined sx={{ color: 'white', fontSize: '80px' }} />
-                <Typography color="white" textAlign="center" mt={1}>
-                  {content.step1}
-                </Typography>
+                <Grid item xs={12} textAlign="center">
+                  <PhotoAlbumOutlined
+                    sx={{ color: 'white', fontSize: '80px' }}
+                  />
+                </Grid>
+                <Grid item xs={12} textAlign="center">
+                  <Typography color="white" textAlign="center" mt={1}>
+                    {content.step1}
+                  </Typography>
+                </Grid>
               </Grid>
               <Hidden mdDown>
                 <Grid
@@ -177,10 +183,14 @@ const Home = () => {
                 </Grid>
               </Hidden>
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
-                <MeetingRoom sx={{ color: 'white', fontSize: '80px' }} />
-                <Typography color="white" textAlign="center" mt={1}>
-                  {content.step2}
-                </Typography>
+                <Grid item xs={12} textAlign="center">
+                  <MeetingRoom sx={{ color: 'white', fontSize: '80px' }} />
+                </Grid>
+                <Grid item xs={12} textAlign="center">
+                  <Typography color="white" textAlign="center" mt={1}>
+                    {content.step2}
+                  </Typography>
+                </Grid>
               </Grid>
               <Hidden mdDown>
                 <Grid
@@ -194,10 +204,16 @@ const Home = () => {
                 </Grid>
               </Hidden>
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
-                <CameraAltOutlined sx={{ color: 'white', fontSize: '80px' }} />
-                <Typography color="white" textAlign="center" mt={1}>
-                  {content.step3}
-                </Typography>
+                <Grid item xs={12} textAlign="center">
+                  <CameraAltOutlined
+                    sx={{ color: 'white', fontSize: '80px' }}
+                  />
+                </Grid>
+                <Grid item xs={12} textAlign="center">
+                  <Typography color="white" textAlign="center" mt={1}>
+                    {content.step3}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -309,48 +325,56 @@ const Home = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} mt={6} pb={2} container justifyContent="center">
-            <Box maxWidth="100%" overflow="scroll">
-              <Box display="flex">
-                {highlights.map((highlight, index) => {
-                  return (
-                    <Box
-                      key={highlight.sys.id}
-                      width="150px"
+            <Box
+              height="100%"
+              overflow="auto"
+              display="flex"
+              justifyContent="flex-start"
+              sx={{
+                '&::-webkit-scrollbar': { display: 'none' },
+                '-ms-overflow-style': 'none',
+                'scrollbar-width': 'none',
+              }}
+            >
+              {highlights.map((highlight, index) => {
+                return (
+                  <Box
+                    key={highlight.sys.id}
+                    width="150px"
+                    textAlign="center"
+                    mt={index % 2 === 1 ? 6 : 0}
+                    mr={3}
+                    ml={3}
+                  >
+                    <Image
+                      height="125px"
+                      width="125px"
+                      style={{ borderRadius: '50%', objectFit: 'cover' }}
+                      src={
+                        highlight.fields.image
+                          ? 'https:' + highlight.fields.image.fields.file.url
+                          : null
+                      }
+                      alt={highlight.fields.title}
+                    />
+                    <Typography textAlign="center" color="white">
+                      <b>{highlight.fields.title}</b>
+                    </Typography>
+                    <Typography
+                      variant="body2"
                       textAlign="center"
-                      mt={index % 2 === 1 ? 6 : 0}
-                      mr={3}
-                      ml={3}
+                      color="white"
                     >
-                      <Image
-                        height="125px"
-                        width="125px"
-                        style={{ borderRadius: '50%', objectFit: 'cover' }}
-                        src={
-                          highlight.fields.image
-                            ? 'https:' + highlight.fields.image.fields.file.url
-                            : null
-                        }
-                        alt={highlight.fields.title}
-                      />
-                      <Typography textAlign="center" color="white">
-                        <b>{highlight.fields.title}</b>
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        textAlign="center"
-                        color="white"
-                      >
-                        {highlight.fields.text}
-                      </Typography>
-                    </Box>
-                  )
-                })}
-                <Hidden smUp>
-                  <Box>
-                    <Box ml={2}></Box>
+                      {highlight.fields.text}
+                    </Typography>
                   </Box>
-                </Hidden>
-              </Box>
+                )
+              })}
+              <Hidden smUp>
+                <Box>
+                  <Box ml={2}></Box>
+                </Box>
+              </Hidden>
             </Box>
           </Grid>
           <Hidden smUp>
@@ -365,8 +389,16 @@ const Home = () => {
             </Grid>
           </Hidden>
 
-          <Grid item xs={12} container justifyContent="center">
-            <Grid item xs={12} md={5} container justifyContent="center" mt={8}>
+          <Grid item xs={12} container justifyContent="space-around">
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={5}
+              container
+              justifyContent="center"
+              mt={8}
+            >
               <Grid item xs={11} container spacing={2} justifyContent="center">
                 <Grid item xs={12}>
                   <Box color="white" pb={2}>
@@ -389,10 +421,10 @@ const Home = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={1}></Grid>
             <Grid
               item
               xs={12}
+              sm={6}
               md={4}
               mt={8}
               container

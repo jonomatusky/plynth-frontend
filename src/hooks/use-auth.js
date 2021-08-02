@@ -30,7 +30,6 @@ export const useAuth = () => {
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       setState({ initializing: false, user })
       if (!!user) {
-        console.log(user.email)
         posthog.identify(user.uid, {
           email: user.email,
           displayName: user.displayName,

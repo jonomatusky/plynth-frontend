@@ -20,11 +20,7 @@ export const useFetch = () => {
       try {
         await fetchUser()
       } catch (err) {
-        if (err.message === 'NOT_REGISTERED') {
-          history.push('/register/username')
-        } else {
-          setError({ message: err.message })
-        }
+        setError({ message: err.message })
       }
     }
 

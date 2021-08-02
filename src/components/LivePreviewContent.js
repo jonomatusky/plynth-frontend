@@ -8,6 +8,7 @@ import CardHighlight from './CardHighlight'
 import CardMusic from './CardMusic'
 import CardImage from './CardImage'
 import CardButtons from './CardButtons'
+import { Box } from '@material-ui/core'
 
 const LivePreviewContent = ({ pack, index, setIndex, height }) => {
   const cards = (pack || {}).cards
@@ -41,18 +42,17 @@ const LivePreviewContent = ({ pack, index, setIndex, height }) => {
         let { type } = card
 
         return (
-          <div
+          <Box
             key={card.id}
-            style={{
-              height: '100%',
-              width: '100%',
-              overflow: 'scroll',
-              flexGrow: 1,
-              color: (style || {}).fontColor,
-              // background:
-              //   card.isFullscreenMobile && card.image
-              //     ? `url(${card.imageUrl}) no-repeat center`
-              //     : null,
+            height="100%"
+            width="100%"
+            flexGrow={1}
+            color={(style || {}).fontColor}
+            overflow="auto"
+            sx={{
+              '&::-webkit-scrollbar': { display: 'none' },
+              '-ms-overflow-style': 'none',
+              'scrollbar-width': 'none',
             }}
           >
             {type === 'text' && <CardText card={card} style={style} />}
@@ -82,7 +82,7 @@ const LivePreviewContent = ({ pack, index, setIndex, height }) => {
             )}
             {type === 'buttons' && <CardButtons card={card} style={style} />}
             {/* temp - adding extra space because live preview screen is still a little too long */}
-          </div>
+          </Box>
         )
       })}
     </SwipeableViews>

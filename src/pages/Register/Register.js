@@ -89,10 +89,6 @@ const Register = ({ title, text }) => {
 
   useEffect(() => {
     const handleLoggedIn = async () => {
-      // if (!loggedIn) {
-      //   logout()
-      // } else
-
       if (status === 'succeeded') {
         history.push(
           `/register/username` + (username ? `?username=${username}` : '')
