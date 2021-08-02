@@ -48,10 +48,10 @@ const BarAccount = ({ children }) => {
   const urlElements = location.pathname.split('/')
   const value = urlElements.slice(0, 3).join('/')
 
-  const { portal, hideOnboarding } = user || {}
+  const { portal, completedSignup } = user || {}
   const { title, text, image } = portal || {}
   const showPortalReminder =
-    hideOnboarding &&
+    completedSignup &&
     !title &&
     !text &&
     !image &&
