@@ -51,8 +51,8 @@ const LivePreviewContent = ({ pack, index, setIndex, height }) => {
             overflow="auto"
             sx={{
               '&::-webkit-scrollbar': { display: 'none' },
-              '-ms-overflow-style': 'none',
-              'scrollbar-width': 'none',
+              msOverflowStyle: 'none',
+              scrollbarWidth: 'none',
             }}
           >
             {type === 'text' && <CardText card={card} style={style} />}

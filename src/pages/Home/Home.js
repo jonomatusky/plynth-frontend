@@ -334,8 +334,8 @@ const Home = () => {
               justifyContent="flex-start"
               sx={{
                 '&::-webkit-scrollbar': { display: 'none' },
-                '-ms-overflow-style': 'none',
-                'scrollbar-width': 'none',
+                msOverflowStyle: 'none',
+                scrollbarWidth: 'none',
               }}
             >
               {highlights.map((highlight, index) => {

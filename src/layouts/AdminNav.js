@@ -113,8 +113,8 @@ const AdminNav = ({ children }) => {
   }
 
   const handleCloseOnboarding = () => {
-    if (!user.hideOnboarding) {
-      updateUser({ hideOnboarding: true })
+    if (!user.completedSignup) {
+      updateUser({ completedSignup: true })
     }
     setOnboardingIsOpen(false)
   }
@@ -123,7 +123,7 @@ const AdminNav = ({ children }) => {
     if (
       status === 'succeeded' &&
       user.tier !== 'trial' &&
-      !user.hideOnboarding
+      !user.completedSignup
     ) {
       setOnboardingIsOpen(true)
     }

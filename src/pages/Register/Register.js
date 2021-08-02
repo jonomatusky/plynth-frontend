@@ -19,7 +19,6 @@ import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
 import { useSession } from 'hooks/use-session'
-import useUserStore from 'hooks/store/use-user-store'
 
 const validationSchema = yup.object({
   email: yup
@@ -35,7 +34,6 @@ const validationSchema = yup.object({
 const Register = ({ title, text }) => {
   const history = useHistory()
   const { user, logout } = useSession()
-  const { createMe } = useUserStore()
   const { setError, clearError } = useAlertStore()
   const [status, setStatus] = useState('idle')
 
@@ -99,7 +97,7 @@ const Register = ({ title, text }) => {
     if (user) {
       handleLoggedIn()
     }
-  }, [createMe, history, logout, user, username, status])
+  }, [history, logout, user, username, status])
 
   return (
     <PublicNav

@@ -105,150 +105,164 @@ const EditAccess = () => {
         {pack && (
           <Grid container justifyContent="center" alignItems="stretch">
             <Grid item sm={12} md={7}>
-              <Box minHeight="48px" />
-              <Grid container justifyContent="center" spacing={2}>
-                <Grid item xs={12} sm={9}>
-                  <Paper>
-                    <Box padding={3}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                          <Typography variant="h4">Link to Artwork</Typography>
-                        </Grid>
-
-                        <Grid item xs={12}>
-                          <Typography variant="body2">
-                            Link this pack to physical artwork. Users snap a
-                            photo at <b>www.plynth.com/{user.username}</b> to
-                            access your pack.
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <b>
-                            Upload photos or art files to link them to this pack
-                          </b>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Box display="flex">
-                            {(pieces || []).length > 0 &&
-                              pieces.map(piece => {
-                                return (
-                                  <PieceImage piece={piece} key={piece.id} />
-                                )
-                              })}
-                            <Grid item>
-                              <Box mb={4}>
-                                <ImageUpload onSubmit={handleNewImage}>
-                                  <ButtonUpload />
-                                </ImageUpload>
-                              </Box>
-                            </Grid>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Box width="100%">
-                            <Divider />
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography variant="h6">
-                            Share with a link or QR code.
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12} container alignItems="center">
-                          <Grid item>
-                            <Switch
-                              color="primary"
-                              checked={!!pack.shareWithLink}
-                              onChange={handleShareWithLink}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <Typography>
-                              <b>
-                                {pack.shareWithLink
-                                  ? 'Link sharing on'
-                                  : 'Link sharing off'}
-                              </b>
+              <Box
+                height="calc(100vh - 48px)"
+                width="100%"
+                overflow="auto"
+                display="flex"
+                alignContent="center"
+                pb={1}
+              >
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={9}>
+                    <Paper>
+                      <Box padding={3} mt={3}>
+                        <Grid container spacing={2}>
+                          <Grid item xs={12}>
+                            <Typography variant="h4">
+                              Link to Artwork
                             </Typography>
                           </Grid>
-                        </Grid>
-                        {pack.shareWithLink && (
-                          <>
-                            <Grid item xs={12}>
-                              <Typography variant="body2">
-                                <b>URL:</b> {packLink}
+
+                          <Grid item xs={12}>
+                            <Typography variant="body2">
+                              Link this pack to physical artwork. Users snap a
+                              photo at <b>www.plynth.com/{user.username}</b> to
+                              access your pack.
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <b>
+                              Upload photos or art files to link them to this
+                              pack
+                            </b>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Box display="flex">
+                              {(pieces || []).length > 0 &&
+                                pieces.map(piece => {
+                                  return (
+                                    <PieceImage piece={piece} key={piece.id} />
+                                  )
+                                })}
+                              <Grid item>
+                                <Box mb={4}>
+                                  <ImageUpload onSubmit={handleNewImage}>
+                                    <ButtonUpload />
+                                  </ImageUpload>
+                                </Box>
+                              </Grid>
+                            </Box>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Box width="100%">
+                              <Divider />
+                            </Box>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="h6">
+                              Share with a link or QR code.
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12} container alignItems="center">
+                            <Grid item>
+                              <Switch
+                                color="primary"
+                                checked={!!pack.shareWithLink}
+                                onChange={handleShareWithLink}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <Typography>
+                                <b>
+                                  {pack.shareWithLink
+                                    ? 'Link sharing on'
+                                    : 'Link sharing off'}
+                                </b>
                               </Typography>
                             </Grid>
-                            <Grid item xs={12} container spacing={2}>
-                              <Grid item>
-                                <ButtonCopyToClipboard textToCopy={packLink}>
-                                  Copy Link
-                                </ButtonCopyToClipboard>
+                          </Grid>
+                          {pack.shareWithLink && (
+                            <>
+                              <Grid item xs={12}>
+                                <Typography variant="body2">
+                                  <b>URL:</b> {packLink}
+                                </Typography>
                               </Grid>
-                              <Grid item>
-                                <DownloadQR
-                                  qrValue={packLink + '?utm_source=qr'}
-                                  fileName={
-                                    `QR Code ` +
-                                    (pack.name || 'Pack').replace(
-                                      /[/\\?%*:|"<>]/g,
-                                      '_'
-                                    ) +
-                                    '.png'
-                                  }
-                                >
-                                  <Button
-                                    endIcon={
-                                      <GetApp
-                                        fontSize="small"
-                                        // sx={{ color: 'text.primary' }}
-                                      />
+                              <Grid item xs={12} container spacing={2}>
+                                <Grid item>
+                                  <ButtonCopyToClipboard textToCopy={packLink}>
+                                    Copy Link
+                                  </ButtonCopyToClipboard>
+                                </Grid>
+                                <Grid item>
+                                  <DownloadQR
+                                    qrValue={packLink + '?utm_source=qr'}
+                                    fileName={
+                                      `QR Code ` +
+                                      (pack.name || 'Pack').replace(
+                                        /[/\\?%*:|"<>]/g,
+                                        '_'
+                                      ) +
+                                      '.png'
                                     }
-                                    size="small"
-                                    style={{ textTransform: 'none' }}
-                                    color="secondary"
-                                    disableElevation
                                   >
-                                    <Box color="text.primary">
-                                      <Typography variant="body2">
-                                        Download QR
-                                      </Typography>
-                                    </Box>
-                                  </Button>
-                                </DownloadQR>
+                                    <Button
+                                      endIcon={
+                                        <GetApp
+                                          fontSize="small"
+                                          // sx={{ color: 'text.primary' }}
+                                        />
+                                      }
+                                      size="small"
+                                      style={{ textTransform: 'none' }}
+                                      color="secondary"
+                                      disableElevation
+                                    >
+                                      <Box color="text.primary">
+                                        <Typography variant="body2">
+                                          Download QR
+                                        </Typography>
+                                      </Box>
+                                    </Button>
+                                  </DownloadQR>
+                                </Grid>
                               </Grid>
+                            </>
+                          )}
+                          <Grid item xs={12}>
+                            <Box width="100%">
+                              <Divider />
+                            </Box>
+                          </Grid>
+                          <Grid item xs={12} container alignItems="center">
+                            <Grid item>
+                              <Typography>
+                                <b>This pack is:</b>
+                              </Typography>
                             </Grid>
-                          </>
-                        )}
-                        <Grid item xs={12}>
-                          <Box width="100%">
-                            <Divider />
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12} container alignItems="center">
-                          <Grid item>
-                            <Typography>
-                              <b>This pack is:</b>
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Switch
-                              color="primary"
-                              checked={!!pack.isPublic}
-                              onChange={handleChangeAvailability}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <Typography>
-                              {pack.isPublic ? 'PUBLIC' : 'PRIVATE'}
-                            </Typography>
+                            <Grid item>
+                              <Switch
+                                color="primary"
+                                checked={!!pack.isPublic}
+                                onChange={handleChangeAvailability}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <Typography>
+                                {pack.isPublic ? 'PUBLIC' : 'PRIVATE'}
+                              </Typography>
+                            </Grid>
                           </Grid>
                         </Grid>
-                      </Grid>
-                    </Box>
-                  </Paper>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box minHeight="24px" />
+                  </Grid>
                 </Grid>
-              </Grid>
+              </Box>
             </Grid>
             <Hidden mdDown>
               <Grid item md={5}>

@@ -24,6 +24,7 @@ import SomethingWentWrong from 'components/SomethingWentWrong'
 import useUserStore from 'hooks/store/use-user-store'
 import { useSession } from 'hooks/use-session'
 import Loading from 'components/Loading'
+import usePackStore from 'hooks/store/use-pack-store'
 
 const validationSchema = yup.object({
   email: yup
@@ -49,6 +50,7 @@ const SignUpWithCode = () => {
 
   const { user, logout } = useSession()
   const { acceptInvite } = useUserStore()
+  const { fetchPacks } = usePackStore()
   const { setError, clearError } = useAlertStore()
   const { status, request } = useRequest()
 
@@ -195,6 +197,9 @@ const SignUpWithCode = () => {
       if (loggedIn) {
         console.log('accepting invite')
         await acceptInvite(code)
+        try {
+          await fetchPacks()
+        } catch (err) {}
         history.push(`/admin`)
       }
     }
@@ -202,7 +207,7 @@ const SignUpWithCode = () => {
     if (user) {
       handleLoggedIn()
     }
-  }, [acceptInvite, code, history, loggedIn, logout, user])
+  }, [acceptInvite, code, history, loggedIn, logout, user, fetchPacks])
 
   return (
     <PublicNav

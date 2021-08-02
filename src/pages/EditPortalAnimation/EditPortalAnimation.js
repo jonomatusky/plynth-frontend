@@ -77,109 +77,94 @@ const EditPortalAnimation = () => {
             <Grid container justifyContent="flex-start">
               <Grid item sm={12} md={7}>
                 <PortalBar />
-                <Box height="calc(100vh - 96px)" overflow="auto">
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <Box display="flex" alignContent="center" pb={1}>
-                        <Grid container justifyContent="center">
-                          <Grid item xs={9}>
-                            <Grid container spacing={2}>
-                              <Grid item xs={12}>
-                                <Paper>
-                                  <Box padding={3} mt={3}>
-                                    <Grid container spacing={3}>
-                                      <Grid
-                                        item
-                                        xs={12}
-                                        container
-                                        justifyContent="center"
-                                      >
-                                        <Grid item>
-                                          <PortalLoadingUpload
-                                            onSubmit={handleUpdatePortal}
-                                            portal={portal}
-                                            crop
-                                          />
-                                        </Grid>
-                                      </Grid>
-                                      <Grid
-                                        item
-                                        xs={12}
-                                        container
-                                        alignItems="center"
-                                        spacing={1}
-                                      >
-                                        <Grid item>
-                                          <Box minWidth="200px">
-                                            <Typography
-                                              variant="h6"
-                                              fontWeight={900}
-                                            >
-                                              Colors
-                                            </Typography>
-                                          </Box>
-                                        </Grid>
-                                        <Grid
-                                          item
-                                          xs={12}
-                                          container
-                                          alignItems="center"
-                                          spacing={3}
-                                        >
-                                          <Grid item>
-                                            <Box minWidth="200px">
-                                              <Typography>
-                                                Background Color
-                                              </Typography>
-                                            </Box>
-                                          </Grid>
-                                          <Grid item>
-                                            <ButtonColorPicker
-                                              color={
-                                                animationBackgroundColor ||
-                                                '#ffffff'
-                                              }
-                                              onChange={handleColorChange}
-                                            />
-                                          </Grid>
-                                        </Grid>
-                                        <Grid
-                                          item
-                                          xs={12}
-                                          container
-                                          alignItems="center"
-                                          spacing={3}
-                                        >
-                                          <Grid item>
-                                            <Box minWidth="200px">
-                                              <Typography>
-                                                Animation Color
-                                              </Typography>
-                                            </Box>
-                                          </Grid>
-                                          <Grid item>
-                                            <ButtonColorPicker
-                                              color={
-                                                animationColor || '#ffffff'
-                                              }
-                                              onChange={
-                                                handleAnimationColorChange
-                                              }
-                                            />
-                                          </Grid>
-                                        </Grid>
-                                      </Grid>
-                                    </Grid>
-                                  </Box>
-                                </Paper>
+                <Box
+                  height="calc(100vh - 96px)"
+                  width="100%"
+                  overflow="auto"
+                  display="flex"
+                  alignContent="center"
+                  pb={1}
+                >
+                  <Grid container justifyContent="center" spacing={2}>
+                    <Grid item xs={9}>
+                      <Paper>
+                        <Box padding={3} mt={3}>
+                          <Grid container spacing={3}>
+                            <Grid
+                              item
+                              xs={12}
+                              container
+                              justifyContent="center"
+                            >
+                              <Grid item>
+                                <PortalLoadingUpload
+                                  onSubmit={handleUpdatePortal}
+                                  portal={portal}
+                                  crop
+                                />
                               </Grid>
-                              <Grid item xs={12}>
-                                <Box minHeight="24px" />
+                            </Grid>
+                            <Grid
+                              item
+                              xs={12}
+                              container
+                              alignItems="center"
+                              spacing={1}
+                            >
+                              <Grid item>
+                                <Box minWidth="200px">
+                                  <Typography variant="h6" fontWeight={900}>
+                                    Colors
+                                  </Typography>
+                                </Box>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                                container
+                                alignItems="center"
+                                spacing={3}
+                              >
+                                <Grid item>
+                                  <Box minWidth="200px">
+                                    <Typography>Background Color</Typography>
+                                  </Box>
+                                </Grid>
+                                <Grid item>
+                                  <ButtonColorPicker
+                                    color={
+                                      animationBackgroundColor || '#ffffff'
+                                    }
+                                    onChange={handleColorChange}
+                                  />
+                                </Grid>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                                container
+                                alignItems="center"
+                                spacing={3}
+                              >
+                                <Grid item>
+                                  <Box minWidth="200px">
+                                    <Typography>Animation Color</Typography>
+                                  </Box>
+                                </Grid>
+                                <Grid item>
+                                  <ButtonColorPicker
+                                    color={animationColor || '#ffffff'}
+                                    onChange={handleAnimationColorChange}
+                                  />
+                                </Grid>
                               </Grid>
                             </Grid>
                           </Grid>
-                        </Grid>
-                      </Box>
+                        </Box>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Box minHeight="24px" />
                     </Grid>
                   </Grid>
                 </Box>

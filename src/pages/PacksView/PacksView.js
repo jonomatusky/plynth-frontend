@@ -84,7 +84,7 @@ const PacksView = () => {
           <Container disableGutters maxWidth={false}>
             <Grid container justifyContent="center">
               <Grid item xs={12} md={7}>
-                <Box height="calc(100vh - 48px)" overflow="scroll" pt={3}>
+                <Box height="calc(100vh - 48px)" overflow="auto" pt={3}>
                   <Grid container justifyContent="center" spacing={3}>
                     <Grid
                       item

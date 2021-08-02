@@ -153,7 +153,7 @@ const EditCards = () => {
                         : 'calc(100vh - 48px)'
                     }
                     marginTop={cards && cards.length > 0 ? '79px' : '0px'}
-                    overflow="scroll"
+                    overflow="auto"
                   >
                     <Grid container>
                       <Grid item xs={12}>

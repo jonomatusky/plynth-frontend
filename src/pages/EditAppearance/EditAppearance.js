@@ -99,135 +99,148 @@ const EditAppearance = () => {
         {pack && (
           <Grid container justifyContent="center" alignItems="stretch">
             <Grid item sm={12} md={7}>
-              <Box minHeight="48px" />
-              <Grid container justifyContent="center" spacing={2}>
-                <Grid item xs={12} sm={9}>
-                  <Paper>
-                    <Box padding={3}>
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          <Typography variant="h4">Edit Appearance</Typography>
-                        </Grid>
-                        <Grid item>
-                          <Box minWidth="200px">
+              <Box
+                height="calc(100vh - 48px)"
+                width="100%"
+                overflow="auto"
+                display="flex"
+                alignContent="center"
+                pb={1}
+              >
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={9}>
+                    <Paper>
+                      <Box padding={3} mt={3}>
+                        <Grid container spacing={3}>
+                          <Grid item xs={12}>
+                            <Typography variant="h4">
+                              Edit Appearance
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Box minWidth="200px">
+                              <Typography variant="h6" fontWeight={900}>
+                                Colors
+                              </Typography>
+                            </Box>
+                          </Grid>
+                          <Grid
+                            item
+                            xs={12}
+                            container
+                            alignItems="center"
+                            spacing={3}
+                          >
+                            <Grid item>
+                              <Box minWidth="200px">
+                                <Typography>Background Color</Typography>
+                              </Box>
+                            </Grid>
+                            <Grid item>
+                              <ButtonColorPicker
+                                color={backgroundColor || '#ffffff'}
+                                onChange={handleColorChange}
+                              />
+                            </Grid>
+                          </Grid>
+                          <Grid
+                            item
+                            xs={12}
+                            container
+                            alignItems="center"
+                            spacing={3}
+                          >
+                            <Grid item>
+                              <Box minWidth="200px">
+                                <Typography>Button Color</Typography>
+                              </Box>
+                            </Grid>
+                            <Grid item>
+                              <ButtonColorPicker
+                                color={buttonColor || '#ffffff'}
+                                onChange={handleButtonColorchange}
+                              />
+                            </Grid>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Box minWidth="200px">
+                              <Typography variant="subtitle2">
+                                *Make sure to pick a buttoncolor that contrasts
+                                with the background
+                              </Typography>
+                            </Box>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Box mt={2} mb={1}>
+                              <Divider />
+                            </Box>
+                          </Grid>
+                          <Grid item xs={12}>
                             <Typography variant="h6" fontWeight={900}>
-                              Colors
+                              Font
                             </Typography>
-                          </Box>
-                        </Grid>
-                        <Grid
-                          item
-                          xs={12}
-                          container
-                          alignItems="center"
-                          spacing={3}
-                        >
-                          <Grid item>
-                            <Box minWidth="200px">
-                              <Typography>Background Color</Typography>
-                            </Box>
                           </Grid>
-                          <Grid item>
-                            <ButtonColorPicker
-                              color={backgroundColor || '#ffffff'}
-                              onChange={handleColorChange}
-                            />
-                          </Grid>
-                        </Grid>
-                        <Grid
-                          item
-                          xs={12}
-                          container
-                          alignItems="center"
-                          spacing={3}
-                        >
-                          <Grid item>
-                            <Box minWidth="200px">
-                              <Typography>Button Color</Typography>
-                            </Box>
-                          </Grid>
-                          <Grid item>
-                            <ButtonColorPicker
-                              color={buttonColor || '#ffffff'}
-                              onChange={handleButtonColorchange}
-                            />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Box minWidth="200px">
-                            <Typography variant="subtitle2">
-                              *Make sure to pick a buttoncolor that contrasts
-                              with the background
-                            </Typography>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Box mt={2} mb={1}>
-                            <Divider />
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography variant="h6" fontWeight={900}>
-                            Font
-                          </Typography>
-                        </Grid>
 
-                        <Grid item xs={12} container spacing={2}>
-                          <Grid item>
-                            <ButtonFont
-                              font={`'Degular', sans-serif`}
-                              setFont={handleFontChange}
-                            />
+                          <Grid item xs={12} container spacing={2}>
+                            <Grid item>
+                              <ButtonFont
+                                font={`'Degular', sans-serif`}
+                                setFont={handleFontChange}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <ButtonFont
+                                font={`'Inter', sans-serif`}
+                                setFont={handleFontChange}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <ButtonFont
+                                font={`'Josefin Sans', sans-serif`}
+                                setFont={handleFontChange}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <ButtonFont
+                                font={`'Jacques Francois', serif`}
+                                setFont={handleFontChange}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <ButtonFont
+                                font={`'Cutive Mono', monospace`}
+                                setFont={handleFontChange}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <ButtonFont
+                                font={`'Patrick Hand', sans-serif`}
+                                setFont={handleFontChange}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <ButtonFont
+                                font={`'Shadows Into Light', sans-serif`}
+                                setFont={handleFontChange}
+                              />
+                            </Grid>
                           </Grid>
-                          <Grid item>
-                            <ButtonFont
-                              font={`'Inter', sans-serif`}
-                              setFont={handleFontChange}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <ButtonFont
-                              font={`'Josefin Sans', sans-serif`}
-                              setFont={handleFontChange}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <ButtonFont
-                              font={`'Jacques Francois', serif`}
-                              setFont={handleFontChange}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <ButtonFont
-                              font={`'Cutive Mono', monospace`}
-                              setFont={handleFontChange}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <ButtonFont
-                              font={`'Patrick Hand', sans-serif`}
-                              setFont={handleFontChange}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <ButtonFont
-                              font={`'Shadows Into Light', sans-serif`}
-                              setFont={handleFontChange}
-                            />
-                          </Grid>
-                        </Grid>
-                        {/* <Grid item xs={12}>
+                          {/* <Grid item xs={12}>
                         <Typography variant="h5">Patterns</Typography>
                       </Grid>
                       <Grid item xs={12}>
                         <Typography>Coming Soon...</Typography>
                         <Button variant="outline">Unlock</Button>
                       </Grid> */}
-                      </Grid>
-                    </Box>
-                  </Paper>
+                        </Grid>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box minHeight="24px" />
+                  </Grid>
                 </Grid>
-              </Grid>
+              </Box>
             </Grid>
             <Hidden mdDown>
               <Grid item md={5}>

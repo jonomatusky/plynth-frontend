@@ -17,6 +17,8 @@ import useAlertStore from 'hooks/store/use-alert-store'
 import { useRequest } from 'hooks/use-request'
 import AdminNav from 'layouts/AdminNav'
 import { Link } from 'react-router-dom'
+import PackListItem from 'pages/PacksView/components/PackListItem'
+import usePackStore from 'hooks/store/use-pack-store'
 
 const validationSchema = yup.object({
   email: yup
@@ -27,6 +29,7 @@ const validationSchema = yup.object({
 
 const SuperAdmin = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const { packs } = usePackStore()
   const { request } = useRequest()
 
   const { setError, setMessage } = useAlertStore()
@@ -72,7 +75,7 @@ const SuperAdmin = () => {
       <Container>
         <Grid container justifyContent="center">
           <Grid item xs={12} md={6}>
-            <Box pt={5}>
+            <Box pt={1}>
               <Grid container justifyContent="center" spacing={2}>
                 <Grid item xs={12}>
                   <Box pb={1}>
@@ -145,6 +148,29 @@ const SuperAdmin = () => {
                       </Paper>
                     </Grid>
                   </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography pt={2}>
+                    <b>Default Packs</b>
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} container>
+                  {packs
+                    .filter(pack => pack.isDefault)
+                    .map(pack => {
+                      return (
+                        <Grid
+                          item
+                          xs={12}
+                          container
+                          justifyContent="center"
+                          alignItems="center"
+                          key={pack.id}
+                        >
+                          <PackListItem pack={pack} onSelectPack={() => {}} />
+                        </Grid>
+                      )
+                    })}
                 </Grid>
                 <Grid item xs={12}>
                   <Box height="24px" />

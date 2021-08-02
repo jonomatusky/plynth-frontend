@@ -5,6 +5,7 @@ import { Box, Tooltip, Typography } from '@material-ui/core'
 const OnboardingTooltip = ({ open, onClose, children, title, ...props }) => {
   return (
     <Tooltip
+      disableHoverListener
       open={open}
       title={
         <Box width="150px">
