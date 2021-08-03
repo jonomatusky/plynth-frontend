@@ -19,7 +19,7 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
 
   return (
     <Paper>
-      <Box pt={2} pb={1} pl={3} pr={3}>
+      <Box pt={2} pb={1} pl={4} pr={4}>
         <Grid container justifyContent="flex-start" spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h4">

@@ -26,7 +26,7 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
   const { links } = card || {}
 
   const show = {
-    buttons: { title: true, text: true, links: true },
+    buttons: { title: true, links: true },
     download: { title: true, text: true, url: true },
     highlight: {
       image: true,
@@ -141,114 +141,26 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
     <Box minHeight="300px" pb={2}>
       <Grid container justifyContent="center">
         {showField.image && (
-          <Grid item container xs={12} justifyContent="center">
+          <Grid item container xs={12} justifyContent="center" mb={1}>
             <Grid item>
               <CardImage card={card} onSubmit={onSubmit} crop />
             </Grid>
           </Grid>
         )}
-        <form onSubmit={formik.handleSubmit}>
-          <Grid item xs={12} container justifyContent="flex-end" spacing={3}>
-            {showField.title && (
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  name="title"
-                  label={showField.title === true ? 'Text' : showField.title}
-                  placeholder="Thanks for the support!"
-                  {...formik.getFieldProps('title')}
-                  error={formik.touched.title && Boolean(formik.errors.title)}
-                  helperText={formik.touched.title && formik.errors.title}
-                  autoComplete="off"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onBlur={formik.handleSubmit}
-                />
-              </Grid>
-            )}
-            {showField.text && (
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  name="text"
-                  label={showField.text === true ? 'Text' : showField.text}
-                  placeholder="Get a sneak peak at our latest video..."
-                  {...formik.getFieldProps('text')}
-                  error={formik.touched.text && Boolean(formik.errors.text)}
-                  helperText={formik.touched.text && formik.errors.text}
-                  autoComplete="off"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onBlur={formik.handleSubmit}
-                  multiline={!!showField.multiline}
-                  rows={showField.multiline ? 4 : null}
-                />
-              </Grid>
-            )}
-            {user.tier && user.tier !== 'free' && showField.textAlign && (
-              <Grid item xs={12} container alignItems="center">
-                <Grid item>
-                  <Box pr={1}>
-                    <Typography>Text Align</Typography>
-                  </Box>
-                </Grid>
-                <Grid item>
-                  <IconButton
-                    color={
-                      !card.textAlign || card.textAlign === 'left'
-                        ? 'primary'
-                        : 'default'
-                    }
-                    onClick={() => handleTextAlign('left')}
-                  >
-                    <FormatAlignLeft />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <IconButton
-                    color={card.textAlign === 'center' ? 'primary' : 'default'}
-                    onClick={() => handleTextAlign('center')}
-                  >
-                    <FormatAlignCenter />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <IconButton
-                    color={card.textAlign === 'right' ? 'primary' : 'default'}
-                    onClick={() => handleTextAlign('right')}
-                  >
-                    <FormatAlignRight />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            )}
-            {showField.label && (
-              <>
-                <Grid item xs={12}>
-                  <Typography variant="h5">Add a Button</Typography>
-                  <Typography>
-                    Add a button that links to external content. Leave the Link
-                    field blank to scroll to the next card instead.
-                  </Typography>
-                </Grid>
+        <Grid item xs={12}>
+          <form onSubmit={formik.handleSubmit}>
+            <Grid container justifyContent="flex-end" spacing={3}>
+              {showField.title && (
                 <Grid item xs={12}>
                   <TextField
                     variant="outlined"
                     fullWidth
-                    name="label"
-                    label={
-                      showField.label === true
-                        ? 'Button Label'
-                        : showField.label
-                    }
-                    placeholder="Add a button label"
-                    {...formik.getFieldProps('label')}
-                    error={formik.touched.label && Boolean(formik.errors.label)}
-                    helperText={formik.touched.label && formik.errors.label}
+                    name="title"
+                    label={showField.title === true ? 'Title' : showField.title}
+                    placeholder="Thanks for the support!"
+                    {...formik.getFieldProps('title')}
+                    error={formik.touched.title && Boolean(formik.errors.title)}
+                    helperText={formik.touched.title && formik.errors.title}
                     autoComplete="off"
                     InputLabelProps={{
                       shrink: true,
@@ -256,167 +168,267 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
                     onBlur={formik.handleSubmit}
                   />
                 </Grid>
-              </>
-            )}
-            {showField.url && (
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  name="url"
-                  label={showField.url === true ? 'Text' : showField.url}
-                  placeholder="Add a link to your video"
-                  {...formik.getFieldProps('url')}
-                  error={formik.touched.url && Boolean(formik.errors.url)}
-                  helperText={formik.touched.url && formik.errors.url}
-                  autoComplete="off"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onBlur={formik.handleSubmit}
-                />
-              </Grid>
-            )}
-            {showField.musicButtons && (
-              <>
-                <Grid item xs={12}>
-                  <Typography variant="h5">Streaming Links</Typography>
-                </Grid>
+              )}
+              {showField.text && (
                 <Grid item xs={12}>
                   <TextField
                     variant="outlined"
                     fullWidth
-                    name="youtube"
-                    label="Youtube"
-                    placeholder="https://youtu.be/"
-                    {...formik.getFieldProps('youtube')}
-                    error={
-                      formik.touched.youtube && Boolean(formik.errors.youtube)
-                    }
-                    helperText={formik.touched.youtube && formik.errors.youtube}
+                    name="text"
+                    label={showField.text === true ? 'Text' : showField.text}
+                    placeholder="Check this out..."
+                    {...formik.getFieldProps('text')}
+                    error={formik.touched.text && Boolean(formik.errors.text)}
+                    helperText={formik.touched.text && formik.errors.text}
                     autoComplete="off"
                     InputLabelProps={{
                       shrink: true,
                     }}
                     onBlur={formik.handleSubmit}
+                    multiline={!!showField.multiline}
+                    rows={showField.multiline ? 4 : null}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    name="spotify"
-                    label="Spotify"
-                    placeholder="https://open.spotify.com/"
-                    {...formik.getFieldProps('spotify')}
-                    error={
-                      formik.touched.spotify && Boolean(formik.errors.spotify)
-                    }
-                    helperText={formik.touched.spotify && formik.errors.spotify}
-                    autoComplete="off"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onBlur={formik.handleSubmit}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    name="appleMusic"
-                    label="Apple Music"
-                    placeholder="https://music.apple.com/"
-                    {...formik.getFieldProps('appleMusic')}
-                    error={
-                      formik.touched.appleMusic &&
-                      Boolean(formik.errors.appleMusic)
-                    }
-                    helperText={
-                      formik.touched.appleMusic && formik.errors.appleMusic
-                    }
-                    autoComplete="off"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onBlur={formik.handleSubmit}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    name="other"
-                    label="Other Site"
-                    placeholder="https://"
-                    {...formik.getFieldProps('other')}
-                    error={formik.touched.other && Boolean(formik.errors.other)}
-                    helperText={formik.touched.other && formik.errors.other}
-                    autoComplete="off"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onBlur={formik.handleSubmit}
-                  />
-                </Grid>
-              </>
-            )}
-            {showField.hideButtons && (
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      color="primary"
-                      checked={card.hideButtons}
-                      onChange={handleHideButtons}
-                    />
-                  }
-                  label="Hide navigation arrows"
-                />
-              </Grid>
-            )}
-            {(showField.isFullscreenMobile || showField.loopingVideo) && (
-              <Grid item xs={12} container>
-                {showField.isFullscreenMobile && (
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          color="primary"
-                          checked={!!card.isFullscreenMobile}
-                          onChange={handleFullscreenMobile}
-                        />
+              )}
+              {user.tier && user.tier !== 'free' && showField.textAlign && (
+                <Grid item xs={12} container alignItems="center">
+                  <Grid item>
+                    <Box pr={1}>
+                      <Typography>Text Align</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item>
+                    <IconButton
+                      color={
+                        !card.textAlign || card.textAlign === 'left'
+                          ? 'primary'
+                          : 'default'
                       }
+                      onClick={() => handleTextAlign('left')}
+                    >
+                      <FormatAlignLeft />
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <IconButton
+                      color={
+                        card.textAlign === 'center' ? 'primary' : 'default'
+                      }
+                      onClick={() => handleTextAlign('center')}
+                    >
+                      <FormatAlignCenter />
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <IconButton
+                      color={card.textAlign === 'right' ? 'primary' : 'default'}
+                      onClick={() => handleTextAlign('right')}
+                    >
+                      <FormatAlignRight />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              )}
+              {showField.label && (
+                <>
+                  <Grid item xs={12}>
+                    <Typography variant="h5">Add a Button</Typography>
+                    <Typography>
+                      Add a button that links to external content. Leave the
+                      Link field blank to scroll to the next card instead.
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      name="label"
                       label={
-                        showField.isFullscreenMobile === true
-                          ? 'Make fullscreen on mobile'
-                          : showField.isFullscreenMobile
+                        showField.label === true
+                          ? 'Button Label'
+                          : showField.label
                       }
+                      placeholder="Add a button label"
+                      {...formik.getFieldProps('label')}
+                      error={
+                        formik.touched.label && Boolean(formik.errors.label)
+                      }
+                      helperText={formik.touched.label && formik.errors.label}
+                      autoComplete="off"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onBlur={formik.handleSubmit}
                     />
                   </Grid>
-                )}
-                {showField.loopingVideo && user.tier !== 'free' && (
+                </>
+              )}
+              {showField.url && (
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    name="url"
+                    label={showField.url === true ? 'URL' : showField.url}
+                    placeholder="Add a link to your video"
+                    {...formik.getFieldProps('url')}
+                    error={formik.touched.url && Boolean(formik.errors.url)}
+                    helperText={formik.touched.url && formik.errors.url}
+                    autoComplete="off"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    onBlur={formik.handleSubmit}
+                  />
+                </Grid>
+              )}
+              {showField.musicButtons && (
+                <>
                   <Grid item xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          color="primary"
-                          checked={!!card.loopingVideo}
-                          onChange={handleLoopingVideo}
-                        />
+                    <Typography variant="h5">Streaming Links</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      name="youtube"
+                      label="Youtube"
+                      placeholder="https://youtu.be/"
+                      {...formik.getFieldProps('youtube')}
+                      error={
+                        formik.touched.youtube && Boolean(formik.errors.youtube)
                       }
-                      label="Looping video"
-                      disabled={!card.isFullscreenMobile}
+                      helperText={
+                        formik.touched.youtube && formik.errors.youtube
+                      }
+                      autoComplete="off"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onBlur={formik.handleSubmit}
                     />
                   </Grid>
-                )}
-              </Grid>
-            )}
-            <Box display="none">
-              <button type="submit">Submit</button>
-            </Box>
-          </Grid>
-        </form>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      name="spotify"
+                      label="Spotify"
+                      placeholder="https://open.spotify.com/"
+                      {...formik.getFieldProps('spotify')}
+                      error={
+                        formik.touched.spotify && Boolean(formik.errors.spotify)
+                      }
+                      helperText={
+                        formik.touched.spotify && formik.errors.spotify
+                      }
+                      autoComplete="off"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onBlur={formik.handleSubmit}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      name="appleMusic"
+                      label="Apple Music"
+                      placeholder="https://music.apple.com/"
+                      {...formik.getFieldProps('appleMusic')}
+                      error={
+                        formik.touched.appleMusic &&
+                        Boolean(formik.errors.appleMusic)
+                      }
+                      helperText={
+                        formik.touched.appleMusic && formik.errors.appleMusic
+                      }
+                      autoComplete="off"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onBlur={formik.handleSubmit}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      name="other"
+                      label="Other Site"
+                      placeholder="https://"
+                      {...formik.getFieldProps('other')}
+                      error={
+                        formik.touched.other && Boolean(formik.errors.other)
+                      }
+                      helperText={formik.touched.other && formik.errors.other}
+                      autoComplete="off"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onBlur={formik.handleSubmit}
+                    />
+                  </Grid>
+                </>
+              )}
+              {showField.hideButtons && (
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={card.hideButtons}
+                        onChange={handleHideButtons}
+                      />
+                    }
+                    label="Hide navigation arrows"
+                  />
+                </Grid>
+              )}
+              {(showField.isFullscreenMobile || showField.loopingVideo) && (
+                <Grid item xs={12} container>
+                  {showField.isFullscreenMobile && (
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            color="primary"
+                            checked={!!card.isFullscreenMobile}
+                            onChange={handleFullscreenMobile}
+                          />
+                        }
+                        label={
+                          showField.isFullscreenMobile === true
+                            ? 'Make fullscreen on mobile'
+                            : showField.isFullscreenMobile
+                        }
+                      />
+                    </Grid>
+                  )}
+                  {showField.loopingVideo && user.tier !== 'free' && (
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            color="primary"
+                            checked={!!card.loopingVideo}
+                            onChange={handleLoopingVideo}
+                          />
+                        }
+                        label="Looping video"
+                        disabled={!card.isFullscreenMobile}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
+              )}
+              <Box display="none">
+                <button type="submit">Submit</button>
+              </Box>
+            </Grid>
+          </form>
+        </Grid>
       </Grid>
       {showField.links && <ButtonsCard card={card} onSubmit={onSubmit} />}
       <Box height="20px" />
