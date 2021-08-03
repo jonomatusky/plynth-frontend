@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, Container, Box, Grid, Typography } from '@material-ui/core'
+import { Link as RouterLink } from 'react-router-dom'
 
 import PublicNav from 'layouts/PublicNav'
 
@@ -39,11 +40,13 @@ const Help = ({ title, text }) => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} mb={1}>
-                  <Typography variant="h5">
-                    <b>
-                      For non-urgent issues, please contact us or consult our
-                      support page.
-                    </b>
+                  <Typography>
+                    For non-urgent issues, please{' '}
+                    <Link component={RouterLink} to="/s/contact">
+                      contact us
+                    </Link>{' '}
+                    or consult our{' '}
+                    <Link href="https://help.plynth.com">support page</Link>.
                   </Typography>
                 </Grid>
               </Grid>

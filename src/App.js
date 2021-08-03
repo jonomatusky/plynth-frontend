@@ -38,7 +38,7 @@ import SuperAdmin from 'pages/SuperAdmin/SuperAdmin'
 import SignUpWithCode from 'pages/SignUpWithCode/SignUpWithCode'
 import OnTheWaitlist from 'pages/OnTheWaitlist/OnTheWaitlist'
 import Recover from 'pages/Recover/Recover'
-import { Help } from '@material-ui/icons'
+import Help from 'pages/Help/Help'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
