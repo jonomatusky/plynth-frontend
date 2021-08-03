@@ -173,18 +173,16 @@ const EditPortalAnimation = () => {
               <Hidden mdDown>
                 <Grid item md={5}>
                   <PreviewLayout>
-                    <Grid container justifyContent="center" spacing={3}>
+                    <Grid container justifyContent="center">
                       <Grid item xs={12} container justifyContent="center">
-                        <Box position="fixed">
-                          <LivePreviewPortalLoading
-                            portal={user.portal}
-                            isLoading={updateStatus === 'loading'}
-                          />
-                        </Box>
+                        <LivePreviewPortalLoading
+                          portal={user.portal}
+                          isLoading={updateStatus === 'loading'}
+                        />
                       </Grid>
                       <Grid item container xs={12} justifyContent="center">
                         <Box paddingTop={4}>
-                          {isSpinning && (
+                          {true && (
                             <CircularProgress
                               size="1.25rem"
                               color="inherit"

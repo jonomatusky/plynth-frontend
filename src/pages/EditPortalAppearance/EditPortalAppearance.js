@@ -285,14 +285,12 @@ const EditPortalAppearance = () => {
               <Hidden mdDown>
                 <Grid item md={5}>
                   <PreviewLayout>
-                    <Grid container justifyContent="center" spacing={3}>
+                    <Grid container justifyContent="center">
                       <Grid item xs={12} container justifyContent="center">
-                        <Box position="fixed">
-                          <LivePreviewPortal
-                            portal={user.portal}
-                            isLoading={updateStatus === 'loading'}
-                          />
-                        </Box>
+                        <LivePreviewPortal
+                          portal={user.portal}
+                          isLoading={updateStatus === 'loading'}
+                        />
                       </Grid>
                       <Grid item container xs={12} justifyContent="center">
                         <Box paddingTop={4}>
