@@ -182,6 +182,7 @@ const EditCards = () => {
                                       cardIndex < (cards || []).length && (
                                         <CardPanel
                                           card={currentCard}
+                                          index={cardIndex}
                                           onSubmit={handleCardSubmit}
                                           onRemove={handleRemoveOpen}
                                           pending={updateStatus === 'loading'}

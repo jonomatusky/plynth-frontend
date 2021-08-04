@@ -8,6 +8,7 @@ let initialState = {
   createMeStatus: 'idle',
   updateStatus: 'idle',
   userListStatus: 'idle',
+  subscribeStatus: 'idle',
   error: null,
   scanRoute: '/',
   locationHistory: [],
@@ -48,6 +49,19 @@ export const createMe = createAsyncThunk(
       data: inputs,
     })
     return user
+  }
+)
+
+export const subscribe = createAsyncThunk(
+  'user/subscribe',
+  async ({ headers, email }) => {
+    const res = await client.request({
+      headers,
+      url: `/users/subscribe`,
+      method: 'POST',
+      data: { email },
+    })
+    return res
   }
 )
 
@@ -170,6 +184,15 @@ const userSlice = createSlice({
     },
     [acceptInvite.fulfilled]: (state, action) => {
       state.user = action.payload
+    },
+    [subscribe.pending]: (state, action) => {
+      state.subscribeStatus = 'loading'
+    },
+    [subscribe.fulfilled]: (state, action) => {
+      state.subscribeStatus = 'succeeded'
+    },
+    [subscribe.rejected]: (state, action) => {
+      state.subscribeStatus = 'failed'
     },
   },
 })

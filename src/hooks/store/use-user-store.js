@@ -10,6 +10,7 @@ import {
   clearUser,
   fetchUserList,
   acceptInvite,
+  subscribe,
 } from 'redux/userSlice'
 
 export const useUserStore = () => {
@@ -34,6 +35,13 @@ export const useUserStore = () => {
   const _createMe = useCallback(
     async user => {
       await dispatchThunk(createMe, user)
+    },
+    [dispatchThunk]
+  )
+
+  const _subscribe = useCallback(
+    async email => {
+      await dispatchThunk(subscribe, { email })
     },
     [dispatchThunk]
   )
@@ -64,6 +72,7 @@ export const useUserStore = () => {
     createMeStatus,
     updateStatus,
     userListStatus,
+    subscribeStatus,
     error,
     scanRoute,
     locationHistory,
@@ -77,6 +86,7 @@ export const useUserStore = () => {
     updateUser: _updateUser,
     clearUser: _clearUser,
     acceptInvite: _acceptInvite,
+    subscribe: _subscribe,
     user,
     users,
     status,
@@ -84,6 +94,7 @@ export const useUserStore = () => {
     createMeStatus,
     updateStatus,
     userListStatus,
+    subscribeStatus,
     error,
     scanRoute,
     locationHistory,

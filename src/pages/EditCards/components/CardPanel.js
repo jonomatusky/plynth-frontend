@@ -11,7 +11,7 @@ import { cardTypes } from 'components/CardCard'
 import { DeleteOutline } from '@material-ui/icons'
 import CardForm from './CardForm'
 
-const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
+const CardPanel = ({ card, index, onSubmit, pending, onRemove }) => {
   const type = card.type
   const { title, description } = cardTypes.find(
     cardType => cardType.type === type
@@ -30,7 +30,7 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
           <Grid item xs={12}>
             <Grid container justify="center">
               <Grid item xs={12}>
-                <CardForm card={card} onSubmit={onSubmit} />
+                <CardForm card={card} index={index} onSubmit={onSubmit} />
               </Grid>
               <Grid
                 item

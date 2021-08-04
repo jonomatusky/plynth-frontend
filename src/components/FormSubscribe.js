@@ -6,6 +6,7 @@ import TextFieldWebsite from 'components/TextFieldWebsite'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import { useRequest } from 'hooks/use-request'
+import useUserStore from 'hooks/store/use-user-store'
 
 const validationSchema = yup.object({
   email: yup
@@ -15,19 +16,14 @@ const validationSchema = yup.object({
 })
 
 const FormSubscribe = ({ title, text }) => {
-  const { status, request } = useRequest()
-
+  const { status } = useRequest()
+  const { subscribe, subscribeStatus } = useUserStore()
   const { setError } = useAlertStore()
 
   const handleSubmit = async values => {
-    const userData = { user: values }
-    if (status !== 'loading') {
+    if (subscribeStatus !== 'loading') {
       try {
-        await request({
-          url: `/users/subscribe`,
-          method: 'POST',
-          data: userData,
-        })
+        await subscribe(values.email)
       } catch (err) {
         setError({
           message: 'There was an error submitting the form. Please try again.',
