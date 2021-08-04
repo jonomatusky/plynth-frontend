@@ -92,11 +92,7 @@ const Register = ({ title, text }) => {
       if (status === 'succeeded') {
         console.log(user.email)
         if (user.email) {
-          try {
-            await subscribe(user.email)
-          } catch (err) {
-            console.log('unable to subscribe')
-          }
+          subscribe(user.email)
         }
 
         history.push(
