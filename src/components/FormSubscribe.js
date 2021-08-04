@@ -5,7 +5,6 @@ import * as yup from 'yup'
 import TextFieldWebsite from 'components/TextFieldWebsite'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
-import { useRequest } from 'hooks/use-request'
 import useUserStore from 'hooks/store/use-user-store'
 
 const validationSchema = yup.object({
@@ -16,7 +15,6 @@ const validationSchema = yup.object({
 })
 
 const FormSubscribe = ({ title, text }) => {
-  const { status } = useRequest()
   const { subscribe, subscribeStatus } = useUserStore()
   const { setError } = useAlertStore()
 
@@ -44,7 +42,7 @@ const FormSubscribe = ({ title, text }) => {
 
   return (
     <>
-      {status === 'succeeded' && (
+      {subscribeStatus === 'succeeded' && (
         <Box height="151px">
           <Grid container justifyContent="flex-start" spacing={3}>
             <Grid item xs={12}>
@@ -55,7 +53,7 @@ const FormSubscribe = ({ title, text }) => {
           </Grid>
         </Box>
       )}
-      {status !== 'succeeded' && (
+      {subscribeStatus !== 'succeeded' && (
         <form onSubmit={formik.handleSubmit}>
           <Grid container justifyContent="flex-start" spacing={3}>
             <Grid item xs={12}>

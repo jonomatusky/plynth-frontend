@@ -1,12 +1,19 @@
 import React from 'react'
-import { Container, Box, Typography, Button, Hidden } from '@material-ui/core'
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Hidden,
+  Grid,
+} from '@material-ui/core'
 
 import { Link as RouterLink } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
 
 import FormSubscribe from 'components/FormSubscribe'
 
-const Register = ({ title, text }) => {
+const Subscribe = ({ title, text }) => {
   return (
     <PublicNav
       right={
@@ -33,11 +40,25 @@ const Register = ({ title, text }) => {
     >
       <Container maxWidth="xs">
         <Box mt={10}>
-          <FormSubscribe />
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h4" color="white">
+                <b>Subscribe</b>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} mb={2}>
+              <Typography color="white">
+                Subscribe below for updates from the Plynth team.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <FormSubscribe />
+            </Grid>
+          </Grid>
         </Box>
       </Container>
     </PublicNav>
   )
 }
 
-export default Register
+export default Subscribe
