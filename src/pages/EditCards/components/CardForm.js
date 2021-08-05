@@ -77,7 +77,7 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
   })
 
   const handleSubmit = values => {
-    const { spotify, appleMusic, youtube, other, ...rest } = values
+    const { spotify, appleMusic, youtube, other, id, ...rest } = values
     const musicLinks = { spotify, appleMusic, youtube, other }
 
     if (spotify || appleMusic || youtube || other) {
@@ -99,6 +99,7 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
 
   const formik = useFormik({
     initialValues: {
+      id: card._id || '',
       title: card.title || '',
       text: card.text || '',
       label: card.label || '',

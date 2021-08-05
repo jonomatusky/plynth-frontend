@@ -12,7 +12,12 @@ export const useFetch = () => {
   const history = useHistory()
   const { setError } = useAlertStore()
 
-  const { fetchUser, status: fetchUserStatus, user: storeUser } = useUserStore()
+  const {
+    fetchUser,
+    status: fetchUserStatus,
+    user: storeUser,
+    createMeStatus,
+  } = useUserStore()
   const { fetchPacks, status: fetchPacksStatus } = usePackStore()
 
   useEffect(() => {
@@ -48,7 +53,14 @@ export const useFetch = () => {
     ) {
       fetch()
     }
-  }, [fetchUserStatus, fetchPacksStatus, fetchPacks, user, storeUser])
+  }, [
+    fetchUserStatus,
+    fetchPacksStatus,
+    fetchPacks,
+    user,
+    storeUser,
+    createMeStatus,
+  ])
 
   return
 }

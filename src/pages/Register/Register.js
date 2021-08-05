@@ -34,6 +34,10 @@ const validationSchema = yup.object({
 const Register = ({ title, text }) => {
   const history = useHistory()
   const { user, logout } = useSession()
+<<<<<<< HEAD
+=======
+  const { subscribe } = useUserStore()
+>>>>>>> develop
   const { setError, clearError } = useAlertStore()
   const [status, setStatus] = useState('idle')
 
@@ -88,6 +92,11 @@ const Register = ({ title, text }) => {
   useEffect(() => {
     const handleLoggedIn = async () => {
       if (status === 'succeeded') {
+        console.log(user.email)
+        if (user.email) {
+          subscribe(user.email)
+        }
+
         history.push(
           `/register/username` + (username ? `?username=${username}` : '')
         )
@@ -97,7 +106,11 @@ const Register = ({ title, text }) => {
     if (user) {
       handleLoggedIn()
     }
+<<<<<<< HEAD
   }, [history, logout, user, username, status])
+=======
+  }, [subscribe, history, logout, user, username, status])
+>>>>>>> develop
 
   return (
     <PublicNav

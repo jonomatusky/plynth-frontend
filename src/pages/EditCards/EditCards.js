@@ -180,7 +180,6 @@ const EditCards = () => {
                                   <Grid container>
                                     <Grid item xs={12}>
                                       <Box minHeight="24px" />
-
                                       {pack &&
                                         cardIndex < (cards || []).length && (
                                           <CardPanel

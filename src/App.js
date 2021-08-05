@@ -39,6 +39,7 @@ import SignUpWithCode from 'pages/SignUpWithCode/SignUpWithCode'
 import OnTheWaitlist from 'pages/OnTheWaitlist/OnTheWaitlist'
 import Recover from 'pages/Recover/Recover'
 import Help from 'pages/Help/Help'
+import Subscribe from 'pages/Subscribe/Subscribe'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -75,6 +76,9 @@ const App = () => {
       </Route>
       <Redirect path="/signup" exact to="/register" />
 
+      <Route path="/s/subscribe">
+        <Subscribe />
+      </Route>
       <Route path="/s/contact">
         <Contact />
       </Route>
