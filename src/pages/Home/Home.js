@@ -141,6 +141,91 @@ const Home = () => {
           </Grid>
           <Grid item xs={12} md={1} />
 
+          {/* Creator Section */}
+          <Grid item xs={12} pb={2}>
+            <Hidden smDown>
+              <Box mb={20} />
+            </Hidden>
+          </Grid>
+          <Grid item xs={12} mt={10} pb={2}>
+            <Typography
+              color="white"
+              variant="h4"
+              letterSpacing={1}
+              style={{ fontWeight: 800 }}
+              textAlign="center"
+            >
+              {content.creatorHeading}
+            </Typography>
+          </Grid>
+          {!!content.creatorSubheading && (
+            <Grid item xs={10} sm={8} md={6} lg={4} pb={2}>
+              <Typography color="white" letterSpacing={1} textAlign="center">
+                {content.creatorSubheading}
+              </Typography>
+            </Grid>
+          )}
+
+          <Grid item xs={12} mt={6} pb={2} container justifyContent="center">
+            <Box
+              height="100%"
+              overflow="auto"
+              display="flex"
+              justifyContent="flex-start"
+              sx={{
+                '&::-webkit-scrollbar': { display: 'none' },
+                msOverflowStyle: 'none',
+                scrollbarWidth: 'none',
+              }}
+            >
+              {highlights.map((highlight, index) => {
+                return (
+                  <Box
+                    key={highlight.sys.id}
+                    width="150px"
+                    textAlign="center"
+                    mt={index % 2 === 1 ? 6 : 0}
+                    mr={3}
+                    ml={3}
+                  >
+                    <Image
+                      height="125px"
+                      width="125px"
+                      style={{ borderRadius: '50%', objectFit: 'cover' }}
+                      src={
+                        highlight.fields.image
+                          ? 'https:' + highlight.fields.image.fields.file.url
+                          : null
+                      }
+                      alt={highlight.fields.title}
+                    />
+                    <Typography textAlign="center" color="white">
+                      <b>{highlight.fields.title}</b>
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      textAlign="center"
+                      color="white"
+                    >
+                      {highlight.fields.text}
+                    </Typography>
+                  </Box>
+                )
+              })}
+              <Hidden smUp>
+                <Box>
+                  <Box ml={2}></Box>
+                </Box>
+              </Hidden>
+            </Box>
+          </Grid>
+          <Hidden smUp>
+            <Grid item xs={12} pb={2} container justifyContent="flex-end">
+              <ArrowForward sx={{ color: 'white' }} />
+            </Grid>
+          </Hidden>
+
+          {/* How it works */}
           <Grid item md={10} xs={11}>
             <Grid container justifyContent="center" alignItems="top">
               <Hidden smDown>
@@ -309,88 +394,13 @@ const Home = () => {
             </Grid>
           </Grid>
 
-          {/* Creator Section */}
-          <Grid item xs={12} pb={2}>
-            <Hidden smDown>
-              <Box mb={20} />
-            </Hidden>
-          </Grid>
-          <Grid item xs={12} mt={10} pb={2}>
-            <Typography
-              color="white"
-              variant="h4"
-              letterSpacing={1}
-              style={{ fontWeight: 800 }}
-              textAlign="center"
-            >
-              {content.creatorHeading}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} mt={6} pb={2} container justifyContent="center">
-            <Box
-              height="100%"
-              overflow="auto"
-              display="flex"
-              justifyContent="flex-start"
-              sx={{
-                '&::-webkit-scrollbar': { display: 'none' },
-                msOverflowStyle: 'none',
-                scrollbarWidth: 'none',
-              }}
-            >
-              {highlights.map((highlight, index) => {
-                return (
-                  <Box
-                    key={highlight.sys.id}
-                    width="150px"
-                    textAlign="center"
-                    mt={index % 2 === 1 ? 6 : 0}
-                    mr={3}
-                    ml={3}
-                  >
-                    <Image
-                      height="125px"
-                      width="125px"
-                      style={{ borderRadius: '50%', objectFit: 'cover' }}
-                      src={
-                        highlight.fields.image
-                          ? 'https:' + highlight.fields.image.fields.file.url
-                          : null
-                      }
-                      alt={highlight.fields.title}
-                    />
-                    <Typography textAlign="center" color="white">
-                      <b>{highlight.fields.title}</b>
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      textAlign="center"
-                      color="white"
-                    >
-                      {highlight.fields.text}
-                    </Typography>
-                  </Box>
-                )
-              })}
-              <Hidden smUp>
-                <Box>
-                  <Box ml={2}></Box>
-                </Box>
-              </Hidden>
-            </Box>
-          </Grid>
-          <Hidden smUp>
-            <Grid item xs={12} pb={2} container justifyContent="flex-end">
-              <ArrowForward sx={{ color: 'white' }} />
-            </Grid>
-          </Hidden>
-
           <Hidden smDown>
             <Grid item xs={12} pb={2}>
               <Box mb={20} />
             </Grid>
           </Hidden>
 
+          {/* Use it for... Section */}
           <Grid item xs={12} container justifyContent="space-around">
             <Grid
               item
