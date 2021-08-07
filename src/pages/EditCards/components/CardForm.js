@@ -27,7 +27,7 @@ const CardForm = ({ card, index, onSubmit, pending, onRemove }) => {
 
   const show = {
     buttons: { title: true, links: true },
-    download: { title: true, text: true, url: true },
+    download: { title: true, text: true, url: true, emailDownload: true },
     highlight: {
       image: true,
       title: true,
@@ -112,11 +112,17 @@ const CardForm = ({ card, index, onSubmit, pending, onRemove }) => {
       loopingVideo: !!card.loopingVideo,
       hidebuttons: !!card.hideButtons,
       textAlign: card.textAlign || 'center',
+      emailDownload: !!card.emailDownload,
     },
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
     enableReinitialize: true,
   })
+
+  const handleEmailDownload = async event => {
+    formik.setFieldValue('emailDownload', event.target.checked)
+    formik.submitForm()
+  }
 
   const handleFullscreenMobile = async event => {
     formik.setFieldValue('isFullscreenMobile', event.target.checked)
@@ -280,6 +286,20 @@ const CardForm = ({ card, index, onSubmit, pending, onRemove }) => {
                       shrink: true,
                     }}
                     onBlur={formik.handleSubmit}
+                  />
+                </Grid>
+              )}
+              {showField.emailDownload && user.tier && user.tier !== 'free' && (
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={card.emailDownload}
+                        onChange={handleEmailDownload}
+                      />
+                    }
+                    label="Let users send the file to their email"
                   />
                 </Grid>
               )}
