@@ -140,17 +140,18 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                           </Typography>
                         </MuiButton>
                       </Box>
-
-                      <MuiButton
-                        component={RouterLink}
-                        to="/register"
-                        size="small"
-                        sx={{ textTransform: 'none' }}
-                      >
-                        <Typography>
-                          <b>Get Early Access</b>
-                        </Typography>
-                      </MuiButton>
+                      {!user && (
+                        <MuiButton
+                          component={RouterLink}
+                          to="/register"
+                          size="small"
+                          sx={{ textTransform: 'none' }}
+                        >
+                          <Typography>
+                            <b>Get Early Access</b>
+                          </Typography>
+                        </MuiButton>
+                      )}
                     </Box>
                   </Hidden>
                 </Box>

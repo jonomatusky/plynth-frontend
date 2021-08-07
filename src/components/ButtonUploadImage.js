@@ -19,10 +19,10 @@ const ButtonUploadImage = ({ children, ...props }) => {
 
   return (
     <Button
-      {...props}
       className={classes.buttonRound}
       variant="outlined"
       color="secondary"
+      {...props}
     >
       <Grid container>
         <Grid item xs={12}>
