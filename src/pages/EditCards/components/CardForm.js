@@ -150,7 +150,12 @@ const CardForm = ({ card, index, onSubmit, pending, onRemove }) => {
         {showField.image && (
           <Grid item container xs={12} justifyContent="center" mb={1}>
             <Grid item>
-              <CardImage card={card} onSubmit={onSubmit} crop />
+              <CardImage
+                card={card}
+                onSubmit={onSubmit}
+                pending={pending}
+                crop={card.type === 'image' ? false : true}
+              />
             </Grid>
           </Grid>
         )}

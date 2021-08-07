@@ -46,7 +46,9 @@ const CardImage = ({ card, crop, pending, onSubmit }) => {
         imageUrl={imageSrc}
         onSubmit={handleAdd}
       />
-      {!showLoadingSpinner && image && <Image src={imageUrl} />}
+      {!showLoadingSpinner && image && (
+        <Image src={imageUrl} style={{ objectFit: 'contain' }} />
+      )}
       {!showLoadingSpinner && !image && crop && (
         <ImagePicker onSelect={handleSelect}>
           <ButtonUploadImage />
@@ -87,7 +89,11 @@ const CardImage = ({ card, crop, pending, onSubmit }) => {
           </Button>
         </Box>
       )}
-      {!image && <Box height="30px" />}
+      {!image && (
+        <Box width="150px" pt="7px">
+          <Box height="30px" />
+        </Box>
+      )}
     </>
   )
 }
