@@ -14,7 +14,7 @@ const PackNameForm = ({ onSubmit, onCancel, name, buttonText, pending }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: name,
+      name: name || '',
     },
     validationSchema: validationSchema,
     onSubmit: onSubmit,
