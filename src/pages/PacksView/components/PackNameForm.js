@@ -1,38 +1,27 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
-import {
-  Grid,
-  TextField,
-  Button as MuiButton,
-  Typography,
-} from '@material-ui/core'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { Grid, TextField, Button as MuiButton } from '@material-ui/core'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Button from 'components/Button'
 import { ArrowForward, Close } from '@material-ui/icons'
 
 const PackNameForm = ({ onSubmit, onCancel, name, buttonText, pending }) => {
-  const defaultValues = {
-    name: name,
-  }
-
   const validationSchema = Yup.object({
     name: Yup.string()
       .max(50, 'Keep it under 50 characters')
       .required('Add a name'),
   })
 
-  const { register, handleSubmit, errors } = useForm({
-    mode: 'onBlur',
-    resolver: yupResolver(validationSchema),
-    defaultValues,
-    validateOnBlur: false,
-    validateOnChange: false,
-    shouldUnregister: false,
+  const formik = useFormik({
+    initialValues: {
+      name: name,
+    },
+    validationSchema: validationSchema,
+    onSubmit: onSubmit,
   })
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={formik.handleSubmit}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <TextField
@@ -41,22 +30,14 @@ const PackNameForm = ({ onSubmit, onCancel, name, buttonText, pending }) => {
             name="name"
             label="Name"
             placeholder="Awesome Pack"
-            inputRef={register}
-            error={Boolean(errors.name)}
-            helperText={errors.name?.message}
+            {...formik.getFieldProps('name')}
+            error={formik.touched.youtube && Boolean(formik.errors.youtube)}
+            helperText={formik.touched.youtube && formik.errors.youtube}
             autoComplete="off"
-            // InputProps={{
-            //   fontSize: 50,
-            // }}
             InputLabelProps={{
               shrink: true,
             }}
           />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="body2">
-            (You can always change this later)
-          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid container justifyContent="space-between" alignItems="center">
@@ -69,6 +50,7 @@ const PackNameForm = ({ onSubmit, onCancel, name, buttonText, pending }) => {
                     startIcon={<Close />}
                     size="small"
                     type="button"
+                    onBlur={formik.handleSubmit}
                   >
                     Cancel
                   </MuiButton>
@@ -80,7 +62,7 @@ const PackNameForm = ({ onSubmit, onCancel, name, buttonText, pending }) => {
               <Button
                 fullWidth
                 type="submit"
-                variant="text"
+                variant="contained"
                 color="primary"
                 size="large"
                 endIcon={<ArrowForward />}

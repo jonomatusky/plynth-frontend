@@ -87,6 +87,9 @@ const FormPortalAppearance = ({ portal, onSubmit, pending, onRemove }) => {
           </Grid>
         </Grid>
       </Grid>
+      <Box display="none">
+        <button type="submit">Submit</button>
+      </Box>
     </form>
   )
 }

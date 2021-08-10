@@ -180,7 +180,7 @@ const EditPortalAppearance = () => {
                                 </Grid>
                                 <Grid item>
                                   <ButtonColorPicker
-                                    color={buttonColor || '#ffffff'}
+                                    color={buttonColor || '#000000'}
                                     onChange={handleButtonColorchange}
                                   />
                                 </Grid>

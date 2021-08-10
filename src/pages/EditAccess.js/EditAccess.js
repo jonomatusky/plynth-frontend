@@ -7,7 +7,6 @@ import {
   Paper,
   Typography,
   Hidden,
-  Divider,
   Switch,
   Button,
 } from '@material-ui/core'
@@ -103,20 +102,18 @@ const EditAccess = () => {
     <AdminNav>
       <EditBar>
         {pack && (
-          <Grid container justifyContent="center" alignItems="stretch">
+          <Grid container justifyContent="center">
             <Grid item sm={12} md={7}>
               <Box
                 height="calc(100vh - 48px)"
                 width="100%"
                 overflow="auto"
-                display="flex"
-                alignContent="center"
                 pb={1}
               >
                 <Grid container justifyContent="center" spacing={2}>
                   <Grid item xs={9}>
                     <Paper>
-                      <Box padding={3} mt={3}>
+                      <Box padding={3} pb={1} mt={3}>
                         <Grid container spacing={2}>
                           <Grid item xs={12}>
                             <Typography variant="h4">
@@ -154,11 +151,15 @@ const EditAccess = () => {
                               </Grid>
                             </Box>
                           </Grid>
-                          <Grid item xs={12}>
-                            <Box width="100%">
-                              <Divider />
-                            </Box>
-                          </Grid>
+                        </Grid>
+                      </Box>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item xs={9}>
+                    <Paper>
+                      <Box padding={3}>
+                        <Grid container spacing={2}>
                           <Grid item xs={12}>
                             <Typography variant="h6">
                               Share with a link or QR code.
@@ -230,11 +231,15 @@ const EditAccess = () => {
                               </Grid>
                             </>
                           )}
-                          <Grid item xs={12}>
-                            <Box width="100%">
-                              <Divider />
-                            </Box>
-                          </Grid>
+                        </Grid>
+                      </Box>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item xs={9}>
+                    <Paper>
+                      <Box padding={3}>
+                        <Grid container spacing={2}>
                           <Grid item xs={12} container alignItems="center">
                             <Grid item>
                               <Typography>

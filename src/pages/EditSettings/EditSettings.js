@@ -66,8 +66,6 @@ const EditSettings = () => {
                   height="calc(100vh - 48px)"
                   width="100%"
                   overflow="auto"
-                  display="flex"
-                  alignContent="center"
                   pb={1}
                 >
                   <Grid container justifyContent="center" spacing={2}>
