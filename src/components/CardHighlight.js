@@ -26,7 +26,6 @@ const NoImage = styled(Box)(props => ({
 const Image = styled('img')(props => ({
   width: '100%',
   height: 'auto',
-  boxShadow: '0px 4px 10px #000',
 }))
 
 const CardHighlight = ({ card, style, increment }) => {

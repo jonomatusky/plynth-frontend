@@ -154,7 +154,7 @@ const SuperAdmin = () => {
                     <b>Default Packs</b>
                   </Typography>
                 </Grid>
-                <Grid item xs={12} container>
+                <Grid item xs={12} container spacing={1}>
                   {packs
                     .filter(pack => pack.isDefault)
                     .map(pack => {

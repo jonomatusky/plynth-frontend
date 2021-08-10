@@ -51,12 +51,14 @@ const BarAccount = ({ children }) => {
   const { portal, completedSignup } = user || {}
   const { title, text, image } = portal || {}
   const showPortalReminder =
-    completedSignup &&
+    !!completedSignup &&
     !title &&
     !text &&
     !image &&
     portalTooltipIsOpen &&
     value === '/admin/packs'
+
+  console.log(showPortalReminder)
 
   return (
     <>
