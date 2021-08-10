@@ -134,6 +134,7 @@ const GroundUP = () => {
               hasUserMedia={hasUserMedia}
               backgroundColor={backgroundColor}
               fontColor={fontColor}
+              portal="groundup"
             >
               <Box
                 bottom="auto"

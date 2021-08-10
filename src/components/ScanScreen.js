@@ -9,6 +9,7 @@ const ScanScreen = ({
   onUserMedia,
   hasUserMedia,
   onClose,
+  portal,
   children,
 }) => {
   useEffect(() => {
@@ -24,6 +25,7 @@ const ScanScreen = ({
           onUserMedia={onUserMedia}
           onUserMediaError={onUserMediaError}
           hasUserMedia={hasUserMedia}
+          portal={portal}
         >
           {children}
         </ScanWindow>
