@@ -30,7 +30,7 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
           <Grid item xs={12}>
             <Grid container justify="center">
               <Grid item xs={12}>
-                <CardForm card={card} onSubmit={onSubmit} />
+                <CardForm card={card} onSubmit={onSubmit} pending={pending} />
               </Grid>
               <Grid
                 item
