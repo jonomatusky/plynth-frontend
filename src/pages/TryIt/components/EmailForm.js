@@ -1,5 +1,5 @@
-import React from 'react'
-import { Grid, Typography, Button } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { Grid, Typography } from '@material-ui/core'
 import * as yup from 'yup'
 
 import firebase from 'config/firebase'
@@ -8,6 +8,7 @@ import { ArrowForward } from '@material-ui/icons'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import { useUserStore } from 'hooks/store/use-user-store'
+import ButtonWebsite from 'components/ButtonWebsite'
 
 const validationSchema = yup.object({
   email: yup
@@ -20,8 +21,16 @@ const EmailForm = ({ onSubmit }) => {
   const { setError } = useAlertStore()
   const { subscribe } = useUserStore()
 
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (loading === true) {
+      setTimeout(() => setLoading(false), 1000)
+    }
+  }, [loading])
+
   const handleSubmit = async ({ email }) => {
-    console.log('email')
+    setLoading(true)
     try {
       const result = await firebase.auth().fetchSignInMethodsForEmail(email)
       if ((result || []).length === 0) {
@@ -41,6 +50,7 @@ const EmailForm = ({ onSubmit }) => {
           message: 'There was an error. Please try again.',
         })
       }
+      setLoading(false)
     }
   }
 
@@ -57,15 +67,20 @@ const EmailForm = ({ onSubmit }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid container justifyContent="flex-start" spacing={3}>
-        <Grid item xs={12} mb={2} mt={2}>
+        <Grid item xs={12} mt={2}>
           <Typography variant="h4" color="white">
+            <b>Try It Now</b>
+          </Typography>
+        </Grid>
+        <Grid item xs={12} mb={2}>
+          <Typography variant="h6" color="white">
             <b>First, what's your email address?</b>
           </Typography>
         </Grid>
         {/* <Grid item xs={12} mb={2}>
           <Typography variant="h6" color="white"></Typography>
         </Grid> */}
-        <Grid item xs={12}>
+        <Grid item xs={12} mb={1}>
           <TextFieldWebsite
             autoFocus
             variant="outlined"
@@ -79,18 +94,9 @@ const EmailForm = ({ onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button
-            type="submit"
-            variant="contained"
-            endIcon={<ArrowForward />}
-            size="large"
-            fullWidth
-            sx={{ height: '51.5px' }}
-          >
-            <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
-              Next: link an image
-            </Typography>
-          </Button>
+          <ButtonWebsite endIcon={<ArrowForward />} loading={loading}>
+            Next: link an image
+          </ButtonWebsite>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body2" color="#ffffffcc">

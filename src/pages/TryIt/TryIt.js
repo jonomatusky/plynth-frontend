@@ -21,7 +21,7 @@ const TryIt = ({ title, text }) => {
   const { createPack } = usePackStore()
   const { request } = useRequest()
 
-  const [status, setStatus] = useState('idle')
+  const [setStatus] = useState('idle')
   const [email, setEmail] = useState()
   const [image, setImage] = useState()
   const [type, setType] = useState()
@@ -62,7 +62,7 @@ const TryIt = ({ title, text }) => {
       try {
         await createMe({ username })
         const createdPack = await createPack({
-          name: 'My first pack',
+          name: 'Your first pack',
           style: { backgroundColor: '#FFF9F0', fontColor: '#333333' },
           isPublic: true,
           shareWithLink: true,
@@ -71,6 +71,10 @@ const TryIt = ({ title, text }) => {
               type,
               url: type !== 'text' ? link : null,
               text: type === 'text' ? link : null,
+            },
+            {
+              type: 'text',
+              text: 'Now visit plynth.com on your desktop to customize this piece and add more item.',
             },
           ],
         })

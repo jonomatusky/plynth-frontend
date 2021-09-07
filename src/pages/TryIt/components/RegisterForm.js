@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Grid, Typography, Button, Divider } from '@material-ui/core'
 import * as yup from 'yup'
 
@@ -9,6 +9,7 @@ import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
 import { useSession } from 'hooks/use-session'
+import ButtonWebsite from 'components/ButtonWebsite'
 
 const validationSchema = yup.object({
   email: yup
@@ -21,16 +22,17 @@ const validationSchema = yup.object({
     .required('Password is required'),
 })
 
-const RegisterForm = ({ email, onSubmit, setStatus }) => {
+const RegisterForm = ({ email, onSubmit }) => {
   const { logout } = useSession()
   const { setError, clearError } = useAlertStore()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async ({ email, password }) => {
-    setStatus('loading')
+    setIsLoading(true)
     try {
       await logout()
       await firebase.auth().createUserWithEmailAndPassword(email, password)
-      setStatus('succeeded')
+      setIsLoading(false)
       onSubmit()
     } catch (err) {
       if (err.code === 'auth/invalid-email') {
@@ -65,7 +67,7 @@ const RegisterForm = ({ email, onSubmit, setStatus }) => {
     clearError()
     try {
       await firebase.auth().signInWithPopup(provider)
-      setStatus('succeeded')
+      setIsLoading(false)
       onSubmit()
     } catch (err) {
       setError({ message: 'Error authorizing account. Please try again.' })
@@ -112,18 +114,9 @@ const RegisterForm = ({ email, onSubmit, setStatus }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button
-            type="submit"
-            variant="contained"
-            endIcon={<ArrowForward />}
-            size="large"
-            fullWidth
-            sx={{ height: '51.5px' }}
-          >
-            <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
-              Continue
-            </Typography>
-          </Button>
+          <ButtonWebsite endIcon={<ArrowForward />} loading={isLoading}>
+            Continue
+          </ButtonWebsite>
         </Grid>
         <Grid item xs={12} container alignItems="center" spacing={1}>
           <Grid item xs>

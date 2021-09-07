@@ -19,10 +19,12 @@ import {
   PhoneIphone,
 } from '@material-ui/icons'
 
+const { REACT_APP_PUBLIC_URL } = process.env
+
 const TryItTest = ({ title, text }) => {
   const { user } = useUserStore()
 
-  const portal = `plynth.com/${user.username}`
+  const portal = `${REACT_APP_PUBLIC_URL}/${user.username}`
 
   return (
     <PublicNav
@@ -76,11 +78,6 @@ const TryItTest = ({ title, text }) => {
                   {portal}
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
-                <Typography color="white" textAlign="center">
-                  Or visit your portal here:
-                </Typography>
-              </Grid>
               <Grid item xs={12} mb={2} container justifyContent="center">
                 <Grid item>
                   <QRCode
@@ -99,8 +96,8 @@ const TryItTest = ({ title, text }) => {
               </Grid>
               <Grid item xs={12}>
                 <Button
-                  href={'https://' + portal}
-                  target="_blank"
+                  component={RouterLink}
+                  to="/admin"
                   endIcon={<ArrowForward />}
                   size="large"
                   fullWidth

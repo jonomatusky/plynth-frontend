@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   Grid,
   Typography,
-  Button,
   FormControl,
   RadioGroup,
   FormControlLabel,
@@ -14,6 +13,7 @@ import * as yup from 'yup'
 import TextFieldWebsite from 'components/TextFieldWebsite'
 import { ArrowForward } from '@material-ui/icons'
 import { useFormik } from 'formik'
+import ButtonWebsite from 'components/ButtonWebsite'
 
 const LinkForm = ({ onSubmit }) => {
   const [type, setType] = useState('video')
@@ -143,18 +143,9 @@ const LinkForm = ({ onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button
-            type="submit"
-            variant="contained"
-            endIcon={<ArrowForward />}
-            size="large"
-            fullWidth
-            sx={{ height: '51.5px' }}
-          >
-            <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
-              Finish Up
-            </Typography>
-          </Button>
+          <ButtonWebsite type="submit" endIcon={<ArrowForward />}>
+            Next
+          </ButtonWebsite>
         </Grid>
       </Grid>
     </form>

@@ -8,8 +8,6 @@ import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
 import useScanStore from 'hooks/store/use-scan-store'
 import PortalContent from './components/PortalContent'
 import PortalCamera from 'pages/PortalOpen/components/PortalCamera'
-import Div100vh from 'components/Div100vh'
-import { Box, Grid, Link, Typography } from '@material-ui/core'
 
 const Portal = () => {
   const { clearScan } = useScanStore()
@@ -27,9 +25,17 @@ const Portal = () => {
     }
   }, [fetchPortal, username, portalUser])
 
-  const { portal } = portalUser || {}
+  let { portal } = portalUser || {}
   const { style } = portal || {}
   const { backgroundColor } = style || {}
+
+  let { title, text, image, imageUrl, hideBranding } = portalUser || {}
+
+  if (!title && !text && !image && !imageUrl && !hideBranding) {
+    title = `Welcome`
+    text = `This is @${username}'s portal. Snap a photo of any image they have linked.`
+    portal = { title, text }
+  }
 
   useEffect(() => {
     if (backgroundColor) {
@@ -69,7 +75,7 @@ const Portal = () => {
       {status !== 'succeeded' && status !== 'failed' && <LoadingScreen />}
       {status === 'failed' && <NotFoundPage />}
       {status === 'succeeded' && !portalUser && <NotFoundPage />}
-      {status === 'succeeded' && portalUser.tier === 'trial' && (
+      {/* {status === 'succeeded' && portalUser.tier === 'trial' && (
         <Div100vh>
           <Box
             height="100%"
@@ -121,8 +127,8 @@ const Portal = () => {
             </Box>
           </Box>
         </Div100vh>
-      )}
-      {status === 'succeeded' && portalUser.tier !== 'trial' && (
+      )} */}
+      {status === 'succeeded' && (
         <>
           <CameraDialog
             open={cameraError}

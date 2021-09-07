@@ -1,23 +1,18 @@
 import React, { useState } from 'react'
-import {
-  Box,
-  Grid,
-  Typography,
-  Button,
-  CircularProgress,
-} from '@material-ui/core'
+import { Box, Grid, Typography, Button } from '@material-ui/core'
 
-import { ArrowForward, Clear } from '@material-ui/icons'
+import { ArrowForward, Clear, AddAPhoto } from '@material-ui/icons'
 
 import Image from 'components/Image'
-import ButtonUploadImage from 'components/ButtonUploadImage'
 import ImageUpload from 'components/ImageUpload'
+import ButtonWebsite from 'components/ButtonWebsite'
 
 const { REACT_APP_ASSET_URL } = process.env
 
-const ImageUploadForm = ({ onSubmit, setStatus }) => {
+const ImageUploadForm = ({ onSubmit }) => {
   const [imageSrc, setImageSrc] = useState()
   const [showLoadingSpinner, setShowLoadingSpinner] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSelect = async image => {
     console.log(image)
@@ -28,6 +23,11 @@ const ImageUploadForm = ({ onSubmit, setStatus }) => {
   const handleRemove = () => {
     setShowLoadingSpinner(false)
     setImageSrc(null)
+  }
+
+  const handleSubmit = imageSrc => {
+    setIsLoading(false)
+    onSubmit(imageSrc)
   }
 
   return (
@@ -44,78 +44,67 @@ const ImageUploadForm = ({ onSubmit, setStatus }) => {
           photo, etc.
         </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <Box display="flex" justifyContent="center">
-          {!showLoadingSpinner && imageSrc && (
-            <Box width="100%">
-              <Image src={REACT_APP_ASSET_URL + '/' + imageSrc} width="100%" />
+      {imageSrc && (
+        <>
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="center" justifyItems="center">
+              <Image
+                src={REACT_APP_ASSET_URL + '/' + imageSrc}
+                width="200px"
+                height="200px"
+              />
             </Box>
-          )}
-          {!showLoadingSpinner && !imageSrc && (
-            <ImageUpload
-              onSubmit={handleSelect}
-              resolution={800}
-              setIsPending={setShowLoadingSpinner}
-            >
-              <Box color="white">
-                <ButtonUploadImage color="inherit" />
-              </Box>
-            </ImageUpload>
-          )}
-          {showLoadingSpinner && (
+          </Grid>
+          <Grid item xs={12}>
             <Box
-              height="150px"
-              width="150px"
-              bgcolor="action.selected"
               display="flex"
-              justifyItems="center"
               justifyContent="center"
-              alignItems="center"
+              maxWidth="100%"
+              height="100%"
+              pb={3}
             >
-              <CircularProgress />
+              <Box width="150px">
+                <Button
+                  onClick={handleRemove}
+                  size="small"
+                  endIcon={<Clear />}
+                  type="button"
+                  fullWidth
+                >
+                  Remove
+                </Button>
+              </Box>
             </Box>
-          )}
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Box
-          display="flex"
-          justifyContent="center"
-          maxWidth="100%"
-          height="100%"
-          pb={3}
-        >
-          {imageSrc && (
-            <Box width="150px">
-              <Button
-                onClick={handleRemove}
-                size="small"
-                endIcon={<Clear />}
-                type="button"
-                fullWidth
+          </Grid>
+          <Grid item xs={12}>
+            <ButtonWebsite
+              onClick={() => handleSubmit(imageSrc)}
+              endIcon={<ArrowForward />}
+              loading={isLoading}
+            >
+              Next: Add your content
+            </ButtonWebsite>
+          </Grid>
+        </>
+      )}
+      {!imageSrc && (
+        <Grid item xs={12}>
+          <ImageUpload
+            onSubmit={handleSelect}
+            resolution={800}
+            setIsPending={setShowLoadingSpinner}
+          >
+            <Box color="white" width="100%">
+              <ButtonWebsite
+                loading={showLoadingSpinner}
+                endIcon={<AddAPhoto />}
               >
-                Remove
-              </Button>
+                Upload an Image
+              </ButtonWebsite>
             </Box>
-          )}
-          {!imageSrc && <Box height="30px" />}
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Button
-          disabled={!imageSrc}
-          onClick={() => onSubmit(imageSrc)}
-          variant="contained"
-          endIcon={<ArrowForward />}
-          size="large"
-          fullWidth
-          sx={{ height: '51.5px' }}
-        >
-          <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
-            Next: Add your content
-          </Typography>
-        </Button>
-      </Grid>
+          </ImageUpload>
+        </Grid>
+      )}
     </Grid>
   )
 }

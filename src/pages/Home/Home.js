@@ -101,12 +101,12 @@ const Home = () => {
                 </Typography>
                 <Button
                   component={RouterLink}
-                  to={'/register'}
+                  to={'/try-it'}
                   variant="contained"
                   endIcon={<ArrowForward />}
                   size="large"
                 >
-                  <b>Get Early Access</b>
+                  <b>Try It Now</b>
                 </Button>
               </Grid>
             </Grid>
@@ -464,13 +464,13 @@ const Home = () => {
               <Grid item xs={12} textAlign="center">
                 <Button
                   component={RouterLink}
-                  to={'/register'}
+                  to={'/try-it'}
                   variant="contained"
                   endIcon={<ArrowForward />}
                   size="large"
                   sx={{ height: '48px' }}
                 >
-                  <b>Get Early Access</b>
+                  <b>Try It Now</b>
                 </Button>
               </Grid>
             </Grid>

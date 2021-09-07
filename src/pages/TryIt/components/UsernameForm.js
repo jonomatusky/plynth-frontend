@@ -1,19 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { Grid, Typography, Button } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 
 import { ArrowForward } from '@material-ui/icons'
 import TextFieldWebsite from 'components/TextFieldWebsite'
 import useAlertStore from 'hooks/store/use-alert-store'
 import usePortalStore from 'hooks/store/use-portal-store'
+import ButtonWebsite from 'components/ButtonWebsite'
 
-const UsernameForm = ({ onSubmit, setStatus }) => {
+const UsernameForm = ({ onSubmit, status, setStatus }) => {
   const { setError } = useAlertStore()
   const { fetchPortal } = usePortalStore()
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async ({ username }) => {
-    setStatus('loading')
+    setLoading(true)
 
     try {
       const existingUser = await fetchPortal(username)
@@ -30,10 +32,9 @@ const UsernameForm = ({ onSubmit, setStatus }) => {
         onSubmit(username)
       } else {
         setError({ message: 'Something went wrong, please try again' })
+        setLoading(false)
       }
     }
-
-    setStatus('succeeded')
   }
 
   const validationSchema = Yup.object({
@@ -90,18 +91,9 @@ const UsernameForm = ({ onSubmit, setStatus }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button
-            type="submit"
-            variant="contained"
-            endIcon={<ArrowForward />}
-            size="large"
-            fullWidth
-            sx={{ height: '51.5px' }}
-          >
-            <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
-              Test it out
-            </Typography>
-          </Button>
+          <ButtonWebsite endIcon={<ArrowForward />} loading={loading}>
+            Finish Up
+          </ButtonWebsite>
         </Grid>
       </Grid>
     </form>
