@@ -97,14 +97,14 @@ const LandingAR = () => {
 
       <Container maxWidth={false} id="about" disableGutters>
         <Grid container justifyContent="center">
-          <Grid item xs={12} md={1} />
+          <Grid item xs={12} md={2} />
           <Grid item xs={12} sm={8} md={4}>
             <Grid container sx={{ height: '100%' }} justifyContent="center">
               {subscribeStatus !== 'succeeded' && (
                 <Grid item xs={11} mt={isMobile ? 6 : 15}>
                   <Typography
                     color="white"
-                    variant="h4"
+                    variant={isMobile ? 'h5' : 'h4'}
                     letterSpacing={1}
                     style={{ fontWeight: 800 }}
                     pb={3}
@@ -113,7 +113,7 @@ const LandingAR = () => {
                   </Typography>
                   <Typography
                     color="white"
-                    variant="h6"
+                    variant={isMobile ? null : 'h6'}
                     pb={2}
                     style={{
                       whiteSpace: 'pre-line',
@@ -122,7 +122,7 @@ const LandingAR = () => {
                   >
                     {content.subheading}
                   </Typography>
-                  <Box mt={1}>
+                  <Box mt={1} maxWidth={isMobile ? null : '300px'}>
                     <form onSubmit={formik.handleSubmit}>
                       <Grid container justifyContent="flex-start" spacing={3}>
                         <Grid item xs={12}>
@@ -130,6 +130,7 @@ const LandingAR = () => {
                             variant="outlined"
                             fullWidth
                             size="small"
+                            type="email"
                             placeholder="email"
                             {...formik.getFieldProps('email')}
                             FormHelperTextProps={{ sx: { fontSize: '16px' } }}
@@ -233,7 +234,7 @@ const LandingAR = () => {
               )}
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6} container justifyContent="center">
+          <Grid item xs={12} md={5} container justifyContent="center">
             {subscribeStatus === 'succeeded' && !isMobile && (
               <Grid item xs={12}>
                 <Box mt={6}>
@@ -265,7 +266,7 @@ const LandingAR = () => {
             {subscribeStatus !== 'succeeded' && (
               <>
                 <Grid item xs={12}>
-                  <Box mt={9} />
+                  <Box mt={6} />
                 </Grid>
                 <Phone>
                   <Box
