@@ -23,6 +23,7 @@ import contentful from 'config/contentful'
 import PublicNav from 'layouts/PublicNav'
 import Carousel from 'react-material-ui-carousel'
 import Image from 'components/Image'
+import ButtonWebsite from 'components/ButtonWebsite'
 
 // const SmoothHashLink = React.forwardRef((props, ref) => (
 //   <HashLink smooth innerRef={ref} {...props} />
@@ -142,21 +143,14 @@ const LandingAR = () => {
                           />
                         </Grid>
                         <Grid item xs={12}>
-                          <Button
+                          <ButtonWebsite
                             type="submit"
-                            variant="contained"
-                            size="large"
                             fullWidth
-                            sx={{ height: '51.5px' }}
                             endIcon={<ArrowForward />}
+                            loading={subscribeStatus === 'loading'}
                           >
-                            <Typography
-                              letterSpacing={1}
-                              style={{ fontWeight: 600 }}
-                            >
-                              Try The Demo
-                            </Typography>
-                          </Button>
+                            Try The Demo
+                          </ButtonWebsite>
                         </Grid>
                       </Grid>
                     </form>
