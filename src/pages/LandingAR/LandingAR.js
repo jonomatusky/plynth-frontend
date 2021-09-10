@@ -53,7 +53,7 @@ const LandingAR = () => {
   const handleSubmit = async values => {
     if (subscribeStatus !== 'loading') {
       try {
-        await subscribe(values.email)
+        await subscribe({ email: values.email, tags: ['ar-waitlist'] })
       } catch (err) {
         setError({
           message: 'There was an error submitting the form. Please try again.',

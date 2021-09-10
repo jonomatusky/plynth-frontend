@@ -54,12 +54,12 @@ export const createMe = createAsyncThunk(
 
 export const subscribe = createAsyncThunk(
   'user/subscribe',
-  async ({ headers, email }) => {
+  async ({ headers, ...inputs }) => {
     const res = await client.request({
       headers,
       url: `/users/subscribe`,
       method: 'POST',
-      data: { email },
+      data: inputs,
     })
     return res
   }

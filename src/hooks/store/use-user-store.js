@@ -40,9 +40,9 @@ export const useUserStore = () => {
   )
 
   const _subscribe = useCallback(
-    async email => {
+    async ({ email, tags, tagsToRemove }) => {
       try {
-        await dispatchThunk(subscribe, { email })
+        await dispatchThunk(subscribe, { email, tags, tagsToRemove })
       } catch (err) {}
     },
     [dispatchThunk]
