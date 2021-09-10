@@ -101,7 +101,7 @@ const LandingAR = () => {
           <Grid item xs={12} sm={8} md={4}>
             <Grid container sx={{ height: '100%' }} justifyContent="center">
               {subscribeStatus !== 'succeeded' && (
-                <Grid item xs={11} mt={isMobile ? 6 : 15}>
+                <Grid item xs={11} mt={isMobile ? 4 : 15}>
                   <Typography
                     color="white"
                     variant={isMobile ? 'h5' : 'h4'}
@@ -217,8 +217,20 @@ const LandingAR = () => {
                     }}
                     textAlign="center"
                   >
-                    To continue the demo, visit <b>plynth.com/ar</b> in the
-                    bowser on your desktop.
+                    To continue the demo, open your desktop and visit{' '}
+                    <b>plynth.com/ar</b>
+                  </Typography>
+                  <Typography
+                    color="white"
+                    pb={3}
+                    variant="h6"
+                    style={{
+                      whiteSpace: 'pre-line',
+                      overflowWrap: 'break-word',
+                    }}
+                    textAlign="center"
+                  >
+                    Keep your phone open. Once you're ready, tap here:
                   </Typography>
                   <Button
                     type="submit"
