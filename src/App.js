@@ -42,6 +42,8 @@ import Help from 'pages/Help/Help'
 import Subscribe from 'pages/Subscribe/Subscribe'
 import TryIt from 'pages/TryIt/TryIt'
 import TryItTest from 'pages/TryItTest/TryItTest'
+import LandingAR from 'pages/LandingAR/LandingAR'
+import LandingARDemo from 'pages/LandingARDemo/LandingARDemo'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -76,6 +78,11 @@ const App = () => {
       <Route path="/register">
         <Register />
       </Route>
+
+      <Route path="/ar" exact>
+        <LandingARDemo />
+      </Route>
+
       <Redirect path="/signup" exact to="/register" />
 
       <PrivateRoute path="/try-it/test">
@@ -93,6 +100,10 @@ const App = () => {
       <Route path="/s/help">
         <Help />
       </Route>
+      <Route path="/s/ar" exact>
+        <LandingAR />
+      </Route>
+
       <Route path="/s/invite-code" exact>
         <SignUpWithCode />
       </Route>

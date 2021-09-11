@@ -91,7 +91,7 @@ const Register = ({ title, text }) => {
     const handleLoggedIn = async () => {
       if (status === 'succeeded') {
         if (user.email) {
-          subscribe(user.email)
+          subscribe({ email: user.email, tags: ['waitlist'] })
         }
 
         history.push(
