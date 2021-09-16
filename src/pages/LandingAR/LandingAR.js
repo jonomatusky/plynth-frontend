@@ -36,12 +36,13 @@ const validationSchema = yup.object({
     .required('Email is required'),
 })
 
-const LandingAR = () => {
+const LandingAR = ({ trying }) => {
   const { search } = useLocation()
   const history = useHistory()
   const [content, setContent] = useState({})
   const [demoImages, setDemoImages] = useState([])
   const [videoIsReady, setVideoIsReady] = useState(false)
+  const [readyToTry, setReadyToTry] = useState(trying || false)
 
   if (search === '?utm_source=qr') {
     history.push('/postcardmixtapes')
@@ -100,7 +101,7 @@ const LandingAR = () => {
           <Grid item xs={12} md={2} />
           <Grid item xs={12} sm={8} md={4}>
             <Grid container sx={{ height: '100%' }} justifyContent="center">
-              {subscribeStatus !== 'succeeded' && (
+              {!readyToTry && (
                 <Grid item xs={11} mt={isMobile ? 4 : 15}>
                   <Typography
                     color="white"
@@ -114,7 +115,7 @@ const LandingAR = () => {
                   <Typography
                     color="white"
                     variant={isMobile ? null : 'h6'}
-                    pb={2}
+                    pb={isMobile ? 0 : 2}
                     style={{
                       whiteSpace: 'pre-line',
                       overflowWrap: 'break-word',
@@ -122,7 +123,112 @@ const LandingAR = () => {
                   >
                     {content.subheading}
                   </Typography>
-                  <Box mt={1} maxWidth={isMobile ? null : '300px'}>
+                  <Box pb={isMobile ? 0 : 4} pt={isMobile ? 2 : 0}>
+                    <ButtonWebsite
+                      fullWidth
+                      endIcon={<ArrowForward />}
+                      onClick={() => setReadyToTry(true)}
+                      pb={2}
+                    >
+                      Try the Demo
+                    </ButtonWebsite>
+                  </Box>
+                  {!isMobile && (
+                    <>
+                      <Typography color="white" variant="h5">
+                        <b>Get Updates</b>
+                      </Typography>
+                      <Typography color="white" pb={2}>
+                        We'll let you know when it launches:
+                      </Typography>
+                      {subscribeStatus !== 'succeeded' && (
+                        <form onSubmit={formik.handleSubmit}>
+                          <Grid
+                            container
+                            justifyContent="flex-start"
+                            spacing={3}
+                          >
+                            <Grid item xs={12}>
+                              <TextFieldWebsite
+                                variant="outlined"
+                                fullWidth
+                                size="small"
+                                type="email"
+                                placeholder="email"
+                                {...formik.getFieldProps('email')}
+                                FormHelperTextProps={{
+                                  sx: { fontSize: '16px' },
+                                }}
+                                error={
+                                  formik.touched.email &&
+                                  Boolean(formik.errors.email)
+                                }
+                                helperText={
+                                  formik.touched.email && formik.errors.email
+                                }
+                              />
+                            </Grid>
+                            <Grid item xs={12} textAlign="right">
+                              <ButtonWebsite
+                                type="submit"
+                                loading={subscribeStatus === 'loading'}
+                              >
+                                Sign Up
+                              </ButtonWebsite>
+                            </Grid>
+                          </Grid>
+                        </form>
+                      )}
+                      {subscribeStatus === 'succeeded' && (
+                        <Typography color="white" variant="h6">
+                          You're subscribed!
+                        </Typography>
+                      )}
+                    </>
+                  )}
+
+                  <Box mt={1} maxWidth={isMobile ? null : '300px'}></Box>
+                </Grid>
+              )}
+
+              {readyToTry && !isMobile && (
+                <Grid item xs={11} mt={6}>
+                  <Typography
+                    color="white"
+                    variant="h4"
+                    letterSpacing={1}
+                    style={{ fontWeight: 800 }}
+                    pb={2}
+                  >
+                    {content.claimHeading}
+                  </Typography>
+                  <Typography
+                    color="white"
+                    pb={3}
+                    style={{
+                      whiteSpace: 'pre-line',
+                      overflowWrap: 'break-word',
+                    }}
+                  >
+                    {content.claimSubheading}
+                  </Typography>
+                  <Box mt={1} textAlign="center" pb={3}>
+                    <QRCode
+                      id="ar-qr"
+                      value="https://ar.plynth.com"
+                      size={150}
+                      level={'H'}
+                      includeMargin={true}
+                    />
+                  </Box>
+                  <Typography color="white" variant="h5">
+                    <b>Get Updates</b>
+                  </Typography>
+                  <Typography color="white" pb={2}>
+                    Like the demo? Sign up here and we'll let you know when it
+                    launches:
+                  </Typography>
+                  {subscribeStatus !== 'succeeded' && (
                     <form onSubmit={formik.handleSubmit}>
                       <Grid container justifyContent="flex-start" spacing={3}>
                         <Grid item xs={12}>
@@ -133,7 +239,9 @@ const LandingAR = () => {
                             type="email"
                             placeholder="email"
                             {...formik.getFieldProps('email')}
-                            FormHelperTextProps={{ sx: { fontSize: '16px' } }}
+                            FormHelperTextProps={{
+                              sx: { fontSize: '16px' },
+                            }}
                             error={
                               formik.touched.email &&
                               Boolean(formik.errors.email)
@@ -143,59 +251,26 @@ const LandingAR = () => {
                             }
                           />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} textAlign="right">
                           <ButtonWebsite
                             type="submit"
-                            fullWidth
-                            endIcon={<ArrowForward />}
                             loading={subscribeStatus === 'loading'}
                           >
-                            Try The Demo
+                            Sign Up
                           </ButtonWebsite>
                         </Grid>
                       </Grid>
                     </form>
-                  </Box>
+                  )}
+                  {subscribeStatus === 'succeeded' && (
+                    <Typography color="white" variant="h6">
+                      You're subscribed!
+                    </Typography>
+                  )}
                 </Grid>
               )}
 
-              {subscribeStatus === 'succeeded' && !isMobile && (
-                <Grid item xs={11} mt={isMobile ? 6 : 15}>
-                  <Typography
-                    color="white"
-                    variant="h4"
-                    letterSpacing={1}
-                    style={{ fontWeight: 800 }}
-                    pb={3}
-                    textAlign="center"
-                  >
-                    {content.claimHeading}
-                  </Typography>
-                  <Typography
-                    color="white"
-                    pb={3}
-                    variant="h6"
-                    style={{
-                      whiteSpace: 'pre-line',
-                      overflowWrap: 'break-word',
-                    }}
-                    textAlign="center"
-                  >
-                    {content.claimSubheading}
-                  </Typography>
-                  <Box mt={1} textAlign="center">
-                    <QRCode
-                      id="ar-qr"
-                      value="https://ar.plynth.com"
-                      size={150}
-                      level={'H'}
-                      includeMargin={true}
-                    />
-                  </Box>
-                </Grid>
-              )}
-
-              {subscribeStatus === 'succeeded' && isMobile && (
+              {readyToTry && isMobile && (
                 <Grid item xs={11} mt={isMobile ? 9 : 15} textAlign="center">
                   <Typography
                     color="white"
@@ -247,7 +322,7 @@ const LandingAR = () => {
             </Grid>
           </Grid>
           <Grid item xs={12} md={5} container justifyContent="center">
-            {subscribeStatus === 'succeeded' && !isMobile && (
+            {readyToTry && !isMobile && (
               <Grid item xs={12}>
                 <Box mt={6}>
                   {
@@ -275,7 +350,7 @@ const LandingAR = () => {
                 </Box>
               </Grid>
             )}
-            {subscribeStatus !== 'succeeded' && (
+            {!readyToTry && (
               <>
                 <Grid item xs={12}>
                   <Box mt={6} />
@@ -303,6 +378,48 @@ const LandingAR = () => {
                     <Box backgroundColor="#999999" height="100%" width="100%" />
                   )}
                 </Phone>
+                {isMobile && (
+                  <Grid item xs={11}>
+                    <Box textAlign="left" pt={4}>
+                      <Typography color="white" variant="h5">
+                        <b>Get Updates</b>
+                      </Typography>
+                      <Typography color="white" pb={2}>
+                        We'll let you know when it launches:
+                      </Typography>
+                      <form onSubmit={formik.handleSubmit}>
+                        <Grid container justifyContent="flex-start" spacing={3}>
+                          <Grid item xs={12}>
+                            <TextFieldWebsite
+                              variant="outlined"
+                              fullWidth
+                              size="small"
+                              type="email"
+                              placeholder="email"
+                              {...formik.getFieldProps('email')}
+                              FormHelperTextProps={{ sx: { fontSize: '16px' } }}
+                              error={
+                                formik.touched.email &&
+                                Boolean(formik.errors.email)
+                              }
+                              helperText={
+                                formik.touched.email && formik.errors.email
+                              }
+                            />
+                          </Grid>
+                          <Grid item xs={12} textAlign="right">
+                            <ButtonWebsite
+                              type="submit"
+                              loading={subscribeStatus === 'loading'}
+                            >
+                              Sign Up
+                            </ButtonWebsite>
+                          </Grid>
+                        </Grid>
+                      </form>
+                    </Box>
+                  </Grid>
+                )}
               </>
             )}
           </Grid>
