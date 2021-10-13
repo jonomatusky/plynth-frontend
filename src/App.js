@@ -82,6 +82,12 @@ const App = () => {
 
       <Redirect path="/signup" exact to="/register" />
 
+      <Route
+        exact
+        path="/card"
+        render={() => (window.location = 'https://ar.plynth.com/card')}
+      />
+
       <Route path="/s/subscribe">
         <Subscribe />
       </Route>
