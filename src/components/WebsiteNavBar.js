@@ -88,12 +88,12 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                     <MuiButton
                       variant="contained"
                       component={RouterLink}
-                      to="/register"
+                      to="/s/waitlist"
                       size="small"
                       sx={{ textTransform: 'none' }}
                     >
                       <Typography>
-                        <b>Get Access</b>
+                        <b>Sign Up</b>
                       </Typography>
                     </MuiButton>
                     <IconButton
