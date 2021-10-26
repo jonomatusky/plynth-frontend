@@ -358,7 +358,7 @@ const Home = () => {
 
             {/* Use it for... Section */}
             <Grid item xs={12} container spacing={2} justifyContent="center">
-              <Grid item xs={8} sm={6} md={6}>
+              <Grid item xs={10} sm={6} md={6}>
                 <Box color="white" pb={2} textAlign="center">
                   <Typography variant="h4" letterSpacing={1}>
                     <b>{content.useHeading}</b>
