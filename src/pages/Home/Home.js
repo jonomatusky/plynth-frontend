@@ -17,6 +17,7 @@ import contentful from 'config/contentful'
 import PublicNav from 'layouts/PublicNav'
 import Image from 'components/Image'
 import FormWaitlist from 'components/FormWaitlist'
+import VideoPoster from 'images/video-poster.jpeg'
 
 // const SmoothHashLink = React.forwardRef((props, ref) => (
 //   <HashLink smooth innerRef={ref} {...props} />
@@ -27,7 +28,7 @@ const Home = () => {
   const history = useHistory()
   const [highlights, setHighlights] = useState([])
   const [content, setContent] = useState({})
-  const [videoIsReady, setVideoIsReady] = useState(false)
+  // const [videoIsReady, setVideoIsReady] = useState(false)
 
   if (search === '?utm_source=qr') {
     history.push('/postcardmixtapes')
@@ -88,7 +89,7 @@ const Home = () => {
             loop={true}
             playing={true}
             config={{ vimeo: { playerOptions: { background: 1 } } }}
-            onReady={() => setVideoIsReady(true)}
+            // onReady={() => setVideoIsReady(true)}
           />
         </Box>
       </Hidden>
@@ -138,8 +139,13 @@ const Home = () => {
                   <Box
                     height="100%"
                     width="100%"
-                    display={videoIsReady ? null : 'none'}
-                    bgcolor="black"
+                    // display={videoIsReady ? null : 'none'}
+                    // bgcolor="#999999"
+                    sx={{
+                      backgroundImage: `url(${VideoPoster})`,
+                      backgroundPosition: 'center',
+                      backgroundSize: 'cover',
+                    }}
                   >
                     <ReactPlayer
                       url={content.videoUrl}
@@ -150,13 +156,13 @@ const Home = () => {
                       loop={true}
                       playing={true}
                       config={{ vimeo: { playerOptions: { background: 1 } } }}
-                      onReady={() => setVideoIsReady(true)}
+                      // onReady={() => setVideoIsReady(true)}
                     />
                   </Box>
 
-                  {!videoIsReady && (
+                  {/* {!videoIsReady && (
                     <Box backgroundColor="#999999" height="100%" width="100%" />
-                  )}
+                  )} */}
                 </Phone>
               </Grid>
             </Hidden>
