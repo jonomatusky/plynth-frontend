@@ -207,7 +207,7 @@ const NewPortalSignUp = ({ title, text }) => {
                   </Typography>
                 </Button>
               </Grid>
-              <Grid item container justifyContent="center">
+              {/* <Grid item container justifyContent="center">
                 <Typography variant="body2" color="white">
                   Don't have an account?{' '}
                   <Link
@@ -219,7 +219,7 @@ const NewPortalSignUp = ({ title, text }) => {
                     <b>Sign Up</b>
                   </Link>
                 </Typography>
-              </Grid>
+              </Grid> */}
             </Grid>
           </form>
         </Box>
