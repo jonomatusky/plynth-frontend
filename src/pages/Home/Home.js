@@ -139,6 +139,7 @@ const Home = () => {
                     height="100%"
                     width="100%"
                     display={videoIsReady ? null : 'none'}
+                    bgcolor="black"
                   >
                     <ReactPlayer
                       url={content.videoUrl}
@@ -380,7 +381,7 @@ const Home = () => {
                           textAlign="center"
                           color="white"
                         >
-                          Find out as soon as it launches
+                          {content.ctaBottom}
                         </Typography>
                       </Grid>
                       <Grid item xs={12} container justifyContent="center">
