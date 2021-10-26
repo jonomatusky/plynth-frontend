@@ -135,20 +135,18 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                           sx={{ textTransform: 'none' }}
                           color="secondary"
                         >
-                          <Typography color="#BBBBBB">
-                            <b>_</b>sign in
-                          </Typography>
+                          <Typography color="#BBBBBB">Sign In</Typography>
                         </MuiButton>
                       </Box>
 
                       <MuiButton
                         component={RouterLink}
-                        to="/register"
+                        to="/s/waitlist"
                         size="small"
                         sx={{ textTransform: 'none' }}
                       >
                         <Typography>
-                          <b>Get Early Access</b>
+                          <b>Sign Up</b>
                         </Typography>
                       </MuiButton>
                     </Box>

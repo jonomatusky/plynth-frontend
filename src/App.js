@@ -41,6 +41,7 @@ import Recover from 'pages/Recover/Recover'
 import Help from 'pages/Help/Help'
 import Subscribe from 'pages/Subscribe/Subscribe'
 import LandingAR from 'pages/LandingAR/LandingAR'
+import Waitlist from 'pages/Waitlist/Waitlist'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -105,10 +106,7 @@ const App = () => {
         <SignUpWithCode />
       </Route>
       <Route path="/s/waitlist">
-        <Register
-          title="Join the Waitlist"
-          text="We're currently in a closed beta and adding new users as quickly as possible. Sign up here to reserve your portal and we'll let you know when new spots open up 👍"
-        />
+        <Waitlist />
       </Route>
       <PrivateRoute path="/s/on-the-waitlist">
         <OnTheWaitlist />

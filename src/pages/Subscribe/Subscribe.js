@@ -31,7 +31,7 @@ const Subscribe = ({ title, text }) => {
             sx={{ textTransform: 'lowercase' }}
           >
             <Typography color="#BBBBBB">
-              <b>_sign in</b>
+              <b>Sign In</b>
             </Typography>
           </Button>
         </>

@@ -1,26 +1,46 @@
 import React from 'react'
+import { Container, Box, Typography, Button, Hidden } from '@material-ui/core'
 
-import WebsiteNavBar from 'components/WebsiteNavBar'
-import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
-import Div100vh from 'components/Div100vh'
+import { Link as RouterLink } from 'react-router-dom'
+import PublicNav from 'layouts/PublicNav'
+import FormWaitlist from 'components/FormWaitlist'
 
 const Waitlist = () => {
   return (
-    <>
-      <ScrollToTopOnMount />
-      <WebsiteNavBar />
-      <Div100vh>
-        <iframe
-          title="waitlist"
-          id="typeform-full"
-          width="100%"
-          height="100%"
-          frameborder="0"
-          allow="camera; microphone; autoplay; encrypted-media;"
-          src="https://form.typeform.com/to/BPzodYqK?typeform-medium=embed-snippet"
-        ></iframe>
-      </Div100vh>
-    </>
+    <PublicNav
+      right={
+        <>
+          <Hidden smDown>
+            <Typography variant="body2" color="white">
+              Already have an account?{' '}
+            </Typography>
+          </Hidden>
+          <Button
+            color="secondary"
+            component={RouterLink}
+            to={'/login'}
+            size="small"
+            sx={{ textTransform: 'none' }}
+          >
+            <Typography color="#BBBBBB">
+              <b>Sign In</b>
+            </Typography>
+          </Button>
+        </>
+      }
+    >
+      <Container maxWidth="xs">
+        <Box mt={10} color="white">
+          <Typography variant="h4" mb={2}>
+            <b>Join the Waitlist</b>
+          </Typography>
+          <Typography variant="h6" mb={2}>
+            Sign up here and we'll let you know as soon as it launches 👍
+          </Typography>
+          <FormWaitlist />
+        </Box>
+      </Container>
+    </PublicNav>
   )
 }
 
