@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Typography, Button, Box } from '@material-ui/core'
 import * as yup from 'yup'
+import ReactGA from 'react-ga'
 
 import TextFieldWebsite from 'components/TextFieldWebsite'
 import { useFormik } from 'formik'
@@ -27,6 +28,15 @@ const FormWaitlist = ({ title, text }) => {
         setError({
           message: 'There was an error submitting the form. Please try again.',
         })
+      }
+
+      try {
+        ReactGA.event({
+          category: 'User',
+          action: 'Waitlist Form Submission',
+        })
+      } catch (err) {
+        console.log('error with GA')
       }
     }
   }

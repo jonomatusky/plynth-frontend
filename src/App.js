@@ -9,6 +9,7 @@ import { UserContext } from 'contexts/user-context'
 import { useAuth } from 'hooks/use-auth'
 import firebase from 'config/firebase'
 import posthog from 'posthog-js'
+import ReactGA from 'react-ga'
 
 import PrivateRoute from 'routes/PrivateRoute'
 import Login from 'pages/Login/Login'
@@ -51,6 +52,8 @@ const App = () => {
   posthog.init(REACT_APP_POSTHOG_KEY, {
     api_host: 'https://app.posthog.com',
   })
+
+  ReactGA.initialize('UA-136166229-3')
 
   firebase.analytics()
 
