@@ -1,6 +1,6 @@
 import React from 'react'
-import LoadingButton from '@material-ui/lab/LoadingButton'
-import { styled } from '@material-ui/core'
+import LoadingButton from '@mui/lab/LoadingButton'
+import { styled } from '@mui/material'
 
 const CardButton = styled(LoadingButton)(props => ({
   // padding: 0,

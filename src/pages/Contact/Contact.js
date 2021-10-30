@@ -6,7 +6,7 @@ import {
   Grid,
   Typography,
   Button,
-} from '@material-ui/core'
+} from '@mui/material'
 import * as yup from 'yup'
 
 import { Link as RouterLink } from 'react-router-dom'

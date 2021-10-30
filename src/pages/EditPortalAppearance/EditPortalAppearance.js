@@ -9,7 +9,7 @@ import {
   FormControlLabel,
   Switch,
   Divider,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import ButtonColorPicker from 'components/ButtonColorPicker'
 import ButtonFont from 'components/ButtonFont'
@@ -282,7 +282,7 @@ const EditPortalAppearance = () => {
                 </Box>
               </Grid>
 
-              <Hidden mdDown>
+              <Hidden lgDown>
                 <Grid item md={5}>
                   <PreviewLayout>
                     <Grid container justifyContent="center">
@@ -312,7 +312,7 @@ const EditPortalAppearance = () => {
         )}
       </BarAccount>
     </AdminNav>
-  )
+  );
 }
 
 export default EditPortalAppearance

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import { Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import theme from 'theme'
 import PackButtonsMobile from './PackButtonsMobile'
 import PaginationDots from './PaginationDots'
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
       maxHeight: `${screenHeight * scaleLgUp}px`,
       maxWidth: `${screenWidth * scaleLgUp}px`,
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       maxHeight: `${screenHeight * scaleLgDown}px`,
       maxWidth: `${screenWidth * scaleLgDown}px`,
     },
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
     [theme.breakpoints.up('lg')]: {
       transform: `scale(${scaleLgUp})`,
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       transform: `scale(${scaleLgDown})`,
     },
     transformOrigin: 'top left',

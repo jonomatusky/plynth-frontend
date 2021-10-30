@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from 'react'
-import { Box, CircularProgress, Fab } from '@material-ui/core'
-import { CameraAlt } from '@material-ui/icons'
+import { Box, CircularProgress, Fab } from '@mui/material'
+import { CameraAlt } from '@mui/icons-material'
 import Webcam from 'react-webcam'
 import useScanStore from 'hooks/store/use-scan-store'
 import useAlertStore from 'hooks/store/use-alert-store'

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 
 import Button from 'components/Button'
 

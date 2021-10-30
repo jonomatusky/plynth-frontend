@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Button, Box } from '@material-ui/core'
+import { Grid, Typography, Button, Box } from '@mui/material'
 import * as yup from 'yup'
 import ReactGA from 'react-ga'
 
@@ -7,7 +7,7 @@ import TextFieldWebsite from 'components/TextFieldWebsite'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import useUserStore from 'hooks/store/use-user-store'
-import { ArrowForward } from '@material-ui/icons'
+import { ArrowForward } from '@mui/icons-material'
 
 const validationSchema = yup.object({
   email: yup

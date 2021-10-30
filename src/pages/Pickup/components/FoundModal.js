@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Dialog, Grid, Box, Typography, Fade } from '@material-ui/core'
+import { Dialog, Grid, Box, Typography, Fade } from '@mui/material'
 
 import styled from 'styled-components'
 import theme from 'theme'
@@ -30,7 +30,7 @@ const FoundModal = props => {
         <Grid
           container
           direction="column"
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           style={{ minHeight: '100vh' }}
         >
@@ -47,7 +47,7 @@ const FoundModal = props => {
         </Grid>
       </FoundScreen>
     </Dialog>
-  )
+  );
 }
 
 export default FoundModal

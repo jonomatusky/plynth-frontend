@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Yup from 'yup'
 import { useHistory } from 'react-router-dom'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 import { useRequest } from 'hooks/use-request'
 

@@ -8,14 +8,14 @@ import {
   Divider,
   Link,
   Hidden,
-} from '@material-ui/core'
+} from '@mui/material'
 import * as yup from 'yup'
 
 import firebase from 'config/firebase'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
 import TextFieldWebsite from 'components/TextFieldWebsite'
-import { ArrowForward } from '@material-ui/icons'
+import { ArrowForward } from '@mui/icons-material'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
@@ -214,7 +214,7 @@ const SignUpWithCode = () => {
       hideFooter
       right={
         <>
-          <Hidden smDown>
+          <Hidden mdDown>
             <Typography variant="body2" color="white">
               Already have an account?{' '}
             </Typography>
@@ -417,7 +417,7 @@ const SignUpWithCode = () => {
         </Container>
       )}
     </PublicNav>
-  )
+  );
 }
 
 export default SignUpWithCode

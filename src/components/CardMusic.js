@@ -1,6 +1,7 @@
 import React from 'react'
-import { Grid, Box, Typography, makeStyles, styled } from '@material-ui/core'
-import { Photo } from '@material-ui/icons'
+import { Grid, Box, Typography, styled } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Photo } from '@mui/icons-material'
 import ButtonIconMusicLink from './ButtonIconMusicLink'
 
 const useStyles = makeStyles({

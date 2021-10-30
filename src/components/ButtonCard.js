@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, styled, Typography } from '@material-ui/core'
+import { Button, styled, Typography } from '@mui/material'
 
 const CardButton = styled(({ children, style, ...props }) => {
   return (

@@ -8,8 +8,8 @@ import {
   TextField,
   DialogTitle,
   Button,
-} from '@material-ui/core'
-import { experimentalStyled as styled } from '@material-ui/core/styles'
+} from '@mui/material'
+import { experimentalStyled as styled } from '@mui/material/styles'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 

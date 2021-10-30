@@ -6,7 +6,7 @@ import {
   Paper,
   Typography,
   Hidden,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import ButtonColorPicker from 'components/ButtonColorPicker'
 import AdminNav from 'layouts/AdminNav'
@@ -170,7 +170,7 @@ const EditPortalAnimation = () => {
                 </Box>
               </Grid>
 
-              <Hidden mdDown>
+              <Hidden lgDown>
                 <Grid item md={5}>
                   <PreviewLayout>
                     <Grid container justifyContent="center">
@@ -200,7 +200,7 @@ const EditPortalAnimation = () => {
         )}
       </BarAccount>
     </AdminNav>
-  )
+  );
 }
 
 export default EditPortalAnimation

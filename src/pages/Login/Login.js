@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
   Divider,
-} from '@material-ui/core'
+} from '@mui/material'
 import * as yup from 'yup'
 
 import firebase from 'config/firebase'

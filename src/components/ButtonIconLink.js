@@ -12,7 +12,7 @@ import {
   faBandcamp,
   faApple,
 } from '@fortawesome/free-brands-svg-icons'
-import { IconButton } from '@material-ui/core'
+import { IconButton } from '@mui/material'
 
 import { useScanStore } from 'hooks/store/use-scan-store'
 import { useLog } from 'hooks/use-log'
@@ -69,10 +69,10 @@ const ButtonIconLink = ({ link }) => {
   }
 
   return (
-    <IconButton target="_blank" href={link} onClick={handleClick}>
+    <IconButton target="_blank" href={link} onClick={handleClick} size="large">
       <FontAwesomeIcon icon={type.fontAwesome} />
     </IconButton>
-  )
+  );
 }
 
 export default ButtonIconLink

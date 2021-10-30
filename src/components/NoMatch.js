@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Grid, Typography, Button, Box, Link } from '@material-ui/core'
+import { Grid, Typography, Button, Box, Link } from '@mui/material'
 import Div100vh from './Div100vh'
 import posthog from 'posthog-js'
 

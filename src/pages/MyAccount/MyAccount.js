@@ -7,9 +7,9 @@ import {
   IconButton,
   Button,
   Link as MuiLink,
-} from '@material-ui/core'
+} from '@mui/material'
 import { Link } from 'react-router-dom'
-import { ArrowBackIos } from '@material-ui/icons'
+import { ArrowBackIos } from '@mui/icons-material'
 import AdminNav from 'layouts/AdminNav'
 import { useSession } from 'hooks/use-session'
 import { useState } from 'react'
@@ -37,7 +37,7 @@ const MyAccount = () => {
       <Grid container>
         <Grid item>
           <Box margin={2}>
-            <IconButton component={Link} to="/admin" color="secondary">
+            <IconButton component={Link} to="/admin" color="secondary" size="large">
               <ArrowBackIos />
             </IconButton>
           </Box>
@@ -152,7 +152,7 @@ const MyAccount = () => {
         </Grid>
       </Container>
     </AdminNav>
-  )
+  );
 }
 
 export default MyAccount

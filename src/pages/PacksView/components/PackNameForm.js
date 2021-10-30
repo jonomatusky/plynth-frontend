@@ -1,9 +1,9 @@
 import React from 'react'
-import { Grid, TextField, Button as MuiButton } from '@material-ui/core'
+import { Grid, TextField, Button as MuiButton } from '@mui/material'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Button from 'components/Button'
-import { ArrowForward, Close } from '@material-ui/icons'
+import { ArrowForward, Close } from '@mui/icons-material'
 
 const PackNameForm = ({ onSubmit, onCancel, name, buttonText, pending }) => {
   const validationSchema = Yup.object({

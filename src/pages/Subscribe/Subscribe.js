@@ -6,7 +6,7 @@ import {
   Button,
   Hidden,
   Grid,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import { Link as RouterLink } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
@@ -18,7 +18,7 @@ const Subscribe = ({ title, text }) => {
     <PublicNav
       right={
         <>
-          <Hidden smDown>
+          <Hidden mdDown>
             <Typography variant="body2" color="white">
               Already have an account?{' '}
             </Typography>
@@ -58,7 +58,7 @@ const Subscribe = ({ title, text }) => {
         </Box>
       </Container>
     </PublicNav>
-  )
+  );
 }
 
 export default Subscribe

@@ -8,7 +8,7 @@ import {
   Typography,
   Hidden,
   Divider,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
@@ -242,7 +242,7 @@ const EditAppearance = () => {
                 </Grid>
               </Box>
             </Grid>
-            <Hidden mdDown>
+            <Hidden lgDown>
               <Grid item md={5}>
                 <PreviewLayout>
                   <Grid container justifyContent="center">
@@ -273,7 +273,7 @@ const EditAppearance = () => {
         )}
       </EditBar>
     </AdminNav>
-  )
+  );
 }
 
 export default EditAppearance

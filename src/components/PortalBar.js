@@ -1,17 +1,10 @@
 import React from 'react'
-import {
-  makeStyles,
-  Tabs,
-  Tab,
-  Box,
-  Grid,
-  Typography,
-  Paper,
-} from '@material-ui/core'
+import { Tabs, Tab, Box, Grid, Typography, Paper } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import theme from 'theme'
-import { MovieFilter, Palette } from '@material-ui/icons'
+import { MovieFilter, Palette } from '@mui/icons-material'
 
 const drawerWidth = 70
 

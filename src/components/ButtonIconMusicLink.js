@@ -6,7 +6,7 @@ import {
   faYoutube,
   faApple,
 } from '@fortawesome/free-brands-svg-icons'
-import { Button, styled } from '@material-ui/core'
+import { Button, styled } from '@mui/material'
 
 const MusicButton = styled(({ children, style, link, ...props }) => {
   return (

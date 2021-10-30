@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextField, Grid, Box, Typography } from '@material-ui/core'
+import { TextField, Grid, Box, Typography } from '@mui/material'
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'

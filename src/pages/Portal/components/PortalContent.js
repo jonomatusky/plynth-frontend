@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Grid, Typography, Box, Button, Link } from '@material-ui/core'
-import { CameraAlt } from '@material-ui/icons'
+import { Grid, Typography, Box, Button, Link } from '@mui/material'
+import { CameraAlt } from '@mui/icons-material'
 
 const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
   const [imageIsLoaded, setImageIsLoaded] = useState(false)

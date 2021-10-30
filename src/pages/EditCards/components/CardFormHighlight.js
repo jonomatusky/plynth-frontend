@@ -7,7 +7,7 @@ import {
   Box,
   FormControlLabel,
   Switch,
-} from '@material-ui/core'
+} from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -18,7 +18,7 @@ import {
   FormatAlignCenter,
   FormatAlignLeft,
   FormatAlignRight,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import useUserStore from 'hooks/store/use-user-store'
 
 const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
@@ -127,7 +127,7 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                         : 'default'
                     }
                     onClick={() => handleTextAlign('left')}
-                  >
+                    size="large">
                     <FormatAlignLeft />
                   </IconButton>
                 </Grid>
@@ -135,7 +135,7 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                   <IconButton
                     color={card.textAlign === 'center' ? 'primary' : 'default'}
                     onClick={() => handleTextAlign('center')}
-                  >
+                    size="large">
                     <FormatAlignCenter />
                   </IconButton>
                 </Grid>
@@ -143,7 +143,7 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                   <IconButton
                     color={card.textAlign === 'right' ? 'primary' : 'default'}
                     onClick={() => handleTextAlign('right')}
-                  >
+                    size="large">
                     <FormatAlignRight />
                   </IconButton>
                 </Grid>
@@ -223,7 +223,7 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
         </form>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 export default CardFormHighlight

@@ -9,8 +9,8 @@ import {
   IconButton,
   Hidden,
   Tooltip,
-} from '@material-ui/core'
-import { Edit, Public, Visibility, Link as LinkIcon } from '@material-ui/icons'
+} from '@mui/material'
+import { Edit, Public, Visibility, Link as LinkIcon } from '@mui/icons-material'
 
 import CopyToClipboard from 'react-copy-to-clipboard'
 
@@ -77,9 +77,7 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                           title="Copied to clipboard!"
                           color="secondary"
                         >
-                          <IconButton
-                            disabled={!pack.shareWithLink || !pack.isPublic}
-                          >
+                          <IconButton disabled={!pack.shareWithLink || !pack.isPublic} size="large">
                             <LinkIcon aria-label="copy" />
                           </IconButton>
                         </Tooltip>
@@ -89,7 +87,7 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                 </Grid>
               </Box>
 
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Box flexBasis={0} minWidth="80px">
                   <Grid container justifyContent="center">
                     <Grid item xs={12}>
@@ -99,10 +97,7 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                     </Grid>
                     <Grid item xs={12}>
                       <Box textAlign="center" minWidth={48}>
-                        <IconButton
-                          component={Link}
-                          to={`/admin/packs/${pack.id}/edit/cards`}
-                        >
+                        <IconButton component={Link} to={`/admin/packs/${pack.id}/edit/cards`} size="large">
                           <Edit aria-label="edit" />
                         </IconButton>
                       </Box>
@@ -122,7 +117,7 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                     </Grid>
                     <Grid item xs={12}>
                       <Box textAlign="center" minWidth={48}>
-                        <IconButton onClick={onSelectPack}>
+                        <IconButton onClick={onSelectPack} size="large">
                           {isSelected && (
                             <Visibility aria-label="view" color="primary" />
                           )}
@@ -138,7 +133,7 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
         </Grid>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default PackListItem

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Grid,
   Box,
@@ -12,9 +13,9 @@ import {
   Hidden,
   IconButton,
   Link as MuiLink,
-} from '@material-ui/core'
-import { Portrait } from '@material-ui/icons'
-// import { Person, HelpOutline } from '@material-ui/icons'
+} from '@mui/material'
+import { Portrait } from '@mui/icons-material'
+// import { Person, HelpOutline } from '@mui/icons-material'
 
 import { useFetch } from 'hooks/use-fetch'
 import { useSession } from 'hooks/use-session'
@@ -137,114 +138,109 @@ const AdminNav = ({ children }) => {
     }
   })
 
-  return (
-    <>
-      {(status === 'idle' || status === 'loading') && (
-        <LoadingScreen backgroundColor={'theme.palette.background.card'} />
-      )}
-      {(status === 'succeeded' || status === 'failed') && (
-        <>
-          <Onboarding
-            setIsOpen={onboardingIsOpen}
-            onClose={handleCloseOnboarding}
-          />
-          <Hidden smDown>
-            <div className={classes.root}>
-              <Drawer
-                className={classes.drawer}
-                variant="permanent"
-                classes={{
-                  paper: classes.drawerPaper,
-                }}
-                anchor="left"
+  return <>
+    {(status === 'idle' || status === 'loading') && (
+      <LoadingScreen backgroundColor={'theme.palette.background.card'} />
+    )}
+    {(status === 'succeeded' || status === 'failed') && (
+      <>
+        <Onboarding
+          setIsOpen={onboardingIsOpen}
+          onClose={handleCloseOnboarding}
+        />
+        <Hidden mdDown>
+          <div className={classes.root}>
+            <Drawer
+              className={classes.drawer}
+              variant="permanent"
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              anchor="left"
+            >
+              {/* <div className={classes.toolbar} /> */}
+              <Grid
+                container
+                direction="column"
+                justifyContent="space-between"
+                alignItems="center"
+                style={{ height: '100%' }}
               >
-                {/* <div className={classes.toolbar} /> */}
-                <Grid
-                  container
-                  direction="column"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  style={{ height: '100%' }}
-                >
-                  <Grid item>
-                    <Box width={25} pt={2}>
-                      <Link to="/admin">
-                        <img
-                          src={logo}
-                          alt="logo"
-                          style={{ maxWidth: '100%' }}
-                        />
-                      </Link>
-                    </Box>
-                  </Grid>
-                  <Grid item container justifyContent="center">
-                    <Grid item xs={12} container justifyContent="center">
-                      <Grid item>
-                        <Box paddingBottom={2}>
-                          <IconButton
-                            onClick={handleOpen}
-                            onMouseOver={handleOpen}
+                <Grid item>
+                  <Box width={25} pt={2}>
+                    <Link to="/admin">
+                      <img
+                        src={logo}
+                        alt="logo"
+                        style={{ maxWidth: '100%' }}
+                      />
+                    </Link>
+                  </Box>
+                </Grid>
+                <Grid item container justifyContent="center">
+                  <Grid item xs={12} container justifyContent="center">
+                    <Grid item>
+                      <Box paddingBottom={2}>
+                        <IconButton onClick={handleOpen} onMouseOver={handleOpen} size="large">
+                          <Portrait fontSize="large" />
+                        </IconButton>
+                        <Menu
+                          id="simple-menu"
+                          anchorEl={anchorEl}
+                          open={Boolean(anchorEl)}
+                          transitionDuration={0}
+                          anchorOrigin={{
+                            horizontal: 'right',
+                            vertical: 'top',
+                          }}
+                          anchorPosition={{ left: 0, top: -20 }}
+                          onClose={handleClose}
+                          MenuListProps={{ onMouseLeave: handleClose }}
+                        >
+                          {user.admin && (
+                            <MenuItem component={Link} to="/admin/super">
+                              🦸🏾‍♀️ Super Admin
+                            </MenuItem>
+                          )}
+                          <MenuItem component={Link} to="/admin/account">
+                            My Account
+                          </MenuItem>
+                          <MenuItem onClick={openOnboarding}>
+                            Show Onboarding
+                          </MenuItem>
+                          <MenuItem
+                            component={MuiLink}
+                            href="https://help.plynth.com"
+                            target="_blank"
                           >
-                            <Portrait fontSize="large" />
-                          </IconButton>
-                          <Menu
-                            id="simple-menu"
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            transitionDuration={0}
-                            anchorOrigin={{
-                              horizontal: 'right',
-                              vertical: 'top',
-                            }}
-                            anchorPosition={{ left: 0, top: -20 }}
-                            onClose={handleClose}
-                            MenuListProps={{ onMouseLeave: handleClose }}
-                          >
-                            {user.admin && (
-                              <MenuItem component={Link} to="/admin/super">
-                                🦸🏾‍♀️ Super Admin
-                              </MenuItem>
-                            )}
-                            <MenuItem component={Link} to="/admin/account">
-                              My Account
-                            </MenuItem>
-                            <MenuItem onClick={openOnboarding}>
-                              Show Onboarding
-                            </MenuItem>
-                            <MenuItem
-                              component={MuiLink}
-                              href="https://help.plynth.com"
-                              target="_blank"
-                            >
-                              Get Help
-                            </MenuItem>
-                            <Divider />
-                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                          </Menu>
-                        </Box>
-                      </Grid>
+                            Get Help
+                          </MenuItem>
+                          <Divider />
+                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                        </Menu>
+                      </Box>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Drawer>
-              <main className={classes.content}>
-                {status === 'failed' && (
-                  <SomethingWentWrong
-                    backgroundColor={theme.palette.background.default}
-                    fontColor={'#555555'}
-                  />
-                )}
-                {status === 'succeeded' && children}
-              </main>
-            </div>
-          </Hidden>
-          <Hidden smUp>
-            <main className={classes.content}>{children}</main>
-          </Hidden>
-        </>
-      )}
-    </>
-  )
+              </Grid>
+            </Drawer>
+            <main className={classes.content}>
+              {status === 'failed' && (
+                <SomethingWentWrong
+                  backgroundColor={theme.palette.background.default}
+                  fontColor={'#555555'}
+                />
+              )}
+              {status === 'succeeded' && children}
+            </main>
+          </div>
+        </Hidden>
+        <Hidden smUp>
+          <main className={classes.content}>{children}</main>
+        </Hidden>
+      </>
+    )}
+  </>;
 }
 
 export default AdminNav

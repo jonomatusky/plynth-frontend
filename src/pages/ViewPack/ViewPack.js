@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { Container, Hidden } from '@material-ui/core'
+import { Container, Hidden } from '@mui/material'
 
 import { useRequest } from 'hooks/use-request'
 import PackContent from 'components/PackContent'
@@ -48,47 +48,45 @@ const ViewPack = () => {
     }
   }, [packId, request, status])
 
-  return (
-    <>
-      {' '}
-      {(status === 'idle' || status === 'loading') && <LoadingScreen />}
-      {status === 'failed' && <NotFound />}
-      {status === 'succeeded' && !pack && <NotFound />}
-      {status === 'succeeded' &&
-        (!(pack || {}).isPublic || !(pack || {}).shareWithLink) && <NotFound />}
-      {status === 'succeeded' && pack && pack.isPublic && pack.shareWithLink && (
-        <>
-          <PaginationDots
-            count={(cards || []).length}
+  return <>
+    {' '}
+    {(status === 'idle' || status === 'loading') && <LoadingScreen />}
+    {status === 'failed' && <NotFound />}
+    {status === 'succeeded' && !pack && <NotFound />}
+    {status === 'succeeded' &&
+      (!(pack || {}).isPublic || !(pack || {}).shareWithLink) && <NotFound />}
+    {status === 'succeeded' && pack && pack.isPublic && pack.shareWithLink && (
+      <>
+        <PaginationDots
+          count={(cards || []).length}
+          index={index}
+          setIndex={setIndex}
+          color={fontColor}
+        />
+        <Container disableGutters maxWidth={false}>
+          <PackContent pack={pack} index={index} setIndex={setIndex} />
+        </Container>
+        <Hidden mdDown>
+          <PackButtonsDesktop
             index={index}
+            lastIndex={(cards || []).length - 1}
             setIndex={setIndex}
-            color={fontColor}
+            fontColor={fontColor}
           />
-          <Container disableGutters maxWidth={false}>
-            <PackContent pack={pack} index={index} setIndex={setIndex} />
-          </Container>
-          <Hidden smDown>
-            <PackButtonsDesktop
+        </Hidden>
+        <Hidden smUp>
+          {!(cards[index] || {}).hideButtons && (
+            <PackButtonsMobile
               index={index}
-              lastIndex={(cards || []).length - 1}
               setIndex={setIndex}
-              fontColor={fontColor}
+              lastIndex={(cards || []).length - 1}
+              fontColor={(style || {}).fontColor}
             />
-          </Hidden>
-          <Hidden smUp>
-            {!(cards[index] || {}).hideButtons && (
-              <PackButtonsMobile
-                index={index}
-                setIndex={setIndex}
-                lastIndex={(cards || []).length - 1}
-                fontColor={(style || {}).fontColor}
-              />
-            )}
-          </Hidden>
-        </>
-      )}
-    </>
-  )
+          )}
+        </Hidden>
+      </>
+    )}
+  </>;
 }
 
 export default ViewPack

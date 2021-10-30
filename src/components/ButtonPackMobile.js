@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { Button, makeStyles } from '@material-ui/core'
-import { ArrowForward, ArrowBack } from '@material-ui/icons'
+import { Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ArrowForward, ArrowBack } from '@mui/icons-material'
 import theme from 'theme'
 
 const useStyles = makeStyles({

@@ -1,6 +1,6 @@
 import React from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import { Grid, Hidden, Box } from '@material-ui/core'
+import { Grid, Hidden, Box } from '@mui/material'
 
 import CardText from './CardText'
 import CardVideo from './CardVideo'
@@ -56,7 +56,7 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
             <Grid container justifyContent="center">
               <Grid item {...gridProps}>
                 {!preview && (
-                  <Hidden mdDown>
+                  <Hidden lgDown>
                     <Box height="30px" />
                   </Hidden>
                 )}
@@ -95,10 +95,10 @@ const PackContent = ({ preview, pack, index, setIndex }) => {
               </Grid>
             </Grid>
           </div>
-        )
+        );
       })}
     </SwipeableViews>
-  )
+  );
 }
 
 export default PackContent

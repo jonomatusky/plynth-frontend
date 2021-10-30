@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import Div100vh from 'components/Div100vh'
 import ScanWindow from './ScanWindow'
 

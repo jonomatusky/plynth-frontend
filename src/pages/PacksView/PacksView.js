@@ -13,8 +13,8 @@ import {
   Button,
   Card,
   CardContent,
-} from '@material-ui/core'
-import { Add, ArrowForwardIos, Person } from '@material-ui/icons'
+} from '@mui/material'
+import { Add, ArrowForwardIos, Person } from '@mui/icons-material'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
@@ -103,7 +103,7 @@ const PacksView = () => {
                         <Grid item xs={false} sm={1}></Grid>
                         {/* <Grid item xs={false} sm={1} /> */}
                         <Grid item xs={11} sm={9}>
-                          <Hidden smDown>
+                          <Hidden mdDown>
                             <Box mb={1} mt={1}>
                               <Button
                                 variant="contained"
@@ -118,7 +118,7 @@ const PacksView = () => {
                             </Box>
                           </Hidden>
                           <Hidden smUp>
-                            <IconButton onClick={handleOpen}>
+                            <IconButton onClick={handleOpen} size="large">
                               <Person />
                             </IconButton>
 
@@ -142,7 +142,7 @@ const PacksView = () => {
 
                       {status === 'succeeded' && (packs || []).length === 0 && (
                         <Grid item xs={11} sm={9}>
-                          <Hidden smDown>
+                          <Hidden mdDown>
                             <Typography align="center">
                               You don't have any packs yet! Create a new one to
                               get started <Emoji symbol="👆" label="up" />
@@ -215,7 +215,7 @@ const PacksView = () => {
                                 />
                               </Grid>
                               <Grid item xs={false} sm={1}>
-                                <Hidden mdDown>
+                                <Hidden lgDown>
                                   <Box textAlign="center">
                                     {index === selectedPackIndex && (
                                       <ArrowForwardIos color="disabled" />
@@ -224,7 +224,7 @@ const PacksView = () => {
                                 </Hidden>
                               </Grid>
                             </Grid>
-                          )
+                          );
                         })}
                         <Grid item xs={12}>
                           <Box height="20px" />
@@ -234,7 +234,7 @@ const PacksView = () => {
                   </Grid>
                 </Box>
               </Grid>
-              <Hidden mdDown>
+              <Hidden lgDown>
                 <Grid item md={5}>
                   <PreviewLayout>
                     <Grid container justifyContent="center" spacing={3}>
@@ -254,7 +254,7 @@ const PacksView = () => {
         </Box>
       </BarAccount>
     </AdminNav>
-  )
+  );
 }
 
 export default PacksView

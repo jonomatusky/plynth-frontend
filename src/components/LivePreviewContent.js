@@ -8,7 +8,7 @@ import CardHighlight from './CardHighlight'
 import CardMusic from './CardMusic'
 import CardImage from './CardImage'
 import CardButtons from './CardButtons'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 
 const LivePreviewContent = ({ pack, index, setIndex, height }) => {
   const cards = (pack || {}).cards

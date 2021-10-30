@@ -9,7 +9,7 @@ import {
   Hidden,
   Switch,
   Button,
-} from '@material-ui/core'
+} from '@mui/material'
 // import QRCode from 'qrcode.react'
 
 import usePackStore from 'hooks/store/use-pack-store'
@@ -22,7 +22,7 @@ import PieceImage from './components/PieceImage'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 import DownloadQR from 'components/DownloadQr'
-import { GetApp } from '@material-ui/icons'
+import { GetApp } from '@mui/icons-material'
 import useUserStore from 'hooks/store/use-user-store'
 import PreviewLayout from 'layouts/PreviewLayout'
 
@@ -269,7 +269,7 @@ const EditAccess = () => {
                 </Grid>
               </Box>
             </Grid>
-            <Hidden mdDown>
+            <Hidden lgDown>
               <Grid item md={5}>
                 <PreviewLayout>
                   <Grid container justifyContent="center">
@@ -300,7 +300,7 @@ const EditAccess = () => {
         )}
       </EditBar>
     </AdminNav>
-  )
+  );
 }
 
 export default EditAccess

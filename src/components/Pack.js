@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Container, Hidden } from '@material-ui/core'
+import { Container, Hidden } from '@mui/material'
 import PackButtonsDesktop from './PackButtonsDesktop'
 import PackButtonsMobile from './PackButtonsMobile'
 import PackContent from './PackContent'
@@ -32,37 +32,35 @@ const Pack = ({ pack }) => {
     posthog.capture('$pageview')
   }, [index, cards, pack.id])
 
-  return (
-    <>
-      <PaginationDots
-        count={(cards || []).length}
+  return <>
+    <PaginationDots
+      count={(cards || []).length}
+      index={index}
+      setIndex={setIndex}
+      color={fontColor}
+    />
+    <Container disableGutters maxWidth={false}>
+      <PackContent pack={pack} index={index} setIndex={setIndex} />
+    </Container>
+    <Hidden mdDown>
+      <PackButtonsDesktop
         index={index}
+        lastIndex={(cards || []).length - 1}
         setIndex={setIndex}
-        color={fontColor}
+        fontColor={fontColor}
       />
-      <Container disableGutters maxWidth={false}>
-        <PackContent pack={pack} index={index} setIndex={setIndex} />
-      </Container>
-      <Hidden smDown>
-        <PackButtonsDesktop
+    </Hidden>
+    <Hidden smUp>
+      {!(cards[index] || {}).hideButtons && (
+        <PackButtonsMobile
           index={index}
-          lastIndex={(cards || []).length - 1}
           setIndex={setIndex}
-          fontColor={fontColor}
+          lastIndex={(cards || []).length - 1}
+          fontColor={(style || {}).fontColor}
         />
-      </Hidden>
-      <Hidden smUp>
-        {!(cards[index] || {}).hideButtons && (
-          <PackButtonsMobile
-            index={index}
-            setIndex={setIndex}
-            lastIndex={(cards || []).length - 1}
-            fontColor={(style || {}).fontColor}
-          />
-        )}
-      </Hidden>
-    </>
-  )
+      )}
+    </Hidden>
+  </>;
 }
 
 export default Pack

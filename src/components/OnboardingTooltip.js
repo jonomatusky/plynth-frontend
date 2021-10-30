@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Tooltip, Typography } from '@material-ui/core'
-// import { Close } from '@material-ui/icons'
+import { Box, Tooltip, Typography } from '@mui/material'
+// import { Close } from '@mui/icons-material'
 
 const OnboardingTooltip = ({ open, onClose, children, title, ...props }) => {
   return (

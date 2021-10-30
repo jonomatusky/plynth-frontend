@@ -1,5 +1,6 @@
 import React from 'react'
-import { Grid, Box, Typography, makeStyles } from '@material-ui/core'
+import { Grid, Box, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import ButtonSquareIconLink from './ButtonSquareIconLink'
 
 const useStyles = makeStyles({

@@ -5,7 +5,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from '@material-ui/core'
+} from '@mui/material'
 import ActionButton from './ActionButton'
 
 const NotificationModal = ({

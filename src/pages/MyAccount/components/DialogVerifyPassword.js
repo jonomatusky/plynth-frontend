@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogContentText,
   TextField,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import firebase from 'config/firebase'
 import useAlertStore from 'hooks/store/use-alert-store'

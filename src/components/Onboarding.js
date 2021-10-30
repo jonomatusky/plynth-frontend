@@ -6,10 +6,10 @@ import {
   DialogContent,
   Grid,
   Typography,
-} from '@material-ui/core'
+} from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import Image from './Image'
-import { ArrowBackIos, ArrowForwardIos, Check } from '@material-ui/icons'
+import { ArrowBackIos, ArrowForwardIos, Check } from '@mui/icons-material'
 import contentful from 'config/contentful'
 import SwipeableViews from 'react-swipeable-views'
 

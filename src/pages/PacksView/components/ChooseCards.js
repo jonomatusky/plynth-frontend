@@ -7,8 +7,8 @@ import {
   Grid,
   Typography,
   Button as MuiButton,
-} from '@material-ui/core'
-import { ArrowForward, Close } from '@material-ui/icons'
+} from '@mui/material'
+import { ArrowForward, Close } from '@mui/icons-material'
 
 import { cardTypes } from 'pages/EditCards/components/CardCard'
 import CardCard from 'pages/EditCards/components/CardCard'

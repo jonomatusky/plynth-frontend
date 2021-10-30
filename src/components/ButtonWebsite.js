@@ -3,7 +3,7 @@ const {
   CircularProgress,
   Typography,
   Box,
-} = require('@material-ui/core')
+} = require('@mui/material')
 
 const ButtonWebsite = ({
   children,

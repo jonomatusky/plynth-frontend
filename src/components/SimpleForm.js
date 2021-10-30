@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Grid, Box, Button, Typography } from '@material-ui/core'
+import { Grid, Box, Button, Typography } from '@mui/material'
 import { Formik, Form } from 'formik'
 import ButtonCardLoading from './ButtonCardLoading'
 
@@ -28,7 +28,7 @@ const SimpleForm = ({
       <Grid
         container
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         style={{ height: '100%' }}
       >
         {confirmationMessage && (
@@ -49,7 +49,7 @@ const SimpleForm = ({
           </Grid>
         )}
       </Grid>
-    )
+    );
   } else {
     return (
       <Formik

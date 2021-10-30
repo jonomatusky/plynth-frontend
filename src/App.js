@@ -41,7 +41,6 @@ import OnTheWaitlist from 'pages/OnTheWaitlist/OnTheWaitlist'
 import Recover from 'pages/Recover/Recover'
 import Help from 'pages/Help/Help'
 import Subscribe from 'pages/Subscribe/Subscribe'
-import LandingAR from 'pages/LandingAR/LandingAR'
 import Waitlist from 'pages/Waitlist/Waitlist'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
@@ -80,10 +79,6 @@ const App = () => {
         <Register />
       </Route>
 
-      <Route path="/ar" exact>
-        <LandingAR trying={true} />
-      </Route>
-
       <Redirect path="/signup" exact to="/register" />
 
       <Route
@@ -100,9 +95,6 @@ const App = () => {
       </Route>
       <Route path="/s/help">
         <Help />
-      </Route>
-      <Route path="/s/ar" exact>
-        <LandingAR />
       </Route>
 
       <Route path="/s/invite-code" exact>

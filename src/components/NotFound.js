@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Container, Grid, Typography, Link, Box } from '@material-ui/core'
+import { Container, Grid, Typography, Link, Box } from '@mui/material'
 
 const NotFound = ({ fontColor }) => {
   useEffect(() => {
@@ -13,7 +13,7 @@ const NotFound = ({ fontColor }) => {
         container
         direction="column"
         align="center"
-        justify="center"
+        justifyContent="center"
         wrap="nowrap"
         spacing={1}
       >
@@ -39,7 +39,7 @@ const NotFound = ({ fontColor }) => {
         </Grid>
       </Grid>
     </Container>
-  )
+  );
 }
 
 export default NotFound

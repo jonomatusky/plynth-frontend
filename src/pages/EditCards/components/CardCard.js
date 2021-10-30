@@ -1,13 +1,6 @@
 import React, { useState } from 'react'
-import {
-  Grid,
-  Box,
-  Card,
-  CardContent,
-  CardActionArea,
-  Typography,
-  makeStyles,
-} from '@material-ui/core'
+import { Grid, Box, Card, CardContent, CardActionArea, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import theme from 'theme'
 import {
   GetApp,
@@ -17,7 +10,7 @@ import {
   Headset,
   Photo,
   Link,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 export const cardTypes = [
   {

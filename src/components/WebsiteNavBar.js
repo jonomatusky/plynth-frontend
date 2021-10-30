@@ -12,8 +12,8 @@ import {
   Menu,
   MenuItem,
   IconButton,
-} from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
+} from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
 
 import { HashLink } from 'react-router-hash-link'
 import plynthLogoWhite from 'images/plynth_logo_white.svg'
@@ -53,19 +53,19 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
       <Toolbar>
         <Grid
           container
-          justify="space-between"
+          justifyContent="space-between"
           alignItems="center"
           alignContent="center"
         >
           {left}
           <Box flexGrow={1}>
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
               <Grid item>
                 <HashLink smooth to="/">
                   <Grid
                     container
                     direction="column"
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center"
                   >
                     <StyledLogo
@@ -102,7 +102,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                       aria-haspopup="true"
                       onClick={handleClick}
                       color="inherit"
-                    >
+                      size="large">
                       <MenuIcon />
                     </IconButton>
                     <Menu
@@ -125,7 +125,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                     </Menu>
                   </Hidden>
 
-                  <Hidden mdDown>
+                  <Hidden lgDown>
                     <Box display="flex">
                       <Box mr={1}>
                         <MuiButton
@@ -158,7 +158,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
         </Grid>
       </Toolbar>
     </AppBar>
-  )
+  );
 }
 
 export default WebsiteNavBar

@@ -1,14 +1,8 @@
 import React from 'react'
-import {
-  Grid,
-  Box,
-  Typography,
-  makeStyles,
-  styled,
-  useMediaQuery,
-} from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
-import { Photo, ArrowForward } from '@material-ui/icons'
+import { Grid, Box, Typography, styled, useMediaQuery } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from '@mui/material/styles'
+import { Photo, ArrowForward } from '@mui/icons-material'
 
 import ButtonCard from './ButtonCard'
 import TextTypography from './TextTypography'
@@ -41,7 +35,7 @@ const Image = styled('img')(props => ({
 const CardImage = ({ card, style, increment, preview }) => {
   const classes = useStyles(style)
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const { image, imageUrl, title, url, text, label, isFullscreenMobile } =
     card || {}
 

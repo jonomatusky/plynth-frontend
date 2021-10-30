@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Container, Box, Grid, Typography } from '@material-ui/core'
+import { Link, Container, Box, Grid, Typography } from '@mui/material'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
 import firebase from 'config/firebase'

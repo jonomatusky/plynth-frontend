@@ -1,5 +1,5 @@
 import React from 'react-hook-form'
-import { Box, CircularProgress } from '@material-ui/core'
+import { Box, CircularProgress } from '@mui/material'
 
 import Div100vh from 'components/Div100vh'
 

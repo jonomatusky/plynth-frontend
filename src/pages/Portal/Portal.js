@@ -9,7 +9,7 @@ import useScanStore from 'hooks/store/use-scan-store'
 import PortalContent from './components/PortalContent'
 import PortalCamera from 'pages/PortalOpen/components/PortalCamera'
 import Div100vh from 'components/Div100vh'
-import { Box, Grid, Link, Typography } from '@material-ui/core'
+import { Box, Grid, Link, Typography } from '@mui/material'
 
 const Portal = () => {
   const { clearScan } = useScanStore()
