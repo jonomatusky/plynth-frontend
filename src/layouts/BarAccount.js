@@ -68,12 +68,7 @@ const BarAccount = ({ children }) => {
         <div style={{ width: '100%' }}>
           <Grid container>
             <Grid item sm={12} md={7}>
-              <Tabs
-                value={value}
-                indicatorColor="primary"
-                textColor="primary"
-                // onChange={handleChange}
-              >
+              <Tabs value={value} indicatorColor="primary" textColor="primary">
                 <Tab
                   label={
                     <Typography>

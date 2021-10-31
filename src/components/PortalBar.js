@@ -130,7 +130,7 @@ const PortalBar = () => {
               size="small"
               endIcon={<Check />}
               onClick={handleSave}
-              pending={isSaving}
+              loading={isSaving}
               disableElevation
               component={Link}
               to="/admin"

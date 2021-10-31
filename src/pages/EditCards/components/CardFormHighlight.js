@@ -127,7 +127,8 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                         : 'default'
                     }
                     onClick={() => handleTextAlign('left')}
-                    size="large">
+                    size="large"
+                  >
                     <FormatAlignLeft />
                   </IconButton>
                 </Grid>
@@ -135,7 +136,8 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                   <IconButton
                     color={card.textAlign === 'center' ? 'primary' : 'default'}
                     onClick={() => handleTextAlign('center')}
-                    size="large">
+                    size="large"
+                  >
                     <FormatAlignCenter />
                   </IconButton>
                 </Grid>
@@ -143,7 +145,8 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                   <IconButton
                     color={card.textAlign === 'right' ? 'primary' : 'default'}
                     onClick={() => handleTextAlign('right')}
-                    size="large">
+                    size="large"
+                  >
                     <FormatAlignRight />
                   </IconButton>
                 </Grid>
@@ -212,7 +215,7 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  pending={pending}
+                  loading={pending}
                   size="large"
                 >
                   Save Card
@@ -223,7 +226,7 @@ const CardFormHighlight = ({ card, onSubmit, pending, onRemove }) => {
         </form>
       </Grid>
     </Grid>
-  );
+  )
 }
 
 export default CardFormHighlight

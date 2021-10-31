@@ -1,13 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
-import {
-  Grid,
-  AppBar,
-  Toolbar,
-  Slider,
-  CircularProgress,
-} from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles';
+import { Grid, AppBar, Toolbar, Slider, CircularProgress } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 
 import { useRequest } from 'hooks/use-request'
 import { useImageResize } from 'hooks/use-image-upload'
@@ -105,7 +99,7 @@ const ImageCropper = ({ imageSrc, resolution, onSubmit, onCancel, round }) => {
                 </Button>
               </Grid>
               <Grid item>
-                <Button onClick={submitHandler} pending={status === 'loading'}>
+                <Button onClick={submitHandler} loading={status === 'loading'}>
                   Accept
                 </Button>
               </Grid>

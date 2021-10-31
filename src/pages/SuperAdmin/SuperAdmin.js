@@ -66,7 +66,12 @@ const SuperAdmin = () => {
       <Grid container>
         <Grid item>
           <Box margin={2}>
-            <IconButton component={Link} to="/admin" color="secondary" size="large">
+            <IconButton
+              component={Link}
+              to="/admin"
+              color="secondary"
+              size="large"
+            >
               <ArrowBackIos />
             </IconButton>
           </Box>
@@ -130,7 +135,7 @@ const SuperAdmin = () => {
                                       size="medium"
                                       fullWidth
                                       sx={{ height: '38px' }}
-                                      pending={isLoading}
+                                      loading={isLoading}
                                     >
                                       <Typography
                                         letterSpacing={1}
@@ -181,7 +186,7 @@ const SuperAdmin = () => {
         </Grid>
       </Container>
     </AdminNav>
-  );
+  )
 }
 
 export default SuperAdmin

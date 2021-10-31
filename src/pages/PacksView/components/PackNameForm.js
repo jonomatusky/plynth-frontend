@@ -66,7 +66,7 @@ const PackNameForm = ({ onSubmit, onCancel, name, buttonText, pending }) => {
                 color="primary"
                 size="large"
                 endIcon={<ArrowForward />}
-                pending={pending}
+                loading={pending}
               >
                 <b>{buttonText || 'Submit'}</b>
               </Button>

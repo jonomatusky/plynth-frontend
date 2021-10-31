@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  TextField,
-  Grid,
-  Box,
-  FormControlLabel,
-  Switch,
-} from '@mui/material'
+import { TextField, Grid, Box, FormControlLabel, Switch } from '@mui/material'
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -115,7 +109,7 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                pending={pending}
+                loading={pending}
                 size="large"
               >
                 Save Card

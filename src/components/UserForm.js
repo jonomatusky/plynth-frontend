@@ -105,7 +105,7 @@ const UserForm = ({ user, onSubmit, pending, submitLabel }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Button fullWidth type="submit" size="large" pending={pending}>
+          <Button fullWidth type="submit" size="large" loading={pending}>
             {submitLabel || `Save & Close`}
           </Button>
         </Grid>
