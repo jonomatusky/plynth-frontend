@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Box, Typography, Button, Hidden } from '@mui/material'
+import { Container, Box, Typography, Button } from '@mui/material'
 
 import { Link as RouterLink } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
@@ -10,11 +10,13 @@ const Waitlist = () => {
     <PublicNav
       right={
         <>
-          <Hidden mdDown>
-            <Typography variant="body2" color="white">
-              Already have an account?{' '}
-            </Typography>
-          </Hidden>
+          <Typography
+            variant="body2"
+            color="white"
+            sx={{ display: { xs: 'none', md: 'block' } }}
+          >
+            Already have an account?{' '}
+          </Typography>
           <Button
             color="secondary"
             component={RouterLink}
@@ -41,7 +43,7 @@ const Waitlist = () => {
         </Box>
       </Container>
     </PublicNav>
-  );
+  )
 }
 
 export default Waitlist

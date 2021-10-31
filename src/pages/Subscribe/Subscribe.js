@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Container,
-  Box,
-  Typography,
-  Button,
-  Hidden,
-  Grid,
-} from '@mui/material'
+import { Container, Box, Typography, Button, Grid } from '@mui/material'
 
 import { Link as RouterLink } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
@@ -18,11 +11,13 @@ const Subscribe = ({ title, text }) => {
     <PublicNav
       right={
         <>
-          <Hidden mdDown>
-            <Typography variant="body2" color="white">
-              Already have an account?{' '}
-            </Typography>
-          </Hidden>
+          <Typography
+            variant="body2"
+            color="white"
+            sx={{ display: { xs: 'none', md: 'block' } }}
+          >
+            Already have an account?{' '}
+          </Typography>
           <Button
             color="secondary"
             component={RouterLink}
@@ -58,7 +53,7 @@ const Subscribe = ({ title, text }) => {
         </Box>
       </Container>
     </PublicNav>
-  );
+  )
 }
 
 export default Subscribe

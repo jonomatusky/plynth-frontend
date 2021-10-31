@@ -7,7 +7,6 @@ import {
   Button,
   Divider,
   Link,
-  Hidden,
 } from '@mui/material'
 import * as yup from 'yup'
 
@@ -214,11 +213,13 @@ const SignUpWithCode = () => {
       hideFooter
       right={
         <>
-          <Hidden mdDown>
-            <Typography variant="body2" color="white">
-              Already have an account?{' '}
-            </Typography>
-          </Hidden>
+          <Typography
+            variant="body2"
+            color="white"
+            sx={{ display: { xs: 'none', md: 'block' } }}
+          >
+            Already have an account?{' '}
+          </Typography>
           <Button
             color="secondary"
             component={RouterLink}
@@ -417,7 +418,7 @@ const SignUpWithCode = () => {
         </Container>
       )}
     </PublicNav>
-  );
+  )
 }
 
 export default SignUpWithCode

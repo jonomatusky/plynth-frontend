@@ -5,7 +5,6 @@ import {
   CircularProgress,
   Paper,
   Typography,
-  Hidden,
   FormControlLabel,
   Switch,
   Divider,
@@ -282,37 +281,35 @@ const EditPortalAppearance = () => {
                 </Box>
               </Grid>
 
-              <Hidden lgDown>
-                <Grid item md={5}>
-                  <PreviewLayout>
-                    <Grid container justifyContent="center">
-                      <Grid item xs={12} container justifyContent="center">
-                        <LivePreviewPortal
-                          portal={user.portal}
-                          isLoading={updateStatus === 'loading'}
-                        />
-                      </Grid>
-                      <Grid item container xs={12} justifyContent="center">
-                        <Box paddingTop={4}>
-                          {isSpinning && (
-                            <CircularProgress
-                              size="1.25rem"
-                              color="inherit"
-                              thickness={6}
-                            />
-                          )}
-                        </Box>
-                      </Grid>
+              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <PreviewLayout>
+                  <Grid container justifyContent="center">
+                    <Grid item xs={12} container justifyContent="center">
+                      <LivePreviewPortal
+                        portal={user.portal}
+                        isLoading={updateStatus === 'loading'}
+                      />
                     </Grid>
-                  </PreviewLayout>
-                </Grid>
-              </Hidden>
+                    <Grid item container xs={12} justifyContent="center">
+                      <Box paddingTop={4}>
+                        {isSpinning && (
+                          <CircularProgress
+                            size="1.25rem"
+                            color="inherit"
+                            thickness={6}
+                          />
+                        )}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </PreviewLayout>
+              </Grid>
             </Grid>
           </Box>
         )}
       </BarAccount>
     </AdminNav>
-  );
+  )
 }
 
 export default EditPortalAppearance

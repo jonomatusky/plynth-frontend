@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { Container, Hidden } from '@mui/material'
+import { Container, Box } from '@mui/material'
 
 import { useRequest } from 'hooks/use-request'
 import PackContent from 'components/PackContent'
@@ -48,45 +48,47 @@ const ViewPack = () => {
     }
   }, [packId, request, status])
 
-  return <>
-    {' '}
-    {(status === 'idle' || status === 'loading') && <LoadingScreen />}
-    {status === 'failed' && <NotFound />}
-    {status === 'succeeded' && !pack && <NotFound />}
-    {status === 'succeeded' &&
-      (!(pack || {}).isPublic || !(pack || {}).shareWithLink) && <NotFound />}
-    {status === 'succeeded' && pack && pack.isPublic && pack.shareWithLink && (
-      <>
-        <PaginationDots
-          count={(cards || []).length}
-          index={index}
-          setIndex={setIndex}
-          color={fontColor}
-        />
-        <Container disableGutters maxWidth={false}>
-          <PackContent pack={pack} index={index} setIndex={setIndex} />
-        </Container>
-        <Hidden mdDown>
-          <PackButtonsDesktop
+  return (
+    <>
+      {' '}
+      {(status === 'idle' || status === 'loading') && <LoadingScreen />}
+      {status === 'failed' && <NotFound />}
+      {status === 'succeeded' && !pack && <NotFound />}
+      {status === 'succeeded' &&
+        (!(pack || {}).isPublic || !(pack || {}).shareWithLink) && <NotFound />}
+      {status === 'succeeded' && pack && pack.isPublic && pack.shareWithLink && (
+        <>
+          <PaginationDots
+            count={(cards || []).length}
             index={index}
-            lastIndex={(cards || []).length - 1}
             setIndex={setIndex}
-            fontColor={fontColor}
+            color={fontColor}
           />
-        </Hidden>
-        <Hidden smUp>
-          {!(cards[index] || {}).hideButtons && (
-            <PackButtonsMobile
+          <Container disableGutters maxWidth={false}>
+            <PackContent pack={pack} index={index} setIndex={setIndex} />
+          </Container>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <PackButtonsDesktop
               index={index}
-              setIndex={setIndex}
               lastIndex={(cards || []).length - 1}
-              fontColor={(style || {}).fontColor}
+              setIndex={setIndex}
+              fontColor={fontColor}
             />
-          )}
-        </Hidden>
-      </>
-    )}
-  </>;
+          </Box>
+          <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+            {!(cards[index] || {}).hideButtons && (
+              <PackButtonsMobile
+                index={index}
+                setIndex={setIndex}
+                lastIndex={(cards || []).length - 1}
+                fontColor={(style || {}).fontColor}
+              />
+            )}
+          </Box>
+        </>
+      )}
+    </>
+  )
 }
 
 export default ViewPack

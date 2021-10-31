@@ -8,7 +8,6 @@ import {
   Button as MuiButton,
   styled,
   Typography,
-  Hidden,
   Menu,
   MenuItem,
   IconButton,
@@ -59,15 +58,10 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
         >
           {left}
           <Box flexGrow={1}>
-            <Grid container justifyContent="center">
+            <Grid container>
               <Grid item>
                 <HashLink smooth to="/">
-                  <Grid
-                    container
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
+                  <Grid container direction="column" alignItems="center">
                     <StyledLogo
                       opacity={opacity}
                       src={plynthLogoWhite}
@@ -84,7 +78,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
             <>
               {!initializing && (
                 <Box color="white">
-                  <Hidden mdUp>
+                  <Box sx={{ display: { xs: 'block', md: 'none' } }}>
                     <MuiButton
                       variant="contained"
                       component={RouterLink}
@@ -102,7 +96,8 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                       aria-haspopup="true"
                       onClick={handleClick}
                       color="inherit"
-                      size="large">
+                      size="large"
+                    >
                       <MenuIcon />
                     </IconButton>
                     <Menu
@@ -123,34 +118,32 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                         Sign In
                       </MenuItem>
                     </Menu>
-                  </Hidden>
+                  </Box>
 
-                  <Hidden lgDown>
-                    <Box display="flex">
-                      <Box mr={1}>
-                        <MuiButton
-                          component={RouterLink}
-                          to={user ? '/admin' : '/login'}
-                          size="small"
-                          sx={{ textTransform: 'none' }}
-                          color="secondary"
-                        >
-                          <Typography color="#BBBBBB">Sign In</Typography>
-                        </MuiButton>
-                      </Box>
-
+                  <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box mr={1}>
                       <MuiButton
                         component={RouterLink}
-                        to="/s/waitlist"
+                        to={user ? '/admin' : '/login'}
                         size="small"
                         sx={{ textTransform: 'none' }}
+                        color="secondary"
                       >
-                        <Typography>
-                          <b>Sign Up</b>
-                        </Typography>
+                        <Typography color="#BBBBBB">Sign In</Typography>
                       </MuiButton>
                     </Box>
-                  </Hidden>
+
+                    <MuiButton
+                      component={RouterLink}
+                      to="/s/waitlist"
+                      size="small"
+                      sx={{ textTransform: 'none' }}
+                    >
+                      <Typography>
+                        <b>Sign Up</b>
+                      </Typography>
+                    </MuiButton>
+                  </Box>
                 </Box>
               )}
             </>
@@ -158,7 +151,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
         </Grid>
       </Toolbar>
     </AppBar>
-  );
+  )
 }
 
 export default WebsiteNavBar

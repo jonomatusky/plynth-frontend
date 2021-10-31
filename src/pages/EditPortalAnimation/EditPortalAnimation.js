@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Grid,
-  Box,
-  CircularProgress,
-  Paper,
-  Typography,
-  Hidden,
-} from '@mui/material'
+import { Grid, Box, CircularProgress, Paper, Typography } from '@mui/material'
 
 import ButtonColorPicker from 'components/ButtonColorPicker'
 import AdminNav from 'layouts/AdminNav'
@@ -170,37 +163,35 @@ const EditPortalAnimation = () => {
                 </Box>
               </Grid>
 
-              <Hidden lgDown>
-                <Grid item md={5}>
-                  <PreviewLayout>
-                    <Grid container justifyContent="center">
-                      <Grid item xs={12} container justifyContent="center">
-                        <LivePreviewPortalLoading
-                          portal={user.portal}
-                          isLoading={updateStatus === 'loading'}
-                        />
-                      </Grid>
-                      <Grid item container xs={12} justifyContent="center">
-                        <Box paddingTop={4}>
-                          {true && (
-                            <CircularProgress
-                              size="1.25rem"
-                              color="inherit"
-                              thickness={6}
-                            />
-                          )}
-                        </Box>
-                      </Grid>
+              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <PreviewLayout>
+                  <Grid container justifyContent="center">
+                    <Grid item xs={12} container justifyContent="center">
+                      <LivePreviewPortalLoading
+                        portal={user.portal}
+                        isLoading={updateStatus === 'loading'}
+                      />
                     </Grid>
-                  </PreviewLayout>
-                </Grid>
-              </Hidden>
+                    <Grid item container xs={12} justifyContent="center">
+                      <Box paddingTop={4}>
+                        {true && (
+                          <CircularProgress
+                            size="1.25rem"
+                            color="inherit"
+                            thickness={6}
+                          />
+                        )}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </PreviewLayout>
+              </Grid>
             </Grid>
           </Box>
         )}
       </BarAccount>
     </AdminNav>
-  );
+  )
 }
 
 export default EditPortalAnimation

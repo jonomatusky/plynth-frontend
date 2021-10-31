@@ -5,7 +5,6 @@ import {
   Box,
   Grid,
   Typography,
-  Hidden,
   IconButton,
   Menu,
   MenuItem,
@@ -103,21 +102,23 @@ const PacksView = () => {
                         <Grid item xs={false} sm={1}></Grid>
                         {/* <Grid item xs={false} sm={1} /> */}
                         <Grid item xs={11} sm={9}>
-                          <Hidden mdDown>
-                            <Box mb={1} mt={1}>
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                size="large"
-                                onClick={handleClick}
-                                endIcon={<Add />}
-                                fullWidth
-                              >
-                                <b>Create New Pack</b>
-                              </Button>
-                            </Box>
-                          </Hidden>
-                          <Hidden smUp>
+                          <Box
+                            mb={1}
+                            mt={1}
+                            sx={{ display: { xs: 'none', md: 'block' } }}
+                          >
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              size="large"
+                              onClick={handleClick}
+                              endIcon={<Add />}
+                              fullWidth
+                            >
+                              <b>Create New Pack</b>
+                            </Button>
+                          </Box>
+                          <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
                             <IconButton onClick={handleOpen} size="large">
                               <Person />
                             </IconButton>
@@ -135,26 +136,28 @@ const PacksView = () => {
                               <Divider />
                               <MenuItem onClick={handleLogout}>Logout</MenuItem>
                             </Menu>
-                          </Hidden>
+                          </Box>
                         </Grid>
                         <Grid item xs={false} sm={1}></Grid>
                       </Grid>
 
                       {status === 'succeeded' && (packs || []).length === 0 && (
                         <Grid item xs={11} sm={9}>
-                          <Hidden mdDown>
-                            <Typography align="center">
-                              You don't have any packs yet! Create a new one to
-                              get started <Emoji symbol="👆" label="up" />
-                            </Typography>
-                          </Hidden>
-                          <Hidden smUp>
-                            <Typography align="center">
-                              You don't have any packs yet! Switch over to
-                              desktop to start creating{' '}
-                              <Emoji symbol="💻" label="desktop" />
-                            </Typography>
-                          </Hidden>
+                          <Typography
+                            align="center"
+                            sx={{ display: { xs: 'none', md: 'block' } }}
+                          >
+                            You don't have any packs yet! Create a new one to
+                            get started <Emoji symbol="👆" label="up" />
+                          </Typography>
+                          <Typography
+                            align="center"
+                            sx={{ display: { xs: 'block', md: 'none' } }}
+                          >
+                            You don't have any packs yet! Switch over to desktop
+                            to start creating{' '}
+                            <Emoji symbol="💻" label="desktop" />
+                          </Typography>
                         </Grid>
                       )}
                       {newPack && (
@@ -215,16 +218,17 @@ const PacksView = () => {
                                 />
                               </Grid>
                               <Grid item xs={false} sm={1}>
-                                <Hidden lgDown>
-                                  <Box textAlign="center">
-                                    {index === selectedPackIndex && (
-                                      <ArrowForwardIos color="disabled" />
-                                    )}
-                                  </Box>
-                                </Hidden>
+                                <Box
+                                  textAlign="center"
+                                  sx={{ display: { xs: 'none', md: 'block' } }}
+                                >
+                                  {index === selectedPackIndex && (
+                                    <ArrowForwardIos color="disabled" />
+                                  )}
+                                </Box>
                               </Grid>
                             </Grid>
-                          );
+                          )
                         })}
                         <Grid item xs={12}>
                           <Box height="20px" />
@@ -234,27 +238,25 @@ const PacksView = () => {
                   </Grid>
                 </Box>
               </Grid>
-              <Hidden lgDown>
-                <Grid item md={5}>
-                  <PreviewLayout>
-                    <Grid container justifyContent="center" spacing={3}>
-                      <Grid item xs={12} container justifyContent="center">
-                        <Box position="fixed">
-                          {!!selectedPack.id && (
-                            <LivePreview pack={selectedPack} />
-                          )}
-                        </Box>
-                      </Grid>
+              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <PreviewLayout>
+                  <Grid container justifyContent="center" spacing={3}>
+                    <Grid item xs={12} container justifyContent="center">
+                      <Box position="fixed">
+                        {!!selectedPack.id && (
+                          <LivePreview pack={selectedPack} />
+                        )}
+                      </Box>
                     </Grid>
-                  </PreviewLayout>
-                </Grid>
-              </Hidden>
+                  </Grid>
+                </PreviewLayout>
+              </Grid>
             </Grid>
           </Container>
         </Box>
       </BarAccount>
     </AdminNav>
-  );
+  )
 }
 
 export default PacksView

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Tabs, Tab, Box, Grid, Typography, Paper } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Tabs, Tab, Box, Grid, Typography, Paper } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import theme from 'theme'
@@ -88,7 +88,7 @@ const PortalBar = () => {
               />
             </Tabs>
           </Grid>
-          {/* <Hidden mdDown>
+          {/* 
             <Grid item md={5}>
               <Box
                 borderLeft={1}
@@ -118,7 +118,7 @@ const PortalBar = () => {
                 )}
               </Box>
             </Grid>
-          </Hidden> */}
+          */}
         </Grid>
 
         {/* <Box display="flex" flexDirection="row" alignItems="center">

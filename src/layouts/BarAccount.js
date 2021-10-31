@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
-import { AppBar, Divider, Tabs, Tab, Box, Grid, Hidden, Typography, Link } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import {
+  AppBar,
+  Divider,
+  Tabs,
+  Tab,
+  Box,
+  Grid,
+  Typography,
+  Link,
+} from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import theme from 'theme'
@@ -48,11 +57,14 @@ const BarAccount = ({ children }) => {
     portalTooltipIsOpen &&
     value === '/admin/packs'
 
-  console.log(showPortalReminder)
-
-  return <>
-    <Hidden mdDown>
-      <AppBar position="fixed" className={classes.appBar} elevation={0}>
+  return (
+    <>
+      <AppBar
+        position="fixed"
+        className={classes.appBar}
+        elevation={0}
+        sx={{ display: { xs: 'none', md: 'block' } }}
+      >
         <div style={{ width: '100%' }}>
           <Grid container>
             <Grid item sm={12} md={7}>
@@ -95,50 +107,54 @@ const BarAccount = ({ children }) => {
                 />
               </Tabs>
             </Grid>
-            <Hidden lgDown>
-              <Grid item md={5}>
-                <Box
-                  borderLeft={1}
-                  borderColor="divider"
-                  height="100%"
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  pl={2}
-                  pr={2}
-                >
-                  {username && (
-                    <>
-                      <Typography variant="subtitle2">
-                        <b>Your Portal: </b>
-                        <Link
-                          href={portalUrl}
-                          target="_blank"
-                          color="inherit"
-                          underline="always"
-                        >
-                          {portalUrl}
-                        </Link>
-                      </Typography>
-                      <ButtonSharePortal url={portalUrl} />
-                    </>
-                  )}
-                </Box>
-              </Grid>
-            </Hidden>
+
+            <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+              <Box
+                borderLeft={1}
+                borderColor="divider"
+                height="100%"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                pl={2}
+                pr={2}
+              >
+                {username && (
+                  <>
+                    <Typography variant="subtitle2">
+                      <b>Your Portal: </b>
+                      <Link
+                        href={portalUrl}
+                        target="_blank"
+                        color="inherit"
+                        underline="always"
+                      >
+                        {portalUrl}
+                      </Link>
+                    </Typography>
+                    <ButtonSharePortal url={portalUrl} />
+                  </>
+                )}
+              </Box>
+            </Grid>
           </Grid>
         </div>
 
         <Divider />
       </AppBar>
-    </Hidden>
-    <Hidden smUp>{children}</Hidden>
-    <Hidden mdDown>
-      <Box height="calc(100vh-48px)" mt="48px" overflow="hidden">
+
+      <Box sx={{ display: { xs: 'block', md: 'none' } }}>{children}</Box>
+
+      <Box
+        height="calc(100vh-48px)"
+        mt="48px"
+        overflow="hidden"
+        sx={{ display: { xs: 'none', md: 'block' } }}
+      >
         {children}
       </Box>
-    </Hidden>
-  </>;
+    </>
+  )
 }
 
 export default BarAccount
