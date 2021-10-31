@@ -42,6 +42,8 @@ import Recover from 'pages/Recover/Recover'
 import Help from 'pages/Help/Help'
 import Subscribe from 'pages/Subscribe/Subscribe'
 import Waitlist from 'pages/Waitlist/Waitlist'
+import Admin from 'pages/Admin/Admin'
+import Pieces from 'pages/Pieces/Pieces'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -84,7 +86,11 @@ const App = () => {
       <Route
         exact
         path="/card"
-        render={() => (window.location = 'https://ar.plynth.com/card')}
+        render={() => {
+          window.location = 'https://ar.plynth.com/card'
+
+          return <></>
+        }}
       />
 
       <Route path="/s/subscribe">
@@ -105,6 +111,10 @@ const App = () => {
       </Route>
       <PrivateRoute path="/s/on-the-waitlist">
         <OnTheWaitlist />
+      </PrivateRoute>
+
+      <PrivateRoute path="/admin/pieces">
+        <Pieces />
       </PrivateRoute>
 
       <PrivateRoute path="/admin/packs/:packId/edit/cards">
@@ -138,7 +148,9 @@ const App = () => {
         <SuperAdmin />
       </SuperRoute>
 
-      <Redirect path="/admin" to="/admin/packs" />
+      <PrivateRoute path="/admin" exact>
+        <Admin />
+      </PrivateRoute>
 
       {/* <Route path="/pickup" exact>
         <NewPickup />
