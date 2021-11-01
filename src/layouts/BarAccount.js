@@ -76,9 +76,25 @@ const BarAccount = ({ children }) => {
       >
         <div style={{ width: '100%' }}>
           <Grid container>
-            {/* {(user.admin || userType === 'old') && (
-              <>
-                <Grid item sm={12} md={7}>
+            <>
+              <Grid item sm={12} md={7}>
+                {userType === 'new' ? (
+                  <Grid item container>
+                    <Box
+                      pl="24px"
+                      height="48px"
+                      display="flex"
+                      alignItems="center"
+                      width="100%"
+                    >
+                      <Box flexGrow={1}>
+                        <Typography variant="h5">
+                          <b>Your Pieces</b>
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                ) : (
                   <Tabs
                     value={value}
                     indicatorColor="primary"
@@ -129,8 +145,43 @@ const BarAccount = ({ children }) => {
                       />
                     )}
                   </Tabs>
+                )}
+              </Grid>
+              {value === '/admin/pieces' ? (
+                <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                  <Box
+                    pl="24px"
+                    height="48px"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    width="100%"
+                  >
+                    <Box pr={1}>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        // onClick={handleClick}
+                        disableElevation
+                        sx={{ textTransform: 'none' }}
+                      >
+                        <b>Invite Friends</b>
+                      </Button>
+                    </Box>
+                    <Box pr={1}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        // onClick={handleClick}
+                        disableElevation
+                        sx={{ textTransform: 'none' }}
+                      >
+                        <b>Upgrade</b>
+                      </Button>
+                    </Box>
+                  </Box>
                 </Grid>
-
+              ) : (
                 <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
                   <Box
                     borderLeft={1}
@@ -160,45 +211,8 @@ const BarAccount = ({ children }) => {
                     )}
                   </Box>
                 </Grid>
-              </>
-            )} */}
-            <Grid item container>
-              <Box
-                pl="24px"
-                height="48px"
-                display="flex"
-                alignItems="center"
-                width="100%"
-              >
-                <Box flexGrow={1}>
-                  <Typography variant="h5">
-                    <b>Your Pieces</b>
-                  </Typography>
-                </Box>
-                <Box pr={1}>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    // onClick={handleClick}
-                    disableElevation
-                    sx={{ textTransform: 'none' }}
-                  >
-                    <b>Invite Friends</b>
-                  </Button>
-                </Box>
-                <Box pr={1}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    // onClick={handleClick}
-                    disableElevation
-                    sx={{ textTransform: 'none' }}
-                  >
-                    <b>Upgrade</b>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
+              )}
+            </>
           </Grid>
         </div>
         <Divider />

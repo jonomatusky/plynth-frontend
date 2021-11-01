@@ -3,30 +3,22 @@ import 'mind-ar/dist/mindar-image.prod.js'
 import 'aframe'
 import 'mind-ar/dist/mindar-image-aframe.prod.js'
 import './ARPack.css'
-import { Box } from '@mui/material'
+import { Box, IconButton } from '@mui/material'
+import { VolumeOff, VolumeUp } from '@mui/icons-material'
+
+import ScanInstructions from 'images/scan-instruction.svg'
+import LoadingScreen from 'components/LoadingScreen'
+import { use100vh } from 'hooks/use-100-vh'
 
 const ARPack = ({ pack }) => {
   const { assetUrl, targetsUrl } = pack.cards[0]
   const sceneRef = useRef(null)
-  // let activeEntity = null
-  // let targetsFound = 0
+  const [isFound, setIsFound] = useState(false)
+  const [showPreload, setShowPreload] = useState(true)
 
-  useEffect(() => {
-    const sceneEl = sceneRef.current
-    const arSystem = sceneEl.systems['mindar-image-system']
-    sceneEl.addEventListener('renderstart', () => {
-      arSystem.start() // start AR
-    })
-    return () => {
-      arSystem.stop()
-    }
-  }, [])
+  document.body.style.backgroundColor = '#000000'
 
-  // window.onpageshow = function (event) {
-  //   if (event.persisted) {
-  //     window.location.reload()
-  //   }
-  // }
+  const vh100 = use100vh()
 
   const play = () => {
     const video = document.getElementById('asset')
@@ -42,73 +34,71 @@ const ARPack = ({ pack }) => {
     }
   }
 
-  // const [isMuted, setIsMuted] = useState(true)
+  useEffect(() => {
+    const sceneEl = sceneRef.current
+    const arSystem = sceneEl.systems['mindar-image-system']
 
-  // const toggleMute = () => {
-  //   const videos = document.querySelectorAll('video')
+    sceneEl.addEventListener('renderstart', () => {
+      arSystem.start() // start AR
+      setShowPreload(false)
+    })
+    sceneEl.addEventListener('arError', event => {
+      document.querySelector('.error-screen').style.display = 'flex'
+    })
 
-  //   console.log(isMuted)
+    const target = document.querySelector('#target')
+    target.addEventListener('targetFound', event => {
+      console.log('found')
+      setIsFound(true)
+      play()
+    })
 
-  //   videos.forEach(video => {
-  //     video.muted = !isMuted
-  //   })
+    target.addEventListener('targetLost', event => {
+      console.log('lost')
+      setIsFound(false)
+      pause()
+    })
+    return () => {
+      arSystem.stop()
+    }
+  }, [])
 
-  //   setIsMuted(!isMuted)
+  // window.onpageshow = function (event) {
+  //   if (event.persisted) {
+  //     window.location.reload()
+  //   }
   // }
 
-  // document.addEventListener('DOMContentLoaded', function () {
-  // const target = document.querySelector('#target')
+  const [isMuted, setIsMuted] = useState(true)
 
-  // const sceneEl = document.querySelector('a-scene')
+  const toggleMute = () => {
+    const videos = document.querySelectorAll('video')
 
-  // sceneEl.addEventListener('arError', event => {
-  //   document.querySelector('.error-screen').style.display = 'flex'
-  // })
+    videos.forEach(video => {
+      video.muted = !isMuted
+    })
 
-  // const targetFound = elementId => {
-  // if (activeEntity !== null) {
-  // pause(activeEntity)
-  // }
+    setIsMuted(!isMuted)
+    console.log(isMuted)
+  }
 
-  // console.log('found')
-
-  // play()
-
-  // if (activeEntity !== elementId) {
-  //   activeEntity = elementId
-  // }
-
-  // targetsFound = targetsFound + 1
-  //
-  // document.querySelector('.player-container').style.display = 'flex'
-  // }
-
-  // const targetLost = elementId => {
-  // targetsFound = targetsFound - 1
-
-  // if (targetsFound === 0) {
-  // document.querySelector('.player-container').style.display = 'none'
-  // }
-
-  // pause()
-
-  // activeEntity = null
-  // }
-
-  // target.addEventListener('targetFound', event => {
-  //   console.log('found')
-  //   play()
-  // })
-
-  // target.addEventListener('targetLost', event => {
-  //   console.log('lost')
-  //   pause()
-  // })
-  // })
+  const SoundButton = () => {
+    return (
+      <Box position="absolute" zIndex="1000" bottom="20px" right="30px">
+        <IconButton onClick={toggleMute} size="large">
+          {isMuted ? (
+            <VolumeOff sx={{ color: 'white', fontSize: 40 }} />
+          ) : (
+            <VolumeUp sx={{ color: 'white', fontSize: 40 }} />
+          )}
+        </IconButton>
+      </Box>
+    )
+  }
 
   return (
-    <Box position="relative" height="100vh" width="100vw" overflow="hidden">
-      {/* <div className="error-screen">
+    <>
+      <div className="error-screen">
         <div className="error-message">
           <div>
             <h3>
@@ -140,48 +130,20 @@ const ARPack = ({ pack }) => {
           <div>
             <p>
               If that doesn't work,
-              <a href="https://plynth.com/s/contact" target="_blank">
+              <a
+                href="https://plynth.com/s/contact"
+                target="_blank"
+                rel="noreferrer"
+              >
                 contact us
               </a>
               .
             </p>
           </div>
         </div>
-      </div> */}
+      </div>
 
-      {/* <div className="player-container">
-        <div class="more-button-div">
-          <div
-            style={{
-              flex: '0 0 100%',
-              color: '#ffffffaa',
-              textAlign: 'center',
-              paddingBottom: '4px',
-            }}
-          >
-            <i class="fas fa-chevron-up"></i>
-          </div>
-          <div style={{ flex: '0 0 100%', textAlign: 'center' }}>
-            <button class="more-button" onclick="openPack()">
-              <b>GET MORE</b>
-            </button>
-          </div>
-        </div>
-
-        <button className="sound-button" onClick={toggleMute}>
-          {isMuted ? (
-            <div id="muted-button">
-              <i className="fas fa-volume-mute"></i>
-            </div>
-          ) : (
-            <div id="unmuted-button">
-              <i className="fas fa-volume-down"></i>
-            </div>
-          )}
-        </button>
-      </div> */}
-
-      {/* <div id="reticle-container" className="hidden">
+      <div id="reticle-container" className="hidden">
         <div
           style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
         >
@@ -195,7 +157,11 @@ const ARPack = ({ pack }) => {
             paddingTop: '2rem',
           }}
         >
-          <img src="/scan-instruction.svg" style="width: 40vw" />
+          <img
+            src={ScanInstructions}
+            style={{ width: '40vw' }}
+            alt="Scan Instructions"
+          />
         </div>
       </div>
 
@@ -215,48 +181,58 @@ const ARPack = ({ pack }) => {
             paddingTop: '2rem',
           }}
         >
-          <img src="/scan-instruction.svg" style="width: 40vw" />
+          <img
+            src={ScanInstructions}
+            style={{ width: '40vw' }}
+            alt="Scan Instructions"
+          />
         </div>
-      </div> */}
-      <a-scene
-        ref={sceneRef}
-        loading-screen="backgroundColor: black"
-        mindar-image={`imageTargetSrc: ${targetsUrl}; autoStart: false; `}
-        color-space="sRGB"
-        embedded
-        renderer="colorManagement: true, physicallyCorrectLights"
-        vr-mode-ui="enabled: false"
-        device-orientation-permission-ui="enabled: false"
-      >
-        <a-assets>
-          <video
-            id="asset"
-            className="video"
-            src={`${assetUrl}`}
-            preload="auto"
-            controls
-            muted
-            crossOrigin="anonymous"
-            loop
-            playsInline
-          ></video>
-        </a-assets>
+      </div>
 
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      {isFound && <SoundButton />}
+      {showPreload && <LoadingScreen />}
 
-        <a-entity mindar-image-target="targetIndex: 0" id="target">
-          <a-video
-            src="#asset"
-            id="asset-a"
-            width="1"
-            height="1.5"
-            position="0 0 0"
-            rotation="0 0 0"
-          ></a-video>
-        </a-entity>
-      </a-scene>
-      <video></video>
-    </Box>
+      <Box position="relative" height={vh100} width="100vw" overflow="hidden">
+        <a-scene
+          ref={sceneRef}
+          loading-screen="backgroundColor: black"
+          mindar-image={`uiScanning: #reticle-container; uiLoading: #reticle-container-loading; imageTargetSrc: ${targetsUrl}; autoStart: false; `}
+          color-space="sRGB"
+          embedded
+          renderer="colorManagement: true, physicallyCorrectLights"
+          vr-mode-ui="enabled: false"
+          device-orientation-permission-ui="enabled: false"
+        >
+          <a-assets>
+            <video
+              id="asset"
+              className="video"
+              src={`${assetUrl}`}
+              preload="auto"
+              controls
+              muted
+              crossOrigin="anonymous"
+              loop
+              playsInline
+            ></video>
+          </a-assets>
+
+          <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+          <a-entity mindar-image-target="targetIndex: 0" id="target">
+            <a-video
+              src="#asset"
+              id="asset-a"
+              width="1"
+              height="1.5"
+              position="0 0 0"
+              rotation="0 0 0"
+            ></a-video>
+          </a-entity>
+        </a-scene>
+        <video></video>
+      </Box>
+    </>
   )
 }
 
