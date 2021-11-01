@@ -63,8 +63,9 @@ const EditPortalAnimation = () => {
   }
 
   return (
-    <AdminNav>
-      <BarAccount>
+    <>
+      <BarAccount />
+      <AdminNav>
         {status === 'succeeded' && (
           <Box height="calc(100vh - 48px)" overflow="hidden">
             <Grid container justifyContent="flex-start">
@@ -189,8 +190,8 @@ const EditPortalAnimation = () => {
             </Grid>
           </Box>
         )}
-      </BarAccount>
-    </AdminNav>
+      </AdminNav>
+    </>
   )
 }
 

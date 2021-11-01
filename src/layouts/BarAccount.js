@@ -18,14 +18,17 @@ import useUserStore from 'hooks/store/use-user-store'
 import ButtonSharePortal from 'components/ButtonSharePortal'
 import OnboardingTooltip from 'components/OnboardingTooltip'
 
-const drawerWidth = 70
+import Logo from 'images/plynth_logo_color.svg'
+import Image from 'components/Image'
+
+// const drawerWidth = 70
 
 const { REACT_APP_PUBLIC_URL } = process.env
 
 const useStyles = makeStyles({
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    // width: `calc(100% - ${drawerWidth}px)`,
+    // marginLeft: drawerWidth,
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.secondary,
   },
@@ -77,7 +80,12 @@ const BarAccount = ({ children }) => {
         <div style={{ width: '100%' }}>
           <Grid container>
             <>
-              <Grid item sm={12} md={7}>
+              <Grid item sm={12} md={7} container alignItems="center">
+                <Grid item pl={1} pr={1}>
+                  <RouterLink to="/admin">
+                    <Image src={Logo} height="28px" width="106px" />
+                  </RouterLink>
+                </Grid>
                 {userType === 'new' ? (
                   <Grid item container>
                     <Box
@@ -218,7 +226,7 @@ const BarAccount = ({ children }) => {
         <Divider />
       </AppBar>
 
-      <Box sx={{ display: { xs: 'block', md: 'none' } }}>{children}</Box>
+      {/* <Box sx={{ display: { xs: 'block', md: 'none' } }}>{children}</Box>
 
       <Box
         height="calc(100vh-48px)"
@@ -227,7 +235,7 @@ const BarAccount = ({ children }) => {
         sx={{ display: { xs: 'none', md: 'block' } }}
       >
         {children}
-      </Box>
+      </Box> */}
     </>
   )
 }

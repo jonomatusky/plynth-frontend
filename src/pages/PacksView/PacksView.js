@@ -31,6 +31,14 @@ const PacksView = () => {
   const { logout } = useSession()
   const { packs, status, createPack } = usePackStore()
 
+  const packsFiltered = packs.filter(pack => {
+    if ((pack.cards || []).length > 0 && pack.cards[0].type === 'ar') {
+      return false
+    } else {
+      return true
+    }
+  })
+
   const [selectedPackIndex, setSelectedPackIndex] = useState(0)
   const [newPack, setNewPack] = useState(null)
 
@@ -77,8 +85,9 @@ const PacksView = () => {
   }
 
   return (
-    <AdminNav>
-      <BarAccount>
+    <>
+      <BarAccount />
+      <AdminNav>
         <Box height="calc(100vh - 48px)" overflow="hidden">
           <Container disableGutters maxWidth={false}>
             <Grid container justifyContent="center">
@@ -199,7 +208,7 @@ const PacksView = () => {
                         </Grid>
                       )}
                       <>
-                        {(packs || []).map((pack, index) => {
+                        {(packsFiltered || []).map((pack, index) => {
                           return (
                             <Grid
                               item
@@ -254,8 +263,8 @@ const PacksView = () => {
             </Grid>
           </Container>
         </Box>
-      </BarAccount>
-    </AdminNav>
+      </AdminNav>
+    </>
   )
 }
 

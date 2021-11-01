@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { useTheme } from '@mui/material/styles'
 import makeStyles from '@mui/styles/makeStyles'
-import {
-  Grid,
-  Box,
-  Menu,
-  MenuItem,
-  Drawer,
-  Divider,
-  IconButton,
-  Link as MuiLink,
-} from '@mui/material'
-import { Portrait } from '@mui/icons-material'
+import // Grid,
+// Box,
+// Menu,
+// MenuItem,
+// Drawer,
+// Divider,
+// IconButton,
+// Link as MuiLink,
+'@mui/material'
+// import { Portrait } from '@mui/icons-material'
 // import { Person, HelpOutline } from '@mui/icons-material'
 
 import { useFetch } from 'hooks/use-fetch'
-import { useSession } from 'hooks/use-session'
-import logo from 'images/plynth_logo_simple.svg'
+// import { useSession } from 'hooks/use-session'
+// import logo from 'images/plynth_logo_simple.svg'
 import usePageTrack from 'hooks/use-page-track'
 import useUserStore from 'hooks/store/use-user-store'
 import LoadingScreen from 'components/LoadingScreen'
@@ -26,6 +25,7 @@ import SomethingWentWrong from 'components/SomethingWentWrong'
 import Onboarding from 'components/Onboarding'
 import useAlertStore from 'hooks/store/use-alert-store'
 import usePackStore from 'hooks/store/use-pack-store'
+import { Box } from '@mui/system'
 
 // import useAlertStore from 'hooks/store/use-alert-store'
 
@@ -67,23 +67,23 @@ const AdminNav = ({ children }) => {
   useFetch()
   usePageTrack()
 
-  const { logout } = useSession()
+  // const { logout } = useSession()
   const classes = useStyles()
   const theme = useTheme()
 
-  const [anchorEl, setAnchorEl] = useState(null)
+  // const [anchorEl, setAnchorEl] = useState(null)
 
-  const handleOpen = event => {
-    setAnchorEl(event.currentTarget)
-  }
+  // const handleOpen = event => {
+  //   setAnchorEl(event.currentTarget)
+  // }
 
-  const handleClose = event => {
-    setAnchorEl(null)
-  }
+  // const handleClose = event => {
+  //   setAnchorEl(null)
+  // }
 
-  const handleLogout = async () => {
-    logout()
-  }
+  // const handleLogout = async () => {
+  //   logout()
+  // }
 
   useEffect(() => {
     if (status === 'succeeded') {
@@ -148,7 +148,7 @@ const AdminNav = ({ children }) => {
             setIsOpen={onboardingIsOpen}
             onClose={handleCloseOnboarding}
           />
-          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+          {/* <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             <div className={classes.root}>
               <Drawer
                 className={classes.drawer}
@@ -158,7 +158,6 @@ const AdminNav = ({ children }) => {
                 }}
                 anchor="left"
               >
-                {/* <div className={classes.toolbar} /> */}
                 <Grid
                   container
                   direction="column"
@@ -238,10 +237,34 @@ const AdminNav = ({ children }) => {
                 {status === 'succeeded' && children}
               </main>
             </div>
-          </Box>
-          <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+          </Box> */}
+          {/* <Box sx={{ display: { xs: 'block', md: 'none' } }}>
             <main className={classes.content}>{children}</main>
-          </Box>
+          </Box> */}
+          <main className={classes.content}>
+            {status === 'failed' && (
+              <SomethingWentWrong
+                backgroundColor={theme.palette.background.default}
+                fontColor={'#555555'}
+              />
+            )}
+            {status === 'succeeded' && (
+              <>
+                <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                  {children}
+                </Box>
+
+                <Box
+                  height="calc(100vh-48px)"
+                  mt="48px"
+                  overflow="hidden"
+                  sx={{ display: { xs: 'none', md: 'block' } }}
+                >
+                  {children}
+                </Box>
+              </>
+            )}
+          </main>
         </>
       )}
     </>

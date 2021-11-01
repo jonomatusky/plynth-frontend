@@ -92,8 +92,9 @@ const EditPortalAppearance = () => {
   }
 
   return (
-    <AdminNav>
-      <BarAccount>
+    <>
+      <BarAccount />
+      <AdminNav>
         {status === 'succeeded' && (
           <Box height="calc(100vh - 48px)" overflow="hidden">
             <Grid container justifyContent="flex-start">
@@ -307,8 +308,8 @@ const EditPortalAppearance = () => {
             </Grid>
           </Box>
         )}
-      </BarAccount>
-    </AdminNav>
+      </AdminNav>
+    </>
   )
 }
 

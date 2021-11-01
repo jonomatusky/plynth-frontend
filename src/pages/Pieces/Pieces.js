@@ -19,8 +19,9 @@ const Pieces = () => {
   })
 
   return (
-    <AdminNav>
-      <BarAccount>
+    <>
+      <BarAccount />
+      <AdminNav>
         <Box height="calc(100vh - 48px)" overflow="hidden">
           <Container disableGutters maxWidth={false}>
             <Box display="flex" width="100%" flexWrap="wrap" padding={6}>
@@ -80,8 +81,8 @@ const Pieces = () => {
             </Box>
           </Container>
         </Box>
-      </BarAccount>
-    </AdminNav>
+      </AdminNav>
+    </>
   )
 }
 
