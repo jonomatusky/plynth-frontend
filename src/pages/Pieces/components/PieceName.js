@@ -10,6 +10,7 @@ const PieceName = ({
   placeholder,
   children,
   childRef,
+  submit,
   ...props
 }) => {
   // Manage the state whether to show the label or the input box. By default, label will be shown.
@@ -30,16 +31,21 @@ const PieceName = ({
     const enterKey = 'Enter'
     const allKeys = [...keys, enterKey] // All keys array
 
+    if (allKeys.indexOf(key) > -1) {
+      setEditing(false)
+      submit()
+    }
+
     /* 
     - For textarea, check only Escape and Tab key and set the state to false
     - For everything else, all three keys will set the state to false
   */
-    if (
-      (type === 'textarea' && keys.indexOf(key) > -1) ||
-      (type !== 'textarea' && allKeys.indexOf(key) > -1)
-    ) {
-      setEditing(false)
-    }
+    // if (
+    //   (type === 'textarea' && keys.indexOf(key) > -1) ||
+    //   (type !== 'textarea' && allKeys.indexOf(key) > -1)
+    // ) {
+    //   setEditing(false)
+    // }
   }
 
   /*
