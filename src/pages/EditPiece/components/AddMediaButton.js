@@ -1,29 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Box, Typography, TextField, CardActionArea } from '@mui/material'
+import { Card, Box, Typography, CardActionArea } from '@mui/material'
 
-import usePackStore from 'hooks/store/use-pack-store'
 import Image from 'components/Image'
-import PieceName from './PieceName'
 
-const PieceItem = ({ piece }) => {
-  const { updatePack } = usePackStore()
-
-  const [name, setName] = useState('')
-
-  useEffect(() => {
-    setName(piece.name)
-  }, [piece.name])
-
-  const updateName = async () => {
-    console.log('submitting')
-    try {
-      await updatePack({ id: piece.id, name: name })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
+const AddMediaButton = ({ piece, mediaType }) => {
   const { imageHeight, imageWidth, videoDuration, imageUrl } = piece.cards[0]
   const aspect =
     imageHeight / imageWidth === 1.5
@@ -33,8 +14,8 @@ const PieceItem = ({ piece }) => {
       : `${imageWidth}x${imageHeight}px`
 
   return (
-    <Box display="flex" flexWrap="wrap" width="160px" mr={4}>
-      <Card>
+    <Box display="flex" flexWrap="wrap" width="160px">
+      <Card elevation={0} variant="outlined">
         <CardActionArea
           sx={{ padding: '8px' }}
           component={Link}
@@ -79,26 +60,8 @@ const PieceItem = ({ piece }) => {
           </Box>
         </CardActionArea>
       </Card>
-      <PieceName
-        text={name}
-        placeholder="Your Piece"
-        type="input"
-        submit={updateName}
-      >
-        <TextField
-          variant="standard"
-          type="text"
-          name="task"
-          placeholder="Your Piece"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          onBlur={() => updateName()}
-          size="small"
-          autoFocus={true}
-        />
-      </PieceName>
     </Box>
   )
 }
 
-export default PieceItem
+export default AddMediaButton

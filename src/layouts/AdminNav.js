@@ -108,9 +108,9 @@ const AdminNav = ({ children }) => {
     setError,
   ])
 
-  const openOnboarding = () => {
-    setOnboardingIsOpen(true)
-  }
+  // const openOnboarding = () => {
+  //   setOnboardingIsOpen(true)
+  // }
 
   const handleCloseOnboarding = () => {
     if (!user.completedSignup) {
