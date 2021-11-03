@@ -45,6 +45,7 @@ import Waitlist from 'pages/Waitlist/Waitlist'
 import Admin from 'pages/Admin/Admin'
 import Pieces from 'pages/Pieces/Pieces'
 import EditPiece from 'pages/EditPiece/EditPiece'
+import CreatePiece from 'pages/CreatePiece/CreatePiece'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -116,6 +117,9 @@ const App = () => {
 
       <PrivateRoute path="/admin/pieces/:pieceId/edit">
         <EditPiece />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/pieces/new">
+        <CreatePiece />
       </PrivateRoute>
       <PrivateRoute path="/admin/pieces">
         <Pieces />

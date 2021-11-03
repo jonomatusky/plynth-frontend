@@ -33,7 +33,7 @@ const PieceItem = ({ piece }) => {
       : `${imageWidth}x${imageHeight}px`
 
   return (
-    <Box display="flex" flexWrap="wrap" width="160px" mr={4}>
+    <Box display="flex" flexWrap="wrap" width="256px" mr={4}>
       <Card>
         <CardActionArea
           sx={{ padding: '8px' }}
@@ -41,23 +41,23 @@ const PieceItem = ({ piece }) => {
           to={`/admin/pieces/${piece.id}/edit`}
         >
           <Box
-            height="144px"
-            width="144px"
+            height="240px"
+            width="240px"
             display="flex"
             alignItems="center"
             justifyContent="center"
             flexWrap="wrap"
           >
             <Box
-              width="144px"
-              height="124px"
+              width="240px"
+              height="220px"
               display="flex"
               alignItems="center"
               justifyContent="center"
             >
               <Image
                 src={imageUrl}
-                style={{ maxHeight: '108px', maxWidth: '100%' }}
+                style={{ maxHeight: '204px', maxWidth: '100%' }}
               />
             </Box>
             <Box

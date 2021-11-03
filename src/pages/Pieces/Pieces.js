@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Box, Typography, Button } from '@mui/material'
 import { Add } from '@mui/icons-material'
+import { Link } from 'react-router-dom'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
@@ -25,9 +26,9 @@ const Pieces = () => {
         <Box height="calc(100vh - 48px)" overflow="hidden">
           <Container disableGutters maxWidth={false}>
             <Box display="flex" width="100%" flexWrap="wrap" padding={6}>
-              <Box display="flex" flexWrap="wrap" width="160px" mr={4}>
+              <Box display="flex" flexWrap="wrap" width="256px" mr={4}>
                 <Box
-                  height="160px"
+                  height="256px"
                   width="100%"
                   borderRadius="6px"
                   display="flex"
@@ -39,7 +40,7 @@ const Pieces = () => {
                     // color="secondary"
                     color="primary"
                     sx={{
-                      height: '160px',
+                      height: '256px',
                       width: '100%',
                       // backgroundColor: '#00000033',
                       // ':hover': {
@@ -49,6 +50,8 @@ const Pieces = () => {
                     size="large"
                     // variant="contained"
                     disableElevation
+                    component={Link}
+                    to="/admin/pieces/new"
                   >
                     <Box
                       display="flex"
@@ -57,13 +60,12 @@ const Pieces = () => {
                       justifyContent="center"
                       width="100%"
                     >
-                      <Add sx={{ fontSize: 40 }} />
+                      <Box width="100%" textAlign="center">
+                        <Add sx={{ fontSize: 48 }} />
+                      </Box>
 
-                      <Typography
-                        fontSize="small"
-                        sx={{ textTransform: 'none' }}
-                      >
-                        Create New Piece
+                      <Typography sx={{ textTransform: 'none' }}>
+                        <b>Create New Piece</b>
                       </Typography>
                     </Box>
                   </Button>

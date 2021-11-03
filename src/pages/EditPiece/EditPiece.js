@@ -16,7 +16,7 @@ import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
 
 import BarEditPiece from 'layouts/BarEditPiece'
-import AddMediaButton from './components/AddMediaButton'
+import AddMediaButton from '../../components/AddMediaButton'
 
 const EditPiece = () => {
   const { pieceId } = useParams()
@@ -26,12 +26,14 @@ const EditPiece = () => {
     status,
     updateStatus,
   } = usePackStore()
+
   const reduxPack = selectPack(pieceId)
   const [pack, setPack] = useState(reduxPack)
-  const [cardIndex, setCardIndex] = useState(0)
-  const [removeDialogIsOpen, setRemoveDialogIsOpen] = useState(false)
+  const cardIndex = 0
+  const { cards } = pack || {}
+  const card = (cards || [])[cardIndex]
 
-  const cards = (pack || {}).cards
+  const [removeDialogIsOpen, setRemoveDialogIsOpen] = useState(false)
 
   useEffect(() => {
     const onPackChange = () => {
@@ -49,7 +51,6 @@ const EditPiece = () => {
     if (status !== 'loading') {
       let updatedCards = [...pack.cards]
       updatedCards[cardIndex] = { ...updatedCards[cardIndex], ...values }
-      // setPack({ ...pack, cards: updatedCards })
       updateReduxPack({ id: pieceId, cards: updatedCards })
     }
   }
@@ -82,21 +83,6 @@ const EditPiece = () => {
     setRemoveDialogIsOpen(true)
   }
 
-  const handleDeleteCard = () => {
-    const updatedCards = [
-      ...cards.slice(0, cardIndex),
-      ...cards.slice(cardIndex + 1),
-    ]
-
-    setPack({ ...pack, cards: updatedCards })
-    if (cardIndex > 0) {
-      setCardIndex(cardIndex - 1)
-    }
-    updateReduxPack({ id: pieceId, cards: updatedCards })
-
-    setRemoveDialogIsOpen(false)
-  }
-
   return (
     <>
       <BarEditPiece />
@@ -120,9 +106,13 @@ const EditPiece = () => {
                         justifyContent="space-around"
                         alignItems="center"
                       >
-                        <AddMediaButton piece={pack} media="image" />
+                        <AddMediaButton
+                          card={card}
+                          mediaType="image"
+                          onCardSubmit={handleCardSubmit}
+                        />
                         <LinkIcon fontSize="large" />
-                        <AddMediaButton piece={pack} media="image" />
+                        <AddMediaButton card={card} mediaType="video" />
                       </Box>
                     </Box>
                   </Paper>
@@ -137,7 +127,7 @@ const EditPiece = () => {
           </Box>
         )}
       </AdminNav>
-      <Dialog
+      {/* <Dialog
         onClose={handleRemoveClose}
         aria-labelledby="remove-dialog-title"
         open={removeDialogIsOpen}
@@ -150,7 +140,7 @@ const EditPiece = () => {
           <MuiButton onClick={handleRemoveClose}>Cancel</MuiButton>
           <MuiButton onClick={handleDeleteCard}>Remove</MuiButton>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </>
   )
 }
