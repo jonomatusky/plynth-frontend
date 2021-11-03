@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Grid, Box, Container, Button, Paper, Typography } from '@mui/material'
+import {
+  Grid,
+  Box,
+  Container,
+  Button,
+  Paper,
+  Typography,
+  Fade,
+} from '@mui/material'
 import {
   Launch,
   Link as LinkIcon,
@@ -10,6 +18,7 @@ import {
   QrCode2,
   VideoCameraBack,
 } from '@mui/icons-material'
+import ReactPlayer from 'react-player'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
@@ -39,8 +48,6 @@ const CreatePiece = () => {
   } = usePackStore()
 
   const card = {}
-
-  console.log(media)
 
   const [removeDialogIsOpen, setRemoveDialogIsOpen] = useState(false)
 
@@ -89,6 +96,95 @@ const CreatePiece = () => {
     setMedia({ ...media, ...newMedia })
   }
 
+  // const cardWidth =
+
+  const DisplayCard = () => {
+    const [hideImage, setHideImage] = useState(true)
+
+    const playerRef = useRef()
+
+    useEffect(() => {
+      if (hideImage) {
+        setTimeout(() => {
+          if (playerRef.current) {
+            playerRef.current.currentTime = 0
+            playerRef.current.play()
+          }
+          setHideImage(false)
+        }, 4000)
+      } else {
+        setTimeout(() => {
+          setHideImage(true)
+        }, 1000)
+      }
+    }, [hideImage])
+
+    return (
+      <Box
+        backgroundColor="white"
+        border="2px solid #ddd"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mt={6}
+        sx={{
+          transform: 'rotate(3deg)',
+          width: { xs: '350px', lg: '450px' },
+          height: {
+            xs: imageSrc ? (imageHeight / imageWidth) * 350 + 'px' : '525px',
+            lg: imageSrc ? (imageHeight / imageWidth) * 450 + 'px' : '675px',
+          },
+        }}
+        mr={2}
+        boxShadow="5px 5px 15px #00000040"
+        position="relative"
+      >
+        {!imageSrc && !videoSrc && (
+          <Box color="#dddddd" textAlign="center">
+            <VideoCameraBack color="inherit" sx={{ fontSize: 100 }} />
+            <Typography>
+              <b>Your Image + Video Here</b>
+            </Typography>
+          </Box>
+        )}
+        {imageSrc && (
+          <Fade
+            // appear={false}
+            timeout={{ enter: 0, exit: 1000 }}
+            in={!hideImage}
+          >
+            <img
+              src={imageSrc}
+              width="100%"
+              height="100%"
+              alt="preview"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                zIndex: 10,
+              }}
+            />
+          </Fade>
+        )}
+        {videoSrc && (
+          <video
+            src={videoSrc}
+            ref={playerRef}
+            autoplay
+            muted
+            style={{
+              position: 'absolute',
+              height: '100%',
+              width: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        )}
+      </Box>
+    )
+  }
+
   return (
     <>
       <BarEditPiece />
@@ -126,7 +222,11 @@ const CreatePiece = () => {
                               {...media}
                             />
                             <LinkIcon fontSize="large" color="secondary" />
-                            <AddMediaButton card={card} mediaType="video" />
+                            <AddMediaButton
+                              mediaType="video"
+                              updateMedia={handleUpdateMedia}
+                              {...media}
+                            />
                           </Box>
                           <Box width="320px" mt={4} mb={4}>
                             <Button
@@ -251,48 +351,7 @@ const CreatePiece = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Box
-                    backgroundColor="white"
-                    border="2px solid #ddd"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    mt={6}
-                    sx={{
-                      transform: 'rotate(3deg)',
-                      width: { xs: '350px', lg: '450px' },
-                      height: {
-                        xs: imageSrc
-                          ? (imageHeight / imageWidth) * 350 + 'px'
-                          : '525px',
-                        lg: imageSrc
-                          ? (imageHeight / imageWidth) * 450 + 'px'
-                          : '675px',
-                      },
-                    }}
-                    mr={2}
-                    boxShadow="5px 5px 15px #00000040"
-                  >
-                    {!imageSrc && !videoSrc && (
-                      <Box color="#dddddd" textAlign="center">
-                        <VideoCameraBack
-                          color="inherit"
-                          sx={{ fontSize: 100 }}
-                        />
-                        <Typography>
-                          <b>Your Image + Video Here</b>
-                        </Typography>
-                      </Box>
-                    )}
-                    {imageSrc && (
-                      <img
-                        src={imageSrc}
-                        width="100%"
-                        height="100%"
-                        alt="preview"
-                      />
-                    )}
-                  </Box>
+                  <DisplayCard />
                 </Box>
               </Grid>
             </Grid>

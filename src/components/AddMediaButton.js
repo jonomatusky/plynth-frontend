@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Card, Box, Typography, CardActionArea } from '@mui/material'
-import { AddAPhoto, AddPhotoAlternate, VideoCall } from '@mui/icons-material'
+import {
+  AddAPhoto,
+  AddPhotoAlternate,
+  VideoCall,
+  PlayArrow,
+} from '@mui/icons-material'
+import ReactPlayer from 'react-player'
 
 import ImageUploadDialog from './ImageUploadDialog'
+import VideoUploadDialog from './VideoUploadDialog'
 import Image from 'components/Image'
 
 const AddMediaButton = ({
@@ -14,14 +21,14 @@ const AddMediaButton = ({
   mediaType,
   updateMedia,
 }) => {
-  const aspect =
-    imageHeight / imageWidth === 1.5
-      ? '2x3 (4"x6")'
-      : imageWidth / imageHeight === 1.5
-      ? '3x2 (6"x4")'
-      : imageSrc
-      ? `${imageWidth}x${imageHeight}px`
-      : ''
+  // const aspect =
+  //   imageHeight / imageWidth === 1.5
+  //     ? '2x3 (4"x6")'
+  //     : imageWidth / imageHeight === 1.5
+  //     ? '3x2 (6"x4")'
+  //     : imageSrc
+  //     ? `${imageWidth}x${imageHeight}px`
+  //     : ''
 
   const [open, setOpen] = useState(false)
 
@@ -34,7 +41,6 @@ const AddMediaButton = ({
   }
 
   const submitImage = image => {
-    console.log(image)
     updateMedia({
       imageSrc: image.src,
       imageFile: image.file,
@@ -43,17 +49,50 @@ const AddMediaButton = ({
     })
   }
 
+  const submitVideo = video => {
+    updateMedia({
+      videoSrc: video.src,
+      videoFile: video.file,
+    })
+  }
+
+  const playerRef = useRef()
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (playerRef.current) {
+        playerRef.current.seekTo(0)
+      }
+    }, 5000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  })
+
   return (
     <>
-      <ImageUploadDialog
-        open={open}
-        imageUrl={imageSrc}
-        videoUrl={videoSrc}
-        width={imageWidth}
-        height={imageHeight}
-        submitImage={submitImage}
-        onClose={handleClose}
-      />
+      {mediaType === 'image' ? (
+        <ImageUploadDialog
+          open={open}
+          imageUrl={imageSrc}
+          videoUrl={videoSrc}
+          width={imageWidth}
+          height={imageHeight}
+          submitImage={submitImage}
+          onClose={handleClose}
+        />
+      ) : (
+        <VideoUploadDialog
+          open={open}
+          imageUrl={imageSrc}
+          videoUrl={videoSrc}
+          width={imageWidth}
+          height={imageHeight}
+          submit={submitVideo}
+          onClose={handleClose}
+        />
+      )}
 
       <Box display="flex" flexWrap="wrap" width="160px">
         <Card elevation={0} variant="outlined">
@@ -81,17 +120,17 @@ const AddMediaButton = ({
                         <>
                           <Box
                             width="144px"
-                            height="124px"
+                            height="144px"
                             display="flex"
                             alignItems="center"
                             justifyContent="center"
                           >
                             <Image
                               src={imageSrc}
-                              style={{ maxHeight: '108px', maxWidth: '100%' }}
+                              style={{ maxHeight: '128px', maxWidth: '100%' }}
                             />
                           </Box>
-                          <Box
+                          {/* <Box
                             width="144px"
                             height="20px"
                             display="flex"
@@ -100,7 +139,7 @@ const AddMediaButton = ({
                             overflow="hidden"
                           >
                             <Typography variant="caption">{aspect}</Typography>
-                          </Box>
+                          </Box> */}
                         </>
                       ) : (
                         <>
@@ -124,17 +163,33 @@ const AddMediaButton = ({
                         <>
                           <Box
                             width="144px"
-                            height="124px"
+                            height="144px"
                             display="flex"
                             alignItems="center"
                             justifyContent="center"
+                            position="relative"
                           >
-                            <video
-                              src={videoSrc}
-                              style={{ maxHeight: '108px', maxWidth: '100%' }}
+                            <Box
+                              width="100%"
+                              height="100%"
+                              zIndex={10}
+                              color="white"
+                              display="flex"
+                              justifyContent="center"
+                              alignItems="center"
+                              position="absolute"
+                            >
+                              <PlayArrow color="inherit" />
+                            </Box>
+                            <ReactPlayer
+                              ref={playerRef}
+                              url={videoSrc}
+                              muted
+                              loop
+                              style={{ maxHeight: '128px', maxWidth: '100%' }}
                             />
                           </Box>
-                          <Box
+                          {/* <Box
                             width="144px"
                             height="20px"
                             display="flex"
@@ -145,7 +200,7 @@ const AddMediaButton = ({
                             <Typography variant="caption">
                               {!!videoDuration ? `${videoDuration}sec` : ''}
                             </Typography>
-                          </Box>
+                          </Box> */}
                         </>
                       ) : (
                         <>

@@ -7,6 +7,7 @@ import {
   Button,
   Box,
   Typography,
+  Fade,
 } from '@mui/material'
 import {
   Upload,
@@ -34,13 +35,19 @@ const demourl = REACT_APP_ASSET_URL + '/' + demoImageName
 
 const imageMinWidthDimension = 1200
 
-const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
+const ImageUploadDialog = ({
+  submitImage,
+  imageUrl,
+  videoUrl,
+  open,
+  onClose,
+}) => {
   const [value, setValue] = useState(0)
 
   // const [image, setImage] = useState({ url: url })
 
   const [image, setImage] = useState({
-    src: null,
+    src: imageUrl,
     file: null,
     width: null,
     height: null,
@@ -53,10 +60,10 @@ const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
 
   useEffect(() => {
     if (open) {
-      setImage({})
+      setImage({ src: imageUrl })
       setImageToCrop({})
     }
-  }, [open])
+  }, [open, imageUrl])
 
   const OptionButton = ({ index, icon, label, disabled }) => {
     const Icon = icon
@@ -113,6 +120,7 @@ const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
     const { getRootProps, getInputProps } = useDropzone({
       onDrop,
       multiple: false,
+      maxFiles: 1,
       accept: 'image/jpeg, image/jpg, image/png',
     })
 
@@ -147,25 +155,21 @@ const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
   //   console.log('selected')
   // }
 
-  console.log('reloading')
-
   const handleSelectFrame = () => {
     return
   }
 
   const handleSelectDemoImage = () => {
-    const imageData = { url: demourl, width: 600, height: 900 }
-    submitImage(imageData)
+    const data = { src: demourl, width: 600, height: 900 }
+    setImage(data)
+    submitImage(data)
     onClose()
   }
 
   const handleClose = () => {
-    setImage({ url: url })
-    onClose()
-  }
-
-  const handleCancelCrop = () => {
+    setImage({ src: imageUrl })
     setImageToCrop({})
+    onClose()
   }
 
   const ContentUpload = () => {
@@ -324,6 +328,10 @@ const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
 
     const handleCropImageLoaded = image => {
       setDisplayImageDimensions({ width: image.width, height: image.height })
+    }
+
+    const handleCancelCrop = () => {
+      setImageToCrop({})
     }
 
     return (
@@ -504,8 +512,13 @@ const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
   }
 
   const handleSubmit = () => {
+    setImageToCrop({})
     submitImage(image)
     onClose()
+  }
+
+  const handleReplace = () => {
+    setImage({ src: null })
   }
 
   const ContentReplace = () => {
@@ -554,7 +567,7 @@ const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
             <Button
               color="secondary"
               endIcon={<Loop />}
-              onClick={() => setImageToCrop({})}
+              onClick={handleReplace}
               // sx={{
               //   backgroundColor: '#ffffff88',
               //   '&:hover': { backgroundColor: '#ffffff50' },
@@ -563,7 +576,7 @@ const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
             >
               Replace
             </Button>
-            {!!url && !image.src ? (
+            {!!imageUrl && !image.src ? (
               <Button variant="contained" onClick={handleClose}>
                 Done
               </Button>
@@ -587,9 +600,7 @@ const ImageUploadDialog = ({ submitImage, url, videoUrl, open, onClose }) => {
         }
       }}
     >
-      {!!url ? (
-        <ContentReplace />
-      ) : !!image.src ? (
+      {!!image.src ? (
         <ContentReplace />
       ) : !!imageToCrop.src ? (
         <ContentCropping />
