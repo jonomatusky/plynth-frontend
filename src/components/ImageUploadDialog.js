@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -8,6 +8,7 @@ import {
   Box,
   Typography,
   Fade,
+  Slider,
 } from '@mui/material'
 import {
   Upload,
@@ -28,6 +29,7 @@ import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { getCroppedImg } from 'util/getCroppedImg'
 import { resizeImage } from 'util/imageHandling'
+import ReactPlayer from 'react-player'
 
 const demoImageName = 'Postcard+Mixtape+Vol+1+600px.jpg'
 const { REACT_APP_ASSET_URL } = process.env
@@ -39,6 +41,7 @@ const ImageUploadDialog = ({
   submitImage,
   imageUrl,
   videoUrl,
+  videoDuration,
   open,
   onClose,
 }) => {
@@ -48,7 +51,7 @@ const ImageUploadDialog = ({
 
   const [image, setImage] = useState({
     src: imageUrl,
-    file: null,
+    // file: null,
     width: null,
     height: null,
   })
@@ -96,6 +99,7 @@ const ImageUploadDialog = ({
   const FileUpload = () => {
     const onDrop = useCallback(acceptedFiles => {
       console.log('uploading file')
+
       acceptedFiles.forEach(file => {
         let imageSrc
         const reader = new FileReader()
@@ -105,7 +109,6 @@ const ImageUploadDialog = ({
           const height = this.height
           const width = this.width
           setImageToCrop({ src: imageSrc, width, height })
-          console.log(height)
         }
 
         reader.onabort = () => console.log('file reading was aborted')
@@ -172,6 +175,63 @@ const ImageUploadDialog = ({
     onClose()
   }
 
+  // const videoDuration = videoRef.current ? videoRef.current.duration : 0
+  // const videoDuration = 75.512
+
+  const videoRef = useRef()
+
+  const TimeSlider = ({ onChange }) => {
+    const [sliderValue, setSliderValue] = useState(0)
+
+    const handleChangeTime = (e, value) => {
+      console.log(value)
+      setSliderValue(value)
+      onChange(value)
+    }
+
+    console.log(videoDuration)
+
+    return (
+      <>
+        {videoDuration && videoUrl && (
+          <Slider
+            value={sliderValue}
+            onChange={handleChangeTime}
+            min={0}
+            max={Math.round(videoDuration * 30)}
+            step={1}
+          />
+        )}
+      </>
+    )
+  }
+
+  const handleChangeTime = value => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = value / 30
+    }
+  }
+
+  const getFrame = () => {
+    const video = document.getElementById('piece-video')
+    const format = 'jpeg'
+    const quality = 0.92
+
+    var canvas = document.createElement('CANVAS')
+
+    const width = video.videoWidth
+    const height = video.videoHeight
+
+    canvas.width = width
+    canvas.height = height
+
+    canvas.getContext('2d').drawImage(video, 0, 0)
+
+    var dataUri = canvas.toDataURL('image/' + format, quality)
+
+    setImageToCrop({ src: dataUri, width, height })
+  }
+
   const ContentUpload = () => {
     return (
       <>
@@ -228,7 +288,43 @@ const ImageUploadDialog = ({
                   </>
                 )}
                 {value === 1 && <FileUpload />}
-                {value === 2 && <FileUpload />}
+                {value === 2 && (
+                  <Box position="relative" height="100%" width="100%">
+                    <Box
+                      position="absolute"
+                      bottom={0}
+                      left={0}
+                      right={0}
+                      zIndex={10}
+                      pl={2}
+                      pr={2}
+                      pt={1}
+                      backgroundColor="#ffffff70"
+                    >
+                      <TimeSlider onChange={handleChangeTime} />
+                    </Box>
+                    <Box
+                      height="100%"
+                      width="100%"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <video
+                        id="piece-video"
+                        src={videoUrl}
+                        ref={videoRef}
+                        style={{
+                          maxWidth: '440px',
+                          maxHeight: '360px',
+                          objectFit: 'contain',
+                        }}
+                        muted
+                        alt="Piece"
+                      />
+                    </Box>
+                  </Box>
+                )}
                 {value === 3 && (
                   <img
                     src={demourl}
@@ -255,9 +351,9 @@ const ImageUploadDialog = ({
                 Next
               </Button>
             )}
-            {value === 1 && (
-              <Button variant="contained" onClick={handleSelectDemoImage}>
-                Select
+            {value === 2 && (
+              <Button variant="contained" onClick={getFrame}>
+                Select Frame
               </Button>
             )}
             {value === 3 && (
@@ -303,7 +399,7 @@ const ImageUploadDialog = ({
 
         setImage({
           src: croppedImageSrc,
-          file: croppedImage,
+          // file: croppedImage,
           width: Math.round(cropScale * crop.width),
           height: Math.round(cropScale * crop.height),
         })
@@ -445,9 +541,9 @@ const ImageUploadDialog = ({
               // }}
               onClick={() => {
                 setCrop({
-                  unit: '%',
-                  width: 100,
-                  height: 100,
+                  unit: 'px',
+                  width: displayImageDimensions.width,
+                  height: displayImageDimensions.height,
                   x: 0,
                   y: 0,
                 })
@@ -519,6 +615,7 @@ const ImageUploadDialog = ({
 
   const handleReplace = () => {
     setImage({ src: null })
+    setImageToCrop({})
   }
 
   const ContentReplace = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -13,6 +13,7 @@ import { Upload, Portrait, Close, Crop, Loop } from '@mui/icons-material'
 import { useDropzone } from 'react-dropzone'
 import 'react-image-crop/dist/ReactCrop.css'
 import ReactPlayer from 'react-player'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 const demoName = 'astronaut-ar-trimmed.mp4'
 const { REACT_APP_ASSET_URL } = process.env
@@ -26,8 +27,7 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
   const [video, setVideo] = useState({
     src: null,
     file: null,
-    width: null,
-    height: null,
+    duration: null,
   })
 
   useEffect(() => {
@@ -77,19 +77,19 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
           }
 
           if (err.code === 'file-invalid-type') {
-            setError(`Please upload a valid video file`)
+            setError(`Please upload a valid video file (.mp4)`)
           }
         })
       })
       acceptedFiles.forEach(file => {
-        let imageSrc
+        let videoSrc
         const reader = new FileReader()
 
         reader.onabort = () => console.log('file reading was aborted')
         reader.onerror = () => console.log('file reading has failed')
         reader.onload = () => {
-          imageSrc = reader.result
-          setVideo({ src: imageSrc, file: acceptedFiles })
+          videoSrc = reader.result
+          setVideo({ src: videoSrc, file: acceptedFiles })
         }
         reader.readAsDataURL(file)
       })
@@ -97,7 +97,7 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
     const { getRootProps, getInputProps } = useDropzone({
       onDrop,
       multiple: false,
-      accept: 'video/*',
+      accept: 'video/mp4',
       maxSize: 100000000,
       maxFiles: 1,
     })
@@ -127,7 +127,14 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
           ) : (
             <Box>
               <Upload color="secondary" sx={{ fontSize: 40 }} />
-              <Typography>{error || `Drop here or click to select`}</Typography>
+              {error ? (
+                <Typography>{error}</Typography>
+              ) : (
+                <>
+                  <Typography>{`Upload a video.`}</Typography>
+                  <Typography>{`Video must be an .mp4`}</Typography>
+                </>
+              )}
             </Box>
           )}
         </Button>
@@ -135,17 +142,8 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
     )
   }
 
-  // const handleSelect = () => {
-  //   console.log('selected')
-  // }
-
-  const handleSelectFrame = () => {
-    return
-  }
-
   const handleSelectDemo = () => {
-    const data = { src: demoUrl, width: 600, height: 900 }
-    setVideo(data)
+    const data = { src: demoUrl, demo: true }
     submit(data)
     onClose()
   }
@@ -154,6 +152,8 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
     setVideo({ src: url })
     onClose()
   }
+
+  console.log('reloading')
 
   const ContentUpload = () => {
     return (
@@ -213,8 +213,8 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
                 {value === 1 && <FileUpload />}
                 {value === 2 && <FileUpload />}
                 {value === 3 && (
-                  <video
-                    src={demoUrl}
+                  <ReactPlayer
+                    url={demoUrl}
                     style={{
                       maxWidth: '440px',
                       maxHeight: '360px',
@@ -257,14 +257,16 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
     )
   }
 
-  const handleSubmit = () => {
-    submit(video)
-    onClose()
-  }
-
-  console.log(video.src)
-
   const ContentReplace = () => {
+    const [videoDuration, setVideoDuration] = useState(null)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const handleSubmit = () => {
+      setIsSubmitting(true)
+      onClose()
+      submit({ ...video, duration: videoDuration })
+    }
+
     return (
       <>
         <DialogTitle>
@@ -292,12 +294,15 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
               alignItems="center"
               justifyContent="center"
             >
-              <video
-                src={video.src}
+              <ReactPlayer
+                url={video.src}
                 style={{
                   maxWidth: '100%',
                   maxHeight: '100%',
                   objectFit: 'contain',
+                }}
+                onDuration={duration => {
+                  setVideoDuration(duration)
                 }}
                 muted
                 autoPlay
@@ -327,9 +332,13 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
                 Done
               </Button>
             ) : (
-              <Button variant="contained" onClick={handleSubmit}>
+              <LoadingButton
+                variant="contained"
+                onClick={handleSubmit}
+                loading={!videoDuration}
+              >
                 Save
-              </Button>
+              </LoadingButton>
             )}
           </Box>
         </DialogActions>

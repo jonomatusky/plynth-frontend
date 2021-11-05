@@ -53,6 +53,7 @@ const AddMediaButton = ({
     updateMedia({
       videoSrc: video.src,
       videoFile: video.file,
+      videoDuration: video.duration,
     })
   }
 
@@ -77,6 +78,7 @@ const AddMediaButton = ({
           open={open}
           imageUrl={imageSrc}
           videoUrl={videoSrc}
+          videoDuration={videoDuration}
           width={imageWidth}
           height={imageHeight}
           submitImage={submitImage}
@@ -179,7 +181,7 @@ const AddMediaButton = ({
                               alignItems="center"
                               position="absolute"
                             >
-                              <PlayArrow color="inherit" />
+                              <PlayArrow color="inherit" fontSize="large" />
                             </Box>
                             <ReactPlayer
                               ref={playerRef}

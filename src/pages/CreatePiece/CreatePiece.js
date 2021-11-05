@@ -40,6 +40,8 @@ const CreatePiece = () => {
   const { imageFile, imageSrc, imageWidth, imageHeight, videoFile, videoSrc } =
     media
 
+  console.log(media)
+
   const {
     selectPack,
     updatePack: updateReduxPack,
@@ -96,6 +98,8 @@ const CreatePiece = () => {
     setMedia({ ...media, ...newMedia })
   }
 
+  console.log('reloading')
+
   // const cardWidth =
 
   const DisplayCard = () => {
@@ -105,17 +109,19 @@ const CreatePiece = () => {
 
     useEffect(() => {
       if (hideImage) {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
           if (playerRef.current) {
             playerRef.current.currentTime = 0
             playerRef.current.play()
           }
           setHideImage(false)
         }, 4000)
+        return () => clearTimeout(timeout)
       } else {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
           setHideImage(true)
         }, 1000)
+        return () => clearTimeout(timeout)
       }
     }, [hideImage])
 
@@ -171,7 +177,7 @@ const CreatePiece = () => {
           <video
             src={videoSrc}
             ref={playerRef}
-            autoplay
+            autoPlay
             muted
             style={{
               position: 'absolute',
