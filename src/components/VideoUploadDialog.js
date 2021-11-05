@@ -19,7 +19,7 @@ const demoName = 'astronaut-ar-trimmed.mp4'
 const { REACT_APP_ASSET_URL } = process.env
 const demoUrl = REACT_APP_ASSET_URL + '/' + demoName
 
-const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
+const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
   const [value, setValue] = useState(0)
 
   // const [image, setImage] = useState({ url: url })
@@ -149,7 +149,7 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
   }
 
   const handleClose = () => {
-    setVideo({ src: url })
+    setVideo({ src: videoUrl })
     onClose()
   }
 
@@ -263,7 +263,10 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
 
     const handleSubmit = () => {
       setIsSubmitting(true)
-      onClose()
+      save()
+    }
+
+    const save = () => {
       submit({ ...video, duration: videoDuration })
     }
 
@@ -327,7 +330,7 @@ const ImageUploadDialog = ({ submit, url, videoUrl, open, onClose }) => {
             >
               Replace
             </Button>
-            {!!url && !video.src ? (
+            {videoUrl === video.src ? (
               <Button variant="contained" onClick={handleClose}>
                 Done
               </Button>

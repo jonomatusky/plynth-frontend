@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
-import { Grid, Typography, Container, Box } from '@mui/material'
+import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Grid, Typography, Container, Box, Button } from '@mui/material'
 // import { HashLink } from 'react-router-hash-link'
 
 import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
@@ -125,7 +125,19 @@ const Home = () => {
                     {content.subheading}
                   </Typography>
                   <Box maxWidth="350px">
-                    <FormWaitlist />
+                    <Button
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      sx={{ height: '51.5px' }}
+                      endIcon={<ArrowForward />}
+                      component={Link}
+                      to="/s/try-it"
+                    >
+                      <Typography letterSpacing={1} style={{ fontWeight: 900 }}>
+                        Try It
+                      </Typography>
+                    </Button>
                   </Box>
                 </Grid>
               </Grid>

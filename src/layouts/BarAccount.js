@@ -9,21 +9,23 @@ import {
   Typography,
   Link,
   Button,
+  IconButton,
+  Menu,
+  MenuItem,
 } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import theme from 'theme'
 import useUserStore from 'hooks/store/use-user-store'
-import ButtonSharePortal from 'components/ButtonSharePortal'
 import OnboardingTooltip from 'components/OnboardingTooltip'
 
 import Logo from 'images/plynth_logo_color.svg'
 import Image from 'components/Image'
+import { AccountCircle } from '@mui/icons-material'
+import { useSession } from 'hooks/use-session'
 
 // const drawerWidth = 70
-
-const { REACT_APP_PUBLIC_URL } = process.env
 
 const useStyles = makeStyles({
   appBar: {
@@ -43,10 +45,7 @@ const BarAccount = ({ children }) => {
   const { user } = useUserStore()
   const classes = useStyles()
   const location = useLocation()
-
-  const { username } = user || {}
-
-  const portalUrl = REACT_APP_PUBLIC_URL + '/' + username
+  const { logout } = useSession()
 
   const urlElements = location.pathname.split('/')
   const value = urlElements.slice(0, 3).join('/')
@@ -69,6 +68,20 @@ const BarAccount = ({ children }) => {
       ? 'old'
       : 'new'
 
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleOpen = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = event => {
+    setAnchorEl(null)
+  }
+
+  const handleLogout = async () => {
+    logout()
+  }
+
   return (
     <>
       <AppBar
@@ -83,7 +96,7 @@ const BarAccount = ({ children }) => {
               <Grid item sm={12} md={7} container alignItems="center">
                 <Grid item pl={1} pr={1}>
                   <RouterLink to="/admin">
-                    <Image src={Logo} height="28px" width="106px" />
+                    <Image src={Logo} height="24px" width="91px" />
                   </RouterLink>
                 </Grid>
                 {userType === 'new' ? (
@@ -97,7 +110,7 @@ const BarAccount = ({ children }) => {
                     >
                       <Box flexGrow={1}>
                         <Typography variant="h5">
-                          <b>Your Pieces</b>
+                          <b>Your Experiences</b>
                         </Typography>
                       </Box>
                     </Box>
@@ -143,7 +156,7 @@ const BarAccount = ({ children }) => {
                       <Tab
                         label={
                           <Typography>
-                            <b>Pieces</b>
+                            <b>AR</b>
                           </Typography>
                         }
                         component={RouterLink}
@@ -155,27 +168,28 @@ const BarAccount = ({ children }) => {
                   </Tabs>
                 )}
               </Grid>
-              {value === '/admin/pieces' ? (
-                <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
-                  <Box
-                    pl="24px"
-                    height="48px"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="flex-end"
-                    width="100%"
-                  >
-                    <Box pr={1}>
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        // onClick={handleClick}
-                        disableElevation
-                        sx={{ textTransform: 'none' }}
-                      >
-                        <b>Invite Friends</b>
-                      </Button>
-                    </Box>
+
+              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Box
+                  pl="24px"
+                  height="48px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  width="100%"
+                >
+                  <Box pr={1}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      // onClick={handleClick}
+                      disableElevation
+                      sx={{ textTransform: 'none' }}
+                    >
+                      <b>Invite Friends</b>
+                    </Button>
+                  </Box>
+                  {value === '/admin/pieces' && (
                     <Box pr={1}>
                       <Button
                         variant="contained"
@@ -187,39 +201,52 @@ const BarAccount = ({ children }) => {
                         <b>Upgrade</b>
                       </Button>
                     </Box>
+                  )}
+                  <Box pr={1}>
+                    <IconButton
+                      onClick={handleOpen}
+                      onMouseOver={handleOpen}
+                      size="large"
+                    >
+                      <AccountCircle fontSize="large" />
+                    </IconButton>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      open={Boolean(anchorEl)}
+                      transitionDuration={0}
+                      anchorOrigin={{
+                        horizontal: 'left',
+                        vertical: 'bottom',
+                      }}
+                      anchorPosition={{ left: 0, top: -20 }}
+                      onClose={handleClose}
+                      MenuListProps={{ onMouseLeave: handleClose }}
+                    >
+                      {user.admin && (
+                        <MenuItem component={RouterLink} to="/admin/super">
+                          🦸🏾‍♀️ Super Admin
+                        </MenuItem>
+                      )}
+                      <MenuItem component={RouterLink} to="/admin/account">
+                        My Account
+                      </MenuItem>
+                      {/* <MenuItem onClick={openOnboarding}>
+                              Show Onboarding
+                            </MenuItem> */}
+                      <MenuItem
+                        component={Link}
+                        href="https://help.plynth.com"
+                        target="_blank"
+                      >
+                        Get Help
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
                   </Box>
-                </Grid>
-              ) : (
-                <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
-                  <Box
-                    borderLeft={1}
-                    borderColor="divider"
-                    height="100%"
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    pl={2}
-                    pr={2}
-                  >
-                    {username && (
-                      <>
-                        <Typography variant="subtitle2">
-                          <b>Your Portal: </b>
-                          <Link
-                            href={portalUrl}
-                            target="_blank"
-                            color="inherit"
-                            underline="always"
-                          >
-                            {portalUrl}
-                          </Link>
-                        </Typography>
-                        <ButtonSharePortal url={portalUrl} />
-                      </>
-                    )}
-                  </Box>
-                </Grid>
-              )}
+                </Box>
+              </Grid>
             </>
           </Grid>
         </div>
@@ -227,6 +254,8 @@ const BarAccount = ({ children }) => {
       </AppBar>
 
       {/* <Box sx={{ display: { xs: 'block', md: 'none' } }}>{children}</Box>
+
+      
 
       <Box
         height="calc(100vh-48px)"

@@ -47,6 +47,7 @@ const AddMediaButton = ({
       imageHeight: image.height,
       imageWidth: image.width,
     })
+    handleClose()
   }
 
   const submitVideo = video => {
@@ -55,6 +56,7 @@ const AddMediaButton = ({
       videoFile: video.file,
       videoDuration: video.duration,
     })
+    handleClose()
   }
 
   const playerRef = useRef()

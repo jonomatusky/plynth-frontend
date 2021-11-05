@@ -25,11 +25,15 @@ import { useHistory } from 'react-router'
 import { useSession } from 'hooks/use-session'
 import BarAccount from 'layouts/BarAccount'
 import PreviewLayout from 'layouts/PreviewLayout'
+import useUserStore from 'hooks/store/use-user-store'
 
 const PacksView = () => {
   const history = useHistory()
   const { logout } = useSession()
   const { packs, status, createPack } = usePackStore()
+  const { user } = useUserStore()
+
+  const { username } = user || {}
 
   const packsFiltered = packs.filter(pack => {
     if ((pack.cards || []).length > 0 && pack.cards[0].type === 'ar') {
@@ -248,7 +252,7 @@ const PacksView = () => {
                 </Box>
               </Grid>
               <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
-                <PreviewLayout>
+                <PreviewLayout username={username}>
                   <Grid container justifyContent="center" spacing={3}>
                     <Grid item xs={12} container justifyContent="center">
                       <Box position="fixed">

@@ -25,6 +25,8 @@ import AdminNav from 'layouts/AdminNav'
 
 import BarEditPiece from 'layouts/BarEditPiece'
 import AddMediaButton from 'components/AddMediaButton'
+import CreateAccountDialog from './components/CreateAccountDialog'
+import { useSession } from 'hooks/use-session'
 
 const CreatePiece = () => {
   const [media, setMedia] = useState({
@@ -37,6 +39,8 @@ const CreatePiece = () => {
     videoSrc: null,
     videoUrl: null,
   })
+  const { user } = useSession()
+
   const { imageFile, imageSrc, imageWidth, imageHeight, videoFile, videoSrc } =
     media
 
@@ -191,9 +195,27 @@ const CreatePiece = () => {
     )
   }
 
+  const [signUpDialogIsOpen, setSignUpDialogIsOpen] = useState(true)
+
+  const submitPiece = () => {
+    return
+  }
+
+  const createPiece = () => {
+    if (!!user) {
+      submitPiece()
+    } else {
+      setSignUpDialogIsOpen(true)
+    }
+  }
+
   return (
     <>
       <BarEditPiece />
+      <CreateAccountDialog
+        open={signUpDialogIsOpen}
+        onClose={() => setSignUpDialogIsOpen(false)}
+      />
       <AdminNav>
         <Box
           height="calc(100vh - 48px)"
@@ -239,8 +261,9 @@ const CreatePiece = () => {
                               variant="contained"
                               fullWidth
                               disabled={!imageSrc || !videoSrc}
+                              onClick={createPiece}
                             >
-                              <b>Create Piece</b>
+                              <b>{`Create & Save`}</b>
                             </Button>
                           </Box>
                           <Box width="100%" display="flex" color="#cccccc">

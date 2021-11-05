@@ -46,6 +46,7 @@ import Admin from 'pages/Admin/Admin'
 import Pieces from 'pages/Pieces/Pieces'
 import EditPiece from 'pages/EditPiece/EditPiece'
 import CreatePiece from 'pages/CreatePiece/CreatePiece'
+import RestrictedPublicRoute from 'routes/RestrictedPublicRoute'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -94,6 +95,13 @@ const App = () => {
           return <></>
         }}
       />
+
+      <RestrictedPublicRoute
+        path="/s/try-it"
+        redirectPath={'/admin/pieces/new'}
+      >
+        <CreatePiece />
+      </RestrictedPublicRoute>
 
       <Route path="/s/subscribe">
         <Subscribe />

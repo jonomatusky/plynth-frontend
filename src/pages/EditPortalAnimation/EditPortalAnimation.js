@@ -12,6 +12,7 @@ import PreviewLayout from 'layouts/PreviewLayout'
 
 const EditPortalAnimation = () => {
   const { user, status, updateUser, updateStatus } = useUserStore()
+  const { username } = user || {}
 
   const portal = user.portal || {}
   const { style } = portal || {}
@@ -165,7 +166,7 @@ const EditPortalAnimation = () => {
               </Grid>
 
               <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
-                <PreviewLayout>
+                <PreviewLayout username={username}>
                   <Grid container justifyContent="center">
                     <Grid item xs={12} container justifyContent="center">
                       <LivePreviewPortalLoading
