@@ -9,7 +9,7 @@ const PrivateRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={() =>
-        initializing ? <></> : !!user ? children : <Redirect to="/" />
+        initializing ? <></> : !!user ? children : <Redirect to="/login" />
       }
     />
   )

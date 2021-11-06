@@ -112,7 +112,7 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
               >
                 <Typography variant="subtitle2">
                   <Link
-                    href="/#about"
+                    href="/"
                     color="inherit"
                     underline="always"
                     target="_blank"

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography, Link } from '@mui/material'
+import { Box, Typography, Link } from '@mui/material'
 
 import ButtonSharePortal from 'components/ButtonSharePortal'
 

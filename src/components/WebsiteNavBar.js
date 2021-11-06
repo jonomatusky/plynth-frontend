@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import {
   Grid,
@@ -15,7 +15,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 
 import { HashLink } from 'react-router-hash-link'
-import plynthLogoWhite from 'images/plynth_logo_white.svg'
+import plynthLogo from 'images/plynth_logo_color.svg'
 import { useSession } from 'hooks/use-session'
 
 const StyledLogo = styled('img')({
@@ -32,10 +32,6 @@ const StyledLogo = styled('img')({
 
 const WebsiteNavBar = ({ left, right, position, opacity }) => {
   const { user, initializing } = useSession()
-
-  useEffect(() => {
-    document.body.style.backgroundColor = '#000000'
-  }, [])
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -64,7 +60,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                   <Grid container direction="column" alignItems="center">
                     <StyledLogo
                       opacity={opacity}
-                      src={plynthLogoWhite}
+                      src={plynthLogo}
                       alt="Plynth Logo"
                     />
                   </Grid>
@@ -77,7 +73,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
           ) : (
             <>
               {!initializing && (
-                <Box color="white">
+                <Box>
                   <Box sx={{ display: { xs: 'block', md: 'none' } }}>
                     <MuiButton
                       variant="contained"
@@ -127,13 +123,13 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                         to={user ? '/admin' : '/login'}
                         size="small"
                         sx={{ textTransform: 'none' }}
-                        color="secondary"
                       >
-                        <Typography color="#BBBBBB">Sign In</Typography>
+                        <Typography>Sign In</Typography>
                       </MuiButton>
                     </Box>
 
                     <MuiButton
+                      variant="contained"
                       component={RouterLink}
                       to="/s/waitlist"
                       size="small"

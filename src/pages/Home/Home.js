@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory, useLocation } from 'react-router-dom'
-import { Grid, Typography, Container, Box, Button } from '@mui/material'
+import { useHistory, useLocation } from 'react-router-dom'
+import { Grid, Typography, Container, Box } from '@mui/material'
 // import { HashLink } from 'react-router-hash-link'
 
 import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
@@ -108,7 +108,6 @@ const Home = () => {
               >
                 <Grid item xs={11} mt={6}>
                   <Typography
-                    color="white"
                     variant="h3"
                     letterSpacing={1}
                     style={{ fontWeight: 800 }}
@@ -117,7 +116,6 @@ const Home = () => {
                     {content.heading}
                   </Typography>
                   <Typography
-                    color="white"
                     variant="h6"
                     pb={3}
                     style={{ whiteSpace: 'pre-line' }}
@@ -125,7 +123,7 @@ const Home = () => {
                     {content.subheading}
                   </Typography>
                   <Box maxWidth="350px">
-                    <Button
+                    {/* <Button
                       variant="contained"
                       size="large"
                       fullWidth
@@ -137,7 +135,8 @@ const Home = () => {
                       <Typography letterSpacing={1} style={{ fontWeight: 900 }}>
                         Try It
                       </Typography>
-                    </Button>
+                    </Button> */}
+                    <FormWaitlist />
                   </Box>
                 </Grid>
               </Grid>
@@ -196,7 +195,6 @@ const Home = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography
-                color="white"
                 variant="h4"
                 letterSpacing={1}
                 style={{ fontWeight: 800 }}
@@ -210,11 +208,7 @@ const Home = () => {
             {!!content.howSubheading && (
               <Grid item container xs={12} justifyContent="center" mb={2}>
                 <Grid item xs={10} sm={9} md={7} lg={5} pb={2}>
-                  <Typography
-                    color="white"
-                    letterSpacing={1}
-                    textAlign="center"
-                  >
+                  <Typography letterSpacing={1} textAlign="center">
                     {content.howSubheading}
                   </Typography>
                 </Grid>
@@ -231,10 +225,10 @@ const Home = () => {
             >
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
                 <Grid item xs={12} textAlign="center">
-                  <Videocam sx={{ color: 'white', fontSize: '80px' }} />
+                  <Videocam sx={{ fontSize: '80px' }} color="primary" />
                 </Grid>
                 <Grid item xs={12} textAlign="center">
-                  <Typography color="white" textAlign="center" mt={1}>
+                  <Typography textAlign="center" mt={1}>
                     {content.step1}
                   </Typography>
                 </Grid>
@@ -247,14 +241,14 @@ const Home = () => {
                 alignItems="center"
                 sx={{ display: { xs: 'none', xl: 'flex' } }}
               >
-                <ArrowForward sx={{ color: 'white', fontSize: '36px' }} />
+                <ArrowForward sx={{ fontSize: '36px' }} />
               </Grid>
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
                 <Grid item xs={12} textAlign="center">
-                  <ImageIcon sx={{ color: 'white', fontSize: '80px' }} />
+                  <ImageIcon sx={{ fontSize: '80px' }} color="primary" />
                 </Grid>
                 <Grid item xs={12} textAlign="center">
-                  <Typography color="white" textAlign="center" mt={1}>
+                  <Typography textAlign="center" mt={1}>
                     {content.step2}
                   </Typography>
                 </Grid>
@@ -267,14 +261,14 @@ const Home = () => {
                 alignItems="center"
                 sx={{ display: { xs: 'none', xl: 'flex' } }}
               >
-                <ArrowForward sx={{ color: 'white', fontSize: '36px' }} />
+                <ArrowForward sx={{ fontSize: '36px' }} />
               </Grid>
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
                 <Grid item xs={12} textAlign="center">
-                  <QrCodeScanner sx={{ color: 'white', fontSize: '80px' }} />
+                  <QrCodeScanner sx={{ fontSize: '80px' }} color="primary" />
                 </Grid>
                 <Grid item xs={12} textAlign="center">
-                  <Typography color="white" textAlign="center" mt={1}>
+                  <Typography textAlign="center" mt={1}>
                     {content.step3}
                   </Typography>
                 </Grid>
@@ -287,7 +281,6 @@ const Home = () => {
             </Grid>
             <Grid item xs={12} mt={10} pb={2}>
               <Typography
-                color="white"
                 variant="h5"
                 letterSpacing={1}
                 style={{ fontWeight: 800 }}
@@ -298,7 +291,7 @@ const Home = () => {
             </Grid>
             {!!content.creatorSubheading && (
               <Grid item xs={10} sm={8} md={6} lg={4} pb={2}>
-                <Typography color="white" letterSpacing={1} textAlign="center">
+                <Typography letterSpacing={1} textAlign="center">
                   {content.creatorSubheading}
                 </Typography>
               </Grid>
@@ -340,14 +333,10 @@ const Home = () => {
                         />
                       </Box>
 
-                      <Typography textAlign="center" color="white">
+                      <Typography textAlign="center">
                         <b>{highlight.fields.title}</b>
                       </Typography>
-                      <Typography
-                        variant="body2"
-                        textAlign="center"
-                        color="white"
-                      >
+                      <Typography variant="body2" textAlign="center">
                         {highlight.fields.text}
                       </Typography>
                     </Box>
@@ -366,7 +355,7 @@ const Home = () => {
               justifyContent="flex-end"
               sx={{ display: { xs: 'block', sm: 'none' } }}
             >
-              <ArrowForward sx={{ color: 'white' }} />
+              <ArrowForward />
             </Grid>
 
             <Grid
@@ -381,7 +370,7 @@ const Home = () => {
             {/* Use it for... Section */}
             <Grid item xs={12} container spacing={2} justifyContent="center">
               <Grid item xs={10} sm={6} md={6}>
-                <Box color="white" pb={2} textAlign="center">
+                <Box pb={2} textAlign="center">
                   <Typography variant="h4" letterSpacing={1}>
                     <b>{content.useHeading}</b>
                   </Typography>
@@ -389,9 +378,7 @@ const Home = () => {
                 {(content.uses || []).map((use, index) => {
                   return (
                     <Box mb="1em" key={index}>
-                      <Typography variant="h6" color="white">
-                        {use}
-                      </Typography>
+                      <Typography variant="h6">{use}</Typography>
                     </Box>
                   )
                 })}
@@ -404,11 +391,7 @@ const Home = () => {
                   <Grid item lg={3} md={4} sm={6} xs={10}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} pb={2}>
-                        <Typography
-                          variant="h6"
-                          textAlign="center"
-                          color="white"
-                        >
+                        <Typography variant="h6" textAlign="center">
                           {content.ctaBottom}
                         </Typography>
                       </Grid>

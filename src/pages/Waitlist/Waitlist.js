@@ -12,19 +12,17 @@ const Waitlist = () => {
         <>
           <Typography
             variant="body2"
-            color="white"
             sx={{ display: { xs: 'none', md: 'block' } }}
           >
             Already have an account?{' '}
           </Typography>
           <Button
-            color="secondary"
             component={RouterLink}
             to={'/login'}
             size="small"
             sx={{ textTransform: 'none' }}
           >
-            <Typography color="#BBBBBB">
+            <Typography>
               <b>Sign In</b>
             </Typography>
           </Button>
@@ -32,7 +30,7 @@ const Waitlist = () => {
       }
     >
       <Container maxWidth="xs">
-        <Box mt={10} color="white">
+        <Box mt={10}>
           <Typography variant="h4" mb={2}>
             <b>Join the Waitlist</b>
           </Typography>

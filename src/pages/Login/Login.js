@@ -104,13 +104,13 @@ const NewPortalSignUp = ({ title, text }) => {
           <form onSubmit={formik.handleSubmit}>
             <Grid container justifyContent="flex-start" spacing={3}>
               <Grid item xs={12} mb={2}>
-                <Typography variant="h4" color="white">
+                <Typography variant="h4">
                   <b>{title || 'Sign In'}</b>
                 </Typography>
               </Grid>
               {text && (
                 <Grid item xs={12} mb={2}>
-                  <Typography variant="h6" color="white">
+                  <Typography variant="h6">
                     <b>{text}</b>
                   </Typography>
                 </Grid>
@@ -141,11 +141,11 @@ const NewPortalSignUp = ({ title, text }) => {
                   }
                   helperText={formik.touched.password && formik.errors.password}
                 />
-                <Typography color="#cccccc" mt={1}>
+                <Typography mt={1}>
                   <Link
                     component={RouterLink}
                     to="/recover"
-                    color="inherit"
+                    color="secondary"
                     underline="hover"
                   >
                     Forgot password?

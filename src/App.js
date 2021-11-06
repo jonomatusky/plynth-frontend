@@ -32,11 +32,11 @@ import MyAccount from 'pages/MyAccount/MyAccount'
 import Portal from 'pages/Portal/Portal'
 import EditPortalAnimation from 'pages/EditPortalAnimation/EditPortalAnimation'
 import PortalOpen from 'pages/PortalOpen/PortalOpen'
-import Register from 'pages/Register/Register'
-import RegisterUsername from 'pages/RegisterUsername/RegisterUsername'
+// import Register from 'pages/Register/Register'
+// import RegisterUsername from 'pages/RegisterUsername/RegisterUsername'
 import SuperRoute from 'routes/SuperRoute'
 import SuperAdmin from 'pages/SuperAdmin/SuperAdmin'
-import SignUpWithCode from 'pages/SignUpWithCode/SignUpWithCode'
+// import SignUpWithCode from 'pages/SignUpWithCode/SignUpWithCode'
 import OnTheWaitlist from 'pages/OnTheWaitlist/OnTheWaitlist'
 import Recover from 'pages/Recover/Recover'
 import Help from 'pages/Help/Help'
@@ -44,9 +44,9 @@ import Subscribe from 'pages/Subscribe/Subscribe'
 import Waitlist from 'pages/Waitlist/Waitlist'
 import Admin from 'pages/Admin/Admin'
 import Pieces from 'pages/Pieces/Pieces'
+// import EditPiece from 'pages/EditPieceOLD/EditPiece'
 import EditPiece from 'pages/EditPiece/EditPiece'
-import CreatePiece from 'pages/CreatePiece/CreatePiece'
-import RestrictedPublicRoute from 'routes/RestrictedPublicRoute'
+import SignUp from 'pages/SignUp/SignUp'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -76,15 +76,17 @@ const App = () => {
         <Recover />
       </Route>
 
-      <PrivateRoute path="/register/username">
+      {/* <PrivateRoute path="/register/username">
         <RegisterUsername />
       </PrivateRoute>
 
       <Route path="/register">
         <Register />
-      </Route>
+      </Route> */}
 
-      <Redirect path="/signup" exact to="/register" />
+      <Route path="/signup" redirectPath={'/admin'} exact>
+        <SignUp />
+      </Route>
 
       <Route
         exact
@@ -95,13 +97,13 @@ const App = () => {
           return <></>
         }}
       />
-
+      {/* 
       <RestrictedPublicRoute
         path="/s/try-it"
         redirectPath={'/admin/pieces/new'}
       >
-        <CreatePiece />
-      </RestrictedPublicRoute>
+        <EditPiece />
+      </RestrictedPublicRoute> */}
 
       <Route path="/s/subscribe">
         <Subscribe />
@@ -113,9 +115,9 @@ const App = () => {
         <Help />
       </Route>
 
-      <Route path="/s/invite-code" exact>
+      {/* <Route path="/s/invite-code" exact>
         <SignUpWithCode />
-      </Route>
+      </Route> */}
       <Route path="/s/waitlist">
         <Waitlist />
       </Route>
@@ -125,9 +127,6 @@ const App = () => {
 
       <PrivateRoute path="/admin/pieces/:pieceId/edit">
         <EditPiece />
-      </PrivateRoute>
-      <PrivateRoute path="/admin/pieces/new">
-        <CreatePiece />
       </PrivateRoute>
       <PrivateRoute path="/admin/pieces">
         <Pieces />

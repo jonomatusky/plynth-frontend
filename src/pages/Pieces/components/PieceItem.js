@@ -6,7 +6,7 @@ import usePackStore from 'hooks/store/use-pack-store'
 import Image from 'components/Image'
 import PieceName from './PieceName'
 
-const PieceItem = ({ piece }) => {
+const PieceItem = ({ piece, isMobile }) => {
   const { updatePack } = usePackStore()
 
   const [name, setName] = useState('')
@@ -38,7 +38,8 @@ const PieceItem = ({ piece }) => {
         <CardActionArea
           sx={{ padding: '8px' }}
           component={Link}
-          to={`/admin/pieces/${piece.id}/edit`}
+          to={isMobile ? `/p/${piece.id}` : `/admin/pieces/${piece.id}/edit`}
+          target={isMobile ? '_black' : null}
         >
           <Box
             height="240px"

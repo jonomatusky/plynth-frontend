@@ -1,5 +1,5 @@
-import React from 'react'
-import { Grid, Typography, Button, Box } from '@mui/material'
+import React, { useState } from 'react'
+import { Grid, Typography, Box } from '@mui/material'
 import * as yup from 'yup'
 import ReactGA from 'react-ga'
 
@@ -8,6 +8,7 @@ import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import useUserStore from 'hooks/store/use-user-store'
 import { ArrowForward } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 
 const validationSchema = yup.object({
   email: yup
@@ -17,13 +18,16 @@ const validationSchema = yup.object({
 })
 
 const FormWaitlist = ({ title, text }) => {
-  const { subscribe, subscribeStatus } = useUserStore()
+  const { subscribe } = useUserStore()
   const { setError } = useAlertStore()
 
+  const [status, setStatus] = useState()
+
   const handleSubmit = async values => {
-    if (subscribeStatus !== 'loading') {
+    setStatus('loading')
+    if (status !== 'loading') {
       try {
-        subscribe({ email: values.email, tags: ['waitlist'] })
+        await subscribe({ email: values.email, tags: ['waitlist'] })
       } catch (err) {
         setError({
           message: 'There was an error submitting the form. Please try again.',
@@ -38,6 +42,8 @@ const FormWaitlist = ({ title, text }) => {
       } catch (err) {
         console.log('error with GA')
       }
+
+      setStatus('succeeded')
     }
   }
 
@@ -53,18 +59,18 @@ const FormWaitlist = ({ title, text }) => {
 
   return (
     <>
-      {subscribeStatus === 'succeeded' && (
+      {status === 'succeeded' && (
         <Box height="151px">
           <Grid container justifyContent="flex-start" spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h6" color="white" textAlign="center">
+              <Typography variant="h6" textAlign="center">
                 You're on the list!
               </Typography>
             </Grid>
           </Grid>
         </Box>
       )}
-      {subscribeStatus !== 'succeeded' && (
+      {status !== 'succeeded' && (
         <form onSubmit={formik.handleSubmit}>
           <Grid container justifyContent="flex-start" spacing={3}>
             <Grid item xs={12}>
@@ -80,18 +86,19 @@ const FormWaitlist = ({ title, text }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button
+              <LoadingButton
                 type="submit"
                 variant="contained"
                 size="large"
                 fullWidth
                 sx={{ height: '51.5px' }}
                 endIcon={<ArrowForward />}
+                loading={status === 'loading'}
               >
                 <Typography letterSpacing={1} style={{ fontWeight: 600 }}>
                   Join the Waitlist
                 </Typography>
-              </Button>
+              </LoadingButton>
             </Grid>
           </Grid>
         </form>

@@ -75,7 +75,7 @@ const PortalFull = ({ portalUser, onClose }) => {
               >
                 <Typography variant="subtitle2">
                   <Link
-                    href="/#about"
+                    href="/"
                     color="inherit"
                     underline="always"
                     target="_blank"

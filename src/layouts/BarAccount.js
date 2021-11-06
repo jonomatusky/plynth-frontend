@@ -5,7 +5,6 @@ import {
   Tabs,
   Tab,
   Box,
-  Grid,
   Typography,
   Link,
   Button,
@@ -39,7 +38,7 @@ const useStyles = makeStyles({
   },
 })
 
-const BarAccount = ({ children }) => {
+const BarAccount = ({ right, left, children }) => {
   const [portalTooltipIsOpen, setPortalTooltipIsOpen] = useState(true)
 
   const { user } = useUserStore()
@@ -84,42 +83,22 @@ const BarAccount = ({ children }) => {
 
   return (
     <>
-      <AppBar
-        position="fixed"
-        className={classes.appBar}
-        elevation={0}
-        sx={{ display: { xs: 'none', md: 'block' } }}
-      >
-        <div style={{ width: '100%' }}>
-          <Grid container>
+      <AppBar position="fixed" className={classes.appBar} elevation={0}>
+        <Box width="100%" display="flex" alignItems="center">
+          {left || (
             <>
-              <Grid item sm={12} md={7} container alignItems="center">
-                <Grid item pl={1} pr={1}>
-                  <RouterLink to="/admin">
-                    <Image src={Logo} height="24px" width="91px" />
-                  </RouterLink>
-                </Grid>
-                {userType === 'new' ? (
-                  <Grid item container>
-                    <Box
-                      pl="24px"
-                      height="48px"
-                      display="flex"
-                      alignItems="center"
-                      width="100%"
-                    >
-                      <Box flexGrow={1}>
-                        <Typography variant="h5">
-                          <b>Your Experiences</b>
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-                ) : (
+              <Box ml={2}>
+                <RouterLink to="/admin">
+                  <Image src={Logo} height="24px" width="91px" />
+                </RouterLink>
+              </Box>
+              <Box flexGrow={1} height="100%" alignItems="flex-end">
+                {userType !== 'new' && (
                   <Tabs
                     value={value}
                     indicatorColor="primary"
                     textColor="primary"
+                    sx={{ display: { xs: 'none', md: 'flex' } }}
                   >
                     <Tab
                       label={
@@ -151,120 +130,92 @@ const BarAccount = ({ children }) => {
                       value="/admin/portal"
                       classes={{ root: classes.tabRoot }}
                     />
-
-                    {user.admin && (
-                      <Tab
-                        label={
-                          <Typography>
-                            <b>AR</b>
-                          </Typography>
-                        }
-                        component={RouterLink}
-                        to="/admin/pieces"
-                        value="/admin/pieces"
-                        classes={{ root: classes.tabRoot }}
-                      />
-                    )}
+                    <Tab
+                      label={
+                        <Typography>
+                          <b>AR (beta)</b>
+                        </Typography>
+                      }
+                      component={RouterLink}
+                      to="/admin/pieces"
+                      value="/admin/pieces"
+                      classes={{ root: classes.tabRoot }}
+                    />
                   </Tabs>
                 )}
-              </Grid>
-
-              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
-                <Box
-                  pl="24px"
-                  height="48px"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                  width="100%"
-                >
-                  <Box pr={1}>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      // onClick={handleClick}
-                      disableElevation
-                      sx={{ textTransform: 'none' }}
-                    >
-                      <b>Invite Friends</b>
-                    </Button>
-                  </Box>
-                  {value === '/admin/pieces' && (
-                    <Box pr={1}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        // onClick={handleClick}
-                        disableElevation
-                        sx={{ textTransform: 'none' }}
-                      >
-                        <b>Upgrade</b>
-                      </Button>
-                    </Box>
-                  )}
-                  <Box pr={1}>
-                    <IconButton
-                      onClick={handleOpen}
-                      onMouseOver={handleOpen}
-                      size="large"
-                    >
-                      <AccountCircle fontSize="large" />
-                    </IconButton>
-                    <Menu
-                      id="simple-menu"
-                      anchorEl={anchorEl}
-                      open={Boolean(anchorEl)}
-                      transitionDuration={0}
-                      anchorOrigin={{
-                        horizontal: 'left',
-                        vertical: 'bottom',
-                      }}
-                      anchorPosition={{ left: 0, top: -20 }}
-                      onClose={handleClose}
-                      MenuListProps={{ onMouseLeave: handleClose }}
-                    >
-                      {user.admin && (
-                        <MenuItem component={RouterLink} to="/admin/super">
-                          🦸🏾‍♀️ Super Admin
-                        </MenuItem>
-                      )}
-                      <MenuItem component={RouterLink} to="/admin/account">
-                        My Account
-                      </MenuItem>
-                      {/* <MenuItem onClick={openOnboarding}>
-                              Show Onboarding
-                            </MenuItem> */}
-                      <MenuItem
-                        component={Link}
-                        href="https://help.plynth.com"
-                        target="_blank"
-                      >
-                        Get Help
-                      </MenuItem>
-                      <Divider />
-                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                    </Menu>
-                  </Box>
-                </Box>
-              </Grid>
+              </Box>
             </>
-          </Grid>
-        </div>
+          )}
+          {right || (
+            <>
+              <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  // onClick={handleClick}
+                  disableElevation
+                  sx={{ textTransform: 'none' }}
+                >
+                  <b>Invite Friends</b>
+                </Button>
+              </Box>
+              {value === '/admin/pieces' && (
+                <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    // onClick={handleClick}
+                    disableElevation
+                    sx={{ textTransform: 'none' }}
+                  >
+                    <b>Upgrade</b>
+                  </Button>
+                </Box>
+              )}
+              <Box pr={1}>
+                <IconButton onClick={handleOpen} onMouseOver={handleOpen}>
+                  <AccountCircle fontSize="large" />
+                </IconButton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  transitionDuration={0}
+                  anchorOrigin={{
+                    horizontal: 'left',
+                    vertical: 'bottom',
+                  }}
+                  anchorPosition={{ left: 0, top: -20 }}
+                  onClose={handleClose}
+                  MenuListProps={{ onMouseLeave: handleClose }}
+                >
+                  {user.admin && (
+                    <MenuItem component={RouterLink} to="/admin/super">
+                      🦸🏾‍♀️ Super Admin
+                    </MenuItem>
+                  )}
+                  <MenuItem component={RouterLink} to="/admin/account">
+                    My Account
+                  </MenuItem>
+                  {/* <MenuItem onClick={openOnboarding}>
+                            Show Onboarding
+                          </MenuItem> */}
+                  <MenuItem
+                    component={Link}
+                    href="https://help.plynth.com"
+                    target="_blank"
+                  >
+                    Get Help
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </Box>
+            </>
+          )}
+        </Box>
         <Divider />
       </AppBar>
-
-      {/* <Box sx={{ display: { xs: 'block', md: 'none' } }}>{children}</Box>
-
-      
-
-      <Box
-        height="calc(100vh-48px)"
-        mt="48px"
-        overflow="hidden"
-        sx={{ display: { xs: 'none', md: 'block' } }}
-      >
-        {children}
-      </Box> */}
     </>
   )
 }

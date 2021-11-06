@@ -24,12 +24,7 @@ const PowerBar = ({ style }) => {
         }}
       >
         <Typography variant="subtitle2">
-          <Link
-            href="/#about"
-            color="inherit"
-            underline="always"
-            target="_blank"
-          >
+          <Link href="/" color="inherit" underline="always" target="_blank">
             Powered by Plynth
           </Link>
         </Typography>
