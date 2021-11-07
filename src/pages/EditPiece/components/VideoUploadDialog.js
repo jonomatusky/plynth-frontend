@@ -153,8 +153,6 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
     onClose()
   }
 
-  console.log('reloading')
-
   const ContentUpload = () => {
     return (
       <>

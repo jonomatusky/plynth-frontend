@@ -8,8 +8,6 @@ export default function usePageTrack() {
   const { pathname, search, hash } = useLocation()
   const { user } = useUserStore()
 
-  console.log(pathname)
-
   useEffect(() => {
     posthog.capture('$pageview')
   }, [pathname, hash, user])

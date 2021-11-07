@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Box, Typography, TextField, CardActionArea } from '@mui/material'
+import { Card, Box, TextField, CardActionArea } from '@mui/material'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import Image from 'components/Image'
 import PieceName from './PieceName'
+import { VideoCameraBack } from '@mui/icons-material'
 
 const PieceItem = ({ piece, isMobile }) => {
   const { updatePack } = usePackStore()
@@ -24,16 +25,16 @@ const PieceItem = ({ piece, isMobile }) => {
     }
   }
 
-  const { imageHeight, imageWidth, videoDuration, imageUrl } = piece.cards[0]
-  const aspect =
-    imageHeight / imageWidth === 1.5
-      ? '2x3 (4"x6")'
-      : imageWidth / imageHeight === 1.5
-      ? '3x2 (6"x4")'
-      : `${imageWidth}x${imageHeight}px`
+  const { imageUrl } = piece.cards[0]
+  // const aspect =
+  //   imageHeight / imageWidth === 1.5
+  //     ? '2x3 (4"x6")'
+  //     : imageWidth / imageHeight === 1.5
+  //     ? '3x2 (6"x4")'
+  //     : `${imageWidth}x${imageHeight}px`
 
   return (
-    <Box display="flex" flexWrap="wrap" width="256px" mr={4}>
+    <Box display="flex" flexWrap="wrap" width="256px" height="300px" mr={4}>
       <Card>
         <CardActionArea
           sx={{ padding: '8px' }}
@@ -51,17 +52,23 @@ const PieceItem = ({ piece, isMobile }) => {
           >
             <Box
               width="240px"
-              height="220px"
+              height="240px"
               display="flex"
               alignItems="center"
               justifyContent="center"
             >
-              <Image
-                src={imageUrl}
-                style={{ maxHeight: '204px', maxWidth: '100%' }}
-              />
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  style={{ maxHeight: '224px', maxWidth: '100%' }}
+                />
+              ) : (
+                <VideoCameraBack
+                  sx={{ fontSize: '128px', color: '#00000044' }}
+                />
+              )}
             </Box>
-            <Box
+            {/* <Box
               width="100%"
               height="20px"
               display="flex"
@@ -76,7 +83,7 @@ const PieceItem = ({ piece, isMobile }) => {
                   {videoDuration || ''} sec
                 </Typography>
               </Box>
-            </Box>
+            </Box> */}
           </Box>
         </CardActionArea>
       </Card>

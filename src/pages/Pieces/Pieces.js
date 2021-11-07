@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { Container, Box, Typography, Button } from '@mui/material'
 import { Add } from '@mui/icons-material'
 
@@ -8,6 +9,7 @@ import BarAccount from 'layouts/BarAccount'
 import PieceItem from './components/PieceItem'
 
 const Pieces = () => {
+  const history = useHistory()
   const { packs, createPack } = usePackStore()
 
   const pieces = packs.filter(pack => {
@@ -19,7 +21,7 @@ const Pieces = () => {
   })
 
   const createExperience = async () => {
-    await createPack({
+    const newExperience = await createPack({
       name: 'My New Pack',
       style: { backgroundColor: '#FFF9F0', fontColor: '#333333' },
       isPublic: false,
@@ -30,6 +32,7 @@ const Pieces = () => {
         },
       ],
     })
+    history.push(`/admin/pieces/${newExperience.id}/edit`)
   }
 
   return (

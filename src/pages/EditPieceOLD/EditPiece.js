@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import {
-  Grid,
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button as MuiButton,
-  Paper,
-} from '@mui/material'
+import { Grid, Box, Paper } from '@mui/material'
 import { Link as LinkIcon } from '@mui/icons-material'
 
 import usePackStore from 'hooks/store/use-pack-store'

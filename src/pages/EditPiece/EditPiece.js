@@ -23,7 +23,7 @@ import AdminNav from 'layouts/AdminNav'
 
 import BarEditPiece from 'layouts/BarEditPiece'
 import AddMediaButton from './components/AddMediaButton'
-import CreateAccountDialog from './components/WelcomeDialog'
+import WelcomeDialog from './components/WelcomeDialog'
 import { useSession } from 'hooks/use-session'
 
 const CreatePiece = () => {
@@ -100,8 +100,6 @@ const CreatePiece = () => {
   const handleUpdateMedia = newMedia => {
     setMedia({ ...media, ...newMedia })
   }
-
-  console.log('reloading')
 
   // const cardWidth =
 
@@ -195,7 +193,7 @@ const CreatePiece = () => {
   }
 
   const [welcomeDialogIsOpen, setWelcomeDialogIsOpen] = useState(
-    packs.length === 0
+    packs.length === 1 && !imageSrc && !videoSrc
   )
 
   const submitPiece = () => {
@@ -213,8 +211,8 @@ const CreatePiece = () => {
   return (
     <>
       <BarEditPiece />
-      <CreateAccountDialog
-        open={setWelcomeDialogIsOpen}
+      <WelcomeDialog
+        open={welcomeDialogIsOpen}
         onClose={() => setWelcomeDialogIsOpen(false)}
       />
       <AdminNav isPublic>

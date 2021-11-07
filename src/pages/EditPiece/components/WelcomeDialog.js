@@ -14,7 +14,7 @@ import { Close } from '@mui/icons-material'
 
 const WelcomeDialog = ({ open, onClose }) => {
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="xs">
+    <Dialog open={open} onClose={onClose} maxWidth="sm" transitionDuration={0}>
       <DialogTitle>
         <Box width="100%" display="flex" justifyContent="space-between" mt={2}>
           <Box>Welcome to Plynth</Box>

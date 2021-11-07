@@ -37,8 +37,6 @@ export const useFetch = () => {
   }, [user, history, fetchUser, fetchUserStatus, setError])
 
   useEffect(() => {
-    console.log(fetchUserStatus)
-    console.log(storeUser)
     if (fetchUserStatus === 'succeeded' && !storeUser._id) {
       createMe({})
     }
