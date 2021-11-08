@@ -18,9 +18,13 @@ import {
   QrCode2,
   VideoCameraBack,
   AutoFixHigh,
+  Download,
+  FilterNone,
+  ArrowForward,
 } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import QRCode from 'qrcode.react'
+import copy from 'copy-to-clipboard'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
@@ -33,10 +37,11 @@ import { useRequest } from 'hooks/use-request'
 import { useAlertStore } from 'hooks/store/use-alert-store'
 import axios from 'axios'
 import { loadImgAsync } from 'util/imageHandling'
+import DownloadQR from 'components/DownloadQr'
 
 const { REACT_APP_ASSET_URL, REACT_APP_PUBLIC_URL } = process.env
 
-const CreatePiece = () => {
+const EditPiece = () => {
   const { user } = useSession()
 
   const { selectPack, packs, updatePack, status, updateStatus } = usePackStore()
@@ -89,7 +94,7 @@ const CreatePiece = () => {
     const playerRef = useRef()
 
     useEffect(() => {
-      if (video && image && !targets) {
+      if (!!video && !targets && !isLoading) {
         if (hideImage) {
           const timeout = setTimeout(() => {
             if (playerRef.current) {
@@ -105,9 +110,12 @@ const CreatePiece = () => {
           }, 1000)
           return () => clearTimeout(timeout)
         }
-      } else {
+      } else if (targets) {
         setHideImage(false)
         setHideVideo(true)
+      } else {
+        setHideImage(false)
+        setHideVideo(false)
       }
     }, [hideImage])
 
@@ -190,18 +198,11 @@ const CreatePiece = () => {
     setIsLoading(true)
 
     try {
-      console.log(imageSrc)
-
-      console.log('creating')
-
       const response = await axios.request({
         url: imageSrc,
         responseType: 'blob',
       })
 
-      console.log(response)
-
-      console.log('got image response')
       const blob = response.data
       const src = await URL.createObjectURL(blob)
 
@@ -275,7 +276,7 @@ const CreatePiece = () => {
                 <Grid item xs={11} lg={9}>
                   <Box margin={4}>
                     <Paper>
-                      <Box padding={4} pb={1}>
+                      <Box padding={4} pb={2}>
                         <Box
                           display="flex"
                           justifyContent="space-around"
@@ -306,6 +307,7 @@ const CreatePiece = () => {
                             <AddMediaButton
                               mediaType="video"
                               updateMedia={handleUpdateMedia}
+                              videoDuration={videoDuration}
                               videoSrc={videoSrc}
                               disabled={!!targets}
                             />
@@ -316,7 +318,15 @@ const CreatePiece = () => {
                               fullWidth
                               disabled={!imageSrc || !videoSrc || !!targets}
                               onClick={getImageTargets}
-                              endIcon={<AutoFixHigh />}
+                              endIcon={
+                                targets ? (
+                                  <ArrowForward
+                                    sx={{ transform: 'rotate(45deg)' }}
+                                  />
+                                ) : (
+                                  <AutoFixHigh />
+                                )
+                              }
                               loading={isLoading}
                               loadingPosition="end"
                               sx={{
@@ -329,7 +339,7 @@ const CreatePiece = () => {
                               {isLoading ? (
                                 <b>Building experience... {percent}%</b>
                               ) : targets ? (
-                                <b>Published!</b>
+                                <b>Ready to Go!</b>
                               ) : (
                                 <b>Create Experience</b>
                               )}
@@ -413,8 +423,8 @@ const CreatePiece = () => {
                                       sx={{ textTransform: 'none' }}
                                       endIcon={<Launch />}
                                       color="inherit"
-                                      component={Link}
-                                      to={`/preview/${pieceId}/${media.id}`}
+                                      href={`/preview/${pieceId}/${media.id}`}
+                                      target="_blank"
                                       disabled={!targets}
                                     >
                                       View Preview Page
@@ -423,36 +433,96 @@ const CreatePiece = () => {
                                 </Box>
                               </Box>
                             </Box>
-                            <Box>
-                              <Box width="144px" height="144px">
+                            <Box
+                              display="flex"
+                              justifyContent="center"
+                              alignItems="flex-start"
+                              flexWrap="wrap"
+                              height="100%"
+                              ml={1}
+                            >
+                              <Box width="120px" height="120px" m={1} mb={0}>
                                 {targets ? (
-                                  <>
-                                    <QRCode
-                                      size={144}
-                                      id="qr"
-                                      value={experiencePage}
-                                      includeMargin={true}
-                                    />
-                                    <Button size="small">Download QR</Button>
-                                    <Button size="small">Copy Link</Button>
-                                  </>
+                                  <QRCode
+                                    size={120}
+                                    id="qr"
+                                    value={experiencePage}
+                                  />
                                 ) : (
-                                  <QrCode2 sx={{ fontSize: 144 }} />
+                                  <QrCode2 sx={{ fontSize: 120 }} />
                                 )}
+                              </Box>
+                              <Box
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                pt={2}
+                              >
+                                <Typography>
+                                  <b>Try It!</b>
+                                </Typography>
+                                <ArrowForward fontSize="small" />
                               </Box>
                             </Box>
                           </Box>
-                          <Box width="320px" mt={3} mb={1}>
+                          <Box
+                            width="400px"
+                            mt={1}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            <Typography
+                              variant="caption"
+                              textAlign="center"
+                              mt={2}
+                            >
+                              Ready to print? Download the QR code to include in
+                              your designs.
+                            </Typography>
+                          </Box>
+                          <Box width="320px" mb={1} mt={1}>
+                            <DownloadQR
+                              qrValue={experiencePage}
+                              fileName={pieceId}
+                            >
+                              <Button
+                                variant="contained"
+                                fullWidth
+                                endIcon={<Download />}
+                                disabled={!targets}
+                              >
+                                Download QR Code
+                              </Button>
+                            </DownloadQR>
+                            <Box
+                              width="320px"
+                              mt={1}
+                              display="flex"
+                              justifyContent="center"
+                            >
+                              <Button
+                                size="small"
+                                color="secondary"
+                                endIcon={<FilterNone />}
+                                onClick={() => copy(experiencePage)}
+                                disabled={!targets}
+                              >
+                                Copy Link
+                              </Button>
+                            </Box>
+                          </Box>
+                          {/* <Box width="320px" mt={3} mb={1}>
                             <Button variant="contained" fullWidth disabled>
                               <b>Download Print Files</b>
                             </Button>
                           </Box>
-                          <Box mb={1} color="#cccccc">
+                          <Box color="#cccccc">
                             <Typography variant="caption">
                               Need help printing? Check out our list of{' '}
                               <u>local and national printers</u>
                             </Typography>
-                          </Box>
+                          </Box> */}
                         </Box>
                       </Box>
                     </Paper>
@@ -491,4 +561,4 @@ const CreatePiece = () => {
   )
 }
 
-export default CreatePiece
+export default EditPiece

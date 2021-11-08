@@ -123,8 +123,8 @@ const SignUpForm = () => {
       if (storeUser) {
         try {
           const createdPack = await createPack({
-            name: 'My New Pack',
-            style: { backgroundColor: '#FFF9F0', fontColor: '#333333' },
+            name: 'My New Experience',
+            style: { backgroundColor: '#fafafa', fontColor: '#222222' },
             isPublic: false,
             shareWithLink: true,
             cards: [

@@ -10,18 +10,11 @@ import ScanInstructions from 'images/scan-instruction.svg'
 import LoadingScreen from 'components/LoadingScreen'
 import { use100vh } from 'hooks/use-100-vh'
 
-const { REACT_APP_ASSET_URL } = process.env
 const ARPack = ({ pack }) => {
-  const { video, targets } = pack.cards[0]
+  const { assetUrl, targetsUrl } = pack.cards[0]
   const sceneRef = useRef(null)
   const [isFound, setIsFound] = useState(false)
   const [showPreload, setShowPreload] = useState(true)
-
-  const assetUrl = REACT_APP_ASSET_URL + '/' + video
-  const targetsUrl = REACT_APP_ASSET_URL + '/' + targets
-
-  console.log(assetUrl)
-  console.log(targetsUrl)
 
   document.body.style.backgroundColor = '#000000'
 
@@ -214,14 +207,14 @@ const ARPack = ({ pack }) => {
             <video
               id="asset"
               className="video"
-              src={assetUrl}
+              src={`${assetUrl}`}
               preload="auto"
               controls
               muted
               crossOrigin="anonymous"
               loop
               playsInline
-            />
+            ></video>
           </a-assets>
 
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>

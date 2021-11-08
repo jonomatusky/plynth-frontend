@@ -10,7 +10,7 @@ const DownloadQR = ({ children, qrValue, fileName }) => {
       .replace('image/png', 'image/octet-stream')
     let downloadLink = document.createElement('a')
     downloadLink.href = pngUrl
-    downloadLink.download = fileName || `Plynth_Portal_QR.png`
+    downloadLink.download = fileName + '.png' || `Plynth_Portal_QR.png`
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
@@ -32,7 +32,6 @@ const DownloadQR = ({ children, qrValue, fileName }) => {
         id="qr-gen"
         value={qrValue}
         size={290}
-        level={'H'}
         includeMargin={true}
       />
     </>

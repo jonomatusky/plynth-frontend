@@ -140,14 +140,43 @@ const SignUp = () => {
       <CreateAccountDialog open={true} />
       <PublicNav hideFooter hideNavBar backgroundColor="#fafafa">
         <Box
-          height="calc(100vh - 48px)"
+          position="aboslute"
+          top="0"
+          bottom="0"
+          left="0"
+          right="0"
+          zIndex={10}
+          sx={{ display: { xs: 'block', md: 'none' } }}
+        >
+          {videoSrc && (
+            <video
+              src={videoSrc}
+              autoPlay
+              loop
+              muted
+              style={{
+                position: 'absolute',
+                height: '100%',
+                width: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          )}
+        </Box>
+        <Box
+          height="calc(100vh)"
           width="100%"
           overflow="auto"
           display="flex"
           alignContent="center"
+          pt={3}
         >
           <Container disableGutters maxWidth="lg">
-            <Grid container justifyContent="flex-start">
+            <Grid
+              container
+              justifyContent="flex-start"
+              sx={{ display: { xs: 'none', md: 'flex' } }}
+            >
               <Grid item sm={12} md={7} container justifyContent="center">
                 <Grid item xs={11} lg={9}>
                   <Box margin={4}>
@@ -286,7 +315,7 @@ const SignUp = () => {
                   </Box>
                 </Grid>
               </Grid>
-              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+              <Grid item xs={12} md={5}>
                 <Box
                   width="100%"
                   display="flex"

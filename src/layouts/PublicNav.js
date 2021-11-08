@@ -25,7 +25,7 @@ const PublicNav = ({
     <Box minHeight={height} position="relative" width="100%">
       {!hideNavBar && <WebsiteNavBar {...props} />}
       <main style={{ backgroundColor }}>
-        <Box height={hideNavBar ? '32px' : '64px'} width="100%" />
+        <Box height={hideNavBar ? '0px' : '64px'} width="100%" />
         {children}
       </main>
       <footer>

@@ -19,7 +19,7 @@ import { set } from 'react-ga'
 
 const demoName = 'astronaut-ar-trimmed.mp4'
 const { REACT_APP_ASSET_URL } = process.env
-const demoUrl = REACT_APP_ASSET_URL + '/' + demoName
+const demoSrc = REACT_APP_ASSET_URL + '/' + demoName
 
 const ImageUploadDialog = ({
   submit,
@@ -257,8 +257,8 @@ const ImageUploadDialog = ({
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <video
-                    src={demoUrl}
+                  <ReactPlayer
+                    url={videoUrl}
                     style={{
                       maxWidth: '440px',
                       maxHeight: '360px',
@@ -344,7 +344,7 @@ const ImageUploadDialog = ({
                   setDuration(duration)
                 }}
                 muted
-                playing
+                autoPlay
                 loop
                 alt="Uploaded"
               />
