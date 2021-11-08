@@ -20,6 +20,7 @@ import {
   AutoFixHigh,
 } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
+import QRCode from 'qrcode.react'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
@@ -33,7 +34,7 @@ import { useAlertStore } from 'hooks/store/use-alert-store'
 import axios from 'axios'
 import { loadImgAsync } from 'util/imageHandling'
 
-const { REACT_APP_ASSET_URL } = process.env
+const { REACT_APP_ASSET_URL, REACT_APP_PUBLIC_URL } = process.env
 
 const CreatePiece = () => {
   const { user } = useSession()
@@ -41,6 +42,7 @@ const CreatePiece = () => {
   const { selectPack, packs, updatePack, status, updateStatus } = usePackStore()
 
   const { pieceId } = useParams()
+  const experiencePage = REACT_APP_PUBLIC_URL + '/p/' + pieceId
 
   const pack = selectPack(pieceId)
 
@@ -82,11 +84,12 @@ const CreatePiece = () => {
 
   const DisplayCard = () => {
     const [hideImage, setHideImage] = useState(!!video)
+    const [hideVideo, setHideVideo] = useState(!!targets)
 
     const playerRef = useRef()
 
     useEffect(() => {
-      if (video && image) {
+      if (video && image && !targets) {
         if (hideImage) {
           const timeout = setTimeout(() => {
             if (playerRef.current) {
@@ -102,6 +105,9 @@ const CreatePiece = () => {
           }, 1000)
           return () => clearTimeout(timeout)
         }
+      } else {
+        setHideImage(false)
+        setHideVideo(true)
       }
     }, [hideImage])
 
@@ -153,7 +159,7 @@ const CreatePiece = () => {
             />
           </Fade>
         )}
-        {videoSrc && (
+        {videoSrc && !hideVideo && (
           <video
             src={videoSrc}
             ref={playerRef}
@@ -182,23 +188,29 @@ const CreatePiece = () => {
 
   const getImageTargets = async () => {
     setIsLoading(true)
+
     try {
       console.log(imageSrc)
 
       console.log('creating')
 
-      const response = await axios.get(imageSrc)
+      const response = await axios.request({
+        url: imageSrc,
+        responseType: 'blob',
+      })
+
+      console.log(response)
 
       console.log('got image response')
       const blob = response.data
-      const src = URL.createObjectURL(blob)
+      const src = await URL.createObjectURL(blob)
 
       let img = await loadImgAsync(src)
       URL.revokeObjectURL(src)
 
       const compiler = new window.MINDAR.IMAGE.Compiler()
       await compiler.compileImageTargets([img], progress => {
-        setPercent(progress.toFixed(2))
+        setPercent(progress.toFixed(0))
       })
 
       const exportedBuffer = await compiler.exportData()
@@ -222,10 +234,11 @@ const CreatePiece = () => {
 
       await updatePack({
         id: pieceId,
-        isPublid: true,
+        isPublic: true,
         cards: [{ ...media, targets: imageFilepath }],
       })
     } catch (err) {
+      console.log(err)
       console.log(err.message)
       setError({
         message:
@@ -284,23 +297,34 @@ const CreatePiece = () => {
                               imageWidth={imageWidth}
                               videoSrc={videoSrc}
                               videoDuration={videoDuration}
+                              disabled={!!targets}
                             />
-                            <LinkIcon fontSize="large" color="secondary" />
+                            <LinkIcon
+                              fontSize="large"
+                              color={targets ? 'primary' : 'secondary'}
+                            />
                             <AddMediaButton
                               mediaType="video"
                               updateMedia={handleUpdateMedia}
                               videoSrc={videoSrc}
+                              disabled={!!targets}
                             />
                           </Box>
                           <Box width="320px" mt={4} mb={4}>
                             <LoadingButton
                               variant={targets ? 'outlined' : 'contained'}
                               fullWidth
-                              disabled={!imageSrc || !videoSrc || targets}
+                              disabled={!imageSrc || !videoSrc || !!targets}
                               onClick={getImageTargets}
                               endIcon={<AutoFixHigh />}
                               loading={isLoading}
                               loadingPosition="end"
+                              sx={{
+                                '&.Mui-disabled': {
+                                  borderColor: targets ? 'primary.main' : null,
+                                  color: targets ? 'primary.main' : null,
+                                },
+                              }}
                             >
                               {isLoading ? (
                                 <b>Building experience... {percent}%</b>
@@ -311,7 +335,11 @@ const CreatePiece = () => {
                               )}
                             </LoadingButton>
                           </Box>
-                          <Box width="100%" display="flex" color="#cccccc">
+                          <Box
+                            width="100%"
+                            display="flex"
+                            color={targets ? 'text.primary' : '#cccccc'}
+                          >
                             <Box flexGrow={1} display="flex" flexWrap="wrap">
                               <Box
                                 flexGrow={1}
@@ -336,7 +364,7 @@ const CreatePiece = () => {
                                   </Typography>
                                   <Typography variant="body2" color="inherit">
                                     Scan the QR code and hold your phone up to
-                                    the image to the right or the physical item.
+                                    the image to the right.
                                   </Typography>
                                 </Box>
                               </Box>
@@ -386,8 +414,8 @@ const CreatePiece = () => {
                                       endIcon={<Launch />}
                                       color="inherit"
                                       component={Link}
-                                      to={'#'}
-                                      disabled
+                                      to={`/preview/${pieceId}/${media.id}`}
+                                      disabled={!targets}
                                     >
                                       View Preview Page
                                     </Button>
@@ -397,7 +425,20 @@ const CreatePiece = () => {
                             </Box>
                             <Box>
                               <Box width="144px" height="144px">
-                                <QrCode2 sx={{ fontSize: 144 }} />
+                                {targets ? (
+                                  <>
+                                    <QRCode
+                                      size={144}
+                                      id="qr"
+                                      value={experiencePage}
+                                      includeMargin={true}
+                                    />
+                                    <Button size="small">Download QR</Button>
+                                    <Button size="small">Copy Link</Button>
+                                  </>
+                                ) : (
+                                  <QrCode2 sx={{ fontSize: 144 }} />
+                                )}
                               </Box>
                             </Box>
                           </Box>

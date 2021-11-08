@@ -20,6 +20,7 @@ const AddMediaButton = ({
   videoSrc,
   mediaType,
   updateMedia,
+  disabled,
 }) => {
   // const aspect =
   //   imageHeight / imageWidth === 1.5
@@ -101,7 +102,11 @@ const AddMediaButton = ({
 
       <Box display="flex" flexWrap="wrap" width="160px">
         <Card elevation={0} variant="outlined">
-          <CardActionArea sx={{ padding: '8px' }} onClick={handleOpen}>
+          <CardActionArea
+            sx={{ padding: '8px' }}
+            onClick={handleOpen}
+            disabled={disabled}
+          >
             <Box
               height="144px"
               width="144px"
