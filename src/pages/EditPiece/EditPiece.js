@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import 'mind-ar/dist/mindar-image.prod.js'
+import { Link, useParams } from 'react-router-dom'
 import {
   Grid,
   Box,
@@ -16,7 +17,9 @@ import {
   PhoneIphone,
   QrCode2,
   VideoCameraBack,
+  AutoFixHigh,
 } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
@@ -25,69 +28,49 @@ import BarEditPiece from 'layouts/BarEditPiece'
 import AddMediaButton from './components/AddMediaButton'
 import WelcomeDialog from './components/WelcomeDialog'
 import { useSession } from 'hooks/use-session'
+import { useRequest } from 'hooks/use-request'
+import { useAlertStore } from 'hooks/store/use-alert-store'
+import axios from 'axios'
+import { loadImgAsync } from 'util/imageHandling'
+
+const { REACT_APP_ASSET_URL } = process.env
 
 const CreatePiece = () => {
-  const [media, setMedia] = useState({
-    imageFile: null,
-    imageSrc: null,
-    imageUrl: null,
-    imageWidth: null,
-    imageHeight: null,
-    videoFile: null,
-    videoSrc: null,
-    videoUrl: null,
-  })
   const { user } = useSession()
 
-  const { imageFile, imageSrc, imageWidth, imageHeight, videoFile, videoSrc } =
+  const { selectPack, packs, updatePack, status, updateStatus } = usePackStore()
+
+  const { pieceId } = useParams()
+
+  const pack = selectPack(pieceId)
+
+  const cards = (pack || {}).cards
+  const media = (cards || [{}])[0]
+
+  const { setError } = useAlertStore()
+
+  const { image, imageHeight, imageWidth, video, videoDuration, targets } =
     media
 
-  console.log(media)
+  let imageSrc = image ? REACT_APP_ASSET_URL + '/' + image : null
+  let videoSrc = video ? REACT_APP_ASSET_URL + '/' + video : null
 
-  const {
-    selectPack,
-    packs,
-    updatePack: updateReduxPack,
-    status,
-    updateStatus,
-  } = usePackStore()
+  // useEffect(() => {
+  //   const onPackChange = () => {
+  //     const cards = (pack || {}).cards
+  //     const card = (cards || [])[0]
+  //     const newMedia = card || {}
+  //     setMedia(newMedia)
+  //   }
+  //   onPackChange()
+  // }, [pack])
 
-  const card = {}
+  const handleUpdateMedia = newMedia => {
+    console.log({ id: pieceId, cards: [{ ...media, ...newMedia }] })
+    updatePack({ id: pieceId, cards: [{ ...media, ...newMedia }] })
+  }
 
   // const [removeDialogIsOpen, setRemoveDialogIsOpen] = useState(false)
-
-  // const updatePack = updatedPack => {
-  //   setPack({ ...pack, ...updatedPack })
-  //   updateReduxPack(updatedPack)
-  // }
-
-  // const handleCardSubmit = values => {
-  //   if (status !== 'loading') {
-  //     let updatedCards = [...pack.cards]
-  //     updatedCards[cardIndex] = { ...updatedCards[cardIndex], ...values }
-  //     updateReduxPack({ id: pieceId, cards: updatedCards })
-  //   }
-  // }
-
-  const [isSpinning, setIsSpinning] = useState(false)
-
-  useEffect(() => {
-    const setSpinning = () => {
-      setIsSpinning(true)
-    }
-    const stopSpinning = () => {
-      setTimeout(() => {
-        if (isSpinning === true) {
-          setIsSpinning(false)
-        }
-      }, 500)
-    }
-    if (updateStatus === 'loading') {
-      setSpinning()
-    } else {
-      stopSpinning()
-    }
-  }, [updateStatus, isSpinning])
 
   // const handleRemoveClose = () => {
   //   setRemoveDialogIsOpen(false)
@@ -97,32 +80,28 @@ const CreatePiece = () => {
   //   setRemoveDialogIsOpen(true)
   // }
 
-  const handleUpdateMedia = newMedia => {
-    setMedia({ ...media, ...newMedia })
-  }
-
-  // const cardWidth =
-
   const DisplayCard = () => {
-    const [hideImage, setHideImage] = useState(true)
+    const [hideImage, setHideImage] = useState(!!video)
 
     const playerRef = useRef()
 
     useEffect(() => {
-      if (hideImage) {
-        const timeout = setTimeout(() => {
-          if (playerRef.current) {
-            playerRef.current.currentTime = 0
-            playerRef.current.play()
-          }
-          setHideImage(false)
-        }, 4000)
-        return () => clearTimeout(timeout)
-      } else {
-        const timeout = setTimeout(() => {
-          setHideImage(true)
-        }, 1000)
-        return () => clearTimeout(timeout)
+      if (video && image) {
+        if (hideImage) {
+          const timeout = setTimeout(() => {
+            if (playerRef.current) {
+              playerRef.current.currentTime = 0
+              playerRef.current.play()
+            }
+            setHideImage(false)
+          }, 4000)
+          return () => clearTimeout(timeout)
+        } else {
+          const timeout = setTimeout(() => {
+            setHideImage(true)
+          }, 1000)
+          return () => clearTimeout(timeout)
+        }
       }
     }, [hideImage])
 
@@ -196,17 +175,71 @@ const CreatePiece = () => {
     packs.length === 1 && !imageSrc && !videoSrc
   )
 
-  const submitPiece = () => {
-    return
-  }
+  const [isLoading, setIsLoading] = useState(false)
+  const [percent, setPercent] = useState(0)
 
-  const createPiece = () => {
-    if (!!user) {
-      submitPiece()
-    } else {
-      setWelcomeDialogIsOpen(true)
+  const { request } = useRequest()
+
+  const getImageTargets = async () => {
+    setIsLoading(true)
+    try {
+      console.log(imageSrc)
+
+      console.log('creating')
+
+      const response = await axios.get(imageSrc)
+
+      console.log('got image response')
+      const blob = response.data
+      const src = URL.createObjectURL(blob)
+
+      let img = await loadImgAsync(src)
+      URL.revokeObjectURL(src)
+
+      const compiler = new window.MINDAR.IMAGE.Compiler()
+      await compiler.compileImageTargets([img], progress => {
+        setPercent(progress.toFixed(2))
+      })
+
+      const exportedBuffer = await compiler.exportData()
+      var targetBlob = new Blob([exportedBuffer])
+      var targetFile = new File([targetBlob], `${pieceId}-targets.mind`)
+
+      console.log('got target file')
+
+      let { signedUrl, imageFilepath } = await request({
+        url: '/auth/sign-s3',
+        method: 'POST',
+        data: {
+          fileName: `${pieceId}-targets`,
+          fileType: 'application/mind',
+        },
+      })
+
+      console.log('got signed url')
+
+      await request({ url: signedUrl, method: 'PUT', data: targetFile })
+
+      await updatePack({
+        id: pieceId,
+        isPublid: true,
+        cards: [{ ...media, targets: imageFilepath }],
+      })
+    } catch (err) {
+      console.log(err.message)
+      setError({
+        message:
+          'Sorry, there was an error creating your experience. Please try again.',
+      })
+      setIsLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (targets) {
+      setIsLoading(false)
+    }
+  }, [targets])
 
   return (
     <>
@@ -246,24 +279,37 @@ const CreatePiece = () => {
                             <AddMediaButton
                               mediaType="image"
                               updateMedia={handleUpdateMedia}
-                              {...media}
+                              imageSrc={imageSrc}
+                              imageHeight={imageHeight}
+                              imageWidth={imageWidth}
+                              videoSrc={videoSrc}
+                              videoDuration={videoDuration}
                             />
                             <LinkIcon fontSize="large" color="secondary" />
                             <AddMediaButton
                               mediaType="video"
                               updateMedia={handleUpdateMedia}
-                              {...media}
+                              videoSrc={videoSrc}
                             />
                           </Box>
                           <Box width="320px" mt={4} mb={4}>
-                            <Button
-                              variant="contained"
+                            <LoadingButton
+                              variant={targets ? 'outlined' : 'contained'}
                               fullWidth
-                              disabled={!imageSrc || !videoSrc}
-                              onClick={createPiece}
+                              disabled={!imageSrc || !videoSrc || targets}
+                              onClick={getImageTargets}
+                              endIcon={<AutoFixHigh />}
+                              loading={isLoading}
+                              loadingPosition="end"
                             >
-                              <b>{`Create & Save`}</b>
-                            </Button>
+                              {isLoading ? (
+                                <b>Building experience... {percent}%</b>
+                              ) : targets ? (
+                                <b>Published!</b>
+                              ) : (
+                                <b>Create Experience</b>
+                              )}
+                            </LoadingButton>
                           </Box>
                           <Box width="100%" display="flex" color="#cccccc">
                             <Box flexGrow={1} display="flex" flexWrap="wrap">

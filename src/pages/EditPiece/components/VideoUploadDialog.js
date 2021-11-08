@@ -14,27 +14,15 @@ import { useDropzone } from 'react-dropzone'
 import 'react-image-crop/dist/ReactCrop.css'
 import ReactPlayer from 'react-player'
 import LoadingButton from '@mui/lab/LoadingButton'
+import { useRequest } from 'hooks/use-request'
 
 const demoName = 'astronaut-ar-trimmed.mp4'
 const { REACT_APP_ASSET_URL } = process.env
-const demoUrl = REACT_APP_ASSET_URL + '/' + demoName
+const videoSrc = REACT_APP_ASSET_URL + '/' + demoName
 
-const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
+const ImageUploadDialog = ({ submit, videoFilepath, open, onClose }) => {
   const [value, setValue] = useState(0)
-
-  // const [image, setImage] = useState({ url: url })
-
-  const [video, setVideo] = useState({
-    src: null,
-    file: null,
-    duration: null,
-  })
-
-  useEffect(() => {
-    if (open) {
-      setVideo({ src: videoUrl })
-    }
-  }, [open, videoUrl])
+  const [replacing, setIsReplacing] = useState(!videoFilepath)
 
   const OptionButton = ({ index, icon, label, disabled }) => {
     const Icon = icon
@@ -68,88 +56,130 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
     const [videoLoading, setVideoLoading] = useState(false)
     const [error, setError] = useState()
 
-    const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+    const request = useRequest()
+
+    const handleDrop = () => {
+      console.log('drop')
+    }
+
+    const { acceptedFiles, rejectedFiles, getRootProps, getInputProps } =
+      useDropzone({
+        onDrop: handleDrop,
+        multiple: false,
+        accept: 'video/mp4,video/quicktime',
+        maxSize: 104857600,
+        maxFiles: 1,
+      })
+
+    console.log(acceptedFiles)
+
+    let file = acceptedFiles[0] || {}
+    console.log(file.name)
+    console.log(file.type)
+
+    if (file.type === 'video/quicktime') {
+      file.name = file.substr(0, file.lastIndexOf('.')) + '.mp4'
+    }
+
+    console.log('uploading')
+
+    const uploadFile = async () => {
       setVideoLoading(true)
-      rejectedFiles.forEach(file => {
-        file.errors.forEach(err => {
-          if (err.code === 'file-too-large') {
-            setError(`Please upload a file that's 100MB or less`)
-          }
-
-          if (err.code === 'file-invalid-type') {
-            setError(`Please upload a valid video file (.mp4)`)
-          }
-        })
+      console.log('uploading')
+      let { signedUrl, imageFilepath } = await request({
+        url: '/auth/sign-s3',
+        method: 'POST',
+        data: {
+          fileName: file.name,
+          fileType: file.type,
+        },
+        disabled: videoLoading,
       })
-      acceptedFiles.forEach(file => {
-        let videoSrc
-        const reader = new FileReader()
 
-        reader.onabort = () => console.log('file reading was aborted')
-        reader.onerror = () => console.log('file reading has failed')
-        reader.onload = () => {
-          videoSrc = reader.result
-          setVideo({ src: videoSrc, file: acceptedFiles })
-        }
-        reader.readAsDataURL(file)
-      })
-    }, [])
-    const { getRootProps, getInputProps } = useDropzone({
-      onDrop,
-      multiple: false,
-      accept: 'video/mp4',
-      maxSize: 100000000,
-      maxFiles: 1,
-    })
+      console.log('requestion')
+      await request({ url: signedUrl, method: 'PUT', data: file })
+
+      await submit({ filepath: imageFilepath })
+    }
+
+    const File = () => {
+      return (
+        <Box padding={3}>
+          <Typography>{file.name}</Typography>
+        </Box>
+      )
+    }
 
     return (
-      <div
-        {...getRootProps()}
-        style={{
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <input {...getInputProps()} />
-        <Button
-          color="secondary"
-          sx={{
-            width: '100%',
-            height: '100%',
-            textAlign: 'center',
-            textTransform: 'none',
-          }}
+      <Box display="flex" flexWrap="wrap" width="440px">
+        <Box
+          height="360px"
+          width="100%"
+          backgroundColor="#00000010"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
         >
-          {videoLoading ? (
-            <Box>
-              <CircularProgress color="inherit" />
-            </Box>
-          ) : (
-            <Box>
-              <Upload color="secondary" sx={{ fontSize: 40 }} />
-              {error ? (
-                <Typography>{error}</Typography>
+          <div
+            {...getRootProps()}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            <input {...getInputProps()} />
+            <Button
+              color="secondary"
+              sx={{
+                width: '100%',
+                height: '100%',
+                textAlign: 'center',
+                textTransform: 'none',
+              }}
+            >
+              {videoLoading ? (
+                <Box>
+                  <CircularProgress color="inherit" />
+                </Box>
+              ) : file.name ? (
+                <File />
               ) : (
-                <>
-                  <Typography>{`Upload a video.`}</Typography>
-                  <Typography>{`Video must be an .mp4`}</Typography>
-                </>
+                <Box>
+                  <Upload color="secondary" sx={{ fontSize: 40 }} />
+                  {error ? (
+                    <Typography>{error}</Typography>
+                  ) : (
+                    <>
+                      <Typography>{`Upload a video.`}</Typography>
+                      <Typography>{`Must be under 100MB and .mp4 or .mov`}</Typography>
+                    </>
+                  )}
+                </Box>
               )}
-            </Box>
-          )}
-        </Button>
-      </div>
+            </Button>
+          </div>
+        </Box>
+        <Box display="flex" justifyContent="flex-end" width="100%" pt={1}>
+          <LoadingButton
+            variant="contained"
+            onClick={uploadFile}
+            disabled={!file}
+            loading={videoLoading}
+          >
+            Upload
+          </LoadingButton>
+        </Box>
+      </Box>
     )
   }
 
   const handleSelectDemo = () => {
-    const data = { src: demoUrl, demo: true }
+    const data = { filepath: demoName }
     submit(data)
     onClose()
   }
 
   const handleClose = () => {
-    setVideo({ src: videoUrl })
     onClose()
   }
 
@@ -195,24 +225,20 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
           </Box>
           <Box flexGrow={1}>
             <Box width="100%" pr={2} pb={2}>
-              <Box
-                height="360px"
-                width="440px"
-                backgroundColor="#00000010"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {value === 0 && (
-                  <>
-                    <FileUpload />
-                  </>
-                )}
-                {value === 1 && <FileUpload />}
-                {value === 2 && <FileUpload />}
-                {value === 3 && (
+              {value === 0 && <FileUpload />}
+              {value === 1 && <FileUpload />}
+              {value === 2 && <FileUpload />}
+              {value === 3 && (
+                <Box
+                  height="360px"
+                  width="440px"
+                  backgroundColor="#00000010"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
                   <ReactPlayer
-                    url={demoUrl}
+                    url={videoSrc}
                     style={{
                       maxWidth: '440px',
                       maxHeight: '360px',
@@ -223,22 +249,13 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
                     loop
                     alt="Piece"
                   />
-                )}
-              </Box>
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>
         <DialogActions>
           <Box pr={1} pb={1} endIcon={<Crop />}>
-            {value === 0 && (
-              <Button
-                variant="contained"
-                // onClick={handleSelect}
-                disabled={!video.src}
-              >
-                Next
-              </Button>
-            )}
             {value === 1 && (
               <Button variant="contained" onClick={handleSelectDemo}>
                 Select
@@ -256,16 +273,8 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
   }
 
   const ContentReplace = () => {
-    const [videoDuration, setVideoDuration] = useState(null)
-    const [isSubmitting, setIsSubmitting] = useState(false)
-
-    const handleSubmit = () => {
-      setIsSubmitting(true)
-      save()
-    }
-
-    const save = () => {
-      submit({ ...video, duration: videoDuration })
+    const submitDuration = duration => {
+      submit({ duration })
     }
 
     return (
@@ -296,14 +305,14 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
               justifyContent="center"
             >
               <ReactPlayer
-                url={video.src}
+                url={videoSrc}
                 style={{
                   maxWidth: '100%',
                   maxHeight: '100%',
                   objectFit: 'contain',
                 }}
                 onDuration={duration => {
-                  setVideoDuration(duration)
+                  submitDuration(duration)
                 }}
                 muted
                 autoPlay
@@ -319,7 +328,7 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
             <Button
               color="secondary"
               endIcon={<Loop />}
-              onClick={() => setVideo({})}
+              onClick={() => setIsReplacing(true)}
               // sx={{
               //   backgroundColor: '#ffffff88',
               //   '&:hover': { backgroundColor: '#ffffff50' },
@@ -328,19 +337,9 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
             >
               Replace
             </Button>
-            {videoUrl === video.src ? (
-              <Button variant="contained" onClick={handleClose}>
-                Done
-              </Button>
-            ) : (
-              <LoadingButton
-                variant="contained"
-                onClick={handleSubmit}
-                loading={!videoDuration}
-              >
-                Save
-              </LoadingButton>
-            )}
+            <Button variant="contained" onClick={handleClose}>
+              Done
+            </Button>
           </Box>
         </DialogActions>
       </>
@@ -356,7 +355,7 @@ const ImageUploadDialog = ({ submit, videoUrl, open, onClose }) => {
         }
       }}
     >
-      {!!video.src ? <ContentReplace /> : <ContentUpload />}
+      {replacing ? <ContentUpload /> : <ContentReplace />}
     </Dialog>
   )
 }

@@ -40,23 +40,24 @@ const AddMediaButton = ({
     setOpen(false)
   }
 
-  const submitImage = image => {
+  const submitImage = ({ filepath, height, width }) => {
     updateMedia({
-      imageSrc: image.src,
-      imageFile: image.file,
-      imageHeight: image.height,
-      imageWidth: image.width,
+      image: filepath,
+      imageHeight: height,
+      imageWidth: width,
     })
-    handleClose()
   }
 
-  const submitVideo = video => {
-    updateMedia({
-      videoSrc: video.src,
-      videoFile: video.file,
-      videoDuration: video.duration,
-    })
-    handleClose()
+  const submitVideo = ({ filepath, duration }) => {
+    let media = {}
+    if (filepath) {
+      media.video = filepath
+    }
+    if (duration) {
+      media.videDuration = duration
+    }
+    console.log(media)
+    updateMedia(media)
   }
 
   const playerRef = useRef()

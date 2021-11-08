@@ -9,6 +9,7 @@ import {
   Typography,
   Slider,
 } from '@mui/material'
+import LoadingButton from '@mui/lab/LoadingButton'
 import {
   Upload,
   FilterFrames,
@@ -21,11 +22,14 @@ import {
   CropSquare,
   CropOriginal,
   ArrowBackIos,
+  SettingsInputAntennaTwoTone,
 } from '@mui/icons-material'
 import { useDropzone } from 'react-dropzone'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { resizeImage } from 'util/imageHandling'
+import { useRequest } from 'hooks/use-request'
+import { ExitStatus } from 'typescript'
 
 const demoImageName = 'Postcard+Mixtape+Vol+1+600px.jpg'
 const { REACT_APP_ASSET_URL } = process.env
@@ -35,7 +39,7 @@ const imageMinWidthDimension = 1200
 
 const ImageUploadDialog = ({
   submitImage,
-  imageUrl,
+  imageFilepath,
   videoUrl,
   videoDuration,
   open,
@@ -46,8 +50,7 @@ const ImageUploadDialog = ({
   // const [image, setImage] = useState({ url: url })
 
   const [image, setImage] = useState({
-    src: imageUrl,
-    // file: null,
+    filepath: imageFilepath,
     width: null,
     height: null,
   })
@@ -57,12 +60,14 @@ const ImageUploadDialog = ({
     height: null,
   })
 
+  const imageSrc = image.filepath
+    ? REACT_APP_ASSET_URL + '/' + image.filepath
+    : null
+
   useEffect(() => {
-    if (open) {
-      setImage({ src: imageUrl })
-      setImageToCrop({})
-    }
-  }, [open, imageUrl])
+    setImage({ filepath: imageFilepath })
+    setImageToCrop({})
+  }, [imageFilepath])
 
   const OptionButton = ({ index, icon, label, disabled }) => {
     const Icon = icon
@@ -97,8 +102,7 @@ const ImageUploadDialog = ({
       console.log('uploading file')
 
       acceptedFiles.forEach(file => {
-        let imageSrc
-        const reader = new FileReader()
+        let imageSrc = URL.createObjectURL(file)
 
         const img = new Image()
         img.onload = function () {
@@ -107,13 +111,7 @@ const ImageUploadDialog = ({
           setImageToCrop({ src: imageSrc, width, height })
         }
 
-        reader.onabort = () => console.log('file reading was aborted')
-        reader.onerror = () => console.log('file reading has failed')
-        reader.onload = () => {
-          imageSrc = reader.result
-          img.src = imageSrc
-        }
-        reader.readAsDataURL(file)
+        img.src = imageSrc
       })
     }, [])
     const { getRootProps, getInputProps } = useDropzone({
@@ -155,14 +153,13 @@ const ImageUploadDialog = ({
   // }
 
   const handleSelectDemoImage = () => {
-    const data = { src: demourl, width: 600, height: 900 }
-    setImage(data)
+    const data = { filepath: demoImageName, width: 600, height: 900 }
     submitImage(data)
     onClose()
   }
 
   const handleClose = () => {
-    setImage({ src: imageUrl })
+    setImage({ filepath: imageFilepath })
     setImageToCrop({})
     onClose()
   }
@@ -222,6 +219,8 @@ const ImageUploadDialog = ({
     var dataUri = canvas.toDataURL('image/' + format, quality)
 
     setImageToCrop({ src: dataUri, width, height })
+
+    canvas = null
   }
 
   const ContentUpload = () => {
@@ -372,34 +371,11 @@ const ImageUploadDialog = ({
       }
     })
 
-    const submitCrop = async () => {
-      const cropScale = imageToCrop.width / displayImageDimensions.width
+    const { request } = useRequest()
 
-      try {
-        const croppedImage = await resizeImage(
-          imageToCrop.src,
-          imageMinWidthDimension,
-          {
-            width: Math.round(cropScale * crop.width),
-            height: Math.round(cropScale * crop.height),
-            x: Math.round(cropScale * crop.x),
-            y: Math.round(cropScale * crop.y),
-          }
-        )
+    const [status, setStatus] = useState('idle')
 
-        const croppedImageSrc = URL.createObjectURL(croppedImage)
-
-        setImage({
-          src: croppedImageSrc,
-          // file: croppedImage,
-          width: Math.round(cropScale * crop.width),
-          height: Math.round(cropScale * crop.height),
-        })
-      } catch (err) {
-        console.log(err)
-      }
-      return
-    }
+    console.log('status: ' + status)
 
     const [currentCrop, setCurrentCrop] = useState(
       imageToCrop.height >= imageToCrop.width ? 0 : 1
@@ -409,6 +385,87 @@ const ImageUploadDialog = ({
       width: null,
       height: null,
     })
+
+    const submitCrop = async () => {
+      setStatus('loading')
+      const cropImage = () => {
+        let cropScale = imageToCrop.width / displayImageDimensions.width
+
+        let width = Math.round(cropScale * crop.width)
+        let height = Math.round(cropScale * crop.height)
+        let x = Math.round(cropScale * crop.x)
+        let y = Math.round(cropScale * crop.y)
+
+        let shortEdgeLength = Math.min(width, height)
+
+        let endWidth = width
+        let endHeight = height
+
+        if (shortEdgeLength > imageMinWidthDimension) {
+          let scale = imageMinWidthDimension / shortEdgeLength
+          endWidth = Math.round(scale * width)
+          endHeight = Math.round(scale * height)
+        }
+
+        return new Promise((resolve, reject) => {
+          var img = new Image()
+
+          const canvas = document.createElement('canvas')
+
+          console.log(imageToCrop.src)
+          console.log(endWidth)
+          console.log(endHeight)
+
+          canvas.width = endWidth
+          canvas.height = endHeight
+
+          var ctx = canvas.getContext('2d')
+
+          img.onload = () => {
+            ctx.drawImage(img, x, y, width, height, 0, 0, endWidth, endHeight)
+
+            ctx.canvas.toBlob(
+              blob => {
+                console.log('image cropped')
+                resolve({ imageFile: blob, width: endWidth, height: endHeight })
+              },
+              'image/jpeg',
+              0.92
+            )
+          }
+          img.onerror = () => {
+            reject('error cropping image')
+            console.log('there was an error cropping the image')
+            setStatus('error')
+          }
+          img.src = imageToCrop.src
+        })
+      }
+
+      try {
+        let { imageFile, width, height } = await cropImage()
+
+        let { signedUrl, imageFilepath } = await request({
+          url: '/auth/sign-s3',
+          method: 'POST',
+          data: {
+            fileName: imageFile.name,
+            fileType: imageFile.type,
+          },
+        })
+
+        await request({ url: signedUrl, method: 'PUT', data: imageFile })
+
+        await submitImage({ filepath: imageFilepath, width, height })
+        setImage({ filepath: imageFilepath, width, height })
+
+        URL.revokeObjectURL(imageToCrop.src)
+        setImageToCrop({})
+      } catch (err) {
+        console.log(err)
+        setStatus('error')
+      }
+    }
 
     const handleChangeCrop = newCrop => {
       setCrop(newCrop)
@@ -563,12 +620,12 @@ const ImageUploadDialog = ({
                   onChange={handleChangeCrop}
                   onImageLoaded={handleCropImageLoaded}
                   imageStyle={{
-                    maxWidth: '484px',
+                    maxWidth: '440px',
                     maxHeight: '360px',
                     objectFit: 'contain',
                   }}
                   style={{
-                    maxWidth: '484px',
+                    maxWidth: '440px',
                     maxHeight: '360px',
                   }}
                 />
@@ -589,9 +646,13 @@ const ImageUploadDialog = ({
             </Box>
 
             <Box pr={1} pb={1}>
-              <Button variant="contained" onClick={submitCrop}>
-                Crop
-              </Button>
+              <LoadingButton
+                variant="contained"
+                onClick={submitCrop}
+                loading={status === 'loading'}
+              >
+                Crop and Save
+              </LoadingButton>
             </Box>
           </Box>
         </DialogActions>
@@ -600,8 +661,6 @@ const ImageUploadDialog = ({
   }
 
   const handleSubmit = () => {
-    setImageToCrop({})
-    submitImage(image)
     onClose()
   }
 
@@ -638,15 +697,17 @@ const ImageUploadDialog = ({
               alignItems="center"
               justifyContent="center"
             >
-              <img
-                src={image.src}
-                style={{
-                  maxWidth: '100%',
-                  maxHeight: '100%',
-                  objectFit: 'contain',
-                }}
-                alt="Piece"
-              />
+              {imageSrc && (
+                <img
+                  src={imageSrc}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                  }}
+                  alt="Piece"
+                />
+              )}
             </Box>
           </Box>
         </Box>
@@ -665,15 +726,9 @@ const ImageUploadDialog = ({
             >
               Replace
             </Button>
-            {!!imageUrl && !image.src ? (
-              <Button variant="contained" onClick={handleClose}>
-                Done
-              </Button>
-            ) : (
-              <Button variant="contained" onClick={handleSubmit}>
-                Save
-              </Button>
-            )}
+            <Button variant="contained" onClick={handleClose}>
+              Done
+            </Button>
           </Box>
         </DialogActions>
       </>
@@ -689,7 +744,7 @@ const ImageUploadDialog = ({
         }
       }}
     >
-      {!!image.src ? (
+      {!!image.filepath ? (
         <ContentReplace />
       ) : !!imageToCrop.src ? (
         <ContentCropping />
