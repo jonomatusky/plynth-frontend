@@ -8,6 +8,9 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
   const { title, text, style, image, imageUrl, hideBranding } = portal || {}
   let { font, fontColor, backgroundColor, buttonColor } = style || {}
 
+  console.log(portal)
+  console.log(style)
+
   return (
     <>
       <Box

@@ -19,6 +19,8 @@ const Portal = () => {
   let { username } = useParams()
   username = username.toLowerCase()
 
+  console.log(portalUser)
+
   useEffect(() => {
     if (!portalUser || portalUser.username !== username) {
       fetchPortal(username)
@@ -26,10 +28,8 @@ const Portal = () => {
   }, [fetchPortal, username, portalUser])
 
   let { portal } = portalUser || {}
-  const { style } = portal || {}
+  let { title, text, image, imageUrl, hideBranding, style } = portal || {}
   const { backgroundColor } = style || {}
-
-  let { title, text, image, imageUrl, hideBranding } = portalUser || {}
 
   if (!title && !text && !image && !imageUrl && !hideBranding) {
     title = `Welcome`
