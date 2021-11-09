@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Card, Box, Typography, CardActionArea } from '@mui/material'
-import {
-  AddAPhoto,
-  AddPhotoAlternate,
-  VideoCall,
-  PlayArrow,
-} from '@mui/icons-material'
+import { AddPhotoAlternate, VideoCall, PlayArrow } from '@mui/icons-material'
 import ReactPlayer from 'react-player'
 
 import ImageUploadDialog from './ImageUploadDialog'
 import VideoUploadDialog from './VideoUploadDialog'
 import Image from 'components/Image'
+import OnboardingTooltip from 'components/OnboardingTooltip'
 
 const AddMediaButton = ({
   imageHeight,
@@ -21,6 +17,7 @@ const AddMediaButton = ({
   mediaType,
   updateMedia,
   disabled,
+  showTooltips,
 }) => {
   // const aspect =
   //   imageHeight / imageWidth === 1.5
@@ -78,6 +75,10 @@ const AddMediaButton = ({
     }
   })
 
+  console.log(imageSrc)
+  console.log(videoSrc)
+  console.log(mediaType === 'image' ? !imageSrc : !!imageSrc && !videoSrc)
+
   return (
     <>
       {mediaType === 'image' ? (
@@ -100,48 +101,60 @@ const AddMediaButton = ({
           onClose={handleClose}
         />
       )}
-
-      <Box display="flex" flexWrap="wrap" width="160px" mt={1}>
-        <Card elevation={0} variant="outlined">
-          <CardActionArea
-            sx={{ padding: '8px' }}
-            onClick={handleOpen}
-            disabled={disabled}
-          >
-            <Box
-              height="144px"
-              width="144px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flexWrap="wrap"
+      <OnboardingTooltip
+        open={
+          showTooltips &&
+          !open &&
+          (mediaType === 'image' ? !imageSrc : !!imageSrc && !videoSrc)
+        }
+        title={
+          mediaType === 'image'
+            ? 'Add an image. Don’t have one? Upload your video first to choose a frame, or try it out with our demo image.'
+            : "Upload a video. Don't have one? Use our demo video."
+        }
+        position="bottom"
+      >
+        <Box display="flex" flexWrap="wrap" width="160px" mt={1}>
+          <Card elevation={0} variant="outlined">
+            <CardActionArea
+              sx={{ padding: '8px' }}
+              onClick={handleOpen}
+              disabled={disabled}
             >
               <Box
-                width="144px"
                 height="144px"
+                width="144px"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
                 flexWrap="wrap"
               >
-                <Box textAlign="center">
-                  {mediaType === 'image' ? (
-                    <>
-                      {imageSrc ? (
-                        <>
-                          <Box
-                            width="144px"
-                            height="144px"
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                          >
-                            <Image
-                              src={imageSrc}
-                              style={{ maxHeight: '128px', maxWidth: '100%' }}
-                            />
-                          </Box>
-                          {/* <Box
+                <Box
+                  width="144px"
+                  height="144px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  flexWrap="wrap"
+                >
+                  <Box textAlign="center">
+                    {mediaType === 'image' ? (
+                      <>
+                        {imageSrc ? (
+                          <>
+                            <Box
+                              width="144px"
+                              height="144px"
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                            >
+                              <Image
+                                src={imageSrc}
+                                style={{ maxHeight: '128px', maxWidth: '100%' }}
+                              />
+                            </Box>
+                            {/* <Box
                             width="144px"
                             height="20px"
                             display="flex"
@@ -151,56 +164,56 @@ const AddMediaButton = ({
                           >
                             <Typography variant="caption">{aspect}</Typography>
                           </Box> */}
-                        </>
-                      ) : (
-                        <>
-                          <AddPhotoAlternate
-                            sx={{ fontSize: 60 }}
-                            color="primary"
-                          />
-                          <Typography
-                            fontSize="large"
-                            sx={{ textTransform: 'none' }}
-                            color="primary"
-                          >
-                            <b>Add Image</b>
-                          </Typography>
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      {videoSrc ? (
-                        <>
-                          <Box
-                            width="144px"
-                            height="144px"
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                            position="relative"
-                          >
-                            <Box
-                              width="100%"
-                              height="100%"
-                              zIndex={10}
-                              color="white"
-                              display="flex"
-                              justifyContent="center"
-                              alignItems="center"
-                              position="absolute"
-                            >
-                              <PlayArrow color="inherit" fontSize="large" />
-                            </Box>
-                            <ReactPlayer
-                              ref={playerRef}
-                              url={videoSrc}
-                              muted
-                              loop
-                              style={{ maxHeight: '128px', maxWidth: '100%' }}
+                          </>
+                        ) : (
+                          <>
+                            <AddPhotoAlternate
+                              sx={{ fontSize: 60 }}
+                              color="primary"
                             />
-                          </Box>
-                          {/* <Box
+                            <Typography
+                              fontSize="large"
+                              sx={{ textTransform: 'none' }}
+                              color="primary"
+                            >
+                              <b>Add Image</b>
+                            </Typography>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {videoSrc ? (
+                          <>
+                            <Box
+                              width="144px"
+                              height="144px"
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              position="relative"
+                            >
+                              <Box
+                                width="100%"
+                                height="100%"
+                                zIndex={10}
+                                color="white"
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                position="absolute"
+                              >
+                                <PlayArrow color="inherit" fontSize="large" />
+                              </Box>
+                              <ReactPlayer
+                                ref={playerRef}
+                                url={videoSrc}
+                                muted
+                                loop
+                                style={{ maxHeight: '128px', maxWidth: '100%' }}
+                              />
+                            </Box>
+                            {/* <Box
                             width="144px"
                             height="20px"
                             display="flex"
@@ -212,27 +225,28 @@ const AddMediaButton = ({
                               {!!videoDuration ? `${videoDuration}sec` : ''}
                             </Typography>
                           </Box> */}
-                        </>
-                      ) : (
-                        <>
-                          <VideoCall sx={{ fontSize: 60 }} color="primary" />
-                          <Typography
-                            fontSize="large"
-                            sx={{ textTransform: 'none' }}
-                            color="primary"
-                          >
-                            <b>Add Video</b>
-                          </Typography>
-                        </>
-                      )}
-                    </>
-                  )}
+                          </>
+                        ) : (
+                          <>
+                            <VideoCall sx={{ fontSize: 60 }} color="primary" />
+                            <Typography
+                              fontSize="large"
+                              sx={{ textTransform: 'none' }}
+                              color="primary"
+                            >
+                              <b>Add Video</b>
+                            </Typography>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          </CardActionArea>
-        </Card>
-      </Box>
+            </CardActionArea>
+          </Card>
+        </Box>
+      </OnboardingTooltip>
     </>
   )
 }

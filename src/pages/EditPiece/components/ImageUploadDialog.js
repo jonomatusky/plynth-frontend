@@ -22,14 +22,11 @@ import {
   CropSquare,
   CropOriginal,
   ArrowBackIos,
-  SettingsInputAntennaTwoTone,
 } from '@mui/icons-material'
 import { useDropzone } from 'react-dropzone'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
-import { resizeImage } from 'util/imageHandling'
 import { useRequest } from 'hooks/use-request'
-import { ExitStatus } from 'typescript'
 
 const demoImageName = 'Postcard+Mixtape+Vol+1+600px.jpg'
 const { REACT_APP_ASSET_URL } = process.env
@@ -39,18 +36,17 @@ const imageMinWidthDimension = 1200
 
 const ImageUploadDialog = ({
   submitImage,
-  imageFilepath,
+  imageUrl,
   videoUrl,
   videoDuration,
   open,
   onClose,
 }) => {
   const [value, setValue] = useState(0)
-
-  // const [image, setImage] = useState({ url: url })
+  const [isReplacing, setIsReplacing] = useState(!imageUrl)
 
   const [image, setImage] = useState({
-    filepath: imageFilepath,
+    filepath: null,
     width: null,
     height: null,
   })
@@ -65,9 +61,12 @@ const ImageUploadDialog = ({
     : null
 
   useEffect(() => {
-    setImage({ filepath: imageFilepath })
+    if (!imageUrl) {
+      setIsReplacing(true)
+    }
+    setImage({})
     setImageToCrop({})
-  }, [imageFilepath])
+  }, [open, imageUrl])
 
   const OptionButton = ({ index, icon, label, disabled }) => {
     const Icon = icon
@@ -155,12 +154,14 @@ const ImageUploadDialog = ({
   const handleSelectDemoImage = () => {
     const data = { filepath: demoImageName, width: 600, height: 900 }
     submitImage(data)
+    setIsReplacing(false)
     onClose()
   }
 
   const handleClose = () => {
-    setImage({ filepath: imageFilepath })
+    setImage({})
     setImageToCrop({})
+    setIsReplacing(false)
     onClose()
   }
 
@@ -462,6 +463,7 @@ const ImageUploadDialog = ({
 
         URL.revokeObjectURL(imageToCrop.src)
         setImageToCrop({})
+        setIsReplacing(false)
       } catch (err) {
         console.log(err)
         setStatus('error')
@@ -661,12 +663,8 @@ const ImageUploadDialog = ({
     )
   }
 
-  const handleSubmit = () => {
-    onClose()
-  }
-
   const handleReplace = () => {
-    setImage({ src: null })
+    setIsReplacing(true)
     setImageToCrop({})
   }
 
@@ -698,9 +696,9 @@ const ImageUploadDialog = ({
               alignItems="center"
               justifyContent="center"
             >
-              {imageSrc && (
+              {(imageSrc || imageUrl) && (
                 <img
-                  src={imageSrc}
+                  src={imageSrc ? imageSrc : imageUrl}
                   style={{
                     maxWidth: '100%',
                     maxHeight: '100%',
@@ -745,7 +743,7 @@ const ImageUploadDialog = ({
         }
       }}
     >
-      {!!image.filepath ? (
+      {!isReplacing ? (
         <ContentReplace />
       ) : !!imageToCrop.src ? (
         <ContentCropping />

@@ -12,7 +12,6 @@ import {
 import { Upload, Portrait, Close, Crop, Loop } from '@mui/icons-material'
 import { useDropzone } from 'react-dropzone'
 import 'react-image-crop/dist/ReactCrop.css'
-import ReactPlayer from 'react-player'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { useRequest } from 'hooks/use-request'
 import VideoJS from 'components/VideoJS'
@@ -63,12 +62,8 @@ const ImageUploadDialog = ({
     )
   }
 
-  console.log(isReplacing)
-  console.log(videoUrl)
-
   const FileUpload = () => {
     const [videoLoading, setVideoLoading] = useState(false)
-    const [error, setError] = useState()
 
     const { request } = useRequest()
 
@@ -76,18 +71,15 @@ const ImageUploadDialog = ({
       console.log('drop')
     }
 
-    const { acceptedFiles, rejectedFiles, getRootProps, getInputProps } =
-      useDropzone({
-        onDrop: handleDrop,
-        multiple: false,
-        accept: 'video/mp4,video/quicktime',
-        maxSize: 104857600,
-        maxFiles: 1,
-      })
+    const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+      onDrop: handleDrop,
+      multiple: false,
+      accept: 'video/mp4,video/quicktime',
+      maxSize: 104857600,
+      maxFiles: 1,
+    })
 
     let file = acceptedFiles[0] || {}
-    console.log(file.name)
-    console.log(file.type)
 
     let name = file.name
 
@@ -163,14 +155,14 @@ const ImageUploadDialog = ({
               ) : (
                 <Box>
                   <Upload color="secondary" sx={{ fontSize: 40 }} />
-                  {error ? (
+                  {/* {error ? (
                     <Typography>{error}</Typography>
                   ) : (
-                    <>
-                      <Typography>{`Upload a video.`}</Typography>
-                      <Typography>{`Must be under 100MB and .mp4 or .mov`}</Typography>
-                    </>
-                  )}
+                    <> */}
+                  <Typography>{`Upload a video.`}</Typography>
+                  <Typography>{`Must be under 100MB and .mp4 or .mov`}</Typography>
+                  {/* </>
+                  )} */}
                 </Box>
               )}
             </Button>

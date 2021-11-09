@@ -32,34 +32,44 @@ import AdminNav from 'layouts/AdminNav'
 import BarEditPiece from 'layouts/BarEditPiece'
 import AddMediaButton from './components/AddMediaButton'
 import WelcomeDialog from './components/WelcomeDialog'
-import { useSession } from 'hooks/use-session'
 import { useRequest } from 'hooks/use-request'
 import { useAlertStore } from 'hooks/store/use-alert-store'
 import axios from 'axios'
 import { loadImgAsync } from 'util/imageHandling'
 import DownloadQR from 'components/DownloadQr'
+// import OnboardingTooltip from 'components/OnboardingTooltip'
 
 const { REACT_APP_ASSET_URL, REACT_APP_PUBLIC_URL } = process.env
 
-const EditPiece = () => {
-  const { user } = useSession()
+const demoImageName = 'Postcard+Mixtape+Vol+1+600px.jpg'
+const demoImageUrl = REACT_APP_ASSET_URL + '/' + demoImageName
 
-  const { selectPack, packs, updatePack, status, updateStatus } = usePackStore()
+const EditPiece = () => {
+  const { selectPack, packs, updatePack } = usePackStore()
 
   const { pieceId } = useParams()
-  const experiencePage = !!pieceId && REACT_APP_PUBLIC_URL + '/p/' + pieceId
+  const experiencePage = !!pieceId
+    ? REACT_APP_PUBLIC_URL + '/p/' + pieceId
+    : null
 
   const pack = selectPack(pieceId)
 
   const cards = (pack || {}).cards
   const media = (cards || [{}])[0]
 
-  const previewPage = !!media.id && `/preview/${pieceId}/${media.id}`
+  const previewPage = !!media.id ? `/preview/${pieceId}/${media.id}` : null
 
   const { setError } = useAlertStore()
 
-  const { image, imageHeight, imageWidth, video, videoDuration, targets } =
-    media
+  const {
+    image,
+    imageUrl,
+    imageHeight,
+    imageWidth,
+    video,
+    videoDuration,
+    targets,
+  } = media
 
   let imageSrc = image ? REACT_APP_ASSET_URL + '/' + image : null
   let videoSrc = video ? REACT_APP_ASSET_URL + '/' + video : null
@@ -145,7 +155,7 @@ const EditPiece = () => {
           <Box color="#dddddd" textAlign="center">
             <VideoCameraBack color="inherit" sx={{ fontSize: 100 }} />
             <Typography>
-              <b>Your Image + Video Here</b>
+              <b>Your Preview Here</b>
             </Typography>
           </Box>
         )}
@@ -187,23 +197,57 @@ const EditPiece = () => {
     )
   }
 
+  const showOnboarding = packs.length === 1
+  const showWelcomeDialogAtStart =
+    showOnboarding && !imageSrc && !videoSrc && !targets
+
   const [welcomeDialogIsOpen, setWelcomeDialogIsOpen] = useState(
-    packs.length === 1 && !imageSrc && !videoSrc
+    showWelcomeDialogAtStart
   )
+  const showTooltips = showOnboarding && !welcomeDialogIsOpen
+
+  useEffect(() => {
+    if (showWelcomeDialogAtStart) {
+      setWelcomeDialogIsOpen(true)
+    }
+  }, [showWelcomeDialogAtStart])
 
   const [isLoading, setIsLoading] = useState(false)
   const [percent, setPercent] = useState(0)
 
   const { request } = useRequest()
 
+  console.log(imageSrc)
+
   const getImageTargets = async () => {
     setIsLoading(true)
+
+    console.log('getting image targets')
+
+    if (imageSrc === demoImageUrl) {
+      try {
+        await updatePack({
+          id: pieceId,
+          isPublic: true,
+          cards: [
+            {
+              ...media,
+              targets:
+                REACT_APP_ASSET_URL + '/Postcard+Mixtape+Vol+1+600px.jpg',
+            },
+          ],
+        })
+      } catch (err) {}
+      return
+    }
 
     try {
       const response = await axios.request({
         url: imageSrc,
         responseType: 'blob',
       })
+
+      console.log('creating blob')
 
       const blob = response.data
       const src = await URL.createObjectURL(blob)
@@ -215,6 +259,8 @@ const EditPiece = () => {
       await compiler.compileImageTargets([img], progress => {
         setPercent(progress.toFixed(0))
       })
+
+      console.log('creating compiler')
 
       const exportedBuffer = await compiler.exportData()
       var targetBlob = new Blob([exportedBuffer])
@@ -285,7 +331,7 @@ const EditPiece = () => {
 
   return (
     <>
-      <BarEditPiece previewPageUrl={previewPage} />
+      <BarEditPiece previewPageUrl={targets ? previewPage : null} />
       <WelcomeDialog
         open={welcomeDialogIsOpen}
         onClose={() => setWelcomeDialogIsOpen(false)}
@@ -371,21 +417,36 @@ const EditPiece = () => {
                               videoSrc={videoSrc}
                               videoDuration={videoDuration}
                               disabled={!!targets}
+                              showTooltips={showTooltips}
                             />
+
                             <LinkIcon
                               fontSize="large"
                               color={targets ? 'primary' : 'secondary'}
                               sx={{ display: { xs: 'none', sm: 'block' } }}
                             />
+
                             <AddMediaButton
                               mediaType="video"
                               updateMedia={handleUpdateMedia}
                               videoDuration={videoDuration}
                               videoSrc={videoSrc}
+                              imageSrc={imageSrc}
                               disabled={!!targets}
+                              showTooltips={showTooltips}
                             />
                           </Box>
                           <Box width="320px" mt={4} mb={4}>
+                            {/* <OnboardingTooltip
+                              open={
+                                showTooltips &&
+                                !!imageSrc &&
+                                !!videoSrc &&
+                                !targets
+                              }
+                              title="Now link your image and video to generate your experience, then give it a try!"
+                              position="bottom"
+                            > */}
                             <LoadingButton
                               variant={targets ? 'outlined' : 'contained'}
                               fullWidth
@@ -403,7 +464,7 @@ const EditPiece = () => {
                               loading={isLoading}
                               loadingPosition="end"
                               sx={{
-                                display: { xs: 'none', md: 'block' },
+                                display: { xs: 'none', md: 'flex' },
                                 '&.Mui-disabled': {
                                   borderColor: targets ? 'primary.main' : null,
                                   color: targets ? 'primary.main' : null,
@@ -418,6 +479,7 @@ const EditPiece = () => {
                                 <b>Create Experience</b>
                               )}
                             </LoadingButton>
+                            {/* </OnboardingTooltip> */}
                             {targets ? (
                               <LoadingButton
                                 variant="outlined"
@@ -426,7 +488,7 @@ const EditPiece = () => {
                                 target="_blank"
                                 endIcon={<Visibility />}
                                 sx={{
-                                  display: { xs: 'block', md: 'none' },
+                                  display: { xs: 'flex', md: 'none' },
                                 }}
                               >
                                 <b>Open Experience</b>
@@ -593,7 +655,7 @@ const EditPiece = () => {
                               your designs.
                             </Typography>
                           </Box>
-                          <Box width="320px" mb={1} mt={1}>
+                          <Box width="320px" mt={1}>
                             <DownloadQR
                               qrValue={experiencePage}
                               fileName={pieceId}
@@ -607,6 +669,16 @@ const EditPiece = () => {
                                 Download QR Code
                               </Button>
                             </DownloadQR>
+                          </Box>
+                          <Box width="320px" mb={1} mt={1}>
+                            <Button
+                              fullWidth
+                              endIcon={<Download />}
+                              href={imageUrl}
+                              disabled={!targets}
+                            >
+                              Download Artwork
+                            </Button>
                           </Box>
                           {/* <Box width="320px" mt={3} mb={1}>
                             <Button variant="contained" fullWidth disabled>

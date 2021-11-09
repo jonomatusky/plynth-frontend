@@ -40,31 +40,38 @@ const SignUpForm = () => {
   const history = useHistory()
   const { user, logout } = useSession()
   const { subscribe, createMe, user: storeUser } = useUserStore()
-  const { createPack } = usePackStore()
+  const { createPack, packs } = usePackStore()
   const { setError, clearError } = useAlertStore()
   const [status, setStatus] = useState('idle')
-  const [displayName, setDisplayName] = useState()
+  const [userData, setUserData] = useState({
+    email: null,
+    password: null,
+    displayName: '',
+  })
 
-  const handleSubmit = async ({ email, password, displayName: name }) => {
-    setStatus('loading')
-    setDisplayName(name)
-    try {
-      await logout()
-      await firebase.auth().createUserWithEmailAndPassword(email, password)
-    } catch (err) {
-      if (err.code === 'auth/invalid-email') {
-        setError({ message: 'Please enter a valid email address' })
-      } else if (err.code === 'auth/email-already-in-use') {
-        setError({
-          message: `Another account is using ${email}. Please sign in instead.`,
-        })
-      } else {
-        setError({
-          message:
-            'There was an error creating your account. Please try again.',
-        })
+  const handleSubmit = async ({ email, password, displayName }) => {
+    setStatus('submitted')
+    setUserData({ email, password, displayName })
+    if (status !== 'submitted') {
+      try {
+        await logout()
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+      } catch (err) {
+        if (err.code === 'auth/invalid-email') {
+          setError({ message: 'Please enter a valid email address' })
+        } else if (err.code === 'auth/email-already-in-use') {
+          setError({
+            message: `Another account is using ${email}. Please sign in instead.`,
+          })
+        } else {
+          console.log(err)
+          setError({
+            message:
+              'There was an error creating your account. Please try again.',
+          })
+        }
+        setStatus('error')
       }
-      setStatus('error')
     }
   }
 
@@ -95,8 +102,7 @@ const SignUpForm = () => {
   useEffect(() => {
     const handleSignIn = async () => {
       try {
-        await createMe({ displayName })
-        setStatus('succeeded')
+        await createMe({ displayName: userData.displayName })
       } catch (err) {
         setStatus('error')
       }
@@ -116,11 +122,11 @@ const SignUpForm = () => {
         handleSignIn()
       }
     }
-  }, [subscribe, history, user, status, createMe, displayName])
+  }, [subscribe, history, user, status, createMe, userData.displayName])
 
   useEffect(() => {
     const handleCreatePiece = async () => {
-      if (storeUser) {
+      if (storeUser && packs.length === 0) {
         try {
           const createdPack = await createPack({
             name: 'My New Experience',
@@ -135,7 +141,7 @@ const SignUpForm = () => {
           })
 
           if (createdPack.id) {
-            history.push(`/admin/pieces/${createdPack.id}`)
+            history.push(`/admin/pieces/${createdPack.id}/edit`)
           } else {
             history.push(`/admin`)
           }
@@ -151,7 +157,7 @@ const SignUpForm = () => {
       } else {
       }
     }
-  }, [history, status, createPack, storeUser])
+  }, [history, status, createPack, storeUser, packs.length])
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -205,7 +211,7 @@ const SignUpForm = () => {
             variant="contained"
             size="large"
             fullWidth
-            loading={status === 'loading'}
+            loading={status === 'submitted'}
           >
             <Typography
               letterSpacing={1}
