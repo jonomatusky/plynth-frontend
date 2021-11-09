@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import { Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PortalContent from 'pages/Portal/components/PortalContent'
 import theme from 'theme'
 
@@ -11,7 +12,7 @@ const useStyles = makeStyles({
       maxHeight: '600px',
       maxWidth: '300px',
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       maxHeight: '520px',
       maxWidth: '260px',
     },
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
     [theme.breakpoints.up('lg')]: {
       transform: 'scale(0.75)',
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       transform: 'scale(0.65)',
     },
     transformOrigin: 'top left',

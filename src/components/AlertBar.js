@@ -1,6 +1,6 @@
 import React from 'react'
-import { Snackbar, SnackbarContent, Button } from '@material-ui/core'
-import ClearIcon from '@material-ui/icons/Clear'
+import { Snackbar, SnackbarContent, Button } from '@mui/material'
+import ClearIcon from '@mui/icons-material/Clear'
 
 import { useAlertStore } from 'hooks/store/use-alert-store'
 

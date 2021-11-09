@@ -5,7 +5,6 @@ import {
   Box,
   Grid,
   Typography,
-  Hidden,
   IconButton,
   Menu,
   MenuItem,
@@ -13,8 +12,8 @@ import {
   Button,
   Card,
   CardContent,
-} from '@material-ui/core'
-import { Add, ArrowForwardIos, Person } from '@material-ui/icons'
+} from '@mui/material'
+import { Add, ArrowForwardIos, Person } from '@mui/icons-material'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
@@ -26,11 +25,23 @@ import { useHistory } from 'react-router'
 import { useSession } from 'hooks/use-session'
 import BarAccount from 'layouts/BarAccount'
 import PreviewLayout from 'layouts/PreviewLayout'
+import useUserStore from 'hooks/store/use-user-store'
 
 const PacksView = () => {
   const history = useHistory()
   const { logout } = useSession()
   const { packs, status, createPack } = usePackStore()
+  const { user } = useUserStore()
+
+  const { username } = user || {}
+
+  const packsFiltered = packs.filter(pack => {
+    if ((pack.cards || []).length > 0 && pack.cards[0].type === 'ar') {
+      return false
+    } else {
+      return true
+    }
+  })
 
   const [selectedPackIndex, setSelectedPackIndex] = useState(0)
   const [newPack, setNewPack] = useState(null)
@@ -78,8 +89,9 @@ const PacksView = () => {
   }
 
   return (
-    <AdminNav>
-      <BarAccount>
+    <>
+      <BarAccount />
+      <AdminNav>
         <Box height="calc(100vh - 48px)" overflow="hidden">
           <Container disableGutters maxWidth={false}>
             <Grid container justifyContent="center">
@@ -103,22 +115,24 @@ const PacksView = () => {
                         <Grid item xs={false} sm={1}></Grid>
                         {/* <Grid item xs={false} sm={1} /> */}
                         <Grid item xs={11} sm={9}>
-                          <Hidden smDown>
-                            <Box mb={1} mt={1}>
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                size="large"
-                                onClick={handleClick}
-                                endIcon={<Add />}
-                                fullWidth
-                              >
-                                <b>Create New Pack</b>
-                              </Button>
-                            </Box>
-                          </Hidden>
-                          <Hidden smUp>
-                            <IconButton onClick={handleOpen}>
+                          <Box
+                            mb={1}
+                            mt={1}
+                            sx={{ display: { xs: 'none', md: 'block' } }}
+                          >
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              size="large"
+                              onClick={handleClick}
+                              endIcon={<Add />}
+                              fullWidth
+                            >
+                              <b>Create New Pack</b>
+                            </Button>
+                          </Box>
+                          <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                            <IconButton onClick={handleOpen} size="large">
                               <Person />
                             </IconButton>
 
@@ -135,26 +149,28 @@ const PacksView = () => {
                               <Divider />
                               <MenuItem onClick={handleLogout}>Logout</MenuItem>
                             </Menu>
-                          </Hidden>
+                          </Box>
                         </Grid>
                         <Grid item xs={false} sm={1}></Grid>
                       </Grid>
 
                       {status === 'succeeded' && (packs || []).length === 0 && (
                         <Grid item xs={11} sm={9}>
-                          <Hidden smDown>
-                            <Typography align="center">
-                              You don't have any packs yet! Create a new one to
-                              get started <Emoji symbol="👆" label="up" />
-                            </Typography>
-                          </Hidden>
-                          <Hidden smUp>
-                            <Typography align="center">
-                              You don't have any packs yet! Switch over to
-                              desktop to start creating{' '}
-                              <Emoji symbol="💻" label="desktop" />
-                            </Typography>
-                          </Hidden>
+                          <Typography
+                            align="center"
+                            sx={{ display: { xs: 'none', md: 'block' } }}
+                          >
+                            You don't have any packs yet! Create a new one to
+                            get started <Emoji symbol="👆" label="up" />
+                          </Typography>
+                          <Typography
+                            align="center"
+                            sx={{ display: { xs: 'block', md: 'none' } }}
+                          >
+                            You don't have any packs yet! Switch over to desktop
+                            to start creating{' '}
+                            <Emoji symbol="💻" label="desktop" />
+                          </Typography>
                         </Grid>
                       )}
                       {newPack && (
@@ -196,7 +212,7 @@ const PacksView = () => {
                         </Grid>
                       )}
                       <>
-                        {(packs || []).map((pack, index) => {
+                        {(packsFiltered || []).map((pack, index) => {
                           return (
                             <Grid
                               item
@@ -215,13 +231,14 @@ const PacksView = () => {
                                 />
                               </Grid>
                               <Grid item xs={false} sm={1}>
-                                <Hidden mdDown>
-                                  <Box textAlign="center">
-                                    {index === selectedPackIndex && (
-                                      <ArrowForwardIos color="disabled" />
-                                    )}
-                                  </Box>
-                                </Hidden>
+                                <Box
+                                  textAlign="center"
+                                  sx={{ display: { xs: 'none', md: 'block' } }}
+                                >
+                                  {index === selectedPackIndex && (
+                                    <ArrowForwardIos color="disabled" />
+                                  )}
+                                </Box>
                               </Grid>
                             </Grid>
                           )
@@ -234,26 +251,24 @@ const PacksView = () => {
                   </Grid>
                 </Box>
               </Grid>
-              <Hidden mdDown>
-                <Grid item md={5}>
-                  <PreviewLayout>
-                    <Grid container justifyContent="center" spacing={3}>
-                      <Grid item xs={12} container justifyContent="center">
-                        <Box position="fixed">
-                          {!!selectedPack.id && (
-                            <LivePreview pack={selectedPack} />
-                          )}
-                        </Box>
-                      </Grid>
+              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <PreviewLayout username={username}>
+                  <Grid container justifyContent="center" spacing={3}>
+                    <Grid item xs={12} container justifyContent="center">
+                      <Box position="fixed">
+                        {!!selectedPack.id && (
+                          <LivePreview pack={selectedPack} />
+                        )}
+                      </Box>
                     </Grid>
-                  </PreviewLayout>
-                </Grid>
-              </Hidden>
+                  </Grid>
+                </PreviewLayout>
+              </Grid>
             </Grid>
           </Container>
         </Box>
-      </BarAccount>
-    </AdminNav>
+      </AdminNav>
+    </>
   )
 }
 

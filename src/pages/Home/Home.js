@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
-import {
-  Grid,
-  Typography,
-  Container,
-  Box,
-  Button,
-  Hidden,
-} from '@material-ui/core'
+import { useHistory, useLocation } from 'react-router-dom'
+import { Grid, Typography, Container, Box } from '@mui/material'
 // import { HashLink } from 'react-router-hash-link'
 
 import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
 import {
   ArrowForward,
-  CameraAltOutlined,
-  MeetingRoom,
-  PhotoAlbumOutlined,
+  QrCodeScanner,
+  Videocam,
+  Image as ImageIcon,
   // Portrait,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import ReactPlayer from 'react-player'
 import Phone from 'components/Phone'
-import TextFieldWebsite from 'components/TextFieldWebsite'
 import contentful from 'config/contentful'
 import PublicNav from 'layouts/PublicNav'
-import FormSubscribe from 'components/FormSubscribe'
 import Image from 'components/Image'
+import FormWaitlist from 'components/FormWaitlist'
+import VideoPoster from 'images/video-poster.jpeg'
 
 // const SmoothHashLink = React.forwardRef((props, ref) => (
 //   <HashLink smooth innerRef={ref} {...props} />
@@ -35,21 +28,10 @@ const Home = () => {
   const history = useHistory()
   const [highlights, setHighlights] = useState([])
   const [content, setContent] = useState({})
-  const [videoIsReady, setVideoIsReady] = useState(false)
-
-  const [username, setUsername] = useState('')
+  // const [videoIsReady, setVideoIsReady] = useState(false)
 
   if (search === '?utm_source=qr') {
     history.push('/postcardmixtapes')
-  }
-
-  const handleChange = event => {
-    setUsername(event.target.value)
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault()
-    history.push(`/register?username=${encodeURI(username)}`)
   }
 
   useEffect(() => {
@@ -73,19 +55,101 @@ const Home = () => {
   }, [])
 
   return (
-    <PublicNav>
-      <ScrollToTopOnMount />
+    <>
+      <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+        <Box
+          position="absolute"
+          overflow="hidden"
+          zIndex="-9"
+          width="100vw"
+          height="80vh"
+          display="flex"
+          jusifycontent="center"
+          alignItems="center"
+          sx={{
+            background: 'linear-gradient(180deg, #00000066 50% , #000000 100%)',
+          }}
+        ></Box>
+        <Box
+          position="absolute"
+          overflow="hidden"
+          zIndex="-10"
+          width="100vw"
+          height="80vh"
+          display="flex"
+          jusifycontent="center"
+          alignItems="center"
+        >
+          <ReactPlayer
+            url={content.videoUrl}
+            height="150vh"
+            width="100vw"
+            overflow="hidden"
+            playsinline={true}
+            loop={true}
+            playing={true}
+            config={{ vimeo: { playerOptions: { background: 1 } } }}
+            // onReady={() => setVideoIsReady(true)}
+          />
+        </Box>
+      </Box>
+      <PublicNav>
+        <ScrollToTopOnMount />
 
-      <Container maxWidth={false} id="about" disableGutters>
-        <Grid container justifyContent="center">
-          <Grid item xs={12} md={2} />
-          <Grid item xs={12} sm={8} md={4}>
+        <Container maxWidth={false} id="about" disableGutters>
+          <Grid container justifyContent="center">
+            <Grid item xs={12} md={2} />
+            <Grid item xs={12} sm={8} md={4}>
+              <Grid
+                container
+                sx={{ height: '100%' }}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item xs={11} mt={6}>
+                  <Typography
+                    variant="h3"
+                    letterSpacing={1}
+                    style={{ fontWeight: 800 }}
+                    pb={3}
+                  >
+                    {content.heading}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    pb={3}
+                    style={{ whiteSpace: 'pre-line' }}
+                  >
+                    {content.subheading}
+                  </Typography>
+                  <Box maxWidth="350px">
+                    {/* <Button
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      sx={{ height: '51.5px' }}
+                      endIcon={<ArrowForward />}
+                      component={Link}
+                      to="/s/try-it"
+                    >
+                      <Typography letterSpacing={1} style={{ fontWeight: 900 }}>
+                        Try It
+                      </Typography>
+                    </Button> */}
+                    <FormWaitlist />
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
             <Grid
+              item
+              xs={12}
+              md={5}
               container
-              sx={{ height: '100%' }}
               justifyContent="center"
-              alignItems="center"
+              sx={{ display: { xs: 'none', md: 'flex' } }}
             >
+<<<<<<< HEAD
               <Grid item xs={11} mt={6}>
                 <Typography
                   color="white"
@@ -108,344 +172,224 @@ const Home = () => {
                 >
                   <b>Try It Now</b>
                 </Button>
+=======
+              <Grid item xs={12}>
+                <Box mt={12} />
+>>>>>>> 3.0
               </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} md={5} container justifyContent="center">
-            <Grid item xs={12}>
-              <Box mt={12} />
-            </Grid>
-            <Phone>
-              <Box
-                height="100%"
-                width="100%"
-                display={videoIsReady ? null : 'none'}
-              >
-                <ReactPlayer
-                  url={content.videoUrl}
+              <Phone>
+                <Box
                   height="100%"
                   width="100%"
-                  overflow="hidden"
-                  playsinline={true}
-                  loop={true}
-                  playing={true}
-                  config={{ vimeo: { playerOptions: { background: 1 } } }}
-                  onReady={() => setVideoIsReady(true)}
-                />
-              </Box>
+                  // display={videoIsReady ? null : 'none'}
+                  // bgcolor="#999999"
+                  sx={{
+                    backgroundImage: `url(${VideoPoster})`,
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                  }}
+                >
+                  <ReactPlayer
+                    url={content.videoUrl}
+                    height="100%"
+                    width="100%"
+                    overflow="hidden"
+                    playsinline={true}
+                    loop={true}
+                    playing={true}
+                    config={{ vimeo: { playerOptions: { background: 1 } } }}
+                    // onReady={() => setVideoIsReady(true)}
+                  />
+                </Box>
 
-              {!videoIsReady && (
-                <Box backgroundColor="#999999" height="100%" width="100%" />
-              )}
-            </Phone>
-          </Grid>
-          <Grid item xs={12} md={1} />
+                {/* {!videoIsReady && (
+                  <Box backgroundColor="#999999" height="100%" width="100%" />
+                )} */}
+              </Phone>
+            </Grid>
+            <Grid item xs={12} md={1} />
 
-          {/* Creator Section */}
-          <Grid item xs={12} pb={2}>
-            <Hidden smDown>
-              <Box mb={20} />
-            </Hidden>
-          </Grid>
-          <Grid item xs={12} mt={10} pb={2}>
-            <Typography
-              color="white"
-              variant="h4"
-              letterSpacing={1}
-              style={{ fontWeight: 800 }}
-              textAlign="center"
+            {/* How it works */}
+            <Grid
+              item
+              xs={12}
+              pb={2}
+              sx={{ display: { xs: 'none', ld: 'block' } }}
             >
-              {content.creatorHeading}
-            </Typography>
-          </Grid>
-          {!!content.creatorSubheading && (
-            <Grid item xs={10} sm={8} md={6} lg={4} pb={2}>
-              <Typography color="white" letterSpacing={1} textAlign="center">
-                {content.creatorSubheading}
+              <Box mb={10} />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                variant="h4"
+                letterSpacing={1}
+                style={{ fontWeight: 800 }}
+                pb={3}
+                mt={10}
+                textAlign="center"
+              >
+                {content.howHeading}
               </Typography>
             </Grid>
-          )}
-
-          <Grid item xs={12} mt={6} pb={2} container justifyContent="center">
-            <Box
-              height="100%"
-              overflow="auto"
-              display="flex"
-              justifyContent="flex-start"
-              sx={{
-                '&::-webkit-scrollbar': { display: 'none' },
-                msOverflowStyle: 'none',
-                scrollbarWidth: 'none',
-              }}
-            >
-              {highlights.map((highlight, index) => {
-                return (
-                  <Box
-                    key={highlight.sys.id}
-                    width="150px"
-                    textAlign="center"
-                    mt={index % 2 === 1 ? 6 : 0}
-                    mr={3}
-                    ml={3}
-                  >
-                    <Image
-                      height="125px"
-                      width="125px"
-                      style={{ borderRadius: '50%', objectFit: 'cover' }}
-                      src={
-                        highlight.fields.image
-                          ? 'https:' + highlight.fields.image.fields.file.url
-                          : null
-                      }
-                      alt={highlight.fields.title}
-                    />
-                    <Typography textAlign="center" color="white">
-                      <b>{highlight.fields.title}</b>
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      textAlign="center"
-                      color="white"
-                    >
-                      {highlight.fields.text}
-                    </Typography>
-                  </Box>
-                )
-              })}
-              <Hidden smUp>
-                <Box>
-                  <Box ml={2}></Box>
-                </Box>
-              </Hidden>
-            </Box>
-          </Grid>
-          <Hidden smUp>
-            <Grid item xs={12} pb={2} container justifyContent="flex-end">
-              <ArrowForward sx={{ color: 'white' }} />
-            </Grid>
-          </Hidden>
-
-          {/* How it works */}
-          <Grid item md={10} xs={11}>
-            <Grid container justifyContent="center" alignItems="top">
-              <Hidden smDown>
-                <Grid item xs={12} pb={2}>
-                  <Box mb={20} />
+            {!!content.howSubheading && (
+              <Grid item container xs={12} justifyContent="center" mb={2}>
+                <Grid item xs={10} sm={9} md={7} lg={5} pb={2}>
+                  <Typography letterSpacing={1} textAlign="center">
+                    {content.howSubheading}
+                  </Typography>
                 </Grid>
-              </Hidden>
-              <Grid item xs={12}>
-                <Typography
-                  color="white"
-                  variant="h4"
-                  letterSpacing={1}
-                  style={{ fontWeight: 800 }}
-                  pb={3}
-                  mt={10}
-                  textAlign="center"
-                >
-                  {content.howHeading}
-                </Typography>
               </Grid>
+            )}
+
+            <Grid
+              item
+              container
+              xs={8}
+              justifyContent="center"
+              mb={2}
+              alignItems="top"
+            >
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
                 <Grid item xs={12} textAlign="center">
-                  <PhotoAlbumOutlined
-                    sx={{ color: 'white', fontSize: '80px' }}
-                  />
+                  <Videocam sx={{ fontSize: '80px' }} color="primary" />
                 </Grid>
                 <Grid item xs={12} textAlign="center">
-                  <Typography color="white" textAlign="center" mt={1}>
+                  <Typography textAlign="center" mt={1}>
                     {content.step1}
                   </Typography>
                 </Grid>
               </Grid>
-              <Hidden mdDown>
-                <Grid
-                  item
-                  xs={1}
-                  container
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <ArrowForward sx={{ color: 'white', fontSize: '36px' }} />
-                </Grid>
-              </Hidden>
+              <Grid
+                item
+                xs={1}
+                container
+                justifyContent="center"
+                alignItems="center"
+                sx={{ display: { xs: 'none', xl: 'flex' } }}
+              >
+                <ArrowForward sx={{ fontSize: '36px' }} />
+              </Grid>
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
                 <Grid item xs={12} textAlign="center">
-                  <MeetingRoom sx={{ color: 'white', fontSize: '80px' }} />
+                  <ImageIcon sx={{ fontSize: '80px' }} color="primary" />
                 </Grid>
                 <Grid item xs={12} textAlign="center">
-                  <Typography color="white" textAlign="center" mt={1}>
+                  <Typography textAlign="center" mt={1}>
                     {content.step2}
                   </Typography>
                 </Grid>
               </Grid>
-              <Hidden mdDown>
-                <Grid
-                  item
-                  xs={1}
-                  container
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <ArrowForward sx={{ color: 'white', fontSize: '36px' }} />
-                </Grid>
-              </Hidden>
+              <Grid
+                item
+                xs={1}
+                container
+                justifyContent="center"
+                alignItems="center"
+                sx={{ display: { xs: 'none', xl: 'flex' } }}
+              >
+                <ArrowForward sx={{ fontSize: '36px' }} />
+              </Grid>
               <Grid item xs={8} md={3} container justifyContent="center" mb={2}>
                 <Grid item xs={12} textAlign="center">
-                  <CameraAltOutlined
-                    sx={{ color: 'white', fontSize: '80px' }}
-                  />
+                  <QrCodeScanner sx={{ fontSize: '80px' }} color="primary" />
                 </Grid>
                 <Grid item xs={12} textAlign="center">
-                  <Typography color="white" textAlign="center" mt={1}>
+                  <Typography textAlign="center" mt={1}>
                     {content.step3}
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} pb={2}>
-            <Hidden smDown>
-              <Box mb={20} />
-            </Hidden>
-          </Grid>
-          <Grid item xs={12} container justifyContent="center" mt={12}>
-            <Grid item>
-              <MeetingRoom sx={{ color: 'white', fontSize: '80px' }} />
-            </Grid>
+
+            {/* Creator Section */}
             <Grid item xs={12} pb={2}>
+              <Box mb={6} sx={{ display: { xs: 'none', lg: 'block' } }} />
+            </Grid>
+            <Grid item xs={12} mt={10} pb={2}>
               <Typography
-                color="white"
                 variant="h5"
                 letterSpacing={1}
                 style={{ fontWeight: 800 }}
                 textAlign="center"
               >
-                {content.claimHeading}
+                {content.creatorHeading}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={7} pb={2}>
-              <Typography
-                color="white"
-                letterSpacing={1}
-                pb={3}
-                textAlign="center"
-              >
-                {content.claimSubheading}
-              </Typography>
-            </Grid>
-            <Grid item md={10} container justifyContent="center">
-              <form onSubmit={handleSubmit}>
-                <Box
-                  width="100%"
-                  display="flex"
-                  justifyContent="center"
-                  flexWrap="wrap"
-                  p={1}
-                >
-                  <Box maxWidth="450px" flexShrink={1} m={1}>
-                    <TextFieldWebsite
-                      variant="outlined"
-                      placeholder="yourname"
-                      size="medium"
-                      fullWidth
-                      InputProps={{
-                        startAdornment: 'plynth.com/',
-                      }}
-                      onChange={handleChange}
-                      value={username}
-                    />
-                  </Box>
-                  <Box flexGrow={1} maxWidth="450px" m={1}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      endIcon={<ArrowForward />}
-                      size="large"
-                      fullWidth
-                      sx={{ height: '68px' }}
-                    >
-                      <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
-                        Claim My Portal
-                      </Typography>
-                    </Button>
-                  </Box>
-                  {/* <Hidden smUp>
-                    <Box flexGrow={1} mt={2} width="250px">
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        endIcon={<ArrowForward />}
-                        size="large"
-                        fullWidth
-                        sx={{ height: '68px' }}
-                      >
-                        <Typography
-                          letterSpacing={1}
-                          style={{ fontWeight: 800 }}
-                        >
-                          Claim My Portal
-                        </Typography>
-                      </Button>
-                    </Box>
-                  </Hidden> */}
-                </Box>
-              </form>
-            </Grid>
-          </Grid>
-
-          <Hidden smDown>
-            <Grid item xs={12} pb={2}>
-              <Box mb={20} />
-            </Grid>
-          </Hidden>
-
-          {/* Use it for... Section */}
-          <Grid item xs={12} container justifyContent="space-around">
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={5}
-              lg={4}
-              container
-              justifyContent="center"
-              mt={8}
-            >
-              <Grid item xs={11} container spacing={2} justifyContent="center">
-                <Grid item xs={12}>
-                  <Box color="white" pb={2}>
-                    <Typography variant="h4" letterSpacing={1}>
-                      <b>{content.useHeading}</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12}>
-                  {(content.uses || []).map((use, index) => {
-                    return (
-                      <Box mb="1em" key={index}>
-                        <Typography variant="h6" color="white">
-                          {use}
-                        </Typography>
-                      </Box>
-                    )
-                  })}
-                </Grid>
+            {!!content.creatorSubheading && (
+              <Grid item xs={10} sm={8} md={6} lg={4} pb={2}>
+                <Typography letterSpacing={1} textAlign="center">
+                  {content.creatorSubheading}
+                </Typography>
               </Grid>
+            )}
+            <Grid item xs={12} mt={3} pb={2} container justifyContent="center">
+              <Box
+                height="100%"
+                overflow="auto"
+                display="flex"
+                justifyContent="flex-start"
+                sx={{
+                  '&::-webkit-scrollbar': { display: 'none' },
+                  msOverflowStyle: 'none',
+                  scrollbarWidth: 'none',
+                }}
+              >
+                {highlights.map((highlight, index) => {
+                  return (
+                    <Box
+                      key={highlight.sys.id}
+                      width="150px"
+                      textAlign="center"
+                      mt={index % 2 === 1 ? 6 : 0}
+                      mr={3}
+                      ml={3}
+                    >
+                      <Box width="125px" ml="auto" mr="auto">
+                        <Image
+                          height="125px"
+                          width="125px"
+                          style={{ borderRadius: '50%', objectFit: 'cover' }}
+                          src={
+                            highlight.fields.image
+                              ? 'https:' +
+                                highlight.fields.image.fields.file.url
+                              : null
+                          }
+                          alt={highlight.fields.title}
+                        />
+                      </Box>
+
+                      <Typography textAlign="center">
+                        <b>{highlight.fields.title}</b>
+                      </Typography>
+                      <Typography variant="body2" textAlign="center">
+                        {highlight.fields.text}
+                      </Typography>
+                    </Box>
+                  )
+                })}
+                <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                  <Box ml={2}></Box>
+                </Box>
+              </Box>
             </Grid>
             <Grid
               item
               xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              mt={8}
+              pb={2}
               container
-              justifyContent="center"
-              alignContent="center"
-              spacing={1}
+              justifyContent="flex-end"
+              sx={{ display: { xs: 'block', sm: 'none' } }}
             >
+              <ArrowForward />
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              pb={2}
+              sx={{ display: { xs: 'none', lg: 'block' } }}
+            >
+<<<<<<< HEAD
               <Grid item xs={12}>
                 <Typography variant="h5" textAlign="center" color="white">
                   <b>Try It Out</b>
@@ -473,40 +417,61 @@ const Home = () => {
                   <b>Try It Now</b>
                 </Button>
               </Grid>
+=======
+              <Box mt={4} />
+>>>>>>> 3.0
             </Grid>
-          </Grid>
-          <Hidden smDown>
-            <Grid item xs={12} pb={2}>
-              <Box mt={20} />
+
+            {/* Use it for... Section */}
+            <Grid item xs={12} container spacing={2} justifyContent="center">
+              <Grid item xs={10} sm={6} md={6}>
+                <Box pb={2} textAlign="center">
+                  <Typography variant="h4" letterSpacing={1}>
+                    <b>{content.useHeading}</b>
+                  </Typography>
+                </Box>
+                {(content.uses || []).map((use, index) => {
+                  return (
+                    <Box mb="1em" key={index}>
+                      <Typography variant="h6">{use}</Typography>
+                    </Box>
+                  )
+                })}
+              </Grid>
             </Grid>
-          </Hidden>
-          <Grid item xs={12} mt={8}>
-            <Box pt={8} pb={8}>
-              <Grid container justifyContent="center" alignItems="center">
-                <Grid item lg={3} md={4} sm={6} xs={10}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <Box pb={2}>
-                        <Typography
-                          variant="h5"
-                          color="white"
-                          textAlign="center"
-                        >
-                          <b>Sign up for updates</b>
+
+            <Grid item xs={12} mt={8}>
+              <Box pt={8} pb={8}>
+                <Grid container justifyContent="center" alignItems="center">
+                  <Grid item lg={3} md={4} sm={6} xs={10}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} pb={2}>
+                        <Typography variant="h6" textAlign="center">
+                          {content.ctaBottom}
                         </Typography>
-                      </Box>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormSubscribe />
+                      </Grid>
+                      <Grid item xs={12} container justifyContent="center">
+                        <Box maxWidth="350px">
+                          <FormWaitlist />
+                        </Box>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Box>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              pb={2}
+              sx={{ display: { xs: 'none', lg: 'block' } }}
+            >
+              <Box mt={2} />
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </PublicNav>
+        </Container>
+      </PublicNav>
+    </>
   )
 }
 

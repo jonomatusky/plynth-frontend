@@ -6,8 +6,8 @@ import {
   Fab,
   Grid,
   Typography,
-} from '@material-ui/core'
-import { CameraAlt, Clear } from '@material-ui/icons'
+} from '@mui/material'
+import { CameraAlt, Clear } from '@mui/icons-material'
 import Div100vh from 'components/Div100vh'
 import useAlertStore from 'hooks/store/use-alert-store'
 import useScanStore from 'hooks/store/use-scan-store'

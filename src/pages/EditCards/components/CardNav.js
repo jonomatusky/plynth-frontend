@@ -9,8 +9,8 @@ import {
   Box,
   Button as MuiButton,
   Icon,
-} from '@material-ui/core'
-import { Add, DragIndicator } from '@material-ui/icons'
+} from '@mui/material'
+import { Add, DragIndicator } from '@mui/icons-material'
 
 import { cardTypes } from 'pages/EditCards/components/CardCard'
 

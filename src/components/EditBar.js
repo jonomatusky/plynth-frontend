@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
-import {
-  AppBar,
-  makeStyles,
-  Divider,
-  Tabs,
-  Tab,
-  Box,
-  Typography,
-} from '@material-ui/core'
+import { AppBar, Divider, Tabs, Tab, Box, Typography } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import { Link, Link as RouterLink, useLocation } from 'react-router-dom'
-import { CameraAlt, Check, Palette, Style } from '@material-ui/icons'
+import { CameraAlt, Check, Palette, Style } from '@mui/icons-material'
 
 import theme from 'theme'
 import Button from 'components/Button'
@@ -136,7 +129,7 @@ const EditBar = ({ children }) => {
               size="small"
               endIcon={<Check />}
               onClick={handleSave}
-              pending={isSaving}
+              loading={isSaving}
               disableElevation
               component={Link}
               to="/admin"

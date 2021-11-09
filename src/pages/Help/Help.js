@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Container, Box, Grid, Typography } from '@material-ui/core'
+import { Link, Container, Box, Grid, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 
 import PublicNav from 'layouts/PublicNav'

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 import CameraDialog from 'components/CameraDialog'
 import ScanScreen from 'components/ScanScreen'
-import { Typography, Box, Grid, Button } from '@material-ui/core'
-import { Clear } from '@material-ui/icons'
+import { Typography, Box, Grid, Button } from '@mui/material'
+import { Clear } from '@mui/icons-material'
 
 const PickupScreen = ({ fontColor, backgroundColor, instructions }) => {
   const [helpDialogIsOpen, setHelpDialogIsOpen] = useState(false)

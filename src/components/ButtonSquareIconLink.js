@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { Button, Grid, makeStyles } from '@material-ui/core'
+import { Button, Grid } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import iconOptions from 'util/iconOptions'
 

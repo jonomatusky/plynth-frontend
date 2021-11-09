@@ -6,7 +6,7 @@ import {
   Box,
   CircularProgress,
   styled,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import theme from '../theme'
 
@@ -33,20 +33,14 @@ const ActionButton = props => {
 
   if (variant === 'text') {
     return (
-      <Button
-        color={'default'}
-        fullWidth={fullWidth}
-        variant={variant}
-        onClick={onClick}
-        {...other}
-      >
+      <Button fullWidth={fullWidth} variant={variant} onClick={onClick} {...other}>
         <Box>
           <ButtonText>
             <strong>{label}</strong>
           </ButtonText>
         </Box>
       </Button>
-    )
+    );
   } else {
     return (
       <StyledButton

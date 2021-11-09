@@ -12,9 +12,9 @@ import {
   Select,
   TextField,
   Typography,
-} from '@material-ui/core'
+} from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { DeleteOutline, DragIndicator } from '@material-ui/icons'
+import { DeleteOutline, DragIndicator } from '@mui/icons-material'
 import isURL from 'validator/lib/isURL'
 
 import iconOptions from 'util/iconOptions'

@@ -5,7 +5,7 @@ import {
   Box,
   Switch,
   FormControlLabel,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'

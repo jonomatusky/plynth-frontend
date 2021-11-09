@@ -10,8 +10,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-} from '@material-ui/core'
-import { DeleteOutline } from '@material-ui/icons'
+} from '@mui/material'
+import { DeleteOutline } from '@mui/icons-material'
 
 import usePackStore from 'hooks/store/use-pack-store'
 

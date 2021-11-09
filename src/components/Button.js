@@ -1,6 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core'
-import LoadingButton from '@material-ui/lab/LoadingButton'
+import makeStyles from '@mui/styles/makeStyles'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 const useStyles = makeStyles({
   button: {
@@ -12,7 +12,7 @@ const Button = ({ children, loading, color, variant, onClick, ...props }) => {
   const classes = useStyles()
   return (
     <LoadingButton
-      pending={loading}
+      loading={loading}
       color={color || 'primary'}
       variant={variant || 'contained'}
       className={classes.button}

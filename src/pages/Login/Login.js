@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
   Divider,
-} from '@material-ui/core'
+} from '@mui/material'
 import * as yup from 'yup'
 
 import firebase from 'config/firebase'
@@ -104,13 +104,13 @@ const NewPortalSignUp = ({ title, text }) => {
           <form onSubmit={formik.handleSubmit}>
             <Grid container justifyContent="flex-start" spacing={3}>
               <Grid item xs={12} mb={2}>
-                <Typography variant="h4" color="white">
+                <Typography variant="h4">
                   <b>{title || 'Sign In'}</b>
                 </Typography>
               </Grid>
               {text && (
                 <Grid item xs={12} mb={2}>
-                  <Typography variant="h6" color="white">
+                  <Typography variant="h6">
                     <b>{text}</b>
                   </Typography>
                 </Grid>
@@ -141,11 +141,11 @@ const NewPortalSignUp = ({ title, text }) => {
                   }
                   helperText={formik.touched.password && formik.errors.password}
                 />
-                <Typography color="#cccccc" mt={1}>
+                <Typography mt={1}>
                   <Link
                     component={RouterLink}
                     to="/recover"
-                    color="inherit"
+                    color="secondary"
                     underline="hover"
                   >
                     Forgot password?
@@ -207,7 +207,7 @@ const NewPortalSignUp = ({ title, text }) => {
                   </Typography>
                 </Button>
               </Grid>
-              <Grid item container justifyContent="center">
+              {/* <Grid item container justifyContent="center">
                 <Typography variant="body2" color="white">
                   Don't have an account?{' '}
                   <Link
@@ -219,7 +219,7 @@ const NewPortalSignUp = ({ title, text }) => {
                     <b>Sign Up</b>
                   </Link>
                 </Typography>
-              </Grid>
+              </Grid> */}
             </Grid>
           </form>
         </Box>

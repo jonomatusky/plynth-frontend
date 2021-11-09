@@ -4,14 +4,15 @@ import { Provider } from 'react-redux'
 
 import 'index.css'
 import reportWebVitals from './reportWebVitals'
-import { ThemeProvider } from '@material-ui/core/styles'
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+import StyledEngineProvider from '@mui/material/StyledEngineProvider'
+import CssBaseline from '@mui/material/CssBaseline'
 
 import App from './App'
 import store from './redux/store'
 import theme from './theme'
 import './config/fontawesome'
+import './aframeComponents.js'
 
 ReactDOM.render(
   <React.StrictMode>

@@ -17,6 +17,7 @@ export const useFetch = () => {
     status: fetchUserStatus,
     user: storeUser,
     createMeStatus,
+    createMe,
   } = useUserStore()
   const { fetchPacks, status: fetchPacksStatus } = usePackStore()
 
@@ -25,6 +26,7 @@ export const useFetch = () => {
       try {
         await fetchUser()
       } catch (err) {
+        console.log('failed to fetch user')
         setError({ message: err.message })
       }
     }
@@ -33,6 +35,12 @@ export const useFetch = () => {
       fetch()
     }
   }, [user, history, fetchUser, fetchUserStatus, setError])
+
+  useEffect(() => {
+    if (fetchUserStatus === 'succeeded' && !storeUser._id) {
+      createMe({})
+    }
+  }, [createMe, fetchUserStatus, storeUser])
 
   useEffect(() => {
     if (!!storeUser.username) {

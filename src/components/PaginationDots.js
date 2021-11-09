@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, ButtonBase } from '@material-ui/core'
+import { Box, Grid, ButtonBase } from '@mui/material'
 
 import theme from 'theme'
 

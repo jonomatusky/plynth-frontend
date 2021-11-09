@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { Button, Grid, makeStyles, Typography } from '@material-ui/core'
-import { AddAPhoto } from '@material-ui/icons'
+import { Button, Grid, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { AddAPhoto } from '@mui/icons-material'
 
 const useStyles = makeStyles({
   buttonRound: {

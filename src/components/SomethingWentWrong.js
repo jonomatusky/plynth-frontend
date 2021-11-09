@@ -1,14 +1,8 @@
-import React, { useEffect } from 'react'
-import { Container, Grid, Typography, Box } from '@material-ui/core'
+import React from 'react'
+import { Container, Grid, Typography, Box } from '@mui/material'
 import Div100vh from './Div100vh'
 
 const SomethingWentWrong = ({ backgroundColor, fontColor }) => {
-  useEffect(() => {
-    if (backgroundColor) {
-      document.body.style.backgroundColor = backgroundColor || 'black'
-    }
-  }, [backgroundColor])
-
   return (
     <>
       <Container maxWidth="md">
@@ -17,7 +11,7 @@ const SomethingWentWrong = ({ backgroundColor, fontColor }) => {
             container
             direction="column"
             align="center"
-            justify="center"
+            justifyContent="center"
             wrap="nowrap"
             spacing={1}
           >

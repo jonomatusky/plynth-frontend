@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Button, Box } from '@material-ui/core'
+import { Grid, Typography, Button, Box } from '@mui/material'
 import * as yup from 'yup'
 
 import TextFieldWebsite from 'components/TextFieldWebsite'

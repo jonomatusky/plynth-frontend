@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Menu, MenuItem } from '@material-ui/core'
+import { Button, Menu, MenuItem } from '@mui/material'
 import copy from 'copy-to-clipboard'
 
 import DownloadQR from 'components/DownloadQr'

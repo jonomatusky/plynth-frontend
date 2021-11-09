@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { Container, Hidden } from '@material-ui/core'
+import { Container, Box } from '@mui/material'
 
 import { useRequest } from 'hooks/use-request'
 import PackContent from 'components/PackContent'
@@ -11,6 +11,7 @@ import NotFound from 'components/NotFound'
 import LoadingScreen from 'components/LoadingScreen'
 import usePageTrack from 'hooks/use-page-track'
 import { useFetch } from 'hooks/use-fetch'
+import ARPack from './components/ARPack'
 
 const ViewPack = () => {
   const { packId } = useParams()
@@ -50,7 +51,6 @@ const ViewPack = () => {
 
   return (
     <>
-      {' '}
       {(status === 'idle' || status === 'loading') && <LoadingScreen />}
       {status === 'failed' && <NotFound />}
       {status === 'succeeded' && !pack && <NotFound />}
@@ -58,33 +58,38 @@ const ViewPack = () => {
         (!(pack || {}).isPublic || !(pack || {}).shareWithLink) && <NotFound />}
       {status === 'succeeded' && pack && pack.isPublic && pack.shareWithLink && (
         <>
-          <PaginationDots
-            count={(cards || []).length}
-            index={index}
-            setIndex={setIndex}
-            color={fontColor}
-          />
-          <Container disableGutters maxWidth={false}>
-            <PackContent pack={pack} index={index} setIndex={setIndex} />
-          </Container>
-          <Hidden smDown>
-            <PackButtonsDesktop
-              index={index}
-              lastIndex={(cards || []).length - 1}
-              setIndex={setIndex}
-              fontColor={fontColor}
-            />
-          </Hidden>
-          <Hidden smUp>
-            {!(cards[index] || {}).hideButtons && (
-              <PackButtonsMobile
+          {(pack.cards[0] || {}).type !== 'ar' && (
+            <>
+              <PaginationDots
+                count={(cards || []).length}
                 index={index}
                 setIndex={setIndex}
-                lastIndex={(cards || []).length - 1}
-                fontColor={(style || {}).fontColor}
+                color={fontColor}
               />
-            )}
-          </Hidden>
+              <Container disableGutters maxWidth={false}>
+                <PackContent pack={pack} index={index} setIndex={setIndex} />
+              </Container>
+              <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                <PackButtonsDesktop
+                  index={index}
+                  lastIndex={(cards || []).length - 1}
+                  setIndex={setIndex}
+                  fontColor={fontColor}
+                />
+              </Box>
+              <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                {!(cards[index] || {}).hideButtons && (
+                  <PackButtonsMobile
+                    index={index}
+                    setIndex={setIndex}
+                    lastIndex={(cards || []).length - 1}
+                    fontColor={(style || {}).fontColor}
+                  />
+                )}
+              </Box>
+            </>
+          )}
+          {(pack.cards[0] || {}).type === 'ar' && <ARPack pack={pack} />}
         </>
       )}
     </>

@@ -7,9 +7,9 @@ import {
   DialogActions,
   Box,
   CircularProgress,
-} from '@material-ui/core'
-import { styled } from '@material-ui/core/styles'
-import { Clear } from '@material-ui/icons'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { Clear } from '@mui/icons-material'
 import { useRequest } from 'hooks/use-request'
 import usePackStore from 'hooks/store/use-pack-store'
 

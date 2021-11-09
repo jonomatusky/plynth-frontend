@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Fab } from '@material-ui/core'
-import PhotoCameraIcon from '@material-ui/icons/PhotoCamera'
+import { Fab } from '@mui/material'
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 
 import { useScanStore } from 'hooks/store/use-scan-store'
 

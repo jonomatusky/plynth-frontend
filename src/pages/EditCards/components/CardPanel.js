@@ -5,10 +5,10 @@ import {
   Grid,
   Typography,
   Button as MuiButton,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import { cardTypes } from 'pages/EditCards/components/CardCard'
-import { DeleteOutline } from '@material-ui/icons'
+import { DeleteOutline } from '@mui/icons-material'
 import CardForm from './CardForm'
 
 const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
@@ -28,7 +28,7 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
             <Typography>{description}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
               <Grid item xs={12}>
                 <CardForm card={card} onSubmit={onSubmit} pending={pending} />
               </Grid>
@@ -55,7 +55,7 @@ const CardPanel = ({ card, onSubmit, pending, onRemove }) => {
         </Grid>
       </Box>
     </Paper>
-  )
+  );
 }
 
 export default CardPanel

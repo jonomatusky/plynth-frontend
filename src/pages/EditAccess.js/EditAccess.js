@@ -6,10 +6,9 @@ import {
   CircularProgress,
   Paper,
   Typography,
-  Hidden,
   Switch,
   Button,
-} from '@material-ui/core'
+} from '@mui/material'
 // import QRCode from 'qrcode.react'
 
 import usePackStore from 'hooks/store/use-pack-store'
@@ -22,7 +21,7 @@ import PieceImage from './components/PieceImage'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 import DownloadQR from 'components/DownloadQr'
-import { GetApp } from '@material-ui/icons'
+import { GetApp } from '@mui/icons-material'
 import useUserStore from 'hooks/store/use-user-store'
 import PreviewLayout from 'layouts/PreviewLayout'
 
@@ -269,33 +268,31 @@ const EditAccess = () => {
                 </Grid>
               </Box>
             </Grid>
-            <Hidden mdDown>
-              <Grid item md={5}>
-                <PreviewLayout>
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12} container justifyContent="center">
-                      <LivePreview
-                        pack={pack}
-                        cardIndex={cardIndex}
-                        isLoading={updateStatus === 'loading'}
-                        setIndex={setCardIndex}
-                      />
-                    </Grid>
-                    <Grid item container xs={12} justifyContent="center">
-                      <Box paddingTop={4}>
-                        {isSpinning && (
-                          <CircularProgress
-                            size="1.25rem"
-                            color="inherit"
-                            thickness={6}
-                          />
-                        )}
-                      </Box>
-                    </Grid>
+            <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+              <PreviewLayout>
+                <Grid container justifyContent="center">
+                  <Grid item xs={12} container justifyContent="center">
+                    <LivePreview
+                      pack={pack}
+                      cardIndex={cardIndex}
+                      isLoading={updateStatus === 'loading'}
+                      setIndex={setCardIndex}
+                    />
                   </Grid>
-                </PreviewLayout>
-              </Grid>
-            </Hidden>
+                  <Grid item container xs={12} justifyContent="center">
+                    <Box paddingTop={4}>
+                      {isSpinning && (
+                        <CircularProgress
+                          size="1.25rem"
+                          color="inherit"
+                          thickness={6}
+                        />
+                      )}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </PreviewLayout>
+            </Grid>
           </Grid>
         )}
       </EditBar>

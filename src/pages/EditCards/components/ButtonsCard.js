@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Grid, Button, Typography } from '@material-ui/core'
+import { Box, Grid, Button, Typography } from '@mui/material'
 
 // import Button from 'components/Button'
 import IconLinkItem from './IconLinkItem'

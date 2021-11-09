@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import {
   Grid,
@@ -8,15 +8,14 @@ import {
   Button as MuiButton,
   styled,
   Typography,
-  Hidden,
   Menu,
   MenuItem,
   IconButton,
-} from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
+} from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
 
 import { HashLink } from 'react-router-hash-link'
-import plynthLogoWhite from 'images/plynth_logo_white.svg'
+import plynthLogo from 'images/plynth_logo_color.svg'
 import { useSession } from 'hooks/use-session'
 
 const StyledLogo = styled('img')({
@@ -34,10 +33,6 @@ const StyledLogo = styled('img')({
 const WebsiteNavBar = ({ left, right, position, opacity }) => {
   const { user, initializing } = useSession()
 
-  useEffect(() => {
-    document.body.style.backgroundColor = '#000000'
-  }, [])
-
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = event => {
@@ -53,24 +48,19 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
       <Toolbar>
         <Grid
           container
-          justify="space-between"
+          justifyContent="space-between"
           alignItems="center"
           alignContent="center"
         >
           {left}
           <Box flexGrow={1}>
-            <Grid container justify="center">
+            <Grid container>
               <Grid item>
                 <HashLink smooth to="/">
-                  <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                  >
+                  <Grid container direction="column" alignItems="center">
                     <StyledLogo
                       opacity={opacity}
-                      src={plynthLogoWhite}
+                      src={plynthLogo}
                       alt="Plynth Logo"
                     />
                   </Grid>
@@ -83,17 +73,17 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
           ) : (
             <>
               {!initializing && (
-                <Box color="white">
-                  <Hidden mdUp>
+                <Box>
+                  <Box sx={{ display: { xs: 'block', md: 'none' } }}>
                     <MuiButton
                       variant="contained"
                       component={RouterLink}
-                      to="/register"
+                      to="/s/waitlist"
                       size="small"
                       sx={{ textTransform: 'none' }}
                     >
                       <Typography>
-                        <b>Get Access</b>
+                        <b>Sign Up</b>
                       </Typography>
                     </MuiButton>
                     <IconButton
@@ -102,6 +92,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                       aria-haspopup="true"
                       onClick={handleClick}
                       color="inherit"
+                      size="large"
                     >
                       <MenuIcon />
                     </IconButton>
@@ -123,37 +114,32 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                         Sign In
                       </MenuItem>
                     </Menu>
-                  </Hidden>
+                  </Box>
 
-                  <Hidden mdDown>
-                    <Box display="flex">
-                      <Box mr={1}>
-                        <MuiButton
-                          component={RouterLink}
-                          to={user ? '/admin' : '/login'}
-                          size="small"
-                          sx={{ textTransform: 'none' }}
-                          color="secondary"
-                        >
-                          <Typography color="#BBBBBB">
-                            <b>_</b>sign in
-                          </Typography>
-                        </MuiButton>
-                      </Box>
-                      {!user && (
-                        <MuiButton
-                          component={RouterLink}
-                          to="/register"
-                          size="small"
-                          sx={{ textTransform: 'none' }}
-                        >
-                          <Typography>
-                            <b>Get Early Access</b>
-                          </Typography>
-                        </MuiButton>
-                      )}
+                  <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box mr={1}>
+                      <MuiButton
+                        component={RouterLink}
+                        to={user ? '/admin' : '/login'}
+                        size="small"
+                        sx={{ textTransform: 'none' }}
+                      >
+                        <Typography>Sign In</Typography>
+                      </MuiButton>
                     </Box>
-                  </Hidden>
+
+                    <MuiButton
+                      variant="contained"
+                      component={RouterLink}
+                      to="/s/waitlist"
+                      size="small"
+                      sx={{ textTransform: 'none' }}
+                    >
+                      <Typography>
+                        <b>Sign Up</b>
+                      </Typography>
+                    </MuiButton>
+                  </Box>
                 </Box>
               )}
             </>

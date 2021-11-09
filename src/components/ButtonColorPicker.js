@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Box, Button, Popover, makeStyles } from '@material-ui/core'
-import { Palette } from '@material-ui/icons'
+import { Box, Button, Popover } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Palette } from '@mui/icons-material'
 import { ChromePicker } from 'react-color'
 import coloring from 'util/coloring'
 

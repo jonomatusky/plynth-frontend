@@ -6,15 +6,14 @@ import {
   Typography,
   Button,
   Divider,
-  Hidden,
-} from '@material-ui/core'
+} from '@mui/material'
 import * as yup from 'yup'
 
 import firebase from 'config/firebase'
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
 import TextFieldWebsite from 'components/TextFieldWebsite'
-import { ArrowForward } from '@material-ui/icons'
+import { ArrowForward } from '@mui/icons-material'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
@@ -109,11 +108,13 @@ const Register = ({ title, text }) => {
     <PublicNav
       right={
         <>
-          <Hidden smDown>
-            <Typography variant="body2" color="white">
-              Already have an account?{' '}
-            </Typography>
-          </Hidden>
+          <Typography
+            variant="body2"
+            color="white"
+            sx={{ display: { xs: 'none', md: 'block' } }}
+          >
+            Already have an account?{' '}
+          </Typography>
           <Button
             color="secondary"
             component={RouterLink}
@@ -122,7 +123,7 @@ const Register = ({ title, text }) => {
             sx={{ textTransform: 'lowercase' }}
           >
             <Typography color="#BBBBBB">
-              <b>_sign in</b>
+              <b>Sign In</b>
             </Typography>
           </Button>
         </>

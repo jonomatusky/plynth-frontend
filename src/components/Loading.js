@@ -1,5 +1,5 @@
 import React from 'react-hook-form'
-import { Box, CircularProgress } from '@material-ui/core'
+import { Box, CircularProgress } from '@mui/material'
 
 const Loading = ({ backgroundColor, color }) => {
   return (

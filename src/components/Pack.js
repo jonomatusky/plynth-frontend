@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Container, Hidden } from '@material-ui/core'
+import { Container, Box } from '@mui/material'
 import PackButtonsDesktop from './PackButtonsDesktop'
 import PackButtonsMobile from './PackButtonsMobile'
 import PackContent from './PackContent'
@@ -43,15 +43,15 @@ const Pack = ({ pack }) => {
       <Container disableGutters maxWidth={false}>
         <PackContent pack={pack} index={index} setIndex={setIndex} />
       </Container>
-      <Hidden smDown>
+      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
         <PackButtonsDesktop
           index={index}
           lastIndex={(cards || []).length - 1}
           setIndex={setIndex}
           fontColor={fontColor}
         />
-      </Hidden>
-      <Hidden smUp>
+      </Box>
+      <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
         {!(cards[index] || {}).hideButtons && (
           <PackButtonsMobile
             index={index}
@@ -60,7 +60,7 @@ const Pack = ({ pack }) => {
             fontColor={(style || {}).fontColor}
           />
         )}
-      </Hidden>
+      </Box>
     </>
   )
 }

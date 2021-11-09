@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, Grid, Box } from '@material-ui/core'
+import { TextField, Grid, Box } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -86,7 +86,7 @@ const CardFormText = ({ card, onSubmit, pending, onRemove }) => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                pending={pending}
+                loading={pending}
                 size="large"
               >
                 Save Card

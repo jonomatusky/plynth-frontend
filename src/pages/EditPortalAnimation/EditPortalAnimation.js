@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Grid,
-  Box,
-  CircularProgress,
-  Paper,
-  Typography,
-  Hidden,
-} from '@material-ui/core'
+import { Grid, Box, CircularProgress, Paper, Typography } from '@mui/material'
 
 import ButtonColorPicker from 'components/ButtonColorPicker'
 import AdminNav from 'layouts/AdminNav'
@@ -19,6 +12,7 @@ import PreviewLayout from 'layouts/PreviewLayout'
 
 const EditPortalAnimation = () => {
   const { user, status, updateUser, updateStatus } = useUserStore()
+  const { username } = user || {}
 
   const portal = user.portal || {}
   const { style } = portal || {}
@@ -70,8 +64,9 @@ const EditPortalAnimation = () => {
   }
 
   return (
-    <AdminNav>
-      <BarAccount>
+    <>
+      <BarAccount />
+      <AdminNav>
         {status === 'succeeded' && (
           <Box height="calc(100vh - 48px)" overflow="hidden">
             <Grid container justifyContent="flex-start">
@@ -170,36 +165,34 @@ const EditPortalAnimation = () => {
                 </Box>
               </Grid>
 
-              <Hidden mdDown>
-                <Grid item md={5}>
-                  <PreviewLayout>
-                    <Grid container justifyContent="center">
-                      <Grid item xs={12} container justifyContent="center">
-                        <LivePreviewPortalLoading
-                          portal={user.portal}
-                          isLoading={updateStatus === 'loading'}
-                        />
-                      </Grid>
-                      <Grid item container xs={12} justifyContent="center">
-                        <Box paddingTop={4}>
-                          {true && (
-                            <CircularProgress
-                              size="1.25rem"
-                              color="inherit"
-                              thickness={6}
-                            />
-                          )}
-                        </Box>
-                      </Grid>
+              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <PreviewLayout username={username}>
+                  <Grid container justifyContent="center">
+                    <Grid item xs={12} container justifyContent="center">
+                      <LivePreviewPortalLoading
+                        portal={user.portal}
+                        isLoading={updateStatus === 'loading'}
+                      />
                     </Grid>
-                  </PreviewLayout>
-                </Grid>
-              </Hidden>
+                    <Grid item container xs={12} justifyContent="center">
+                      <Box paddingTop={4}>
+                        {true && (
+                          <CircularProgress
+                            size="1.25rem"
+                            color="inherit"
+                            thickness={6}
+                          />
+                        )}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </PreviewLayout>
+              </Grid>
             </Grid>
           </Box>
         )}
-      </BarAccount>
-    </AdminNav>
+      </AdminNav>
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Typography, styled } from '@material-ui/core'
+import { Typography, styled } from '@mui/material'
 
 const TextTypography = styled(Typography)(props => ({
   fontFamily: props.font,

@@ -8,6 +8,11 @@ import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
 import useScanStore from 'hooks/store/use-scan-store'
 import PortalContent from './components/PortalContent'
 import PortalCamera from 'pages/PortalOpen/components/PortalCamera'
+<<<<<<< HEAD
+=======
+import Div100vh from 'components/Div100vh'
+import { Box, Grid, Link, Typography } from '@mui/material'
+>>>>>>> 3.0
 
 const Portal = () => {
   const { clearScan } = useScanStore()

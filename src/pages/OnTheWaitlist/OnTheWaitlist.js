@@ -8,12 +8,12 @@ import {
   IconButton,
   Button,
   CircularProgress,
-} from '@material-ui/core'
+} from '@mui/material'
 import useUserStore from 'hooks/store/use-user-store'
 import { faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSession } from 'hooks/use-session'
-import { Close } from '@material-ui/icons'
+import { Close } from '@mui/icons-material'
 import PublicNav from 'layouts/PublicNav'
 
 const OnTheWaitlist = () => {
@@ -62,7 +62,7 @@ const OnTheWaitlist = () => {
             container
             direction="column"
             align="center"
-            justify="center"
+            justifyContent="center"
             wrap="nowrap"
             spacing={2}
           >
@@ -96,7 +96,7 @@ const OnTheWaitlist = () => {
                 <IconButton
                   href={'https://www.instagram.com/plynthplayer/'}
                   target="_blank"
-                >
+                  size="large">
                   <FontAwesomeIcon
                     icon={faInstagram}
                     color="white"
@@ -106,10 +106,7 @@ const OnTheWaitlist = () => {
                 </IconButton>
               </Grid>
               <Grid item>
-                <IconButton
-                  href={'https://www.tiktok.com/@plynth'}
-                  target="_blank"
-                >
+                <IconButton href={'https://www.tiktok.com/@plynth'} target="_blank" size="large">
                   <FontAwesomeIcon
                     icon={faTiktok}
                     color="white"
@@ -123,7 +120,7 @@ const OnTheWaitlist = () => {
         </Container>
       )}
     </PublicNav>
-  )
+  );
 }
 
 export default OnTheWaitlist

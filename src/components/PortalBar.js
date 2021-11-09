@@ -1,17 +1,10 @@
 import React from 'react'
-import {
-  makeStyles,
-  Tabs,
-  Tab,
-  Box,
-  Grid,
-  Typography,
-  Paper,
-} from '@material-ui/core'
+import { Tabs, Tab, Box, Grid, Typography, Paper } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import theme from 'theme'
-import { MovieFilter, Palette } from '@material-ui/icons'
+import { MovieFilter, Palette } from '@mui/icons-material'
 
 const drawerWidth = 70
 
@@ -95,7 +88,7 @@ const PortalBar = () => {
               />
             </Tabs>
           </Grid>
-          {/* <Hidden mdDown>
+          {/* 
             <Grid item md={5}>
               <Box
                 borderLeft={1}
@@ -125,7 +118,7 @@ const PortalBar = () => {
                 )}
               </Box>
             </Grid>
-          </Hidden> */}
+          */}
         </Grid>
 
         {/* <Box display="flex" flexDirection="row" alignItems="center">
@@ -137,7 +130,7 @@ const PortalBar = () => {
               size="small"
               endIcon={<Check />}
               onClick={handleSave}
-              pending={isSaving}
+              loading={isSaving}
               disableElevation
               component={Link}
               to="/admin"

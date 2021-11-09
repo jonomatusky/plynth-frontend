@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, Typography, Box, Button } from '@material-ui/core'
+import { Grid, Typography, Box, Button } from '@mui/material'
 import ScanScreen from 'components/ScanScreen'
 import GroundUPLogo from './images/groundup-logo.png'
 import useScanStore from 'hooks/store/use-scan-store'
@@ -8,7 +8,7 @@ import Pack from 'components/Pack'
 import GroundUpLoading from './components/GroundUpLoading'
 import NoMatch from 'components/NoMatch'
 import CameraDialog from 'components/CameraDialog'
-import { CameraAlt, Clear } from '@material-ui/icons'
+import { CameraAlt, Clear } from '@mui/icons-material'
 import ScanError from 'components/ScanError'
 
 const GroundUP = () => {

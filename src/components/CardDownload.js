@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Grid, Box, Typography, makeStyles, Button } from '@material-ui/core'
+import { Grid, Box, Typography, Button } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 import ButtonDownload from './ButtonDownload'
 import TextTypography from './TextTypography'

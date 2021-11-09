@@ -7,10 +7,9 @@ import {
   Box,
   Typography,
   IconButton,
-  Hidden,
   Tooltip,
-} from '@material-ui/core'
-import { Edit, Public, Visibility, Link as LinkIcon } from '@material-ui/icons'
+} from '@mui/material'
+import { Edit, Public, Visibility, Link as LinkIcon } from '@mui/icons-material'
 
 import CopyToClipboard from 'react-copy-to-clipboard'
 
@@ -79,6 +78,7 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                         >
                           <IconButton
                             disabled={!pack.shareWithLink || !pack.isPublic}
+                            size="large"
                           >
                             <LinkIcon aria-label="copy" />
                           </IconButton>
@@ -89,50 +89,57 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
                 </Grid>
               </Box>
 
-              <Hidden smDown>
-                <Box flexBasis={0} minWidth="80px">
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12}>
-                      <Typography variant="body2" align="center">
-                        Edit
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Box textAlign="center" minWidth={48}>
-                        <IconButton
-                          component={Link}
-                          to={`/admin/packs/${pack.id}/edit/cards`}
-                        >
-                          <Edit aria-label="edit" />
-                        </IconButton>
-                      </Box>
-                    </Grid>
+              <Box
+                flexBasis={0}
+                minWidth="80px"
+                sx={{ display: { xs: 'none', md: 'flex' } }}
+              >
+                <Grid container justifyContent="center">
+                  <Grid item xs={12}>
+                    <Typography variant="body2" align="center">
+                      Edit
+                    </Typography>
                   </Grid>
-                </Box>
-                <Box flexBasis={0} minWidth="80px">
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12}>
-                      <Typography
-                        variant="body2"
-                        align="center"
-                        color={isSelected ? 'primary.main' : 'inherit'}
+                  <Grid item xs={12}>
+                    <Box textAlign="center" minWidth={48}>
+                      <IconButton
+                        component={Link}
+                        to={`/admin/packs/${pack.id}/edit/cards`}
+                        size="large"
                       >
-                        Show
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Box textAlign="center" minWidth={48}>
-                        <IconButton onClick={onSelectPack}>
-                          {isSelected && (
-                            <Visibility aria-label="view" color="primary" />
-                          )}
-                          {!isSelected && <Visibility aria-label="view" />}
-                        </IconButton>
-                      </Box>
-                    </Grid>
+                        <Edit aria-label="edit" />
+                      </IconButton>
+                    </Box>
                   </Grid>
-                </Box>
-              </Hidden>
+                </Grid>
+              </Box>
+              <Box
+                flexBasis={0}
+                minWidth="80px"
+                sx={{ display: { xs: 'none', md: 'flex' } }}
+              >
+                <Grid container justifyContent="center">
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="body2"
+                      align="center"
+                      color={isSelected ? 'primary.main' : 'inherit'}
+                    >
+                      Show
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box textAlign="center" minWidth={48}>
+                      <IconButton onClick={onSelectPack} size="large">
+                        {isSelected && (
+                          <Visibility aria-label="view" color="primary" />
+                        )}
+                        {!isSelected && <Visibility aria-label="view" />}
+                      </IconButton>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
             </Box>
           </Grid>
         </Grid>

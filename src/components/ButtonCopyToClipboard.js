@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Button, Tooltip, Typography, Box } from '@material-ui/core'
-import { FilterNone } from '@material-ui/icons'
+import { Button, Tooltip, Typography, Box } from '@mui/material'
+import { FilterNone } from '@mui/icons-material'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 const ButtonCopyToClipboard = ({ children, textToCopy }) => {

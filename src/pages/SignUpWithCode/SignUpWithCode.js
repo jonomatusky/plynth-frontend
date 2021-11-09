@@ -1,423 +1,295 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
-  Container,
-  Box,
   Grid,
-  Typography,
+  Box,
+  Container,
   Button,
-  Divider,
-  Link,
-  Hidden,
-} from '@material-ui/core'
-import * as yup from 'yup'
+  Paper,
+  Typography,
+  Fade,
+} from '@mui/material'
+import {
+  Launch,
+  Link as LinkIcon,
+  People,
+  PhoneIphone,
+  QrCode2,
+  VideoCameraBack,
+} from '@mui/icons-material'
 
-import firebase from 'config/firebase'
-import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom'
+import CreateAccountDialog from './components/CreateAccountDialog'
+import MediaBlock from 'components/MediaBlock'
 import PublicNav from 'layouts/PublicNav'
-import TextFieldWebsite from 'components/TextFieldWebsite'
-import { ArrowForward } from '@material-ui/icons'
-import { useFormik } from 'formik'
-import useAlertStore from 'hooks/store/use-alert-store'
-import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
-import { useRequest } from 'hooks/use-request'
-import SomethingWentWrong from 'components/SomethingWentWrong'
-import useUserStore from 'hooks/store/use-user-store'
-import { useSession } from 'hooks/use-session'
-import Loading from 'components/Loading'
-import usePackStore from 'hooks/store/use-pack-store'
 
-const validationSchema = yup.object({
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  // code: yup
-  //   .string('Enter your invite code')
-  //   .required('Invite code is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password must be at least 8 characters')
-    .required('Password is required'),
-})
+const { REACT_APP_ASSET_URL } = process.env
+const demoVideoName = 'astronaut-ar-trimmed.mp4'
+const videoSrc = REACT_APP_ASSET_URL + '/' + demoVideoName
+const demoImageName = 'Postcard+Mixtape+Vol+1+600px.jpg'
+const imageSrc = REACT_APP_ASSET_URL + '/' + demoImageName
+const imageWidth = 600
+const imageHeight = 900
 
-const SignUpWithCode = () => {
-  const [inviteState, setInviteState] = useState(null)
-  const [loggedIn, setLoggedIn] = useState(null)
-  const [code, setCode] = useState(
-    new URLSearchParams(useLocation().search).get('code')
-  )
-  const history = useHistory()
+const CreatePiece = () => {
+  const DisplayCard = () => {
+    const [hideImage, setHideImage] = useState(true)
 
-  const { user, logout } = useSession()
-  const { acceptInvite } = useUserStore()
-  const { fetchPacks } = usePackStore()
-  const { setError, clearError } = useAlertStore()
-  const { status, request } = useRequest()
+    const playerRef = useRef()
 
-  const email = decodeURIComponent(
-    new URLSearchParams(useLocation().search).get('email') || ''
-  )
-
-  useEffect(() => {
-    const getState = async () => {
-      try {
-        const { state } = await request({
-          method: 'POST',
-          url: '/auth/invite',
-          data: {
-            email: email,
-            code: code,
-          },
-        })
-        setInviteState(state)
-      } catch (err) {
-        setError({ message: err.message })
-      }
-    }
-
-    if (status === 'idle' && !!code) {
-      getState()
-    }
-  }, [code, email, request, setError, status])
-
-  const signIn = async (email, password) => {
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password)
-    } catch (err) {
-      if (err.code === 'auth/wrong-password') {
-        try {
-          let signInMethods = await firebase
-            .auth()
-            .fetchSignInMethodsForEmail(email)
-
-          if (
-            signInMethods.length !== 0 &&
-            !signInMethods.includes('password')
-          ) {
-            setError({
-              message:
-                'No password found for this account. Try a different login method.',
-            })
-          } else {
-            setError({
-              message: `Incorrect email or password. Please try again.`,
-            })
+    useEffect(() => {
+      if (hideImage) {
+        const timeout = setTimeout(() => {
+          if (playerRef.current) {
+            try {
+              playerRef.current.currentTime = 0
+              playerRef.current.play()
+            } catch (err) {}
           }
-        } catch (err) {
-          setError({
-            message: `Incorrect email or password. Please try again.`,
-          })
-        }
-      } else if (err.code === 'auth/invalid-email') {
-        setError({ message: 'Please enter a valid email address' })
-      } else if (err.code === 'auth/user-not-found') {
-        setError({
-          message: `Incorrect email or password. Please try again.`,
-        })
+          setHideImage(false)
+        }, 4000)
+        return () => clearTimeout(timeout)
       } else {
-        setError({
-          message: `Incorrect email or password. Please try again.`,
-        })
+        const timeout = setTimeout(() => {
+          setHideImage(true)
+        }, 1000)
+        return () => clearTimeout(timeout)
       }
-    }
+    }, [hideImage])
+
+    return (
+      <Box
+        backgroundColor="white"
+        border="2px solid #ddd"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mt={6}
+        sx={{
+          transform: 'rotate(3deg)',
+          width: { xs: '350px', lg: '450px' },
+          height: {
+            xs: imageSrc ? (imageHeight / imageWidth) * 350 + 'px' : '525px',
+            lg: imageSrc ? (imageHeight / imageWidth) * 450 + 'px' : '675px',
+          },
+        }}
+        mr={2}
+        boxShadow="5px 5px 15px #00000040"
+        position="relative"
+      >
+        {!imageSrc && !videoSrc && (
+          <Box color="#dddddd" textAlign="center">
+            <VideoCameraBack color="inherit" sx={{ fontSize: 100 }} />
+            <Typography>
+              <b>Your Image + Video Here</b>
+            </Typography>
+          </Box>
+        )}
+        {imageSrc && (
+          <Fade
+            // appear={false}
+            timeout={{ enter: 0, exit: 1000 }}
+            in={!hideImage}
+          >
+            <img
+              src={imageSrc}
+              width="100%"
+              height="100%"
+              alt="preview"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                zIndex: 10,
+              }}
+            />
+          </Fade>
+        )}
+        {videoSrc && (
+          <video
+            src={videoSrc}
+            ref={playerRef}
+            autoPlay
+            muted
+            style={{
+              position: 'absolute',
+              height: '100%',
+              width: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        )}
+      </Box>
+    )
   }
-
-  const signUp = async (email, password) => {
-    try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password)
-    } catch (err) {
-      if (err.code === 'auth/invalid-email') {
-        setError({ message: 'Please enter a valid email address' })
-      } else if (err.code === 'auth/email-already-in-use') {
-        try {
-          await signIn(email, password)
-        } catch (err) {}
-      } else {
-        setError({
-          message:
-            'There was an error creating your account. Please try again.',
-        })
-      }
-    }
-  }
-
-  const handleSubmit = async ({ email, password }) => {
-    if (status === 'loading') {
-      return
-    }
-
-    if (inviteState === 'NEW' || !code) {
-      try {
-        await signUp(email, password)
-        setLoggedIn(true)
-      } catch (err) {
-        setError({ message: err.message })
-      }
-    } else {
-      try {
-        await signIn(email, password)
-        setLoggedIn(true)
-      } catch (err) {
-        setError({ message: err.message })
-      }
-    }
-  }
-
-  const formik = useFormik({
-    initialValues: {
-      email: email || '',
-      password: '',
-    },
-    validationSchema: validationSchema,
-    validateOnBlur: false,
-    validateOnChange: false,
-    onSubmit: handleSubmit,
-  })
-
-  var provider = new firebase.auth.GoogleAuthProvider()
-
-  const handleSignUpWithGoogle = async () => {
-    clearError()
-    try {
-      await firebase.auth().signInWithPopup(provider)
-      setLoggedIn(true)
-    } catch (err) {
-      setError({ message: 'Unable to sign in' })
-    }
-  }
-
-  console.log(loggedIn)
-
-  useEffect(() => {
-    const handleLoggedIn = async () => {
-      // if (!loggedIn) {
-      //   logout()
-      // } else
-
-      if (loggedIn) {
-        console.log('accepting invite')
-        await acceptInvite(code)
-        try {
-          await fetchPacks()
-        } catch (err) {}
-        history.push(`/admin`)
-      }
-    }
-
-    if (user) {
-      handleLoggedIn()
-    }
-  }, [acceptInvite, code, history, loggedIn, logout, user, fetchPacks])
 
   return (
-    <PublicNav
-      hideFooter
-      right={
-        <>
-          <Hidden smDown>
-            <Typography variant="body2" color="white">
-              Already have an account?{' '}
-            </Typography>
-          </Hidden>
-          <Button
-            color="secondary"
-            component={RouterLink}
-            to={'/login'}
-            size="small"
-            sx={{ textTransform: 'lowercase' }}
-          >
-            <Typography color="#BBBBBB">
-              <b>_sign in</b>
-            </Typography>
-          </Button>
-        </>
-      }
-    >
-      {status === 'loading' && <Loading />}
-      {status === 'failed' && <SomethingWentWrong />}
-      {status === 'succeeded' && inviteState === 'INVALID' && (
-        <Container maxWidth="xs">
-          <Box mt={10}>
-            <Grid container justifyContent="center" spacing={3}>
-              <Grid item xs={12} mb={2}>
-                <Typography variant="h4" color="white" textAlign="center">
-                  <b>Invite Code is Invalid</b>
-                </Typography>
-              </Grid>
-              <Grid item xs={12} mb={2}>
-                <Typography variant="h6" color="white" textAlign="center">
-                  Please enter the correct code or{' '}
-                  <Link component={RouterLink} to={'/login'} color="inherit">
-                    sign in
-                  </Link>
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
-      )}
-      {status === 'succeeded' && inviteState === 'USED' && (
-        <Container maxWidth="xs">
-          <Box mt={10}>
-            <Grid container justifyContent="flex-start" spacing={3}>
-              <Grid item xs={12} mb={2}>
-                <Typography variant="h4" color="white">
-                  <b>Invite Accepted</b>
-                </Typography>
-              </Grid>
-              <Grid item xs={12} mb={2}>
-                <Typography variant="h6" color="white">
-                  Please{' '}
-                  <Link component={RouterLink} to={'/login'} color="inherit">
-                    sign in
-                  </Link>
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
-      )}
-      {((status === 'succeeded' &&
-        (inviteState === 'EXISTING' || inviteState === 'NEW')) ||
-        !code) && (
-        <Container maxWidth="xs">
-          <Box mt={8}>
-            <form onSubmit={formik.handleSubmit}>
-              <Grid container justifyContent="flex-start" spacing={3}>
-                <Grid item xs={12}>
-                  <Typography variant="h4" color="white">
-                    <b>Accept Invite</b>
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} mb={1}>
-                  <Typography variant="h6" color="white">
-                    {inviteState === 'EXISTING' ? 'Sign in' : 'Sign up'} to
-                    accept your invite.
-                  </Typography>
-                </Grid>
-                {!code && (
-                  <Grid item xs={12}>
-                    <TextFieldWebsite
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      placeholder="invite code"
-                      name="code"
-                      onChange={value => setCode(value)}
-                      value={code}
-                      FormHelperTextProps={{ sx: { fontSize: '16px' } }}
-                    />
-                  </Grid>
-                )}
-
-                <Grid item xs={12}>
-                  <TextFieldWebsite
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    placeholder="email"
-                    {...formik.getFieldProps('email')}
-                    FormHelperTextProps={{ sx: { fontSize: '16px' } }}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextFieldWebsite
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    placeholder="password"
-                    {...formik.getFieldProps('password')}
-                    FormHelperTextProps={{ sx: { fontSize: '16px' } }}
-                    error={
-                      formik.touched.password && Boolean(formik.errors.password)
-                    }
-                    helperText={
-                      formik.touched.password && formik.errors.password
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    endIcon={<ArrowForward />}
-                    size="large"
-                    fullWidth
-                    sx={{ height: '51.5px' }}
-                  >
-                    <Typography letterSpacing={1} style={{ fontWeight: 800 }}>
-                      Continue
-                    </Typography>
-                  </Button>
-                </Grid>
-                {!!code && (
-                  <>
-                    <Grid
-                      item
-                      xs={12}
-                      container
-                      alignItems="center"
-                      spacing={1}
-                    >
-                      <Grid item xs>
-                        <Divider color="#999999" />
-                      </Grid>
-                      <Grid item>
-                        <Typography color="#999999" variant="body2">
-                          or
-                        </Typography>
-                      </Grid>
-                      <Grid item xs>
-                        <Divider color="#999999" />
-                      </Grid>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Button
-                        type="button"
-                        variant="outlined"
-                        size="large"
-                        color="secondary"
-                        fullWidth
-                        sx={{
-                          height: '51.5px',
-                          textTransform: 'none',
-                          backgroundColor: '#ffffff',
-                          '&:hover': {
-                            backgroundColor: '#ffffff',
-                          },
-                        }}
-                        onClick={handleSignUpWithGoogle}
-                      >
-                        <Box display="flex" mr="24px">
-                          <img src={GoogleLogo} alt="Google Logo" />
-                        </Box>
-                        <Typography
-                          letterSpacing={1}
-                          style={{ fontWeight: 500 }}
+    <>
+      {/* <BarEditPiece /> */}
+      <CreateAccountDialog open={true} />
+      <PublicNav hideFooter hideNavBar backgroundColor="#fafafa">
+        <Box
+          height="calc(100vh - 48px)"
+          width="100%"
+          overflow="auto"
+          display="flex"
+          alignContent="center"
+        >
+          <Container disableGutters maxWidth="lg">
+            <Grid container justifyContent="flex-start">
+              <Grid item sm={12} md={7} container justifyContent="center">
+                <Grid item xs={11} lg={9}>
+                  <Box margin={4}>
+                    <Paper>
+                      <Box padding={4} pb={1}>
+                        <Box
+                          display="flex"
+                          justifyContent="space-around"
+                          alignItems="center"
+                          width="100%"
+                          flexWrap="wrap"
                         >
-                          Sign up with Google
-                        </Typography>
-                      </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="body2" color="#ffffffcc">
-                        By signing up, you agree to our terms of service and
-                        privacy policy.
-                      </Typography>
-                    </Grid>
-                  </>
-                )}
+                          <Box
+                            width="100%"
+                            display="flex"
+                            justifyContent="space-around"
+                            alignItems="center"
+                          >
+                            <MediaBlock mediaType="image" imageSrc={imageSrc} />
+                            <LinkIcon fontSize="large" color="secondary" />
+                            <MediaBlock mediaType="video" videoSrc={videoSrc} />
+                          </Box>
+                          <Box width="320px" mt={4} mb={4}>
+                            <Button
+                              variant="contained"
+                              fullWidth
+                              disabled={!imageSrc || !videoSrc}
+                            >
+                              <b>{`Create & Save`}</b>
+                            </Button>
+                          </Box>
+                          <Box width="100%" display="flex" color="#cccccc">
+                            <Box flexGrow={1} display="flex" flexWrap="wrap">
+                              <Box
+                                flexGrow={1}
+                                display="flex"
+                                alignItems="flex-start"
+                              >
+                                <Box
+                                  minWidth="60px"
+                                  textAlign="center"
+                                  display="flex"
+                                  justifyContent="center"
+                                  pt="6px"
+                                >
+                                  <PhoneIphone
+                                    sx={{ fontSize: 60 }}
+                                    color="inherit"
+                                  />
+                                </Box>
+                                <Box flexGrow={1}>
+                                  <Typography variant="h5" color="inherit">
+                                    <b>Try it out</b>
+                                  </Typography>
+                                  <Typography variant="body2" color="inherit">
+                                    Scan the QR code and hold your phone up to
+                                    the image to the right or the physical item.
+                                  </Typography>
+                                </Box>
+                              </Box>
+                              <Box
+                                flexGrow={1}
+                                display="flex"
+                                alignItems="flex-start"
+                                mt={1}
+                              >
+                                <Box
+                                  minWidth="60px"
+                                  textAlign="center"
+                                  display="flex"
+                                  justifyContent="center"
+                                >
+                                  <People
+                                    sx={{ fontSize: 40 }}
+                                    color="inherit"
+                                  />
+                                </Box>
+                                <Box flexGrow={1}>
+                                  <Typography variant="h6" color="inherit">
+                                    Share with a friend
+                                  </Typography>
+                                  <Typography variant="body2" color="inherit">
+                                    Send a link to the preview page so they can
+                                    try it out themselves.
+                                  </Typography>
+                                </Box>
+                              </Box>
+                              <Box
+                                flexGrow={1}
+                                display="flex"
+                                alignItems="flex-start"
+                                mt={1}
+                              >
+                                <Box
+                                  minWidth="52px"
+                                  textAlign="center"
+                                  display="flex"
+                                  justifyContent="center"
+                                ></Box>
+                                <Box flexGrow={1}>
+                                  <Typography>
+                                    <Button
+                                      sx={{ textTransform: 'none' }}
+                                      endIcon={<Launch />}
+                                      color="inherit"
+                                      component={Link}
+                                      to={'#'}
+                                      disabled
+                                    >
+                                      View Preview Page
+                                    </Button>
+                                  </Typography>
+                                </Box>
+                              </Box>
+                            </Box>
+                            <Box>
+                              <Box width="144px" height="144px">
+                                <QrCode2 sx={{ fontSize: 144 }} />
+                              </Box>
+                            </Box>
+                          </Box>
+                          <Box width="320px" mt={3} mb={1}>
+                            <Button variant="contained" fullWidth disabled>
+                              <b>Download Print Files</b>
+                            </Button>
+                          </Box>
+                          <Box mb={1} color="#cccccc">
+                            <Typography variant="caption">
+                              Need help printing? Check out our list of{' '}
+                              <u>local and national printers</u>
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Paper>
+                  </Box>
+                </Grid>
               </Grid>
-            </form>
-          </Box>
-        </Container>
-      )}
-    </PublicNav>
+              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Box
+                  width="100%"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <DisplayCard />
+                </Box>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
+      </PublicNav>
+    </>
   )
 }
 
-export default SignUpWithCode
+export default CreatePiece

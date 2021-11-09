@@ -1,4 +1,8 @@
 import React from 'react'
+import 'aframe'
+import 'mind-ar/dist/mindar-image.prod.js'
+import 'mind-ar/dist/mindar-image-aframe.prod.js'
+
 import {
   BrowserRouter as Router,
   Route,
@@ -9,6 +13,7 @@ import { UserContext } from 'contexts/user-context'
 import { useAuth } from 'hooks/use-auth'
 import firebase from 'config/firebase'
 import posthog from 'posthog-js'
+import ReactGA from 'react-ga'
 
 import PrivateRoute from 'routes/PrivateRoute'
 import Login from 'pages/Login/Login'
@@ -31,18 +36,22 @@ import MyAccount from 'pages/MyAccount/MyAccount'
 import Portal from 'pages/Portal/Portal'
 import EditPortalAnimation from 'pages/EditPortalAnimation/EditPortalAnimation'
 import PortalOpen from 'pages/PortalOpen/PortalOpen'
-import Register from 'pages/Register/Register'
-import RegisterUsername from 'pages/RegisterUsername/RegisterUsername'
+// import Register from 'pages/Register/Register'
+// import RegisterUsername from 'pages/RegisterUsername/RegisterUsername'
 import SuperRoute from 'routes/SuperRoute'
 import SuperAdmin from 'pages/SuperAdmin/SuperAdmin'
-import SignUpWithCode from 'pages/SignUpWithCode/SignUpWithCode'
+// import SignUpWithCode from 'pages/SignUpWithCode/SignUpWithCode'
 import OnTheWaitlist from 'pages/OnTheWaitlist/OnTheWaitlist'
 import Recover from 'pages/Recover/Recover'
 import Help from 'pages/Help/Help'
 import Subscribe from 'pages/Subscribe/Subscribe'
-import TryIt from 'pages/TryIt/TryIt'
-import TryItTest from 'pages/TryItTest/TryItTest'
-import LandingAR from 'pages/LandingAR/LandingAR'
+import Waitlist from 'pages/Waitlist/Waitlist'
+import Admin from 'pages/Admin/Admin'
+import Pieces from 'pages/Pieces/Pieces'
+// import EditPiece from 'pages/EditPieceOLD/EditPiece'
+import EditPiece from 'pages/EditPiece/EditPiece'
+import SignUp from 'pages/SignUp/SignUp'
+import Preview from 'pages/Preview/Preview'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -52,6 +61,8 @@ const App = () => {
   posthog.init(REACT_APP_POSTHOG_KEY, {
     api_host: 'https://app.posthog.com',
   })
+
+  ReactGA.initialize('UA-136166229-3')
 
   firebase.analytics()
 
@@ -70,19 +81,39 @@ const App = () => {
         <Recover />
       </Route>
 
-      <PrivateRoute path="/register/username">
+      {/* <PrivateRoute path="/register/username">
         <RegisterUsername />
       </PrivateRoute>
 
       <Route path="/register">
         <Register />
-      </Route>
+      </Route> */}
 
+<<<<<<< HEAD
       <Route path="/ar" exact>
         <LandingAR trying={true} />
+=======
+      <Route path="/signup" redirectPath={'/admin'} exact>
+        <SignUp />
+>>>>>>> 3.0
       </Route>
 
-      <Redirect path="/signup" exact to="/register" />
+      <Route
+        exact
+        path="/card"
+        render={() => {
+          window.location = 'https://ar.plynth.com/card'
+
+          return <></>
+        }}
+      />
+      {/* 
+      <RestrictedPublicRoute
+        path="/s/try-it"
+        redirectPath={'/admin/pieces/new'}
+      >
+        <EditPiece />
+      </RestrictedPublicRoute> */}
 
       <PrivateRoute path="/try-it/test">
         <TryItTest />
@@ -99,21 +130,26 @@ const App = () => {
       <Route path="/s/help">
         <Help />
       </Route>
-      <Route path="/s/ar" exact>
-        <LandingAR />
-      </Route>
 
-      <Route path="/s/invite-code" exact>
+      {/* <Route path="/s/invite-code" exact>
         <SignUpWithCode />
-      </Route>
+      </Route> */}
       <Route path="/s/waitlist">
-        <Register
-          title="Join the Waitlist"
-          text="We're currently in a closed beta and adding new users as quickly as possible. Sign up here to reserve your portal and we'll let you know when new spots open up 👍"
-        />
+        <Waitlist />
       </Route>
       <PrivateRoute path="/s/on-the-waitlist">
         <OnTheWaitlist />
+      </PrivateRoute>
+
+      <Route path="/preview/:pieceId/:cardId">
+        <Preview />
+      </Route>
+
+      <PrivateRoute path="/admin/pieces/:pieceId/edit">
+        <EditPiece />
+      </PrivateRoute>
+      <PrivateRoute path="/admin/pieces">
+        <Pieces />
       </PrivateRoute>
 
       <PrivateRoute path="/admin/packs/:packId/edit/cards">
@@ -147,7 +183,9 @@ const App = () => {
         <SuperAdmin />
       </SuperRoute>
 
-      <Redirect path="/admin" to="/admin/packs" />
+      <PrivateRoute path="/admin" exact>
+        <Admin />
+      </PrivateRoute>
 
       {/* <Route path="/pickup" exact>
         <NewPickup />

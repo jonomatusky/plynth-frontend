@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 
 import { ReactComponent as PlynthLogo } from 'images/plynth_logo_black.svg'
 

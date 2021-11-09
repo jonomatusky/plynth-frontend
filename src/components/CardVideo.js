@@ -1,19 +1,14 @@
 import React, { useState } from 'react'
-import {
-  Grid,
-  Box,
-  Typography,
-  makeStyles,
-  ButtonBase,
-} from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Grid, Box, Typography, ButtonBase } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from '@mui/material/styles'
 import ReactPlayer from 'react-player'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 import TextTypography from 'components/TextTypography'
 import Div100vh from 'components/Div100vh'
 import { use100vh } from 'hooks/use-100-vh'
-import { PlayCircle } from '@material-ui/icons'
+import { PlayCircle } from '@mui/icons-material'
 
 const useStyles = makeStyles({
   type: {
@@ -24,7 +19,7 @@ const useStyles = makeStyles({
 const CardVideo = ({ cardIndex, currentIndex, card, style, preview }) => {
   // note: cardindex and current index are actually swapped. current index is the index of the card in the pack, card index is the index the user is viewing currently
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const classes = useStyles(style)
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Box, Grid, Typography, Button } from '@material-ui/core'
+import { Container, Box, Grid, Typography, Button } from '@mui/material'
 import * as yup from 'yup'
 
 import firebase from 'config/firebase'
@@ -8,7 +8,7 @@ import PublicNav from 'layouts/PublicNav'
 import TextFieldWebsite from 'components/TextFieldWebsite'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
-import { Close } from '@material-ui/icons'
+import { Close } from '@mui/icons-material'
 
 const validationSchema = yup.object({
   email: yup

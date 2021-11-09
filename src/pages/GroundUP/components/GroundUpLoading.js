@@ -1,6 +1,6 @@
 import React from 'react-hook-form'
-import { Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles';
 
 import Div100vh from 'components/Div100vh'
 import GroundUPLogo from '../images/groundup-logo.png'

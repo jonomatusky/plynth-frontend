@@ -6,9 +6,8 @@ import {
   CircularProgress,
   Paper,
   Typography,
-  Hidden,
   Switch,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import LivePreview from 'components/LivePreview'
@@ -141,33 +140,31 @@ const EditSettings = () => {
                 </Box>
               )}
             </Grid>
-            <Hidden mdDown>
-              <Grid item md={5}>
-                <PreviewLayout>
-                  <Grid container justifyContent="center">
-                    <Grid item xs={12} container justifyContent="center">
-                      <LivePreview
-                        pack={pack}
-                        cardIndex={cardIndex}
-                        isLoading={updateStatus === 'loading'}
-                        setIndex={setCardIndex}
-                      />
-                    </Grid>
-                    <Grid item container xs={12} justifyContent="center">
-                      <Box paddingTop={4}>
-                        {isSpinning && (
-                          <CircularProgress
-                            size="1.25rem"
-                            color="inherit"
-                            thickness={6}
-                          />
-                        )}
-                      </Box>
-                    </Grid>
+            <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+              <PreviewLayout>
+                <Grid container justifyContent="center">
+                  <Grid item xs={12} container justifyContent="center">
+                    <LivePreview
+                      pack={pack}
+                      cardIndex={cardIndex}
+                      isLoading={updateStatus === 'loading'}
+                      setIndex={setCardIndex}
+                    />
                   </Grid>
-                </PreviewLayout>
-              </Grid>
-            </Hidden>
+                  <Grid item container xs={12} justifyContent="center">
+                    <Box paddingTop={4}>
+                      {isSpinning && (
+                        <CircularProgress
+                          size="1.25rem"
+                          color="inherit"
+                          thickness={6}
+                        />
+                      )}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </PreviewLayout>
+            </Grid>
           </Grid>
         )}
       </EditBar>

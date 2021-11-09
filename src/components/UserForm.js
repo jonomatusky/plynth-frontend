@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 
 import Button from 'components/Button'
 
@@ -105,7 +105,7 @@ const UserForm = ({ user, onSubmit, pending, submitLabel }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <Button fullWidth type="submit" size="large" pending={pending}>
+          <Button fullWidth type="submit" size="large" loading={pending}>
             {submitLabel || `Save & Close`}
           </Button>
         </Grid>

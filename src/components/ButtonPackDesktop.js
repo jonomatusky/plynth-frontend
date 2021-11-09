@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { IconButton, makeStyles } from '@material-ui/core'
-import { ArrowForward, ArrowBack } from '@material-ui/icons'
+import { IconButton } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ArrowForward, ArrowBack } from '@mui/icons-material'
 import theme from 'theme'
 
 const useStyles = makeStyles({
@@ -26,20 +27,18 @@ const useStyles = makeStyles({
 
 const ButtonPackDesktop = ({ children, isLeft, color, ...props }) => {
   const classes = useStyles({ isLeft, color })
-  return (
-    <>
-      <IconButton
-        color="secondary"
-        {...props}
-        className={classes.buttonRound}
-        variant="outlined"
-        id={isLeft ? 'previous-card' : 'next-card'}
-      >
-        {isLeft && <ArrowBack fontSize="large" aria-label="Previous Card" />}
-        {!isLeft && <ArrowForward fontSize="large" aria-label="Next Card" />}
-      </IconButton>
-    </>
-  )
+  return <>
+    <IconButton
+      color="secondary"
+      {...props}
+      className={classes.buttonRound}
+      variant="outlined"
+      id={isLeft ? 'previous-card' : 'next-card'}
+      size="large">
+      {isLeft && <ArrowBack fontSize="large" aria-label="Previous Card" />}
+      {!isLeft && <ArrowForward fontSize="large" aria-label="Next Card" />}
+    </IconButton>
+  </>;
 }
 
 export default ButtonPackDesktop

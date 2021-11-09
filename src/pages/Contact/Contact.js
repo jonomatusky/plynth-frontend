@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Link,
-  Container,
-  Box,
-  Grid,
-  Typography,
-  Button,
-} from '@material-ui/core'
+import { Link, Container, Box, Grid, Typography, Button } from '@mui/material'
 import * as yup from 'yup'
 
 import { Link as RouterLink } from 'react-router-dom'
@@ -160,7 +153,7 @@ const Contact = ({ title, text }) => {
                         size="large"
                         fullWidth
                         sx={{ height: '51.5px' }}
-                        pending={status === 'loading'}
+                        loading={status === 'loading'}
                       >
                         <Typography
                           letterSpacing={1}

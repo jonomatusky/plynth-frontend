@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Button, Box, Link } from '@material-ui/core'
+import { Grid, Typography, Button, Box, Link } from '@mui/material'
 import Div100vh from './Div100vh'
 
 const ScanError = ({ fontColor, onClose }) => {

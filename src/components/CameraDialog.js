@@ -10,7 +10,7 @@ import {
   Button,
   Link,
   DialogActions,
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   isIOS,
   isSafari,

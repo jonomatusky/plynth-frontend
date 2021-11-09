@@ -7,11 +7,11 @@ import {
   TextField,
   Paper,
   IconButton,
-} from '@material-ui/core'
+} from '@mui/material'
 import * as yup from 'yup'
-import LoadingButton from '@material-ui/lab/LoadingButton'
+import LoadingButton from '@mui/lab/LoadingButton'
 
-import { ArrowBackIos, Send } from '@material-ui/icons'
+import { ArrowBackIos, Send } from '@mui/icons-material'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import { useRequest } from 'hooks/use-request'
@@ -66,7 +66,12 @@ const SuperAdmin = () => {
       <Grid container>
         <Grid item>
           <Box margin={2}>
-            <IconButton component={Link} to="/admin" color="secondary">
+            <IconButton
+              component={Link}
+              to="/admin"
+              color="secondary"
+              size="large"
+            >
               <ArrowBackIos />
             </IconButton>
           </Box>
@@ -130,7 +135,7 @@ const SuperAdmin = () => {
                                       size="medium"
                                       fullWidth
                                       sx={{ height: '38px' }}
-                                      pending={isLoading}
+                                      loading={isLoading}
                                     >
                                       <Typography
                                         letterSpacing={1}

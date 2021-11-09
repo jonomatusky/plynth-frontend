@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, Typography, Box, Button, Link } from '@material-ui/core'
-import { Close } from '@material-ui/icons'
+import { Grid, Typography, Box, Button, Link } from '@mui/material'
+import { Close } from '@mui/icons-material'
 import Image from 'components/Image'
 import PartysOver from 'images/partys_over.png'
 
@@ -75,7 +75,7 @@ const PortalFull = ({ portalUser, onClose }) => {
               >
                 <Typography variant="subtitle2">
                   <Link
-                    href="/#about"
+                    href="/"
                     color="inherit"
                     underline="always"
                     target="_blank"

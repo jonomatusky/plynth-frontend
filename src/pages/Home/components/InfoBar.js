@@ -6,10 +6,10 @@ import {
   IconButton,
   Tooltip,
   Button,
-} from '@material-ui/core'
+} from '@mui/material'
 
-import InfoIcon from '@material-ui/icons/Info'
-import { withStyles } from '@material-ui/core/styles'
+import InfoIcon from '@mui/icons-material/Info'
+import withStyles from '@mui/styles/withStyles';
 import plynthLogo from 'images/plynth-logo-white.png'
 import styled from 'styled-components'
 import { HashLink } from 'react-router-hash-link'
@@ -50,7 +50,7 @@ const InfoBar = () => {
       container
       alignItems="center"
       alignContent="center"
-      justify="space-between"
+      justifyContent="space-between"
       spacing={0}
     >
       <Grid item>
@@ -75,7 +75,7 @@ const InfoBar = () => {
           arrow={true}
           placement="bottom-end"
         >
-          <IconButton aria-label="info">
+          <IconButton aria-label="info" size="large">
             <StyledInfo />
           </IconButton>
         </StyledTooltip>
@@ -85,7 +85,7 @@ const InfoBar = () => {
           <Grid
             container
             direction="column"
-            justify="center"
+            justifyContent="center"
             alignItems="center"
           >
             {/* <Box
@@ -110,7 +110,7 @@ const InfoBar = () => {
         </Button>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 export default InfoBar

@@ -7,7 +7,7 @@ import {
   FormControlLabel,
   Typography,
   IconButton,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -17,7 +17,7 @@ import {
   FormatAlignCenter,
   FormatAlignLeft,
   FormatAlignRight,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import ButtonsCard from './ButtonsCard'
 
 const CardForm = ({ card, onSubmit, pending, onRemove }) => {
@@ -217,7 +217,7 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
                           : 'default'
                       }
                       onClick={() => handleTextAlign('left')}
-                    >
+                      size="large">
                       <FormatAlignLeft />
                     </IconButton>
                   </Grid>
@@ -227,7 +227,7 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
                         card.textAlign === 'center' ? 'primary' : 'default'
                       }
                       onClick={() => handleTextAlign('center')}
-                    >
+                      size="large">
                       <FormatAlignCenter />
                     </IconButton>
                   </Grid>
@@ -235,7 +235,7 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
                     <IconButton
                       color={card.textAlign === 'right' ? 'primary' : 'default'}
                       onClick={() => handleTextAlign('right')}
-                    >
+                      size="large">
                       <FormatAlignRight />
                     </IconButton>
                   </Grid>
@@ -459,7 +459,7 @@ const CardForm = ({ card, onSubmit, pending, onRemove }) => {
       {showField.links && <ButtonsCard card={card} onSubmit={onSubmit} />}
       <Box height="20px" />
     </Box>
-  )
+  );
 }
 
 export default CardForm
