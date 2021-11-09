@@ -89,13 +89,8 @@ const App = () => {
         <Register />
       </Route> */}
 
-<<<<<<< HEAD
-      <Route path="/ar" exact>
-        <LandingAR trying={true} />
-=======
       <Route path="/signup" redirectPath={'/admin'} exact>
         <SignUp />
->>>>>>> 3.0
       </Route>
 
       <Route
@@ -115,12 +110,12 @@ const App = () => {
         <EditPiece />
       </RestrictedPublicRoute> */}
 
-      <PrivateRoute path="/try-it/test">
+      {/* <PrivateRoute path="/try-it/test">
         <TryItTest />
       </PrivateRoute>
       <Route path="/try-it">
         <TryIt />
-      </Route>
+      </Route> */}
       <Route path="/s/subscribe">
         <Subscribe />
       </Route>
