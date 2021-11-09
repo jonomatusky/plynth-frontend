@@ -149,33 +149,8 @@ const Home = () => {
               justifyContent="center"
               sx={{ display: { xs: 'none', md: 'flex' } }}
             >
-<<<<<<< HEAD
-              <Grid item xs={11} mt={6}>
-                <Typography
-                  color="white"
-                  variant="h3"
-                  letterSpacing={1}
-                  style={{ fontWeight: 800 }}
-                  pb={3}
-                >
-                  {content.heading}
-                </Typography>
-                <Typography color="white" variant="h5" pb={3}>
-                  {content.subheading}
-                </Typography>
-                <Button
-                  component={RouterLink}
-                  to={'/try-it'}
-                  variant="contained"
-                  endIcon={<ArrowForward />}
-                  size="large"
-                >
-                  <b>Try It Now</b>
-                </Button>
-=======
               <Grid item xs={12}>
                 <Box mt={12} />
->>>>>>> 3.0
               </Grid>
               <Phone>
                 <Box
@@ -389,37 +364,7 @@ const Home = () => {
               pb={2}
               sx={{ display: { xs: 'none', lg: 'block' } }}
             >
-<<<<<<< HEAD
-              <Grid item xs={12}>
-                <Typography variant="h5" textAlign="center" color="white">
-                  <b>Try It Out</b>
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  textAlign="center"
-                  color="white"
-                  variant="h6"
-                  mb={2}
-                >
-                  Sign up for early access
-                </Typography>
-              </Grid>
-              <Grid item xs={12} textAlign="center">
-                <Button
-                  component={RouterLink}
-                  to={'/try-it'}
-                  variant="contained"
-                  endIcon={<ArrowForward />}
-                  size="large"
-                  sx={{ height: '48px' }}
-                >
-                  <b>Try It Now</b>
-                </Button>
-              </Grid>
-=======
               <Box mt={4} />
->>>>>>> 3.0
             </Grid>
 
             {/* Use it for... Section */}
