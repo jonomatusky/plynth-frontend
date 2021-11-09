@@ -304,7 +304,7 @@ const ImageUploadDialog = ({
                       <video
                         id="piece-video"
                         src={videoUrl}
-                        crossorigin="anonymous"
+                        crossOrigin="anonymous"
                         ref={videoRef}
                         style={{
                           maxWidth: '440px',

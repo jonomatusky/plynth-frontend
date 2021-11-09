@@ -54,6 +54,7 @@
     "tsutils": "^3.21.0",
     "typescript": "^4.4.4",
     "validator": "^13.6.0",
+    "video.js": "^7.15.4",
     "web-vitals": "^2.1.2",
     "yup": "^0.32.11"
   },

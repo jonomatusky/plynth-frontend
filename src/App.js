@@ -1,4 +1,8 @@
 import React from 'react'
+import 'aframe'
+import 'mind-ar/dist/mindar-image.prod.js'
+import 'mind-ar/dist/mindar-image-aframe.prod.js'
+
 import {
   BrowserRouter as Router,
   Route,

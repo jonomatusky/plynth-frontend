@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -15,7 +15,7 @@ import 'react-image-crop/dist/ReactCrop.css'
 import ReactPlayer from 'react-player'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { useRequest } from 'hooks/use-request'
-import { set } from 'react-ga'
+import VideoJS from 'components/VideoJS'
 
 const demoName = 'astronaut-ar-trimmed.mp4'
 const { REACT_APP_ASSET_URL } = process.env
@@ -293,17 +293,47 @@ const ImageUploadDialog = ({
   }
 
   const ContentReplace = () => {
-    const [duration, setDuration] = useState()
-
-    console.log(duration)
-    console.log(videoDuration)
+    const [videoData, setVideoData] = useState({})
+    // const [wasUpdated, setWasUpdated] = useState(false)
 
     const closeAndSetDuration = () => {
-      if (duration !== videoDuration) {
-        console.log('submitting duration')
-        submit({ duration })
-      }
+      // if (wasUpdated) {
+      submit(videoData)
+      // }
+      // setWasUpdated(false)
       handleClose()
+    }
+
+    const playerRef = useRef(null)
+
+    const videoJsOptions = {
+      // lookup the options in the docs for more options
+      autoplay: true,
+      muted: true,
+      loop: true,
+      width: 568,
+      height: 360,
+      sources: [
+        {
+          src: videoUrl,
+          type: 'video/mp4',
+        },
+      ],
+    }
+
+    const handlePlayerReady = async player => {
+      playerRef.current = player
+
+      player.on('loadeddata', () => {
+        let duration = player.duration()
+        let width = player.videoWidth()
+        let height = player.videoHeight()
+        setVideoData({ duration, width, height })
+      })
+    }
+
+    const handleReplace = () => {
+      setIsReplacing(true)
     }
 
     return (
@@ -333,21 +363,7 @@ const ImageUploadDialog = ({
               alignItems="center"
               justifyContent="center"
             >
-              <ReactPlayer
-                url={videoUrl}
-                style={{
-                  maxWidth: '100%',
-                  maxHeight: '100%',
-                  objectFit: 'contain',
-                }}
-                onDuration={duration => {
-                  setDuration(duration)
-                }}
-                muted
-                playing
-                loop
-                alt="Uploaded"
-              />
+              <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
             </Box>
           </Box>
         </Box>
@@ -357,7 +373,7 @@ const ImageUploadDialog = ({
             <Button
               color="secondary"
               endIcon={<Loop />}
-              onClick={() => setIsReplacing(true)}
+              onClick={handleReplace}
               // sx={{
               //   backgroundColor: '#ffffff88',
               //   '&:hover': { backgroundColor: '#ffffff50' },
@@ -369,7 +385,7 @@ const ImageUploadDialog = ({
             <Button
               variant="contained"
               onClick={closeAndSetDuration}
-              disabled={!duration}
+              disabled={!videoData.duration}
             >
               Done
             </Button>

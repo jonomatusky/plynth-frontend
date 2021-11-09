@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import 'mind-ar/dist/mindar-image.prod.js'
-import 'aframe'
-import 'mind-ar/dist/mindar-image-aframe.prod.js'
 import './ARPack.css'
 import { Box, IconButton } from '@mui/material'
 import { VolumeOff, VolumeUp } from '@mui/icons-material'
@@ -11,7 +8,23 @@ import LoadingScreen from 'components/LoadingScreen'
 import { use100vh } from 'hooks/use-100-vh'
 
 const ARPack = ({ pack }) => {
-  const { assetUrl, targetsUrl } = pack.cards[0]
+  const {
+    videoUrl: assetUrl,
+    targetsUrl,
+    imageWidth,
+    imageHeight,
+    videoWidth,
+    videoHeight,
+  } = pack.cards[0]
+
+  let imageAspect =
+    imageWidth > 0 && imageHeight > 0 ? imageHeight / imageWidth : 1
+  let videoAspect =
+    videoWidth > 0 && videoHeight > 0 ? videoHeight / videoWidth : 1
+
+  console.log('video aspect: ' + videoAspect)
+  console.log('image aspect: ' + imageAspect)
+
   const sceneRef = useRef(null)
   const [isFound, setIsFound] = useState(false)
   const [showPreload, setShowPreload] = useState(true)
@@ -208,26 +221,79 @@ const ARPack = ({ pack }) => {
               id="asset"
               className="video"
               src={`${assetUrl}`}
-              preload="auto"
+              // preload="auto"
               controls
               muted
               crossOrigin="anonymous"
               loop
               playsInline
+              // style={{
+              //   position: 'absolute',
+              //   height: '100%',
+              //   width: '100%',
+              //   objectFit: 'cover',
+              // }}
             ></video>
           </a-assets>
 
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
           <a-entity mindar-image-target="targetIndex: 0" id="target">
-            <a-video
-              src="#asset"
+            {/* <a-plane
               id="asset-a"
               width="1"
-              height="1.5"
+              height={imageHeight / imageWidth}
+              position="0 0 0"
+              rotation="0 0 0"
+              material="src: #asset"
+              fit-texture
+            ></a-plane> */}
+            {/* <a-entity
+              // cloak
+              width={5}
+              height={5}
+              position={`-3.5 ${(-5 * imageHeight) / imageWidth} 0.05`}
+            ></a-entity> */}
+            <a-entity
+              cloak
+              id="top-cloak"
+              position={`1.5 ${0.5 * imageAspect + 2.5} 0.05`}
+            ></a-entity>
+            <a-entity
+              cloak
+              id="right-cloak"
+              position={`3 ${2.5 - 0.5 * imageAspect - 0.5} 0.05`}
+            ></a-entity>
+            <a-entity
+              cloak
+              id="bottom-cloak"
+              position={`-1.5 ${-0.5 * imageAspect - 2.5} 0.05`}
+            ></a-entity>
+            <a-entity
+              cloak
+              id="left-cloak"
+              position={`-3 ${-2.5 + 0.5 * imageAspect + 0.5} 0.05`}
+            ></a-entity>
+
+            <a-video
+              id="asset-a"
+              src="#asset"
+              width={videoAspect > imageAspect ? 1 : imageAspect / videoAspect}
+              height={
+                videoAspect > imageAspect
+                  ? videoAspect
+                  : imageHeight / imageWidth
+              }
               position="0 0 0"
               rotation="0 0 0"
             ></a-video>
+            {/* <a-entity
+              geometry={`primitive: plane; height: ${
+                imageHeight / imageWidth
+              };`}
+              material="src: #asset;"
+              fit-texture
+            ></a-entity> */}
           </a-entity>
         </a-scene>
         <video></video>

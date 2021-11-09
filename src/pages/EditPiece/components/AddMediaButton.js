@@ -49,14 +49,16 @@ const AddMediaButton = ({
     })
   }
 
-  const submitVideo = ({ filepath, duration }) => {
+  const submitVideo = ({ filepath, duration, height, width }) => {
     let media = {}
     if (filepath) {
       media.video = filepath
     }
-    if (duration) {
+    if (duration || height || width) {
       console.log('updating duration')
       media.videoDuration = duration
+      media.videoWidth = width
+      media.videoHeight = height
     }
     console.log(media)
     updateMedia(media)

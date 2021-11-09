@@ -12,6 +12,7 @@ import App from './App'
 import store from './redux/store'
 import theme from './theme'
 import './config/fontawesome'
+import './aframeComponents.js'
 
 ReactDOM.render(
   <React.StrictMode>

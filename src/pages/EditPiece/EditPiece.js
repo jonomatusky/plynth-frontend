@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import 'mind-ar/dist/mindar-image.prod.js'
 import { Link, useParams } from 'react-router-dom'
 import {
   Grid,
@@ -88,7 +87,7 @@ const EditPiece = () => {
   // }
 
   const DisplayCard = () => {
-    const [hideImage, setHideImage] = useState(!!video)
+    const [hideImage, setHideImage] = useState(false)
     const [hideVideo, setHideVideo] = useState(!!targets)
 
     const playerRef = useRef()
@@ -452,17 +451,19 @@ const EditPiece = () => {
                                   <QrCode2 sx={{ fontSize: 120 }} />
                                 )}
                               </Box>
-                              <Box
-                                display="flex"
-                                justifyContent="center"
-                                alignItems="center"
-                                pt={2}
-                              >
-                                <Typography>
-                                  <b>Try It!</b>
-                                </Typography>
-                                <ArrowForward fontSize="small" />
-                              </Box>
+                              {targets && (
+                                <Box
+                                  display="flex"
+                                  justifyContent="center"
+                                  alignItems="center"
+                                  pt={2}
+                                >
+                                  <Typography>
+                                    <b>Scan to try</b>
+                                  </Typography>
+                                  <ArrowForward fontSize="small" />
+                                </Box>
+                              )}
                             </Box>
                           </Box>
                           <Box
