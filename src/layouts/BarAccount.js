@@ -84,7 +84,7 @@ const BarAccount = ({ right, left, children }) => {
   return (
     <>
       <AppBar position="fixed" className={classes.appBar} elevation={0}>
-        <Box width="100%" display="flex" alignItems="center">
+        <Box width="100%" display="flex" alignItems="center" height="52px">
           {left || (
             <>
               <Box ml={2}>
@@ -173,7 +173,7 @@ const BarAccount = ({ right, left, children }) => {
                 </Box>
               )}
               <Box pr={1}>
-                <IconButton onClick={handleOpen} onMouseOver={handleOpen}>
+                <IconButton onClick={handleOpen}>
                   <AccountCircle fontSize="large" />
                 </IconButton>
                 <Menu
@@ -206,6 +206,13 @@ const BarAccount = ({ right, left, children }) => {
                     target="_blank"
                   >
                     Get Help
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    href="https://airtable.com/shrmOgSoAqE7bBOmI"
+                    target="_blank"
+                  >
+                    Report a Bug
                   </MenuItem>
                   <Divider />
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>

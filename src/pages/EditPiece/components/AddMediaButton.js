@@ -101,7 +101,7 @@ const AddMediaButton = ({
         />
       )}
 
-      <Box display="flex" flexWrap="wrap" width="160px">
+      <Box display="flex" flexWrap="wrap" width="160px" mt={1}>
         <Card elevation={0} variant="outlined">
           <CardActionArea
             sx={{ padding: '8px' }}

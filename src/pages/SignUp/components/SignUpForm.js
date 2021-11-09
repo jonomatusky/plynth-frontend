@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import {
   Box,
   Grid,
   Typography,
   Button,
   Divider,
-  Link,
   TextField,
 } from '@mui/material'
 import * as yup from 'yup'
@@ -265,7 +265,7 @@ const SignUpForm = () => {
             Already have an account?{' '}
             <Button
               sx={{ textTransform: 'none' }}
-              component={Link}
+              component={RouterLink}
               size="small"
               to="/login"
             >

@@ -181,7 +181,7 @@ const SignUp = () => {
                 <Grid item xs={11} lg={9}>
                   <Box margin={4}>
                     <Paper>
-                      <Box padding={4} pb={1}>
+                      <Box padding={4} pb={3}>
                         <Box
                           display="flex"
                           justifyContent="space-around"
@@ -302,12 +302,6 @@ const SignUp = () => {
                             <Button variant="contained" fullWidth disabled>
                               <b>Download Print Files</b>
                             </Button>
-                          </Box>
-                          <Box mb={1} color="#cccccc">
-                            <Typography variant="caption">
-                              Need help printing? Check out our list of{' '}
-                              <u>local and national printers</u>
-                            </Typography>
                           </Box>
                         </Box>
                       </Box>

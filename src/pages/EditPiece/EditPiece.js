@@ -20,6 +20,7 @@ import {
   Download,
   FilterNone,
   ArrowForward,
+  Visibility,
 } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import QRCode from 'qrcode.react'
@@ -46,12 +47,14 @@ const EditPiece = () => {
   const { selectPack, packs, updatePack, status, updateStatus } = usePackStore()
 
   const { pieceId } = useParams()
-  const experiencePage = REACT_APP_PUBLIC_URL + '/p/' + pieceId
+  const experiencePage = !!pieceId && REACT_APP_PUBLIC_URL + '/p/' + pieceId
 
   const pack = selectPack(pieceId)
 
   const cards = (pack || {}).cards
   const media = (cards || [{}])[0]
+
+  const previewPage = !!media.id && `/preview/${pieceId}/${media.id}`
 
   const { setError } = useAlertStore()
 
@@ -254,9 +257,35 @@ const EditPiece = () => {
     }
   }, [targets])
 
+  const CopyButton = () => {
+    const [isCopied, setIsCopied] = useState(false)
+
+    useEffect(() => {
+      const timer = setTimeout(() => setIsCopied(false), 2000)
+      return () => clearTimeout(timer)
+    }, [isCopied])
+
+    const handleCopy = () => {
+      setIsCopied(true)
+      copy(experiencePage)
+    }
+
+    return (
+      <Button
+        size="small"
+        color="secondary"
+        endIcon={<FilterNone />}
+        onClick={handleCopy}
+        disabled={!targets}
+      >
+        {isCopied ? 'Copied!' : 'Copy Link'}
+      </Button>
+    )
+  }
+
   return (
     <>
-      <BarEditPiece />
+      <BarEditPiece previewPageUrl={previewPage} />
       <WelcomeDialog
         open={welcomeDialogIsOpen}
         onClose={() => setWelcomeDialogIsOpen(false)}
@@ -271,9 +300,52 @@ const EditPiece = () => {
         >
           <Container disableGutters maxWidth="lg">
             <Grid container justifyContent="flex-start">
-              <Grid item sm={12} md={7} container justifyContent="center">
-                <Grid item xs={11} lg={9}>
-                  <Box margin={4}>
+              <Grid
+                item
+                sm={12}
+                container
+                justifyContent="center"
+                sx={{ display: { xs: 'flex', sm: 'none' } }}
+              >
+                <Grid item mt={2} xs={11}>
+                  <Paper>
+                    <Box padding={2}>
+                      <Grid container spacing={2} justifyContent="center">
+                        <Grid item xs={12}>
+                          <Typography variant="h5">Swith to Desktop</Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography>
+                            Sorry, you can't build new experiences on a mobile
+                            device. Please switch to desktop to create a new
+                            experience. You can view and try out your existing
+                            experiences from the home screen.
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Button
+                            variant="contained"
+                            component={Link}
+                            to="/admin"
+                          >
+                            Go Home
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Paper>
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                sm={12}
+                md={7}
+                container
+                justifyContent="center"
+                sx={{ display: { xs: 'none', sm: 'flex' } }}
+              >
+                <Grid item xs={11} lg={8}>
+                  <Box mt={4} mb={4}>
                     <Paper>
                       <Box padding={4} pb={2}>
                         <Box
@@ -288,6 +360,7 @@ const EditPiece = () => {
                             display="flex"
                             justifyContent="space-around"
                             alignItems="center"
+                            flexWrap="wrap"
                           >
                             <AddMediaButton
                               mediaType="image"
@@ -302,6 +375,7 @@ const EditPiece = () => {
                             <LinkIcon
                               fontSize="large"
                               color={targets ? 'primary' : 'secondary'}
+                              sx={{ display: { xs: 'none', sm: 'block' } }}
                             />
                             <AddMediaButton
                               mediaType="video"
@@ -329,6 +403,7 @@ const EditPiece = () => {
                               loading={isLoading}
                               loadingPosition="end"
                               sx={{
+                                display: { xs: 'none', md: 'block' },
                                 '&.Mui-disabled': {
                                   borderColor: targets ? 'primary.main' : null,
                                   color: targets ? 'primary.main' : null,
@@ -343,11 +418,44 @@ const EditPiece = () => {
                                 <b>Create Experience</b>
                               )}
                             </LoadingButton>
+                            {targets ? (
+                              <LoadingButton
+                                variant="outlined"
+                                fullWidth
+                                href={experiencePage}
+                                target="_blank"
+                                endIcon={<Visibility />}
+                                sx={{
+                                  display: { xs: 'block', md: 'none' },
+                                }}
+                              >
+                                <b>Open Experience</b>
+                              </LoadingButton>
+                            ) : (
+                              <LoadingButton
+                                variant={'contained'}
+                                fullWidth
+                                disabled={!imageSrc || !videoSrc || !!targets}
+                                onClick={getImageTargets}
+                                endIcon={<AutoFixHigh />}
+                                loading={isLoading}
+                                loadingPosition="end"
+                                sx={{
+                                  display: { xs: 'block', md: 'none' },
+                                }}
+                              >
+                                {isLoading ? (
+                                  <b>Building experience... {percent}%</b>
+                                ) : (
+                                  <b>Create Experience</b>
+                                )}
+                              </LoadingButton>
+                            )}
                           </Box>
                           <Box
                             width="100%"
-                            display="flex"
                             color={targets ? 'text.primary' : '#cccccc'}
+                            sx={{ display: { xs: 'none', md: 'flex' } }}
                           >
                             <Box flexGrow={1} display="flex" flexWrap="wrap">
                               <Box
@@ -422,7 +530,7 @@ const EditPiece = () => {
                                       sx={{ textTransform: 'none' }}
                                       endIcon={<Launch />}
                                       color="inherit"
-                                      href={`/preview/${pieceId}/${media.id}`}
+                                      href={previewPage}
                                       target="_blank"
                                       disabled={!targets}
                                     >
@@ -452,17 +560,20 @@ const EditPiece = () => {
                                 )}
                               </Box>
                               {targets && (
-                                <Box
-                                  display="flex"
-                                  justifyContent="center"
-                                  alignItems="center"
-                                  pt={2}
-                                >
-                                  <Typography>
-                                    <b>Scan to try</b>
-                                  </Typography>
-                                  <ArrowForward fontSize="small" />
-                                </Box>
+                                <>
+                                  <Box
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    pt={1}
+                                  >
+                                    <Typography>
+                                      <b>Scan to try</b>
+                                    </Typography>
+                                    <ArrowForward fontSize="small" />
+                                  </Box>
+                                  <CopyButton />
+                                </>
                               )}
                             </Box>
                           </Box>
@@ -496,22 +607,6 @@ const EditPiece = () => {
                                 Download QR Code
                               </Button>
                             </DownloadQR>
-                            <Box
-                              width="320px"
-                              mt={1}
-                              display="flex"
-                              justifyContent="center"
-                            >
-                              <Button
-                                size="small"
-                                color="secondary"
-                                endIcon={<FilterNone />}
-                                onClick={() => copy(experiencePage)}
-                                disabled={!targets}
-                              >
-                                Copy Link
-                              </Button>
-                            </Box>
                           </Box>
                           {/* <Box width="320px" mt={3} mb={1}>
                             <Button variant="contained" fullWidth disabled>

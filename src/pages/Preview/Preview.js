@@ -1,43 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react'
-import 'mind-ar/dist/mindar-image.prod.js'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Grid, Box, Container, Button, Paper, Typography } from '@mui/material'
 import {
-  Launch,
-  Link as LinkIcon,
-  People,
-  PhoneIphone,
-  QrCode2,
-  VideoCameraBack,
-  AutoFixHigh,
-  Download,
-  FilterNone,
-  ArrowForward,
-} from '@mui/icons-material'
-import { LoadingButton } from '@mui/lab'
+  Grid,
+  Box,
+  Container,
+  Button,
+  Paper,
+  Typography,
+  Snackbar,
+  SnackbarContent,
+} from '@mui/material'
+import { FilterNone } from '@mui/icons-material'
 import QRCode from 'qrcode.react'
 import copy from 'copy-to-clipboard'
 
-import usePackStore from 'hooks/store/use-pack-store'
-import AdminNav from 'layouts/AdminNav'
-
-import BarEditPiece from 'layouts/BarEditPiece'
-import AddMediaButton from './components/AddMediaButton'
-import WelcomeDialog from './components/WelcomeDialog'
-import { useSession } from 'hooks/use-session'
 import { useRequest } from 'hooks/use-request'
-import { useAlertStore } from 'hooks/store/use-alert-store'
-import axios from 'axios'
-import { loadImgAsync } from 'util/imageHandling'
-import DownloadQR from 'components/DownloadQr'
 import usePageTrack from 'hooks/use-page-track'
 import { useFetch } from 'hooks/use-fetch'
 import SomethingWentWrong from 'components/SomethingWentWrong'
+import scanImage from 'images/scan.svg'
+import experienceImage from 'images/experience.svg'
+import Image from 'components/Image'
+import BarAccount from 'layouts/BarAccount'
+import LoadingScreen from 'components/LoadingScreen'
+import arrow from 'images/arrow.svg'
+import Logo from 'images/plynth_logo_color.svg'
+import useUserStore from 'hooks/store/use-user-store'
 
-const { REACT_APP_ASSET_URL, REACT_APP_PUBLIC_URL } = process.env
+const { REACT_APP_PUBLIC_URL } = process.env
 
 const Preview = () => {
-  const { user } = useSession()
+  const { user } = useUserStore()
   const [pack, setPack] = useState(null)
 
   const { pieceId, cardId } = useParams()
@@ -76,9 +69,19 @@ const Preview = () => {
   const card = (cards || [{}])[0]
   const { imageUrl, imageHeight, imageWidth, type } = card
 
-  console.log(card)
+  const isOwner = !!user && !!pack && user.id === (pack || {}).owner._id
 
-  const { setMessage } = useAlertStore()
+  const [message, setMessage] = useState()
+  console.log(isOwner)
+
+  useEffect(() => {
+    if (isOwner) {
+      console.log('setting message')
+      setMessage(
+        'This is your preview page. Share with friends and collaborators to let them try it out before you print.'
+      )
+    }
+  }, [isOwner, setMessage])
 
   const DisplayCard = () => {
     return (
@@ -119,71 +122,283 @@ const Preview = () => {
     )
   }
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [percent, setPercent] = useState(0)
+  const CopyButton = () => {
+    const [isCopied, setIsCopied] = useState(false)
+
+    useEffect(() => {
+      const timer = setTimeout(() => setIsCopied(false), 2000)
+      return () => clearTimeout(timer)
+    }, [isCopied])
+
+    const handleCopy = () => {
+      setIsCopied(true)
+      copy(experiencePage)
+    }
+
+    return (
+      <Button
+        size="small"
+        color="secondary"
+        endIcon={<FilterNone />}
+        onClick={handleCopy}
+      >
+        {isCopied ? 'Copied!' : 'Copy QR Link'}
+      </Button>
+    )
+  }
+
+  const CopyPageButton = () => {
+    const [isCopied, setIsCopied] = useState(false)
+
+    useEffect(() => {
+      const timer = setTimeout(() => setIsCopied(false), 2000)
+      return () => clearTimeout(timer)
+    }, [isCopied])
+
+    const handleCopy = () => {
+      setIsCopied(true)
+      copy(experiencePage)
+    }
+
+    return (
+      <Button
+        variant="outlined"
+        color="primary"
+        endIcon={<FilterNone />}
+        disableElevation
+        onClick={handleCopy}
+        sx={{ textTransform: 'none' }}
+      >
+        {isCopied ? 'Copied!' : 'Copy Link'}
+      </Button>
+    )
+  }
 
   return (
     <>
-      <BarEditPiece />
-      {isPublic && cardId === card.id && imageUrl ? (
-        <AdminNav isPublic>
-          <Box
-            height="calc(100vh - 48px)"
-            width="100%"
-            overflow="auto"
-            display="flex"
-            alignContent="center"
-          >
-            <Container disableGutters maxWidth="lg">
-              <Grid container justifyContent="flex-start">
-                <Grid item sm={12} md={7} container justifyContent="center">
-                  <Grid item xs={11} lg={9}>
-                    <Box margin={4}>
-                      <Paper>
-                        <Box padding={4} pb={2}>
-                          <Box
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={!!message}
+        onClose={() => setMessage(null)}
+      >
+        <SnackbarContent
+          sx={{
+            backgroundColor: 'secondary.main',
+            borderRadius: 0,
+            fontWeight: 'bold',
+          }}
+          message={message}
+          action={
+            <Button
+              sx={{ minWidth: '30px ' }}
+              onClick={() => setMessage(null)}
+              color="inherit"
+              size="small"
+            >
+              Got It
+            </Button>
+          }
+        />
+      </Snackbar>
+      <BarAccount
+        left={
+          <>
+            <Box ml={2}>
+              <Link to={isOwner ? '/admin' : '/'}>
+                <Image src={Logo} height="24px" width="91px" />
+              </Link>
+            </Box>
+            <Box flexGrow={1} />
+          </>
+        }
+        right={
+          <>
+            <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
+              <CopyPageButton />
+            </Box>
+            {!isOwner && (
+              <Box pr={1}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disableElevation
+                  sx={{ textTransform: 'none' }}
+                  component={Link}
+                  to="/signup"
+                >
+                  <b>Create Your Own</b>
+                </Button>
+              </Box>
+            )}
+          </>
+        }
+      />
+      {(status === 'idle' || status === 'loading') && !isPublic && (
+        <LoadingScreen backgroundColor={'theme.palette.background.card'} />
+      )}
+      {status === 'failed' && <SomethingWentWrong />}
+
+      {status === 'succeeded' && (
+        <>
+          {isPublic && cardId === card.id && imageUrl && type === 'ar' ? (
+            <Box
+              mt="48px"
+              height="calc(100vh - 48px)"
+              width="100%"
+              overflow="auto"
+              display="flex"
+              alignContent="center"
+            >
+              <Container disableGutters maxWidth="lg">
+                <Grid
+                  container
+                  justifyContent="center"
+                  sx={{ display: { xs: 'flex', sm: 'none' } }}
+                >
+                  <Grid item mt={2} xs={11}>
+                    <Paper>
+                      <Box padding={2}>
+                        <Grid container spacing={2} justifyContent="center">
+                          <Grid item xs={12}>
+                            <Typography variant="h5">
+                              Swith to Desktop
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography>
+                              Sorry, you can't view the preview page on mobile.
+                              Please switch to desktop.
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <CopyPageButton />
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="flex-start" mt={1}>
+                  <Grid item xs={7} container justifyContent="center">
+                    <Grid item xs={11} lg={9}>
+                      <Box margin={4}>
+                        <Paper>
+                          <Box padding={4} pb={6}>
+                            <Grid container spacing={2} width="100%">
+                              <Grid item xs={12}>
+                                <Typography variant="h4" color="primary">
+                                  <b>Preview</b>
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12}>
+                                <Typography>
+                                  This experince was created using Plynth. Scan
+                                  the QR code to try it out before you print.
+                                </Typography>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                                container
+                                justifyContent="center"
+                              >
+                                <Grid item xs={3}></Grid>
+                                <Grid
+                                  item
+                                  xs={6}
+                                  container
+                                  justifyContent="center"
+                                >
+                                  <Box m={1} mb={0} textAlign="center">
+                                    <QRCode
+                                      size={160}
+                                      id="qr"
+                                      value={experiencePage}
+                                    />
+                                    <CopyButton />
+                                  </Box>
+                                </Grid>
+                                <Grid item xs={3} textAlign="center" pt={6}>
+                                  <Box
+                                    textAlign="center"
+                                    sx={{
+                                      display: { xs: 'none', md: 'block' },
+                                    }}
+                                  >
+                                    <Image
+                                      src={arrow}
+                                      style={{ width: '100%' }}
+                                    />
+                                    <Typography variant="h6">
+                                      <b>Try Me</b>
+                                    </Typography>{' '}
+                                  </Box>
+                                </Grid>
+                              </Grid>
+
+                              <Grid
+                                item
+                                xs={6}
+                                container
+                                justifyContent="center"
+                                spacing={2}
+                                mt={1}
+                              >
+                                <Image height="72px" src={scanImage} />
+                                <Grid item xs={12}>
+                                  <Typography>
+                                    1. Scan the QR code with your mobile device
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={6}
+                                container
+                                justifyContent="center"
+                                spacing={2}
+                                mt={1}
+                              >
+                                <Image height="72px" src={experienceImage} />
+                                <Grid item xs={12}>
+                                  <Typography>
+                                    2. Hold your device over the image to the
+                                    right{' '}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+
+                            {/* <Box
                             display="flex"
                             justifyContent="space-around"
                             alignItems="center"
                             width="100%"
                             flexWrap="wrap"
-                          ></Box>
-                        </Box>
-                      </Paper>
+                          ></Box> */}
+                          </Box>
+                        </Paper>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Box
+                      width="100%"
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <DisplayCard />
                     </Box>
                   </Grid>
                 </Grid>
-                <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
-                  <Box
-                    width="100%"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <DisplayCard />
-                  </Box>
-                </Grid>
-              </Grid>
-            </Container>
-          </Box>
-        </AdminNav>
-      ) : (
-        <SomethingWentWrong />
+              </Container>
+            </Box>
+          ) : (
+            <SomethingWentWrong />
+          )}
+        </>
       )}
-      {/* <Dialog
-        onClose={handleRemoveClose}
-        aria-labelledby="remove-dialog-title"
-        open={removeDialogIsOpen}
-      >
-        <DialogTitle id="remove-dialog-title">Remove Card</DialogTitle>
-        <DialogContent>
-          Are you sure you want to remove this card? This cannot be undone.
-        </DialogContent>
-        <DialogActions>
-          <MuiButton onClick={handleRemoveClose}>Cancel</MuiButton>
-          <MuiButton onClick={handleDeleteCard}>Remove</MuiButton>
-        </DialogActions>
-      </Dialog> */}
     </>
   )
 }

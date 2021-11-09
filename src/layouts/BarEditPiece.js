@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useParams } from 'react-router-dom'
 import { AppBar, Divider, Button, Box } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import { ArrowBackIos, Visibility } from '@mui/icons-material'
@@ -18,17 +18,12 @@ const useStyles = makeStyles({
   },
 })
 
-const BarEditPiece = ({ children }) => {
+const BarEditPiece = ({ previewPageUrl }) => {
   const classes = useStyles()
 
   return (
     <>
-      <AppBar
-        position="fixed"
-        className={classes.appBar}
-        elevation={0}
-        sx={{ display: { xs: 'none', md: 'block' } }}
-      >
+      <AppBar position="fixed" className={classes.appBar} elevation={0}>
         <Box width="100%" display="flex" height="48px" alignItems="center">
           <Box pl={1}>
             <Button
@@ -41,17 +36,21 @@ const BarEditPiece = ({ children }) => {
             </Button>
           </Box>
           <Box flexGrow={1} />
-          <Box pr={1}>
-            <Button
-              variant="outlined"
-              color="primary"
-              // onClick={handleClick}
-              disableElevation
-              sx={{ textTransform: 'none' }}
-              endIcon={<Visibility />}
-            >
-              View Preview Page
-            </Button>
+
+          <Box pr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
+            {previewPageUrl && (
+              <Button
+                variant="outlined"
+                color="primary"
+                href={previewPageUrl}
+                target="_blank"
+                disableElevation
+                sx={{ textTransform: 'none' }}
+                endIcon={<Visibility />}
+              >
+                View Preview Page
+              </Button>
+            )}
           </Box>
         </Box>
         <Divider />

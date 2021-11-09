@@ -39,7 +39,7 @@ const Pieces = () => {
     <>
       <BarAccount />
       <AdminNav>
-        <Box height="calc(100vh - 48px)" overflow="hidden">
+        <Box height="calc(100vh - 48px)" overflow="scroll">
           <Container disableGutters maxWidth={false}>
             <Box
               sx={{ display: { xs: 'none', sm: 'flex' } }}
