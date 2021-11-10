@@ -280,7 +280,12 @@ const Preview = () => {
                     </Paper>
                   </Grid>
                 </Grid>
-                <Grid container justifyContent="flex-start" mt={1}>
+                <Grid
+                  container
+                  justifyContent="flex-start"
+                  mt={1}
+                  sx={{ display: { xs: 'none', sm: 'flex' } }}
+                >
                   <Grid item xs={7} container justifyContent="center">
                     <Grid item xs={11} lg={9}>
                       <Box margin={4}>
