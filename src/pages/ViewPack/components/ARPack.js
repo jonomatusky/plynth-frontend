@@ -221,7 +221,7 @@ const ARPack = ({ pack }) => {
               id="asset"
               className="video"
               src={`${assetUrl}`}
-              // preload="auto"
+              preload="auto"
               controls
               muted
               crossOrigin="anonymous"
