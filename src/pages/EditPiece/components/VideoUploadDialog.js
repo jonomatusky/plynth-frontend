@@ -89,7 +89,7 @@ const ImageUploadDialog = ({
         method: 'POST',
         data: {
           fileName: name,
-          fileType: file.type,
+          fileType: 'video/mp4',
         },
         disabled: videoLoading,
       })
