@@ -34,7 +34,9 @@ const Preview = () => {
   const [pack, setPack] = useState(null)
 
   const { pieceId, cardId } = useParams()
-  const experiencePage = REACT_APP_PUBLIC_URL + '/p/' + pieceId
+
+  const previewPage =
+    REACT_APP_PUBLIC_URL + '/preview/' + pieceId + '/' + cardId
 
   useFetch()
   usePageTrack()
@@ -122,30 +124,30 @@ const Preview = () => {
     )
   }
 
-  const CopyButton = () => {
-    const [isCopied, setIsCopied] = useState(false)
+  // const CopyButton = () => {
+  //   const [isCopied, setIsCopied] = useState(false)
 
-    useEffect(() => {
-      const timer = setTimeout(() => setIsCopied(false), 2000)
-      return () => clearTimeout(timer)
-    }, [isCopied])
+  //   useEffect(() => {
+  //     const timer = setTimeout(() => setIsCopied(false), 2000)
+  //     return () => clearTimeout(timer)
+  //   }, [isCopied])
 
-    const handleCopy = () => {
-      setIsCopied(true)
-      copy(experiencePage)
-    }
+  //   const handleCopy = () => {
+  //     setIsCopied(true)
+  //     copy(experiencePage)
+  //   }
 
-    return (
-      <Button
-        size="small"
-        color="secondary"
-        endIcon={<FilterNone />}
-        onClick={handleCopy}
-      >
-        {isCopied ? 'Copied!' : 'Copy QR Link'}
-      </Button>
-    )
-  }
+  //   return (
+  //     <Button
+  //       size="small"
+  //       color="secondary"
+  //       endIcon={<FilterNone />}
+  //       onClick={handleCopy}
+  //     >
+  //       {isCopied ? 'Copied!' : 'Copy QR Link'}
+  //     </Button>
+  //   )
+  // }
 
   const CopyPageButton = () => {
     const [isCopied, setIsCopied] = useState(false)
@@ -157,7 +159,7 @@ const Preview = () => {
 
     const handleCopy = () => {
       setIsCopied(true)
-      copy(experiencePage)
+      copy(previewPage)
     }
 
     return (
@@ -313,9 +315,9 @@ const Preview = () => {
                                     <QRCode
                                       size={160}
                                       id="qr"
-                                      value={experiencePage}
+                                      value={previewPage}
                                     />
-                                    <CopyButton />
+                                    {/* <CopyButton /> */}
                                   </Box>
                                 </Grid>
                                 <Grid item xs={3} textAlign="center" pt={6}>
