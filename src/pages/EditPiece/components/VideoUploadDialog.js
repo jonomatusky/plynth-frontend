@@ -67,12 +67,7 @@ const ImageUploadDialog = ({
 
     const { request } = useRequest()
 
-    const handleDrop = () => {
-      console.log('drop')
-    }
-
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-      onDrop: handleDrop,
       multiple: false,
       accept: 'video/mp4,video/quicktime',
       maxSize: 104857600,
@@ -89,7 +84,6 @@ const ImageUploadDialog = ({
 
     const uploadFile = async () => {
       setVideoLoading(true)
-      console.log('uploading')
       let { signedUrl, imageFilepath } = await request({
         url: '/auth/sign-s3',
         method: 'POST',
@@ -99,8 +93,6 @@ const ImageUploadDialog = ({
         },
         disabled: videoLoading,
       })
-
-      console.log('requestion')
 
       try {
         await request({ url: signedUrl, method: 'PUT', data: file })

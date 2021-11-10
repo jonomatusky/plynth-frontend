@@ -85,7 +85,6 @@ const EditPiece = () => {
   // }, [pack])
 
   const handleUpdateMedia = newMedia => {
-    console.log({ id: pieceId, cards: [{ ...media, ...newMedia }] })
     updatePack({ id: pieceId, cards: [{ ...media, ...newMedia }] })
   }
 
@@ -217,12 +216,8 @@ const EditPiece = () => {
 
   const { request } = useRequest()
 
-  console.log(imageSrc)
-
   const getImageTargets = async () => {
     setIsLoading(true)
-
-    console.log('getting image targets')
 
     if (imageSrc === demoImageUrl) {
       try {
@@ -247,8 +242,6 @@ const EditPiece = () => {
         responseType: 'blob',
       })
 
-      console.log('creating blob')
-
       const blob = response.data
       const src = await URL.createObjectURL(blob)
 
@@ -260,13 +253,9 @@ const EditPiece = () => {
         setPercent(progress.toFixed(0))
       })
 
-      console.log('creating compiler')
-
       const exportedBuffer = await compiler.exportData()
       var targetBlob = new Blob([exportedBuffer])
       var targetFile = new File([targetBlob], `${pieceId}-targets.mind`)
-
-      console.log('got target file')
 
       let { signedUrl, imageFilepath } = await request({
         url: '/auth/sign-s3',
@@ -277,8 +266,6 @@ const EditPiece = () => {
         },
       })
 
-      console.log('got signed url')
-
       await request({ url: signedUrl, method: 'PUT', data: targetFile })
 
       await updatePack({
@@ -287,8 +274,6 @@ const EditPiece = () => {
         cards: [{ ...media, targets: imageFilepath }],
       })
     } catch (err) {
-      console.log(err)
-      console.log(err.message)
       setError({
         message:
           'Sorry, there was an error creating your experience. Please try again.',

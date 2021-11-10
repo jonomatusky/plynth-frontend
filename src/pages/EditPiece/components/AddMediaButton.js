@@ -52,12 +52,10 @@ const AddMediaButton = ({
       media.video = filepath
     }
     if (duration || height || width) {
-      console.log('updating duration')
       media.videoDuration = duration
       media.videoWidth = width
       media.videoHeight = height
     }
-    console.log(media)
     updateMedia(media)
   }
 
@@ -74,10 +72,6 @@ const AddMediaButton = ({
       clearInterval(interval)
     }
   })
-
-  console.log(imageSrc)
-  console.log(videoSrc)
-  console.log(mediaType === 'image' ? !imageSrc : !!imageSrc && !videoSrc)
 
   return (
     <>

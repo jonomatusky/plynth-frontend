@@ -98,7 +98,7 @@ const BarAccount = ({ right, left, children }) => {
                     value={value}
                     indicatorColor="primary"
                     textColor="primary"
-                    sx={{ display: { xs: 'none', md: 'flex' } }}
+                    sx={{ height: '100%', display: { xs: 'none', md: 'flex' } }}
                   >
                     <Tab
                       label={

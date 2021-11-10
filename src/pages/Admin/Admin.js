@@ -1,13 +1,17 @@
-const { useSession } = require('hooks/use-session')
+import React from 'react'
+import useUserStore from 'hooks/store/use-user-store'
+
 const { Redirect } = require('react-router')
 
 const Admin = () => {
-  const { user, initializing } = useSession()
+  const { user } = useUserStore()
 
-  if (!initializing) {
+  if (user.id) {
     if (
       user.tier === 'free' ||
-      (user.tier === 'artist') | (user.tier === 'agency')
+      user.tier === 'artist' ||
+      user.tier === 'agency' ||
+      user.tier === 'trial'
     ) {
       return <Redirect push to="/admin/packs" />
     } else {

@@ -67,7 +67,7 @@ const Home = () => {
               md={2}
               sx={{ display: { xs: 'none', md: 'flex' } }}
             />
-            <Grid item xs={8} sm={7} md={4}>
+            <Grid item xs={11} sm={7} md={4}>
               <Grid
                 container
                 sx={{ height: '100%' }}
