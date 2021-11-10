@@ -56,50 +56,18 @@ const Home = () => {
 
   return (
     <>
-      <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-        <Box
-          position="absolute"
-          overflow="hidden"
-          zIndex="-9"
-          width="100vw"
-          height="80vh"
-          display="flex"
-          jusifycontent="center"
-          alignItems="center"
-          sx={{
-            background: 'linear-gradient(180deg, #00000066 50% , #000000 100%)',
-          }}
-        ></Box>
-        <Box
-          position="absolute"
-          overflow="hidden"
-          zIndex="-10"
-          width="100vw"
-          height="80vh"
-          display="flex"
-          jusifycontent="center"
-          alignItems="center"
-        >
-          <ReactPlayer
-            url={content.videoUrl}
-            height="150vh"
-            width="100vw"
-            overflow="hidden"
-            playsinline={true}
-            loop={true}
-            playing={true}
-            config={{ vimeo: { playerOptions: { background: 1 } } }}
-            // onReady={() => setVideoIsReady(true)}
-          />
-        </Box>
-      </Box>
       <PublicNav>
         <ScrollToTopOnMount />
 
-        <Container maxWidth={false} id="about" disableGutters>
+        <Container maxWidth="lg" id="about" disableGutters>
           <Grid container justifyContent="center">
-            <Grid item xs={12} md={2} />
-            <Grid item xs={12} sm={8} md={4}>
+            <Grid
+              item
+              xs={12}
+              md={2}
+              sx={{ display: { xs: 'none', md: 'flex' } }}
+            />
+            <Grid item xs={8} sm={7} md={4}>
               <Grid
                 container
                 sx={{ height: '100%' }}
@@ -122,7 +90,7 @@ const Home = () => {
                   >
                     {content.subheading}
                   </Typography>
-                  <Box maxWidth="350px">
+                  <Box width="100%" maxWidth="350px">
                     {/* <Button
                       variant="contained"
                       size="large"
@@ -143,11 +111,12 @@ const Home = () => {
             </Grid>
             <Grid
               item
-              xs={12}
+              xs={4}
+              sm={5}
               md={5}
               container
               justifyContent="center"
-              sx={{ display: { xs: 'none', md: 'flex' } }}
+              sx={{ display: { xs: 'none', sm: 'flex' } }}
             >
               <Grid item xs={12}>
                 <Box mt={12} />
@@ -182,9 +151,12 @@ const Home = () => {
                 )} */}
               </Phone>
             </Grid>
-            <Grid item xs={12} md={1} />
-
-            {/* How it works */}
+            <Grid
+              item
+              xs={12}
+              md={1}
+              sx={{ display: { xs: 'none', md: 'flex' } }}
+            />
             <Grid
               item
               xs={12}
@@ -193,6 +165,36 @@ const Home = () => {
             >
               <Box mb={10} />
             </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{ display: { xs: 'flex', sm: 'none' } }}
+              mt={5}
+            >
+              <Box
+                overflow="hidden"
+                width="100vw"
+                height="500px"
+                display="flex"
+                jusifycontent="center"
+                alignItems="center"
+              >
+                <ReactPlayer
+                  url={content.videoUrl}
+                  height="150vh"
+                  width="100vw"
+                  overflow="hidden"
+                  playsinline={true}
+                  loop={true}
+                  playing={true}
+                  config={{ vimeo: { playerOptions: { background: 1 } } }}
+                  // onReady={() => setVideoIsReady(true)}
+                />
+              </Box>
+            </Grid>
+
+            {/* How it works */}
+
             <Grid item xs={12}>
               <Typography
                 variant="h4"
