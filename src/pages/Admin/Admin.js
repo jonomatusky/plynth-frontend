@@ -22,7 +22,7 @@ const Admin = () => {
       return <Redirect push to="/admin/pieces" />
     }
   } else {
-    return <LoadingScreen />
+    return <LoadingScreen backgroundColor={'theme.palette.background.card'} />
   }
 }
 

@@ -38,6 +38,8 @@ const Preview = () => {
   const previewPage =
     REACT_APP_PUBLIC_URL + '/preview/' + pieceId + '/' + cardId
 
+  const experiencePage = REACT_APP_PUBLIC_URL + '/p/' + pieceId
+
   useFetch()
   usePageTrack()
 
@@ -320,7 +322,7 @@ const Preview = () => {
                                     <QRCode
                                       size={160}
                                       id="qr"
-                                      value={previewPage}
+                                      value={experiencePage}
                                     />
                                     {/* <CopyButton /> */}
                                   </Box>
