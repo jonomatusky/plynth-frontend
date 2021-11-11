@@ -1,12 +1,16 @@
 import React from 'react'
 import useUserStore from 'hooks/store/use-user-store'
+import { useFetch } from 'hooks/use-fetch'
+import LoadingScreen from 'components/LoadingScreen'
 
 const { Redirect } = require('react-router')
 
 const Admin = () => {
   const { user } = useUserStore()
 
-  if (user.id) {
+  useFetch()
+
+  if (user._id) {
     if (
       user.tier === 'free' ||
       user.tier === 'artist' ||
@@ -18,7 +22,7 @@ const Admin = () => {
       return <Redirect push to="/admin/pieces" />
     }
   } else {
-    return <></>
+    return <LoadingScreen />
   }
 }
 

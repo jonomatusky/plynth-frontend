@@ -159,7 +159,7 @@ const BarAccount = ({ right, left, children }) => {
                   <b>Invite Friends</b>
                 </Button>
               </Box>
-              {value === '/admin/pieces' && (
+              {/* {value === '/admin/pieces' && (
                 <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
                   <Button
                     variant="contained"
@@ -171,7 +171,7 @@ const BarAccount = ({ right, left, children }) => {
                     <b>Upgrade</b>
                   </Button>
                 </Box>
-              )}
+              )} */}
               <Box pr={1}>
                 <IconButton onClick={handleOpen}>
                   <AccountCircle fontSize="large" />
