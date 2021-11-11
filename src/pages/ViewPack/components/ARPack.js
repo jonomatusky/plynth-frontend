@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './ARPack.css'
-import { Box, IconButton } from '@mui/material'
+import { Box, IconButton, Link, Typography } from '@mui/material'
 import { VolumeOff, VolumeUp } from '@mui/icons-material'
 
 import ScanInstructions from 'images/scan-instruction.svg'
@@ -21,9 +21,6 @@ const ARPack = ({ pack }) => {
     imageWidth > 0 && imageHeight > 0 ? imageHeight / imageWidth : 1
   let videoAspect =
     videoWidth > 0 && videoHeight > 0 ? videoHeight / videoWidth : 1
-
-  console.log('video aspect: ' + videoAspect)
-  console.log('image aspect: ' + imageAspect)
 
   const sceneRef = useRef(null)
   const [isFound, setIsFound] = useState(false)
@@ -205,6 +202,29 @@ const ARPack = ({ pack }) => {
       {isFound && <SoundButton />}
       {showPreload && <LoadingScreen />}
 
+      <div
+        style={{
+          bottom: 0,
+          left: 0,
+          right: 0,
+          top: 'auto',
+          textAlign: 'center',
+          color: 'white',
+          paddingTop: '5px',
+          paddingBottom: '5px',
+          position: 'absolute',
+          zIndex: 2000,
+          backgroundColor: 'black',
+          fontSize: '12px',
+        }}
+      >
+        <Typography color="inherit" variant="body2">
+          <Link href="https://plynth.com" target="_blank" color="inherit">
+            Powered by Plynth
+          </Link>
+        </Typography>
+      </div>
+
       <Box position="relative" height={vh100} width="100vw" overflow="hidden">
         <a-scene
           ref={sceneRef}
@@ -227,33 +247,12 @@ const ARPack = ({ pack }) => {
               crossOrigin="anonymous"
               loop
               playsInline
-              // style={{
-              //   position: 'absolute',
-              //   height: '100%',
-              //   width: '100%',
-              //   objectFit: 'cover',
-              // }}
             ></video>
           </a-assets>
 
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
           <a-entity mindar-image-target="targetIndex: 0" id="target">
-            {/* <a-plane
-              id="asset-a"
-              width="1"
-              height={imageHeight / imageWidth}
-              position="0 0 0"
-              rotation="0 0 0"
-              material="src: #asset"
-              fit-texture
-            ></a-plane> */}
-            {/* <a-entity
-              // cloak
-              width={5}
-              height={5}
-              position={`-3.5 ${(-5 * imageHeight) / imageWidth} 0.05`}
-            ></a-entity> */}
             <a-entity
               cloak
               id="top-cloak"
@@ -287,16 +286,8 @@ const ARPack = ({ pack }) => {
               position="0 0 0"
               rotation="0 0 0"
             ></a-video>
-            {/* <a-entity
-              geometry={`primitive: plane; height: ${
-                imageHeight / imageWidth
-              };`}
-              material="src: #asset;"
-              fit-texture
-            ></a-entity> */}
           </a-entity>
         </a-scene>
-        <video></video>
       </Box>
     </>
   )
