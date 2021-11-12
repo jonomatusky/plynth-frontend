@@ -21,10 +21,12 @@ import {
   FilterNone,
   ArrowForward,
   Visibility,
+  Computer,
 } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import QRCode from 'qrcode.react'
 import copy from 'copy-to-clipboard'
+import { isMobile } from 'react-device-detect'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
@@ -196,7 +198,7 @@ const EditPiece = () => {
     )
   }
 
-  const showOnboarding = packs.length === 1
+  const showOnboarding = packs.length === 1 && !isMobile
   const showWelcomeDialogAtStart =
     showOnboarding && !imageSrc && !videoSrc && !targets
 
@@ -204,6 +206,8 @@ const EditPiece = () => {
     showWelcomeDialogAtStart
   )
   const showTooltips = showOnboarding && !welcomeDialogIsOpen
+
+  console.log(showTooltips)
 
   useEffect(() => {
     if (showWelcomeDialogAtStart) {
@@ -342,8 +346,13 @@ const EditPiece = () => {
                   <Paper>
                     <Box padding={2}>
                       <Grid container spacing={2} justifyContent="center">
+                        <Grid item xs={12} textAlign="center">
+                          <Computer sx={{ fontSize: 60 }} color="primary" />
+                        </Grid>
                         <Grid item xs={12}>
-                          <Typography variant="h5">Swith to Desktop</Typography>
+                          <Typography variant="h5" textAlign="center">
+                            Swith to Desktop
+                          </Typography>
                         </Grid>
                         <Grid item xs={12}>
                           <Typography>
@@ -353,11 +362,12 @@ const EditPiece = () => {
                             experiences from the home screen.
                           </Typography>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} pb={2} mt={2}>
                           <Button
                             variant="contained"
                             component={Link}
                             to="/admin"
+                            fullWidth
                           >
                             Go Home
                           </Button>

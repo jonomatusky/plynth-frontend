@@ -98,14 +98,16 @@ const packsSlice = createSlice({
       const matchingIndex = state.packs.findIndex(
         pack => pack.id === updatedPack.id
       )
+      const newPacks = state.packs
+      newPacks[matchingIndex] = updatedPack
 
-      if (matchingIndex >= 0) {
-        state.packs = [
-          ...state.packs.slice(0, matchingIndex),
-          ...state.packs.slice(matchingIndex + 1),
-        ]
-      }
-      state.packs = [updatedPack, ...state.packs]
+      // if (matchingIndex >= 0) {
+      //   state.packs = [
+      //     ...state.packs.slice(0, matchingIndex),
+      //     ...state.packs.slice(matchingIndex + 1),
+      //   ]
+      // }
+      state.packs = newPacks
     },
     [updatePack.rejected]: (state, action) => {
       state.updateStatus = 'failed'
