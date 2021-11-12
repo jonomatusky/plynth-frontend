@@ -49,6 +49,8 @@ const SignUpForm = () => {
     displayName: '',
   })
 
+  console.log(status)
+
   const handleSubmit = async ({ email, password, displayName }) => {
     setStatus('submitted')
     setUserData({ email, password, displayName })
@@ -70,6 +72,9 @@ const SignUpForm = () => {
               'There was an error creating your account. Please try again.',
           })
         }
+        console.log('firebase error')
+        console.log(err.message)
+
         setStatus('error')
       }
     }
@@ -104,6 +109,8 @@ const SignUpForm = () => {
       try {
         await createMe({ displayName: userData.displayName })
       } catch (err) {
+        console.log('create user error')
+        console.log(err.message)
         setStatus('error')
       }
       if (user.email) {
@@ -211,7 +218,7 @@ const SignUpForm = () => {
             variant="contained"
             size="large"
             fullWidth
-            loading={status === 'submitted'}
+            loading={formik.isSubmitting === true || status === 'submitted'}
           >
             <Typography
               letterSpacing={1}
@@ -251,7 +258,7 @@ const SignUpForm = () => {
               },
             }}
             onClick={handleSignUpWithGoogle}
-            loading={status === 'loading'}
+            loading={formik.isSubmitting === true || status === 'submitted'}
           >
             <Box display="flex" mr="24px">
               <img src={GoogleLogo} alt="Google Logo" />

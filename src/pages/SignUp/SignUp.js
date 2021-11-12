@@ -138,191 +138,188 @@ const SignUp = () => {
     <>
       {/* <BarEditPiece /> */}
       <CreateAccountDialog open={true} />
-      <PublicNav hideFooter hideNavBar backgroundColor="#fafafa">
-        <Box
-          position="aboslute"
-          top="0"
-          bottom="0"
-          left="0"
-          right="0"
-          zIndex={10}
-          sx={{ display: { xs: 'block', md: 'none' } }}
-        >
-          {videoSrc && (
-            <video
-              src={videoSrc}
-              autoPlay
-              loop
-              muted
-              style={{
-                position: 'absolute',
-                height: '100%',
-                width: '100%',
-                objectFit: 'cover',
-              }}
-            />
-          )}
-        </Box>
-        <Box
-          height="calc(100vh)"
-          width="100%"
-          overflow="auto"
-          display="flex"
-          alignContent="center"
-          pt={3}
-        >
-          <Container disableGutters maxWidth="lg">
-            <Grid
-              container
-              justifyContent="flex-start"
-              sx={{ display: { xs: 'none', md: 'flex' } }}
-            >
-              <Grid item sm={12} md={7} container justifyContent="center">
-                <Grid item xs={11} lg={9}>
-                  <Box margin={4}>
-                    <Paper>
-                      <Box padding={4} pb={3}>
+      {/* <PublicNav hideFooter hideNavBar backgroundColor="#fafafa"> */}
+      <Box
+        position="aboslute"
+        top="0"
+        bottom="0"
+        left="0"
+        right="0"
+        zIndex={10}
+        sx={{ display: { xs: 'block', md: 'none' } }}
+      >
+        {videoSrc && (
+          <video
+            src={videoSrc}
+            autoPlay
+            loop
+            muted
+            style={{
+              position: 'absolute',
+              height: '100%',
+              width: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        )}
+      </Box>
+      <Box
+        height="calc(100vh)"
+        width="100%"
+        overflow="auto"
+        display="flex"
+        alignContent="center"
+        pt={3}
+      >
+        <Container disableGutters maxWidth="lg">
+          <Grid
+            container
+            justifyContent="flex-start"
+            sx={{ display: { xs: 'none', md: 'flex' } }}
+          >
+            <Grid item sm={12} md={7} container justifyContent="center">
+              <Grid item xs={11} lg={9}>
+                <Box margin={4}>
+                  <Paper>
+                    <Box padding={4} pb={3}>
+                      <Box
+                        display="flex"
+                        justifyContent="space-around"
+                        alignItems="center"
+                        width="100%"
+                        flexWrap="wrap"
+                      >
                         <Box
+                          width="100%"
                           display="flex"
                           justifyContent="space-around"
                           alignItems="center"
-                          width="100%"
-                          flexWrap="wrap"
                         >
-                          <Box
-                            width="100%"
-                            display="flex"
-                            justifyContent="space-around"
-                            alignItems="center"
+                          <MediaBlock mediaType="image" imageSrc={imageSrc} />
+                          <LinkIcon fontSize="large" color="secondary" />
+                          <MediaBlock mediaType="video" videoSrc={videoSrc} />
+                        </Box>
+                        <Box width="320px" mt={4} mb={4}>
+                          <Button
+                            variant="contained"
+                            fullWidth
+                            disabled={!imageSrc || !videoSrc}
                           >
-                            <MediaBlock mediaType="image" imageSrc={imageSrc} />
-                            <LinkIcon fontSize="large" color="secondary" />
-                            <MediaBlock mediaType="video" videoSrc={videoSrc} />
-                          </Box>
-                          <Box width="320px" mt={4} mb={4}>
-                            <Button
-                              variant="contained"
-                              fullWidth
-                              disabled={!imageSrc || !videoSrc}
+                            <b>{`Create & Save`}</b>
+                          </Button>
+                        </Box>
+                        <Box width="100%" display="flex" color="#cccccc">
+                          <Box flexGrow={1} display="flex" flexWrap="wrap">
+                            <Box
+                              flexGrow={1}
+                              display="flex"
+                              alignItems="flex-start"
                             >
-                              <b>{`Create & Save`}</b>
-                            </Button>
-                          </Box>
-                          <Box width="100%" display="flex" color="#cccccc">
-                            <Box flexGrow={1} display="flex" flexWrap="wrap">
                               <Box
-                                flexGrow={1}
+                                minWidth="60px"
+                                textAlign="center"
                                 display="flex"
-                                alignItems="flex-start"
+                                justifyContent="center"
+                                pt="6px"
                               >
-                                <Box
-                                  minWidth="60px"
-                                  textAlign="center"
-                                  display="flex"
-                                  justifyContent="center"
-                                  pt="6px"
-                                >
-                                  <PhoneIphone
-                                    sx={{ fontSize: 60 }}
-                                    color="inherit"
-                                  />
-                                </Box>
-                                <Box flexGrow={1}>
-                                  <Typography variant="h5" color="inherit">
-                                    <b>Try it out</b>
-                                  </Typography>
-                                  <Typography variant="body2" color="inherit">
-                                    Scan the QR code and hold your phone up to
-                                    the image to the right or the physical item.
-                                  </Typography>
-                                </Box>
+                                <PhoneIphone
+                                  sx={{ fontSize: 60 }}
+                                  color="inherit"
+                                />
                               </Box>
-                              <Box
-                                flexGrow={1}
-                                display="flex"
-                                alignItems="flex-start"
-                                mt={1}
-                              >
-                                <Box
-                                  minWidth="60px"
-                                  textAlign="center"
-                                  display="flex"
-                                  justifyContent="center"
-                                >
-                                  <People
-                                    sx={{ fontSize: 40 }}
-                                    color="inherit"
-                                  />
-                                </Box>
-                                <Box flexGrow={1}>
-                                  <Typography variant="h6" color="inherit">
-                                    Share with a friend
-                                  </Typography>
-                                  <Typography variant="body2" color="inherit">
-                                    Send a link to the preview page so they can
-                                    try it out themselves.
-                                  </Typography>
-                                </Box>
-                              </Box>
-                              <Box
-                                flexGrow={1}
-                                display="flex"
-                                alignItems="flex-start"
-                                mt={1}
-                              >
-                                <Box
-                                  minWidth="52px"
-                                  textAlign="center"
-                                  display="flex"
-                                  justifyContent="center"
-                                ></Box>
-                                <Box flexGrow={1}>
-                                  <Typography>
-                                    <Button
-                                      sx={{ textTransform: 'none' }}
-                                      endIcon={<Launch />}
-                                      color="inherit"
-                                      component={Link}
-                                      to={'#'}
-                                      disabled
-                                    >
-                                      View Preview Page
-                                    </Button>
-                                  </Typography>
-                                </Box>
+                              <Box flexGrow={1}>
+                                <Typography variant="h5" color="inherit">
+                                  <b>Try it out</b>
+                                </Typography>
+                                <Typography variant="body2" color="inherit">
+                                  Scan the QR code and hold your phone up to the
+                                  image to the right or the physical item.
+                                </Typography>
                               </Box>
                             </Box>
-                            <Box>
-                              <Box width="144px" height="144px">
-                                <QrCode2 sx={{ fontSize: 144 }} />
+                            <Box
+                              flexGrow={1}
+                              display="flex"
+                              alignItems="flex-start"
+                              mt={1}
+                            >
+                              <Box
+                                minWidth="60px"
+                                textAlign="center"
+                                display="flex"
+                                justifyContent="center"
+                              >
+                                <People sx={{ fontSize: 40 }} color="inherit" />
+                              </Box>
+                              <Box flexGrow={1}>
+                                <Typography variant="h6" color="inherit">
+                                  Share with a friend
+                                </Typography>
+                                <Typography variant="body2" color="inherit">
+                                  Send a link to the preview page so they can
+                                  try it out themselves.
+                                </Typography>
+                              </Box>
+                            </Box>
+                            <Box
+                              flexGrow={1}
+                              display="flex"
+                              alignItems="flex-start"
+                              mt={1}
+                            >
+                              <Box
+                                minWidth="52px"
+                                textAlign="center"
+                                display="flex"
+                                justifyContent="center"
+                              ></Box>
+                              <Box flexGrow={1}>
+                                <Typography>
+                                  <Button
+                                    sx={{ textTransform: 'none' }}
+                                    endIcon={<Launch />}
+                                    color="inherit"
+                                    component={Link}
+                                    to={'#'}
+                                    disabled
+                                  >
+                                    View Preview Page
+                                  </Button>
+                                </Typography>
                               </Box>
                             </Box>
                           </Box>
-                          <Box width="320px" mt={3} mb={1}>
-                            <Button variant="contained" fullWidth disabled>
-                              <b>Download Print Files</b>
-                            </Button>
+                          <Box>
+                            <Box width="144px" height="144px">
+                              <QrCode2 sx={{ fontSize: 144 }} />
+                            </Box>
                           </Box>
                         </Box>
+                        <Box width="320px" mt={3} mb={1}>
+                          <Button variant="contained" fullWidth disabled>
+                            <b>Download Print Files</b>
+                          </Button>
+                        </Box>
                       </Box>
-                    </Paper>
-                  </Box>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} md={5}>
-                <Box
-                  width="100%"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <DisplayCard />
+                    </Box>
+                  </Paper>
                 </Box>
               </Grid>
             </Grid>
-          </Container>
-        </Box>
-      </PublicNav>
+            <Grid item xs={12} md={5}>
+              <Box
+                width="100%"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <DisplayCard />
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+      {/* </PublicNav> */}
     </>
   )
 }
