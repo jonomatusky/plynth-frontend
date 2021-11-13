@@ -37,10 +37,17 @@ export const useFetch = () => {
   }, [user, history, fetchUser, fetchUserStatus, setError])
 
   useEffect(() => {
-    if (fetchUserStatus === 'succeeded' && !storeUser._id) {
-      createMe({})
+    if (
+      fetchUserStatus === 'succeeded' &&
+      !storeUser._id &&
+      createMeStatus === 'idle'
+    ) {
+      console.log('creating user')
+      try {
+        createMe({})
+      } catch (err) {}
     }
-  }, [createMe, fetchUserStatus, storeUser])
+  }, [createMe, fetchUserStatus, storeUser, createMeStatus])
 
   useEffect(() => {
     if (!!storeUser.username) {
@@ -57,18 +64,11 @@ export const useFetch = () => {
     if (
       fetchUserStatus === 'succeeded' &&
       fetchPacksStatus === 'idle' &&
-      storeUser._id
+      !!storeUser._id
     ) {
       fetch()
     }
-  }, [
-    fetchUserStatus,
-    fetchPacksStatus,
-    fetchPacks,
-    user,
-    storeUser,
-    createMeStatus,
-  ])
+  }, [fetchUserStatus, fetchPacksStatus, fetchPacks, user, storeUser])
 
   return
 }

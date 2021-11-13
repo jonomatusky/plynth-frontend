@@ -207,8 +207,6 @@ const EditPiece = () => {
   )
   const showTooltips = showOnboarding && !welcomeDialogIsOpen
 
-  console.log(showTooltips)
-
   useEffect(() => {
     if (showWelcomeDialogAtStart) {
       setWelcomeDialogIsOpen(true)
@@ -351,7 +349,7 @@ const EditPiece = () => {
                         </Grid>
                         <Grid item xs={12}>
                           <Typography variant="h5" textAlign="center">
-                            Swith to Desktop
+                            Switch to Desktop
                           </Typography>
                         </Grid>
                         <Grid item xs={12}>

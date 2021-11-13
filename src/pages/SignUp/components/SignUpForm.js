@@ -18,17 +18,17 @@ import GoogleLogo from 'images/btn_google_light_normal_ios.svg'
 import useUserStore from 'hooks/store/use-user-store'
 import { useSession } from 'hooks/use-session'
 import { LoadingButton } from '@mui/lab'
-import usePackStore from 'hooks/store/use-pack-store'
+// import usePackStore from 'hooks/store/use-pack-store'
 
 const validationSchema = yup.object({
   email: yup
     .string('Enter your email')
     .email('Enter a valid email')
     .required('Email is required'),
-  displayName: yup
-    .string('Enter your first name')
-    .max(48, 'Name must be less than 48 characters')
-    .required('Name is required'),
+  // displayName: yup
+  //   .string('Enter your first name')
+  //   .max(48, 'Name must be less than 48 characters')
+  //   .required('Name is required'),
   password: yup
     .string('Enter your password')
     .min(8, 'Password must be at least 8 characters')
@@ -39,21 +39,19 @@ const validationSchema = yup.object({
 const SignUpForm = () => {
   const history = useHistory()
   const { user, logout } = useSession()
-  const { subscribe, createMe, user: storeUser } = useUserStore()
-  const { createPack, packs } = usePackStore()
+  const { subscribe } = useUserStore()
+  // const { createPack, packs } = usePackStore()
   const { setError, clearError } = useAlertStore()
   const [status, setStatus] = useState('idle')
   const [userData, setUserData] = useState({
     email: null,
     password: null,
-    displayName: '',
+    // displayName: '',
   })
 
-  console.log(status)
-
-  const handleSubmit = async ({ email, password, displayName }) => {
+  const handleSubmit = async ({ email, password }) => {
     setStatus('submitted')
-    setUserData({ email, password, displayName })
+    setUserData({ email, password })
     if (status !== 'submitted') {
       try {
         await logout()
@@ -84,7 +82,6 @@ const SignUpForm = () => {
     initialValues: {
       email: '',
       password: '',
-      displayName: '',
     },
     validationSchema: validationSchema,
     validateOnBlur: false,
@@ -105,66 +102,66 @@ const SignUpForm = () => {
   }
 
   useEffect(() => {
-    const handleSignIn = async () => {
-      try {
-        await createMe({ displayName: userData.displayName })
-      } catch (err) {
-        console.log('create user error')
-        console.log(err.message)
-        setStatus('error')
-      }
-      if (user.email) {
-        try {
-          subscribe({ email: user.email, tags: ['waitlist'] })
-        } catch (err) {
-          console.log(err)
-        }
-      }
-    }
+    // const handleSignIn = async () => {
+    //   try {
+    //     await createMe({ displayName: userData.displayName })
+    //   } catch (err) {
+    //     console.log('create user error')
+    //     console.log(err.message)
+    //     setStatus('error')
+    //   }
+    //   if (user.email) {
+    //     try {
+    //       subscribe({ email: user.email, tags: ['waitlist'] })
+    //     } catch (err) {
+    //       console.log(err)
+    //     }
+    //   }
+    // }
 
     if (user) {
-      if (status === 'idle') {
-        history.push(`/admin`)
-      } else {
-        handleSignIn()
-      }
+      // if (status === 'idle') {
+      history.push(`/admin`)
+      // } else {
+      //   handleSignIn()
+      // }
     }
-  }, [subscribe, history, user, status, createMe, userData.displayName])
+  }, [subscribe, history, user, status, userData.displayName])
 
-  useEffect(() => {
-    const handleCreatePiece = async () => {
-      if (storeUser && packs.length === 0) {
-        try {
-          const createdPack = await createPack({
-            name: 'My New Experience',
-            style: { backgroundColor: '#fafafa', fontColor: '#222222' },
-            isPublic: false,
-            shareWithLink: true,
-            cards: [
-              {
-                type: 'ar',
-              },
-            ],
-          })
+  // useEffect(() => {
+  //   const handleCreatePiece = async () => {
+  //     if (storeUser && packs.length === 0) {
+  //       try {
+  //         const createdPack = await createPack({
+  //           name: 'My New Experience',
+  //           style: { backgroundColor: '#fafafa', fontColor: '#222222' },
+  //           isPublic: false,
+  //           shareWithLink: true,
+  //           cards: [
+  //             {
+  //               type: 'ar',
+  //             },
+  //           ],
+  //         })
 
-          if (createdPack.id) {
-            history.push(`/admin/pieces/${createdPack.id}/edit`)
-          } else {
-            history.push(`/admin`)
-          }
-        } catch (err) {
-          setStatus('error')
-        }
-      }
-    }
+  //         if (createdPack.id) {
+  //           history.push(`/admin/pieces/${createdPack.id}/edit`)
+  //         } else {
+  //           history.push(`/admin`)
+  //         }
+  //       } catch (err) {
+  //         setStatus('error')
+  //       }
+  //     }
+  //   }
 
-    if (storeUser) {
-      if (status !== 'idle') {
-        handleCreatePiece()
-      } else {
-      }
-    }
-  }, [history, status, createPack, storeUser, packs.length])
+  //   if (storeUser) {
+  //     if (status !== 'idle') {
+  //       handleCreatePiece()
+  //     } else {
+  //     }
+  //   }
+  // }, [history, status, createPack, storeUser, packs.length])
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -176,7 +173,7 @@ const SignUpForm = () => {
           </Typography>
         </Grid>
 
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <TextField
             variant="outlined"
             fullWidth
@@ -188,13 +185,14 @@ const SignUpForm = () => {
             }
             helperText={formik.touched.displayName && formik.errors.displayName}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <TextField
             variant="outlined"
             fullWidth
             size="small"
             label="Email"
+            type="email"
             {...formik.getFieldProps('email')}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}

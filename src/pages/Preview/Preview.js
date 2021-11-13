@@ -265,7 +265,7 @@ const Preview = () => {
                         <Grid container spacing={2} justifyContent="center">
                           <Grid item xs={12}>
                             <Typography variant="h5">
-                              Swith to Desktop
+                              Switch to Desktop
                             </Typography>
                           </Grid>
                           <Grid item xs={12}>
