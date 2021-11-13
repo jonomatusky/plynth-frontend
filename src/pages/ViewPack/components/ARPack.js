@@ -94,12 +94,12 @@ const ARPack = ({ pack }) => {
 
   const SoundButton = () => {
     return (
-      <Box position="absolute" zIndex="1000" bottom="20px" right="30px">
+      <Box position="absolute" zIndex="1000" bottom="40px" right="30px">
         <IconButton onClick={toggleMute} size="large">
           {isMuted ? (
-            <VolumeOff sx={{ color: 'white', fontSize: 40 }} />
+            <VolumeOff sx={{ color: 'white', fontSize: 50 }} />
           ) : (
-            <VolumeUp sx={{ color: 'white', fontSize: 40 }} />
+            <VolumeUp sx={{ color: 'white', fontSize: 50 }} />
           )}
         </IconButton>
       </Box>
