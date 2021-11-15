@@ -8,7 +8,7 @@ const Help = ({ title, text }) => {
   return (
     <PublicNav>
       <Container maxWidth="xs">
-        <Box color="white" pt={8}>
+        <Box pt={8}>
           <Grid container>
             <Grid item xs={12}>
               <Grid container justifyContent="flex-start" spacing={3}>

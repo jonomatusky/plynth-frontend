@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Container, Box, Grid, Typography, Button } from '@mui/material'
+import { Link, Container, Box, Grid, Typography } from '@mui/material'
 import * as yup from 'yup'
 
 import { Link as RouterLink } from 'react-router-dom'
@@ -8,6 +8,7 @@ import TextFieldWebsite from 'components/TextFieldWebsite'
 import { useFormik } from 'formik'
 import useAlertStore from 'hooks/store/use-alert-store'
 import { useRequest } from 'hooks/use-request'
+import { LoadingButton } from '@mui/lab'
 
 const validationSchema = yup.object({
   name: yup.string('Enter your name').required('Name is required'),
@@ -56,7 +57,7 @@ const Contact = ({ title, text }) => {
   return (
     <PublicNav>
       <Container maxWidth="xs">
-        <Box color="white" pt={8}>
+        <Box pt={8}>
           <Grid container>
             {status === 'succeeded' && (
               <Grid item xs={12}>
@@ -147,7 +148,7 @@ const Contact = ({ title, text }) => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <Button
+                      <LoadingButton
                         type="submit"
                         variant="contained"
                         size="large"
@@ -161,7 +162,7 @@ const Contact = ({ title, text }) => {
                         >
                           Submit
                         </Typography>
-                      </Button>
+                      </LoadingButton>
                     </Grid>
                   </Grid>
                 </form>
