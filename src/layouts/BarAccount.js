@@ -133,7 +133,7 @@ const BarAccount = ({ right, left, children }) => {
                     <Tab
                       label={
                         <Typography>
-                          <b>AR (beta)</b>
+                          <b>AR</b>
                         </Typography>
                       }
                       component={RouterLink}
@@ -148,7 +148,7 @@ const BarAccount = ({ right, left, children }) => {
           )}
           {right || (
             <>
-              <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
+              {/* <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
                 <Button
                   variant="outlined"
                   color="primary"
@@ -158,20 +158,19 @@ const BarAccount = ({ right, left, children }) => {
                 >
                   <b>Invite Friends</b>
                 </Button>
+              </Box> */}
+              <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  component={RouterLink}
+                  to="/s/join-the-beta"
+                  disableElevation
+                  sx={{ textTransform: 'none' }}
+                >
+                  <b>Join the Beta</b>
+                </Button>
               </Box>
-              {/* {value === '/admin/pieces' && (
-                <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    // onClick={handleClick}
-                    disableElevation
-                    sx={{ textTransform: 'none' }}
-                  >
-                    <b>Upgrade</b>
-                  </Button>
-                </Box>
-              )} */}
               <Box pr={1}>
                 <IconButton onClick={handleOpen}>
                   <AccountCircle fontSize="large" />

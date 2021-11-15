@@ -52,6 +52,7 @@ import Pieces from 'pages/Pieces/Pieces'
 import EditPiece from 'pages/EditPiece/EditPiece'
 import SignUp from 'pages/SignUp/SignUp'
 import Preview from 'pages/Preview/Preview'
+import JoinTheBeta from 'pages/JoinTheBeta/JoinTheBeta'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -124,6 +125,9 @@ const App = () => {
       </Route>
       <Route path="/s/help">
         <Help />
+      </Route>
+      <Route path="/s/join-the-beta">
+        <JoinTheBeta />
       </Route>
 
       {/* <Route path="/s/invite-code" exact>

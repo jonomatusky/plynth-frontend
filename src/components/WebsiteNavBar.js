@@ -52,22 +52,26 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
           alignItems="center"
           alignContent="center"
         >
-          {left}
-          <Box flexGrow={1}>
-            <Grid container>
-              <Grid item>
-                <HashLink smooth to="/">
-                  <Grid container direction="column" alignItems="center">
-                    <StyledLogo
-                      opacity={opacity}
-                      src={plynthLogo}
-                      alt="Plynth Logo"
-                    />
-                  </Grid>
-                </HashLink>
+          {!!left ? (
+            left
+          ) : (
+            <Box flexGrow={1}>
+              <Grid container>
+                <Grid item>
+                  <HashLink smooth to="/">
+                    <Grid container direction="column" alignItems="center">
+                      <StyledLogo
+                        opacity={opacity}
+                        src={plynthLogo}
+                        alt="Plynth Logo"
+                      />
+                    </Grid>
+                  </HashLink>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
+            </Box>
+          )}
+
           {right ? (
             right
           ) : (
