@@ -229,9 +229,7 @@ const EditPiece = () => {
           cards: [
             {
               ...media,
-              targets:
-                REACT_APP_ASSET_URL +
-                '/9ff785ec-2c25-43d7-a886-601a1a7aa3b3.mind',
+              targets: '9ff785ec-2c25-43d7-a886-601a1a7aa3b3.mind',
             },
           ],
         })

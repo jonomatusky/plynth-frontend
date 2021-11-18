@@ -6,11 +6,13 @@ import { VolumeOff, VolumeUp } from '@mui/icons-material'
 import ScanInstructions from 'images/scan-instruction.svg'
 import LoadingScreen from 'components/LoadingScreen'
 import { use100vh } from 'hooks/use-100-vh'
+import playButton from 'images/play-button.svg'
 
 const ARPack = ({ pack }) => {
   const {
     videoUrl: assetUrl,
     targetsUrl,
+    imageUrl,
     imageWidth,
     imageHeight,
     videoWidth,
@@ -31,6 +33,7 @@ const ARPack = ({ pack }) => {
   const vh100 = use100vh()
 
   const play = () => {
+    console.log('playing')
     const video = document.getElementById('asset')
     if (video) {
       video.play()
@@ -104,6 +107,11 @@ const ARPack = ({ pack }) => {
         </IconButton>
       </Box>
     )
+  }
+
+  const handleVideoPlay = () => {
+    document.querySelector('.poster').setAttribute('visible', false)
+    document.querySelector('.play').setAttribute('visible', false)
   }
 
   return (
@@ -225,7 +233,13 @@ const ARPack = ({ pack }) => {
         </Typography>
       </div>
 
-      <Box position="relative" height={vh100} width="100vw" overflow="hidden">
+      <Box
+        position="relative"
+        height={vh100}
+        width="100vw"
+        overflow="hidden"
+        onClick={play}
+      >
         <a-scene
           ref={sceneRef}
           loading-screen="backgroundColor: black"
@@ -247,7 +261,15 @@ const ARPack = ({ pack }) => {
               crossOrigin="anonymous"
               loop
               playsInline
+              onPlay={handleVideoPlay}
             ></video>
+            <img
+              id="poster"
+              src={imageUrl}
+              crossOrigin="anonymous"
+              alt="Poster"
+            />
+            <img id="play" src={playButton} alt="Play" />
           </a-assets>
 
           <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -286,6 +308,26 @@ const ARPack = ({ pack }) => {
               position="0 0 0"
               rotation="0 0 0"
             ></a-video>
+            <a-image
+              width={0.4}
+              height={0.4}
+              position="0 0 .1"
+              rotation="0 0 0"
+              src="#play"
+              class="play"
+              material="transparent:false; alphaTest: 0.5;"
+              id="a-play"
+            ></a-image>
+            <a-image
+              width={1}
+              height={imageAspect}
+              position="0 0 .05"
+              rotation="0 0 0"
+              src="#poster"
+              class="poster"
+              // material="transparent:false; alphaTest: 0.5;"
+              id="a-poster"
+            ></a-image>
           </a-entity>
         </a-scene>
       </Box>
