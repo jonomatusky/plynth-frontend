@@ -64,6 +64,7 @@ const ImageUploadDialog = ({
 
   const FileUpload = () => {
     const [videoLoading, setVideoLoading] = useState(false)
+    const [uploadStatus, setUploadStatus] = useState(0)
 
     const { request } = useRequest()
 
@@ -99,6 +100,13 @@ const ImageUploadDialog = ({
           method: 'PUT',
           data: file,
           timeout: 100000,
+          onUploadProgress: progressEvent => {
+            if (progressEvent.total) {
+              setUploadStatus(
+                Math.round((progressEvent.loaded / progressEvent.total) * 100)
+              )
+            }
+          },
         })
 
         await submit({ filepath: imageFilepath })
@@ -145,6 +153,9 @@ const ImageUploadDialog = ({
               {videoLoading ? (
                 <Box>
                   <CircularProgress color="inherit" />
+                  <Typography color="secondary" variant="subtitle2">
+                    Uploading... {uploadStatus > 0 ? uploadStatus + '%' : ''}
+                  </Typography>
                 </Box>
               ) : name ? (
                 <File />
