@@ -230,7 +230,8 @@ const EditPiece = () => {
             {
               ...media,
               targets:
-                REACT_APP_ASSET_URL + '/Postcard+Mixtape+Vol+1+600px.jpg',
+                REACT_APP_ASSET_URL +
+                '/9ff785ec-2c25-43d7-a886-601a1a7aa3b3.mind',
             },
           ],
         })
