@@ -108,7 +108,7 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                       open={Boolean(anchorEl)}
                       onClose={handleClose}
                     >
-                      <MenuItem component={RouterLink} to="/register">
+                      <MenuItem component={RouterLink} to="/signup">
                         Sign Up
                       </MenuItem>
                       <MenuItem

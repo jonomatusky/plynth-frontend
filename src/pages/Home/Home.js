@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
-import { Grid, Typography, Container, Box } from '@mui/material'
+import { useHistory, useLocation, Link } from 'react-router-dom'
+import { Grid, Typography, Container, Box, Button } from '@mui/material'
 // import { HashLink } from 'react-router-hash-link'
 
 import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
@@ -16,7 +16,7 @@ import Phone from 'components/Phone'
 import contentful from 'config/contentful'
 import PublicNav from 'layouts/PublicNav'
 import Image from 'components/Image'
-import FormWaitlist from 'components/FormWaitlist'
+// import FormWaitlist from 'components/FormWaitlist'
 import VideoPoster from 'images/video-poster.jpeg'
 
 // const SmoothHashLink = React.forwardRef((props, ref) => (
@@ -91,20 +91,20 @@ const Home = () => {
                     {content.subheading}
                   </Typography>
                   <Box width="100%" maxWidth="350px">
-                    {/* <Button
+                    <Button
                       variant="contained"
                       size="large"
                       fullWidth
                       sx={{ height: '51.5px' }}
                       endIcon={<ArrowForward />}
                       component={Link}
-                      to="/s/try-it"
+                      to="/signup"
                     >
                       <Typography letterSpacing={1} style={{ fontWeight: 900 }}>
-                        Try It
+                        Start Creating
                       </Typography>
-                    </Button> */}
-                    <FormWaitlist />
+                    </Button>
+                    {/* <FormWaitlist /> */}
                   </Box>
                 </Grid>
               </Grid>
@@ -364,9 +364,9 @@ const Home = () => {
               item
               xs={12}
               pb={2}
-              sx={{ display: { xs: 'none', lg: 'block' } }}
+              sx={{ display: { xs: 'none', md: 'block' } }}
             >
-              <Box mt={4} />
+              <Box mt={8} />
             </Grid>
 
             {/* Use it for... Section */}
@@ -399,7 +399,22 @@ const Home = () => {
                       </Grid>
                       <Grid item xs={12} container justifyContent="center">
                         <Box maxWidth="350px">
-                          <FormWaitlist />
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            sx={{ height: '51.5px' }}
+                            endIcon={<ArrowForward />}
+                            component={Link}
+                            to="/signup"
+                          >
+                            <Typography
+                              letterSpacing={1}
+                              style={{ fontWeight: 900 }}
+                            >
+                              Start Creating
+                            </Typography>
+                          </Button>
                         </Box>
                       </Grid>
                     </Grid>
