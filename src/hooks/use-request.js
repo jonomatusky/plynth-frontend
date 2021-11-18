@@ -24,8 +24,6 @@ export const useRequest = () => {
 
       if (user) {
         token = await user.getIdToken()
-        console.log(user)
-        console.log(token)
       }
 
       try {

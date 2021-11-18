@@ -74,12 +74,12 @@ const ImageUploadDialog = ({
       maxFiles: 1,
     })
 
-    let file = acceptedFiles[0] || {}
+    let file = acceptedFiles[0]
 
-    let name = file.name
+    let { name } = file || {}
 
-    if (file.type === 'video/quicktime') {
-      name = file.name.substr(0, file.name.lastIndexOf('.')) + '.mp4'
+    if ((file || {}).type === 'video/quicktime') {
+      name = name.substr(0, name.lastIndexOf('.')) + '.mp4'
     }
 
     const uploadFile = async () => {
@@ -106,7 +106,7 @@ const ImageUploadDialog = ({
     const File = () => {
       return (
         <Box padding={3}>
-          <Typography>{file.name}</Typography>
+          <Typography>{name}</Typography>
         </Box>
       )
     }
@@ -142,7 +142,7 @@ const ImageUploadDialog = ({
                 <Box>
                   <CircularProgress color="inherit" />
                 </Box>
-              ) : file.name ? (
+              ) : name ? (
                 <File />
               ) : (
                 <Box>
