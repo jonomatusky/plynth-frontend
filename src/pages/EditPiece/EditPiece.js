@@ -267,7 +267,12 @@ const EditPiece = () => {
         },
       })
 
-      await request({ url: signedUrl, method: 'PUT', data: targetFile })
+      await request({
+        url: signedUrl,
+        method: 'PUT',
+        data: targetFile,
+        timeout: 100000,
+      })
 
       await updatePack({
         id: pieceId,
