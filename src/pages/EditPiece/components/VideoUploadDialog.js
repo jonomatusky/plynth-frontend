@@ -91,11 +91,15 @@ const ImageUploadDialog = ({
           fileName: name,
           fileType: 'video/mp4',
         },
-        disabled: videoLoading,
       })
 
       try {
-        await request({ url: signedUrl, method: 'PUT', data: file })
+        await request({
+          url: signedUrl,
+          method: 'PUT',
+          data: file,
+          timeout: 100000,
+        })
 
         await submit({ filepath: imageFilepath })
       } catch (err) {}
