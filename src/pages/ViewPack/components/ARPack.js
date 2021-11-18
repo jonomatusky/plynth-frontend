@@ -246,7 +246,7 @@ const ARPack = ({ pack }) => {
           mindar-image={`uiScanning: #reticle-container; uiLoading: #reticle-container-loading; imageTargetSrc: ${targetsUrl}; autoStart: false; `}
           color-space="sRGB"
           embedded
-          renderer="colorManagement: true, physicallyCorrectLights"
+          renderer="colorManagement: true; physicallyCorrectLights: true;"
           vr-mode-ui="enabled: false"
           device-orientation-permission-ui="enabled: false"
         >
@@ -309,8 +309,8 @@ const ARPack = ({ pack }) => {
               rotation="0 0 0"
             ></a-video>
             <a-image
-              width={0.4}
-              height={0.4}
+              width={Math.min(0.4, 0.4 * imageAspect)}
+              height={Math.min(0.4, 0.4 * imageAspect)}
               position="0 0 .1"
               rotation="0 0 0"
               src="#play"
