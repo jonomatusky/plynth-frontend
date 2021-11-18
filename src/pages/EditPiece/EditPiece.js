@@ -347,16 +347,15 @@ const EditPiece = () => {
                           <Computer sx={{ fontSize: 60 }} color="primary" />
                         </Grid>
                         <Grid item xs={12}>
-                          <Typography variant="h5" textAlign="center">
-                            Switch to Desktop
+                          <Typography variant="h6" textAlign="center">
+                            Please Switch to Desktop
                           </Typography>
                         </Grid>
                         <Grid item xs={12}>
                           <Typography>
-                            Sorry, you can't build new experiences on a mobile
-                            device. Please switch to desktop to create a new
-                            experience. You can view and try out your existing
-                            experiences from the home screen.
+                            Please switch to desktop to create your first
+                            interactive experience. Then you'll be able to try
+                            it out on your mobile device!
                           </Typography>
                         </Grid>
                         <Grid item xs={12} pb={2} mt={2}>
