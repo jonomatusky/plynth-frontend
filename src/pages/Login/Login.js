@@ -208,14 +208,9 @@ const NewPortalSignUp = ({ title, text }) => {
                 </Button>
               </Grid>
               <Grid item container justifyContent="center">
-                <Typography variant="body2" color="white">
+                <Typography variant="body2">
                   Don't have an account?{' '}
-                  <Link
-                    component={RouterLink}
-                    color="white"
-                    to={'/signup'}
-                    size="small"
-                  >
+                  <Link component={RouterLink} to={'/signup'} size="small">
                     <b>Sign Up</b>
                   </Link>
                 </Typography>
