@@ -18,14 +18,14 @@ import {
   VideoCameraBack,
 } from '@mui/icons-material'
 
-import CreateAccountDialog from './components/CreateAccountDialog'
 import MediaBlock from 'components/MediaBlock'
 import PublicNav from 'layouts/PublicNav'
+import LivelyCreateAccountDialog from './components/LivelyCreateAccountDialog'
 
 const { REACT_APP_ASSET_URL } = process.env
-const demoVideoName = 'astronaut-ar-trimmed.mp4'
+const demoVideoName = 'a900f553-fedb-440a-ac1d-078f90126d23.mp4'
 const videoSrc = REACT_APP_ASSET_URL + '/' + demoVideoName
-const demoImageName = 'Postcard+Mixtape+Vol+1+600px.jpg'
+const demoImageName = '8a31b8ff-ad39-40c4-b9da-235a4a6a6056.jpeg'
 const imageSrc = REACT_APP_ASSET_URL + '/' + demoImageName
 const imageWidth = 600
 const imageHeight = 900
@@ -38,6 +38,11 @@ const LivelySignUp = () => {
 
     useEffect(() => {
       if (hideImage) {
+        const timeout = setTimeout(() => {
+          setHideImage(false)
+        }, 4000)
+        return () => clearTimeout(timeout)
+      } else {
         const timeout = setTimeout(() => {
           if (playerRef.current) {
             try {
@@ -57,11 +62,6 @@ const LivelySignUp = () => {
               }
             } catch (err) {}
           }
-          setHideImage(false)
-        }, 4000)
-        return () => clearTimeout(timeout)
-      } else {
-        const timeout = setTimeout(() => {
           setHideImage(true)
         }, 1000)
         return () => clearTimeout(timeout)
@@ -137,7 +137,7 @@ const LivelySignUp = () => {
   return (
     <>
       {/* <BarEditPiece /> */}
-      <CreateAccountDialog open={true} />
+      <LivelyCreateAccountDialog open={true} />
       <PublicNav hideFooter hideNavBar backgroundColor="#fafafa">
         <Box
           position="aboslute"

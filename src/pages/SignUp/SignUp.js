@@ -39,6 +39,11 @@ const SignUp = () => {
     useEffect(() => {
       if (hideImage) {
         const timeout = setTimeout(() => {
+          setHideImage(false)
+        }, 4000)
+        return () => clearTimeout(timeout)
+      } else {
+        const timeout = setTimeout(() => {
           if (playerRef.current) {
             try {
               playerRef.current.currentTime = 0
@@ -57,11 +62,6 @@ const SignUp = () => {
               }
             } catch (err) {}
           }
-          setHideImage(false)
-        }, 4000)
-        return () => clearTimeout(timeout)
-      } else {
-        const timeout = setTimeout(() => {
           setHideImage(true)
         }, 1000)
         return () => clearTimeout(timeout)

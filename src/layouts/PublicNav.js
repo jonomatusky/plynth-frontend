@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Box, Grid, IconButton, Typography } from '@mui/material'
+import { Box, Grid, IconButton, Typography, Link } from '@mui/material'
 import { use100vh } from 'hooks/use-100-vh'
 import { useFetch } from 'hooks/use-fetch'
 import usePageTrack from 'hooks/use-page-track'
@@ -28,9 +28,10 @@ const PublicNav = ({
         <Box height={hideNavBar ? '0px' : '64px'} width="100%" />
         {children}
       </main>
-      <footer>
-        <Box height="64px" width="100%" />
-        {!hideFooter && (
+      {!hideFooter && (
+        <footer>
+          <Box height="64px" width="100%" />
+
           <Box position="absolute" bottom={0} left={0} width="100%" pb={1}>
             <Grid container justifyContent="center">
               <Grid item xs={12} container justifyContent="center">
@@ -42,7 +43,7 @@ const PublicNav = ({
                   >
                     <FontAwesomeIcon
                       icon={faInstagram}
-                      color="#ffffffbb"
+                      // color="#ffffffbb"
                       alt="Instagram"
                     />
                   </IconButton>
@@ -55,7 +56,7 @@ const PublicNav = ({
                   >
                     <FontAwesomeIcon
                       icon={faTiktok}
-                      color="#ffffffbb"
+                      // color="#ffffffbb"
                       alt="Tiktok"
                     />
                   </IconButton>
@@ -68,7 +69,7 @@ const PublicNav = ({
                   >
                     <FontAwesomeIcon
                       icon={faEnvelope}
-                      color="#ffffffbb"
+                      // color="#ffffffbb"
                       alt="Contact"
                     />
                   </IconButton>
@@ -77,16 +78,33 @@ const PublicNav = ({
               <Grid item xs={12}>
                 <Typography
                   fontSize="10px"
-                  color="#ffffff99"
+                  // color="#ffffff99"
                   textAlign="center"
                 >
                   Copyright © Plynth Inc 2021
                 </Typography>
               </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  fontSize="10px"
+                  // color="#ffffff99"
+                  textAlign="center"
+                >
+                  <Link component={RouterLink} to="/s/terms">
+                    Terms of Service
+                  </Link>{' '}
+                  <Link component={RouterLink} to="/s/privacy">
+                    Privacy Policy
+                  </Link>{' '}
+                  <Link component={RouterLink} to="/s/dsar">
+                    DSAR Form
+                  </Link>
+                </Typography>
+              </Grid>
             </Grid>
           </Box>
-        )}
-      </footer>
+        </footer>
+      )}
     </Box>
   )
 }

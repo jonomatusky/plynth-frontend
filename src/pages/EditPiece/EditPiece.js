@@ -110,15 +110,29 @@ const EditPiece = () => {
       if (!!video && !targets && !isLoading) {
         if (hideImage) {
           const timeout = setTimeout(() => {
-            if (playerRef.current) {
-              playerRef.current.currentTime = 0
-              playerRef.current.play()
-            }
             setHideImage(false)
           }, 4000)
           return () => clearTimeout(timeout)
         } else {
           const timeout = setTimeout(() => {
+            if (playerRef.current) {
+              try {
+                playerRef.current.currentTime = 0
+                var playPromise = playerRef.current.play()
+
+                if (playPromise !== undefined) {
+                  playPromise
+                    .then(_ => {
+                      // Automatic playback started!
+                      // Show playing UI.
+                    })
+                    .catch(error => {
+                      // Auto-play was prevented
+                      // Show paused UI.
+                    })
+                }
+              } catch (err) {}
+            }
             setHideImage(true)
           }, 1000)
           return () => clearTimeout(timeout)
