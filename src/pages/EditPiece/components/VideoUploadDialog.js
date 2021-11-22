@@ -20,7 +20,7 @@ const demoName = 'astronaut-ar-trimmed.mp4'
 const { REACT_APP_ASSET_URL } = process.env
 const demoUrl = REACT_APP_ASSET_URL + '/' + demoName
 
-const ImageUploadDialog = ({
+const VideoUploadDialog = ({
   submit,
   videoUrl,
   videoDuration,
@@ -295,9 +295,9 @@ const ImageUploadDialog = ({
     const [videoData, setVideoData] = useState({})
     // const [wasUpdated, setWasUpdated] = useState(false)
 
-    const closeAndSetDuration = () => {
+    const closeAndSetDuration = async () => {
       // if (wasUpdated) {
-      submit(videoData)
+      await submit(videoData)
       // }
       // setWasUpdated(false)
       handleClose()
@@ -408,4 +408,4 @@ const ImageUploadDialog = ({
   )
 }
 
-export default ImageUploadDialog
+export default VideoUploadDialog

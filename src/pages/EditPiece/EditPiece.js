@@ -26,7 +26,7 @@ import {
 import { LoadingButton } from '@mui/lab'
 import QRCode from 'qrcode.react'
 import copy from 'copy-to-clipboard'
-import { isMobile } from 'react-device-detect'
+import { isMobile, isTablet } from 'react-device-detect'
 
 import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
@@ -39,7 +39,9 @@ import { useAlertStore } from 'hooks/store/use-alert-store'
 import axios from 'axios'
 import { loadImgAsync } from 'util/imageHandling'
 import DownloadQR from 'components/DownloadQr'
-// import OnboardingTooltip from 'components/OnboardingTooltip'
+import ImageUploadDialog from './components/ImageUploadDialog'
+import VideoUploadDialog from './components/VideoUploadDialog'
+import OnboardingTooltip from 'components/OnboardingTooltip'
 
 const { REACT_APP_ASSET_URL, REACT_APP_PUBLIC_URL } = process.env
 
@@ -212,14 +214,13 @@ const EditPiece = () => {
     )
   }
 
-  const showOnboarding = packs.length === 1 && !isMobile
+  const showOnboarding = packs.length === 1 && !isMobile && !isTablet
   const showWelcomeDialogAtStart =
     showOnboarding && !imageSrc && !videoSrc && !targets
 
   const [welcomeDialogIsOpen, setWelcomeDialogIsOpen] = useState(
     showWelcomeDialogAtStart
   )
-  const showTooltips = showOnboarding && !welcomeDialogIsOpen
 
   useEffect(() => {
     if (showWelcomeDialogAtStart) {
@@ -334,8 +335,56 @@ const EditPiece = () => {
     )
   }
 
+  const [videoDialogIsOpen, setVideoDialogIsOpen] = useState(false)
+  const [imageDialogIsOpen, setImageDialogIsOpen] = useState(false)
+
+  const showTooltips =
+    showOnboarding &&
+    !welcomeDialogIsOpen &&
+    !videoDialogIsOpen &&
+    !imageDialogIsOpen
+
+  const submitImage = ({ filepath, height, width }) => {
+    handleUpdateMedia({
+      image: filepath,
+      imageHeight: height,
+      imageWidth: width,
+    })
+  }
+
+  const submitVideo = ({ filepath, duration, height, width }) => {
+    let media = {}
+    if (filepath) {
+      media.video = filepath
+    }
+    if (duration || height || width) {
+      media.videoDuration = duration
+      media.videoWidth = width
+      media.videoHeight = height
+    }
+    handleUpdateMedia(media)
+  }
+
   return (
     <>
+      <ImageUploadDialog
+        open={imageDialogIsOpen}
+        imageUrl={imageSrc}
+        videoUrl={videoSrc}
+        videoDuration={videoDuration}
+        width={imageWidth}
+        height={imageHeight}
+        submitImage={submitImage}
+        onClose={() => setImageDialogIsOpen(false)}
+      />
+      <VideoUploadDialog
+        open={videoDialogIsOpen}
+        videoUrl={videoSrc}
+        videoDuration={videoDuration}
+        submit={submitVideo}
+        onClose={() => setVideoDialogIsOpen(false)}
+      />
+
       <BarEditPiece previewPageUrl={targets ? previewPage : null} />
       <WelcomeDialog
         open={welcomeDialogIsOpen}
@@ -420,15 +469,14 @@ const EditPiece = () => {
                             flexWrap="wrap"
                           >
                             <AddMediaButton
-                              mediaType="image"
-                              updateMedia={handleUpdateMedia}
-                              imageSrc={imageSrc}
-                              imageHeight={imageHeight}
-                              imageWidth={imageWidth}
-                              videoSrc={videoSrc}
+                              mediaType="video"
+                              // updateMedia={handleUpdateMedia}
                               videoDuration={videoDuration}
+                              videoSrc={videoSrc}
+                              imageSrc={imageSrc}
                               disabled={!!targets}
                               showTooltips={showTooltips}
+                              handleClick={() => setVideoDialogIsOpen(true)}
                             />
 
                             <LinkIcon
@@ -438,92 +486,103 @@ const EditPiece = () => {
                             />
 
                             <AddMediaButton
-                              mediaType="video"
-                              updateMedia={handleUpdateMedia}
-                              videoDuration={videoDuration}
-                              videoSrc={videoSrc}
+                              mediaType="image"
+                              // updateMedia={handleUpdateMedia}
                               imageSrc={imageSrc}
+                              imageHeight={imageHeight}
+                              imageWidth={imageWidth}
+                              videoSrc={videoSrc}
+                              videoDuration={videoDuration}
                               disabled={!!targets}
                               showTooltips={showTooltips}
+                              handleClick={() => setImageDialogIsOpen(true)}
                             />
                           </Box>
-                          <Box width="320px" mt={4} mb={4}>
-                            {/* <OnboardingTooltip
-                              open={
-                                showTooltips &&
-                                !!imageSrc &&
-                                !!videoSrc &&
-                                !targets
-                              }
-                              title="Now link your image and video to generate your experience, then give it a try!"
-                              position="bottom"
-                            > */}
-                            <LoadingButton
-                              variant={targets ? 'outlined' : 'contained'}
-                              fullWidth
-                              disabled={!imageSrc || !videoSrc || !!targets}
-                              onClick={getImageTargets}
-                              endIcon={
-                                targets ? (
-                                  <ArrowForward
-                                    sx={{ transform: 'rotate(45deg)' }}
-                                  />
-                                ) : (
-                                  <AutoFixHigh />
-                                )
-                              }
-                              loading={isLoading}
-                              loadingPosition="end"
-                              sx={{
-                                display: { xs: 'none', md: 'flex' },
-                                '&.Mui-disabled': {
-                                  borderColor: targets ? 'primary.main' : null,
-                                  color: targets ? 'primary.main' : null,
-                                },
-                              }}
-                            >
-                              {isLoading ? (
-                                <b>Building experience... {percent}%</b>
-                              ) : targets ? (
-                                <b>Ready to Go!</b>
+                          <Box
+                            width="100%"
+                            display="flex"
+                            justifyContent="center"
+                          >
+                            <Box width="320px" mt={4} mb={4}>
+                              <OnboardingTooltip
+                                open={
+                                  showTooltips &&
+                                  !!imageSrc &&
+                                  !!videoSrc &&
+                                  !targets
+                                }
+                                title="Now link your image and video to generate your experience, then give it a try!"
+                                position="bottom"
+                              >
+                                <LoadingButton
+                                  variant={targets ? 'outlined' : 'contained'}
+                                  fullWidth
+                                  disabled={!imageSrc || !videoSrc || !!targets}
+                                  onClick={getImageTargets}
+                                  endIcon={
+                                    targets ? (
+                                      <ArrowForward
+                                        sx={{ transform: 'rotate(45deg)' }}
+                                      />
+                                    ) : (
+                                      <AutoFixHigh />
+                                    )
+                                  }
+                                  loading={isLoading}
+                                  loadingPosition="end"
+                                  sx={{
+                                    display: { xs: 'none', md: 'flex' },
+                                    '&.Mui-disabled': {
+                                      borderColor: targets
+                                        ? 'primary.main'
+                                        : null,
+                                      color: targets ? 'primary.main' : null,
+                                    },
+                                  }}
+                                >
+                                  {isLoading ? (
+                                    <b>Building experience... {percent}%</b>
+                                  ) : targets ? (
+                                    <b>Ready to Go!</b>
+                                  ) : (
+                                    <b>Create Experience</b>
+                                  )}
+                                </LoadingButton>
+                              </OnboardingTooltip>
+                              {targets ? (
+                                <LoadingButton
+                                  variant="outlined"
+                                  fullWidth
+                                  href={experiencePage}
+                                  target="_blank"
+                                  endIcon={<Visibility />}
+                                  sx={{
+                                    display: { xs: 'flex', md: 'none' },
+                                  }}
+                                >
+                                  <b>Open Experience</b>
+                                </LoadingButton>
                               ) : (
-                                <b>Create Experience</b>
+                                <LoadingButton
+                                  variant={'contained'}
+                                  fullWidth
+                                  disabled={!imageSrc || !videoSrc || !!targets}
+                                  onClick={getImageTargets}
+                                  endIcon={<AutoFixHigh />}
+                                  loading={isLoading}
+                                  loadingPosition="end"
+                                  sx={{
+                                    display: { xs: 'flex', md: 'none' },
+                                  }}
+                                >
+                                  {isLoading ? (
+                                    <b>Building experience... {percent}%</b>
+                                  ) : (
+                                    <b>Create Experience</b>
+                                  )}
+                                </LoadingButton>
                               )}
-                            </LoadingButton>
-                            {/* </OnboardingTooltip> */}
-                            {targets ? (
-                              <LoadingButton
-                                variant="outlined"
-                                fullWidth
-                                href={experiencePage}
-                                target="_blank"
-                                endIcon={<Visibility />}
-                                sx={{
-                                  display: { xs: 'flex', md: 'none' },
-                                }}
-                              >
-                                <b>Open Experience</b>
-                              </LoadingButton>
-                            ) : (
-                              <LoadingButton
-                                variant={'contained'}
-                                fullWidth
-                                disabled={!imageSrc || !videoSrc || !!targets}
-                                onClick={getImageTargets}
-                                endIcon={<AutoFixHigh />}
-                                loading={isLoading}
-                                loadingPosition="end"
-                                sx={{
-                                  display: { xs: 'block', md: 'none' },
-                                }}
-                              >
-                                {isLoading ? (
-                                  <b>Building experience... {percent}%</b>
-                                ) : (
-                                  <b>Create Experience</b>
-                                )}
-                              </LoadingButton>
-                            )}
+                            </Box>
                           </Box>
                           <Box
                             width="100%"
@@ -651,35 +710,47 @@ const EditPiece = () => {
                             </Box>
                           </Box>
                           <Box
-                            width="400px"
-                            mt={1}
+                            width="100%"
                             display="flex"
-                            alignItems="center"
                             justifyContent="center"
                           >
-                            <Typography
-                              variant="caption"
-                              textAlign="center"
-                              mt={2}
+                            <Box
+                              width="400px"
+                              mt={1}
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
                             >
-                              Ready to print? Download the QR code to include in
-                              your designs.
-                            </Typography>
-                          </Box>
-                          <Box width="320px" mt={1}>
-                            <DownloadQR
-                              qrValue={experiencePage}
-                              fileName={pieceId}
-                            >
-                              <Button
-                                variant="contained"
-                                fullWidth
-                                endIcon={<Download />}
-                                disabled={!targets}
+                              <Typography
+                                variant="caption"
+                                textAlign="center"
+                                mt={2}
                               >
-                                Download QR Code
-                              </Button>
-                            </DownloadQR>
+                                Ready to print? Download the QR code to include
+                                in your designs.
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <Box
+                            width="100%"
+                            display="flex"
+                            justifyContent="center"
+                          >
+                            <Box width="320px" mt={1}>
+                              <DownloadQR
+                                qrValue={experiencePage}
+                                fileName={pieceId}
+                              >
+                                <Button
+                                  variant="contained"
+                                  fullWidth
+                                  endIcon={<Download />}
+                                  disabled={!targets}
+                                >
+                                  Download QR Code
+                                </Button>
+                              </DownloadQR>
+                            </Box>
                           </Box>
                           <Box width="320px" mb={1} mt={1}>
                             <Button

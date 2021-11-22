@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Card, Box, Typography, CardActionArea } from '@mui/material'
 import { AddPhotoAlternate, VideoCall, PlayArrow } from '@mui/icons-material'
 import ReactPlayer from 'react-player'
 
-import ImageUploadDialog from './ImageUploadDialog'
-import VideoUploadDialog from './VideoUploadDialog'
+// import ImageUploadDialog from './ImageUploadDialog'
+// import VideoUploadDialog from './VideoUploadDialog'
 import Image from 'components/Image'
 import OnboardingTooltip from 'components/OnboardingTooltip'
 
@@ -18,6 +18,7 @@ const AddMediaButton = ({
   updateMedia,
   disabled,
   showTooltips,
+  handleClick,
 }) => {
   // const aspect =
   //   imageHeight / imageWidth === 1.5
@@ -28,36 +29,36 @@ const AddMediaButton = ({
   //     ? `${imageWidth}x${imageHeight}px`
   //     : ''
 
-  const [open, setOpen] = useState(false)
+  // const [open, setOpen] = useState(false)
 
-  const handleOpen = () => {
-    setOpen(true)
-  }
+  // const handleOpen = () => {
+  //   setOpen(true)
+  // }
 
-  const handleClose = () => {
-    setOpen(false)
-  }
+  // const handleClose = () => {
+  //   setOpen(false)
+  // }
 
-  const submitImage = ({ filepath, height, width }) => {
-    updateMedia({
-      image: filepath,
-      imageHeight: height,
-      imageWidth: width,
-    })
-  }
+  // const submitImage = ({ filepath, height, width }) => {
+  //   updateMedia({
+  //     image: filepath,
+  //     imageHeight: height,
+  //     imageWidth: width,
+  //   })
+  // }
 
-  const submitVideo = ({ filepath, duration, height, width }) => {
-    let media = {}
-    if (filepath) {
-      media.video = filepath
-    }
-    if (duration || height || width) {
-      media.videoDuration = duration
-      media.videoWidth = width
-      media.videoHeight = height
-    }
-    updateMedia(media)
-  }
+  // const submitVideo = ({ filepath, duration, height, width }) => {
+  //   let media = {}
+  //   if (filepath) {
+  //     media.video = filepath
+  //   }
+  //   if (duration || height || width) {
+  //     media.videoDuration = duration
+  //     media.videoWidth = width
+  //     media.videoHeight = height
+  //   }
+  //   updateMedia(media)
+  // }
 
   const playerRef = useRef()
 
@@ -75,7 +76,7 @@ const AddMediaButton = ({
 
   return (
     <>
-      {mediaType === 'image' ? (
+      {/* {mediaType === 'image' ? (
         <ImageUploadDialog
           open={open}
           imageUrl={imageSrc}
@@ -94,16 +95,12 @@ const AddMediaButton = ({
           submit={submitVideo}
           onClose={handleClose}
         />
-      )}
+      )} */}
       <OnboardingTooltip
-        open={
-          showTooltips &&
-          !open &&
-          (mediaType === 'image' ? !imageSrc : !!imageSrc && !videoSrc)
-        }
+        open={showTooltips && (mediaType === 'video' ? !videoSrc : !imageSrc)}
         title={
           mediaType === 'image'
-            ? 'Add an image. Don’t have one? Upload your video first to choose a frame, or try it out with our demo image.'
+            ? 'Add an image. Don’t have one? Choose a frame from your video, or try it out with our demo image.'
             : "Upload a video. Don't have one? Use our demo video."
         }
         position="bottom"
@@ -112,7 +109,7 @@ const AddMediaButton = ({
           <Card elevation={0} variant="outlined">
             <CardActionArea
               sx={{ padding: '8px' }}
-              onClick={handleOpen}
+              onClick={handleClick}
               disabled={disabled}
             >
               <Box
