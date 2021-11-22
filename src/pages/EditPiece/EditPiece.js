@@ -509,7 +509,8 @@ const EditPiece = () => {
                                   showTooltips &&
                                   !!imageSrc &&
                                   !!videoSrc &&
-                                  !targets
+                                  !targets &&
+                                  !isLoading
                                 }
                                 title="Now link your image and video to generate your experience, then give it a try!"
                                 position="bottom"

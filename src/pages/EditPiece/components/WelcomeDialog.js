@@ -55,7 +55,7 @@ const WelcomeDialog = ({ open, onClose }) => {
               <Typography variant="h6">Step 2</Typography>
               <Typography variant="body2">
                 Hit "Create Experience" to publish it to the web, then use the
-                QR to test it our on your mobile device.
+                QR code to test it out on your mobile device.
               </Typography>
             </Grid>
             <Grid item xs={12} sm={4} textAlign="center">
