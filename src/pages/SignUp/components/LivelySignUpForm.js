@@ -37,7 +37,7 @@ const validationSchema = yup.object({
     .required('Password is required'),
 })
 
-const SignUpForm = () => {
+const LivelySignUpForm = () => {
   const history = useHistory()
   const { user, logout } = useSession()
   const { subscribe } = useUserStore()
@@ -120,12 +120,18 @@ const SignUpForm = () => {
     //   }
     // }
 
-    if (user) {
-      // if (status === 'idle') {
+    const handleSubscribe = async () => {
+      try {
+        if (user.email) {
+          await subscribe({ email: user.email, tags: ['lively'] })
+        }
+      } catch (err) {}
+
       history.push(`/admin`)
-      // } else {
-      //   handleSignIn()
-      // }
+    }
+
+    if (user) {
+      handleSubscribe()
     }
   }, [subscribe, history, user, status, userData.displayName])
 
@@ -169,8 +175,8 @@ const SignUpForm = () => {
       <Grid container justifyContent="flex-start" spacing={3}>
         <Grid item xs={12}>
           <Typography>
-            Create an account to start building your first interactive
-            experience. It's free.
+            Sign up for a free account to create your first Lively greeting
+            card, powered by Plynth.
           </Typography>
         </Grid>
 
@@ -298,4 +304,4 @@ const SignUpForm = () => {
   )
 }
 
-export default SignUpForm
+export default LivelySignUpForm

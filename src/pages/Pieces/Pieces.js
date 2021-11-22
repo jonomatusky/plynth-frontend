@@ -7,6 +7,7 @@ import usePackStore from 'hooks/store/use-pack-store'
 import AdminNav from 'layouts/AdminNav'
 import BarAccount from 'layouts/BarAccount'
 import PieceItem from './components/PieceItem'
+import { isMobile } from 'react-device-detect'
 
 const Pieces = () => {
   const history = useHistory()
@@ -104,13 +105,16 @@ const Pieces = () => {
               sx={{ display: { xs: 'flex', sm: 'none' } }}
             >
               <Typography textAlign="center" pb={1}>
-                Switch over to desktop to create new experiences, or test your
-                existing experiences below:
+                Switch over to desktop to create a new experience.
               </Typography>
 
-              {pieces.map(piece => {
-                return <PieceItem piece={piece} key={piece.id} isMobile />
-              })}
+              {pieces
+                .filter(piece => {
+                  return isMobile ? !!piece.targets : true
+                })
+                .map(piece => {
+                  return <PieceItem piece={piece} key={piece.id} isMobile />
+                })}
             </Box>
           </Container>
         </Box>

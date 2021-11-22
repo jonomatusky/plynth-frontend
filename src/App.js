@@ -53,6 +53,10 @@ import EditPiece from 'pages/EditPiece/EditPiece'
 import SignUp from 'pages/SignUp/SignUp'
 import Preview from 'pages/Preview/Preview'
 import JoinTheBeta from 'pages/JoinTheBeta/JoinTheBeta'
+import LivelySignUp from 'pages/SignUp/LivelySignUp'
+import Privacy from 'pages/Privacy/Privacy'
+import Terms from 'pages/Terms/Terms'
+import DSARForm from 'pages/DSARForm/DSARForm'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -92,6 +96,22 @@ const App = () => {
 
       <Route path="/signup" redirectPath={'/admin'} exact>
         <SignUp />
+      </Route>
+
+      <Route path="/s/lively-signup" redirectPath={'/admin'} exact>
+        <LivelySignUp />
+      </Route>
+
+      <Route path="/s/privacy" exact>
+        <Privacy />
+      </Route>
+
+      <Route path="/s/terms" exact>
+        <Terms />
+      </Route>
+
+      <Route path="/s/dsar" exact>
+        <DSARForm />
       </Route>
 
       <Route
