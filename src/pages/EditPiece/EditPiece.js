@@ -362,21 +362,22 @@ const EditPiece = () => {
                         </Grid>
                         <Grid item xs={12}>
                           <Typography variant="h6" textAlign="center">
-                            Please Switch to Desktop
+                            Switch to Desktop
                           </Typography>
                         </Grid>
                         <Grid item xs={12}>
                           <Typography>
-                            Please switch to desktop to create your first
-                            interactive experience. Then you'll be able to try
-                            it out on your mobile device!
+                            Please visit plynth.com on your computer to create
+                            your first interactive experience. After you create
+                            it, you can return to your mobile device to try it
+                            out.
                           </Typography>
                         </Grid>
                         <Grid item xs={12} pb={2} mt={2}>
                           <Button
                             variant="contained"
                             component={Link}
-                            to="/admin"
+                            to="/admin/pieces"
                             fullWidth
                           >
                             Go Home
