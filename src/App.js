@@ -57,6 +57,7 @@ import LivelySignUp from 'pages/SignUp/LivelySignUp'
 import Privacy from 'pages/Privacy/Privacy'
 import Terms from 'pages/Terms/Terms'
 import DSARForm from 'pages/DSARForm/DSARForm'
+import QrScan from 'pages/QrScan/QrScan'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -227,6 +228,10 @@ const App = () => {
 
       <Route restricted={false} path="/:username/open" exact>
         <PortalOpen />
+      </Route>
+
+      <Route path="/:username/qr/:qrId">
+        <QrScan />
       </Route>
 
       <Route restricted={false} path="/:username">
