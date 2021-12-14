@@ -151,7 +151,7 @@ const QrScan = () => {
                 other attendees you meet at the event.
               </Typography>
             </Grid>
-            <Grid item xs={12} mt={1}>
+            <Grid item xs={12}>
               <LoadingButton
                 type="submit"
                 variant="contained"
@@ -234,7 +234,7 @@ const QrScan = () => {
       </Container>
     )
   } else {
-    return <LoadingScreen color="white" />
+    return <LoadingScreen backgroundColor="white" />
   }
 }
 
