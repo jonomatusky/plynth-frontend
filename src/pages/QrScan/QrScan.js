@@ -107,6 +107,7 @@ const QrScan = () => {
                 fullWidth
                 // size="small"
                 label="URL"
+                autoComplete="off"
                 {...formik.getFieldProps('url')}
                 error={formik.touched.url && Boolean(formik.errors.url)}
                 helperText={formik.touched.url && formik.errors.url}
