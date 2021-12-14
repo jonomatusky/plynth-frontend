@@ -139,7 +139,7 @@ const SignUp = () => {
       {/* <BarEditPiece /> */}
       <CreateAccountDialog open={true} />
       <PublicNav hideFooter hideNavBar backgroundColor="#fafafa">
-        <Box
+        {/* <Box
           position="aboslute"
           top="0"
           bottom="0"
@@ -162,7 +162,7 @@ const SignUp = () => {
               }}
             />
           )}
-        </Box>
+        </Box> */}
         <Box
           height="calc(100vh)"
           width="100%"
