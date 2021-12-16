@@ -170,7 +170,7 @@ const QrScan = () => {
                 </Typography>
               </LoadingButton>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} pb={2}>
               <Typography color="inherit" variant="body2">
                 <Link href="https://plynth.com" target="_blank" color="inherit">
                   Powered by Plynth
