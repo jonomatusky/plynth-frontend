@@ -173,8 +173,7 @@ const QrScan = () => {
             <Grid item xs={12}>
               <Typography variant="body2">
                 We'll keep your email private any only use it to send you the
-                one follow-up email. We'll only share you name and link with
-                other attendees you meet at the event.
+                one follow-up email.
               </Typography>
             </Grid>
             <Grid item xs={12}>
