@@ -125,18 +125,6 @@ const JoinTheBeta = () => {
                         <ListItemIcon sx={{ minWidth: '36px' }}>
                           <Check color="primary" />
                         </ListItemIcon>
-                        <ListItemText primary="One url/QR code for all experiences" />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon sx={{ minWidth: '36px' }}>
-                          <Check color="primary" />
-                        </ListItemIcon>
-                        <ListItemText primary="Analytics" />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon sx={{ minWidth: '36px' }}>
-                          <Check color="primary" />
-                        </ListItemIcon>
                         <ListItemText primary="Remove Plynth branding" />
                       </ListItem>
                       <ListItem>
@@ -151,11 +139,23 @@ const JoinTheBeta = () => {
                         </ListItemIcon>
                         <ListItemText primary={'Form submissions & signups'} />
                       </ListItem>
+                      <ListItem>
+                        <ListItemIcon sx={{ minWidth: '36px' }}>
+                          <Check color="primary" />
+                        </ListItemIcon>
+                        <ListItemText primary="One url/QR code for all experiences (coming soon)" />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon sx={{ minWidth: '36px' }}>
+                          <Check color="primary" />
+                        </ListItemIcon>
+                        <ListItemText primary="Analytics (coming soon)" />
+                      </ListItem>
                     </List>
                   </Grid>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <Typography>Join the Plynth Discord server</Typography>
-                  </Grid>
+                  </Grid> */}
                   <Grid item xs={12}>
                     <Typography>
                       Receive personal support from our team
