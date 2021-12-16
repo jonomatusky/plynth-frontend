@@ -81,7 +81,7 @@ const JoinTheBeta = () => {
                 overflowWrap: 'break-word',
               }}
             >
-              Join now for <b>$100/year</b>
+              Join now for <b>$160/year</b>
             </Typography>
             <Button
               href="https://buy.stripe.com/4gw2aA69tazigAU3cc"
