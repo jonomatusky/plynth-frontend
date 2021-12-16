@@ -168,7 +168,7 @@ const JoinTheBeta = () => {
                   </Grid>
                   <Grid item xs={12} textAlign="center" mt={2} mb={1}>
                     <Button
-                      href="https://buy.stripe.com/4gw2aA69tazigAU3cc"
+                      href="https://buy.stripe.com/00gcPe41l6j2fwQ4gh"
                       target="_blank"
                       variant="contained"
                       size="large"
