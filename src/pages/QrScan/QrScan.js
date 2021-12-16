@@ -99,8 +99,7 @@ const QrScan = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">
-                Enter a link to share with other attendess, like your website,
-                LinkedIn, or socials. Next time someone scans this QR code,
+                Enter a link to share with other attendees, like your Instagram, Bandcamp or Linktree. Next time someone scans this QR code,
                 they'll be redirected here:
               </Typography>
             </Grid>
@@ -111,6 +110,7 @@ const QrScan = () => {
                 // size="small"
                 label="URL"
                 autoComplete="off"
+                type="url"
                 {...formik.getFieldProps('url')}
                 error={formik.touched.url && Boolean(formik.errors.url)}
                 helperText={formik.touched.url && formik.errors.url}
@@ -118,15 +118,14 @@ const QrScan = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">
-                Add your name and email address to receive an email with a list
-                of everyone you met.
+                Tell us what you're sharing and add your email address below to be included on the round-up email after the event!
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 fullWidth
-                label="Name (Optional)"
+                label="What are you sharing? (Optional)"
                 {...formik.getFieldProps('displayName')}
                 error={
                   formik.touched.displayName &&
@@ -193,8 +192,8 @@ const QrScan = () => {
           </Grid>
           <Grid item xs={12} textAlign="center">
             <Typography>
-              You've successfully claimed your name tag. Scan the QR code again
-              to test it out.
+              You claimed your card. Scan the QR code again
+              to test it out!
             </Typography>
           </Grid>
         </Grid>
