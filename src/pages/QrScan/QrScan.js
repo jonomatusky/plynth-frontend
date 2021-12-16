@@ -26,8 +26,13 @@ const QrScan = () => {
         const res = await request({
           url: `/qr/${qrId}`,
         })
-        setQr(res.qr)
-        setStatus('succeeded')
+
+        if (((res || {}).qr || {}).status === 'unclaimed') {
+          setStatus('unclaimed')
+        } else {
+          setQr(res.qr)
+          setStatus('succeeded')
+        }
       } catch (err) {
         setStatus('failed')
       }
@@ -55,6 +60,7 @@ const QrScan = () => {
       })
       console.log(res)
     } catch (err) {
+      setStatus('failed')
       console.log(err)
     }
 
@@ -92,14 +98,30 @@ const QrScan = () => {
   } else if (status === 'failed') {
     return (
       <Container>
+        <Grid container justifyContent="center" spacing={3}>
+          <Grid item xs={12}>
+            <Typography variant="h5" pt={7} textAlign="center">
+              Something Went Wrong
+            </Typography>
+          </Grid>
+          <Grid item xs={12} textAlign="center">
+            <Typography>Please refresh the page and try again.</Typography>
+          </Grid>
+        </Grid>
+      </Container>
+    )
+  } else if (status === 'unclaimed') {
+    return (
+      <Container>
         <form onSubmit={formik.handleSubmit}>
           <Grid container justifyContent="flex-start" spacing={2} pt={3}>
             <Grid item xs={12}>
-              <Typography variant="h4">Claim Your Name Tag</Typography>
+              <Typography variant="h4">Claim Your Card</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">
-                Enter a link to share with other attendees, like your Instagram, Bandcamp or Linktree. Next time someone scans this QR code,
+                Enter a link to share with other attendees, like your Instagram,
+                Bandcamp or Linktree. Next time someone scans this QR code,
                 they'll be redirected here:
               </Typography>
             </Grid>
@@ -118,7 +140,8 @@ const QrScan = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">
-                Tell us what you're sharing and add your email address below to be included on the round-up email after the event!
+                Tell us what you're sharing and add your email address below to
+                be included in the round-up email after the event!
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -166,12 +189,12 @@ const QrScan = () => {
                   letterSpacing={1}
                   style={{ fontWeight: 900, textTransform: 'none' }}
                 >
-                  Claim My Name Tag
+                  Claim My Card
                 </Typography>
               </LoadingButton>
             </Grid>
-            <Grid item xs={12} pb={2}>
-              <Typography color="inherit" variant="body2">
+            <Grid item xs={12} pb={3}>
+              <Typography color="inherit" variant="body2" textAlign="center">
                 <Link href="https://plynth.com" target="_blank" color="inherit">
                   Powered by Plynth
                 </Link>
@@ -192,8 +215,7 @@ const QrScan = () => {
           </Grid>
           <Grid item xs={12} textAlign="center">
             <Typography>
-              You claimed your card. Scan the QR code again
-              to test it out!
+              You claimed your card. Scan the QR code again to test it out!
             </Typography>
           </Grid>
         </Grid>
