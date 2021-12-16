@@ -4,6 +4,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import posthog from 'posthog-js'
 import { Container, Grid, Link, TextField, Typography } from '@mui/material'
+import usePageTrack from 'hooks/use-page-track'
 
 import { request } from 'util/client'
 import { LoadingButton } from '@mui/lab'
@@ -13,6 +14,8 @@ const QrScan = () => {
   const { qrId } = useParams()
   const [status, setStatus] = useState('idle')
   const [qr, setQr] = useState(null)
+
+  usePageTrack()
 
   console.log(qr)
   console.log(status)
@@ -96,9 +99,9 @@ const QrScan = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">
-                Enter a link to share your website, LinkedIn, or socials with
-                other attendees. Next time someone scans this QR code, they'll
-                be redirected here:
+                Enter a link to share with other attendess, like your website,
+                LinkedIn, or socials. Next time someone scans this QR code,
+                they'll be redirected here:
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -107,6 +110,7 @@ const QrScan = () => {
                 fullWidth
                 // size="small"
                 label="URL"
+                autoComplete="off"
                 {...formik.getFieldProps('url')}
                 error={formik.touched.url && Boolean(formik.errors.url)}
                 helperText={formik.touched.url && formik.errors.url}
@@ -167,30 +171,15 @@ const QrScan = () => {
                 </Typography>
               </LoadingButton>
             </Grid>
+            <Grid item xs={12}>
+              <Typography color="inherit" variant="body2">
+                <Link href="https://plynth.com" target="_blank" color="inherit">
+                  Powered by Plynth
+                </Link>
+              </Typography>
+            </Grid>
           </Grid>
         </form>
-        <div
-          style={{
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 'auto',
-            textAlign: 'center',
-            // color: 'white',
-            paddingTop: '5px',
-            paddingBottom: '5px',
-            position: 'absolute',
-            zIndex: 2000,
-            // backgroundColor: 'black',
-            fontSize: '12px',
-          }}
-        >
-          <Typography color="inherit" variant="body2">
-            <Link href="https://plynth.com" target="_blank" color="inherit">
-              Powered by Plynth
-            </Link>
-          </Typography>
-        </div>
       </Container>
     )
   } else if (status === 'succeeded') {
