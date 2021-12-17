@@ -3,6 +3,7 @@ import { Container, Box, Typography, Button, Grid } from '@mui/material'
 
 import { Link as RouterLink } from 'react-router-dom'
 import PublicNav from 'layouts/PublicNav'
+import ReactPlayer from 'react-player'
 
 import FormSubscribe from 'components/FormSubscribe'
 
@@ -19,7 +20,7 @@ const Subscribe = ({ title, text }) => {
             Already have an account?{' '}
           </Typography>
           <Button
-            color="secondary"
+            color="primary"
             component={RouterLink}
             to={'/login'}
             size="small"
@@ -33,21 +34,46 @@ const Subscribe = ({ title, text }) => {
       }
       hideFooter
     >
-      <Container maxWidth="xs">
-        <Box mt={10}>
+      <Container maxWidth="xs" disableGutters>
+        <Box mt={5}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h4" color="white">
-                <b>Subscribe</b>
+            <Grid item xs={11}>
+              <Typography variant="h5">
+                <b>Bring your work to life with Plynth</b>
               </Typography>
             </Grid>
-            <Grid item xs={12} mb={2}>
-              <Typography color="white">
-                Subscribe below for updates from the Plynth team.
-              </Typography>
+            <Grid item xs={11} mb={2}>
+              <Typography>Enter your email for updates:</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={11}>
               <FormSubscribe />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{ display: { xs: 'flex', sm: 'none' } }}
+              mt={5}
+            >
+              <Box
+                overflow="hidden"
+                width="100vw"
+                height="500px"
+                display="flex"
+                jusifycontent="center"
+                alignItems="center"
+              >
+                <ReactPlayer
+                  url="https://vimeo.com/638810680"
+                  height="150vh"
+                  width="100vw"
+                  overflow="hidden"
+                  playsinline={true}
+                  loop={true}
+                  playing={true}
+                  config={{ vimeo: { playerOptions: { background: 1 } } }}
+                  // onReady={() => setVideoIsReady(true)}
+                />
+              </Box>
             </Grid>
           </Grid>
         </Box>
