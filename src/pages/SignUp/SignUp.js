@@ -120,6 +120,7 @@ const SignUp = () => {
           <video
             src={videoSrc}
             ref={playerRef}
+            playsinline
             autoPlay
             muted
             style={{
