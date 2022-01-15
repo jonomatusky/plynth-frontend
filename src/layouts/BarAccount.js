@@ -159,7 +159,7 @@ const BarAccount = ({ right, left, children }) => {
                   <b>Invite Friends</b>
                 </Button>
               </Box> */}
-              {user.tier !== 'free2' && (
+              {/* {user.tier !== 'free2' && (
                 <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
                   <Button
                     variant="contained"
@@ -172,7 +172,7 @@ const BarAccount = ({ right, left, children }) => {
                     <b>Join the Beta</b>
                   </Button>
                 </Box>
-              )}
+              )} */}
               <Box pr={1}>
                 <IconButton onClick={handleOpen}>
                   <AccountCircle fontSize="large" />
