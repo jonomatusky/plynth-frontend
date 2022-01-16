@@ -14,6 +14,7 @@ import usePageTrack from 'hooks/use-page-track'
 import useAlertStore from 'hooks/store/use-alert-store'
 import PortalFull from './components/PortalFull'
 import { useFetch } from 'hooks/use-fetch'
+import ARPack from 'pages/ViewPack/components/ARPack'
 
 const PortalOpen = () => {
   const {
@@ -89,7 +90,15 @@ const PortalOpen = () => {
   } else if (scanStatus === 'loading') {
     return <ProfileLoading portal={portal} />
   } else if (scanStatus === 'succeeded' && foundPack && foundPack.isPublic) {
-    return <Pack pack={foundPack} />
+    return (
+      <>
+        {(foundPack.cards[0] || {}).type !== 'ar' ? (
+          <Pack pack={foundPack} />
+        ) : (
+          <ARPack pack={foundPack} />
+        )}
+      </>
+    )
   } else if (scanStatus === 'succeeded' && foundPack && !foundPack.isPublic) {
     return <NoMatch fontColor={fontColor} onClose={handleClose} />
   } else if (scanStatus === 'succeeded' && !foundPack) {
