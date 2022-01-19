@@ -50,7 +50,7 @@ import Admin from 'pages/Admin/Admin'
 import Pieces from 'pages/Pieces/Pieces'
 // import EditPiece from 'pages/EditPieceOLD/EditPiece'
 import EditPiece from 'pages/EditPiece/EditPiece'
-// import SignUp from 'pages/SignUp/SignUp'
+import SignUp from 'pages/SignUp/SignUp'
 import Preview from 'pages/Preview/Preview'
 // import JoinTheBeta from 'pages/JoinTheBeta/JoinTheBeta'
 import LivelySignUp from 'pages/SignUp/LivelySignUp'
@@ -95,7 +95,7 @@ const App = () => {
         <Register />
       </Route> */}
 
-      <Route
+      {/* <Route
         exact
         path="/signup"
         render={() => {
@@ -103,11 +103,11 @@ const App = () => {
 
           return <></>
         }}
-      />
+      /> */}
 
-      {/* <Route path="/signup" redirectPath={'/admin'} exact>
+      <Route path="/signup" redirectPath={'/admin'} exact>
         <SignUp />
-      </Route> */}
+      </Route>
 
       <Route path="/s/lively-signup" redirectPath={'/admin'} exact>
         <LivelySignUp />
