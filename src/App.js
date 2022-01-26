@@ -58,6 +58,7 @@ import Privacy from 'pages/Privacy/Privacy'
 import Terms from 'pages/Terms/Terms'
 import DSARForm from 'pages/DSARForm/DSARForm'
 import QrScan from 'pages/QrScan/QrScan'
+import DemoPreview from 'pages/Preview/DemoPreview'
 
 const { REACT_APP_POSTHOG_KEY } = process.env
 
@@ -168,6 +169,10 @@ const App = () => {
       />
       <Route path="/s/help">
         <Help />
+      </Route>
+
+      <Route path="/s/demo">
+        <DemoPreview />
       </Route>
       {/* <Route path="/s/join-the-beta">
         <JoinTheBeta />
