@@ -17,12 +17,9 @@ const PieceItem = ({ piece, isMobile }) => {
   }, [piece.name])
 
   const updateName = async () => {
-    console.log('submitting')
     try {
       await updatePack({ id: piece.id, name: name })
-    } catch (err) {
-      console.log(err)
-    }
+    } catch (err) {}
   }
 
   const { imageUrl } = piece.cards[0]

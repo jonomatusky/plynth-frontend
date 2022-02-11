@@ -55,10 +55,8 @@ const AddMediaButton = ({
       media.video = filepath
     }
     if (duration) {
-      console.log('updating duration')
       media.videoDuration = duration
     }
-    console.log(media)
     updateMedia(media)
   }
 

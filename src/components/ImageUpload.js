@@ -20,7 +20,6 @@ const ImageUpload = ({ onSubmit, resolution, children, setIsPending }) => {
       resizedImage = await resizeImage(imageSrc, resolution || 600)
     } catch (err) {
       // setError({ message: err.message })
-      console.log(err.message)
     }
 
     try {

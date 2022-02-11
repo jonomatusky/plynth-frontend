@@ -39,9 +39,7 @@ const FormWaitlist = ({ title, text }) => {
           category: 'User',
           action: 'Waitlist Form Submission',
         })
-      } catch (err) {
-        console.log('error with GA')
-      }
+      } catch (err) {}
 
       setStatus('succeeded')
     }

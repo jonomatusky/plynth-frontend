@@ -76,9 +76,6 @@ const PortalOpen = () => {
     setCameraError(true)
   }
 
-  console.log('user scan limit: ' + portalUser.scanLimit)
-  console.log('scan count: ' + scanCount)
-
   if (portalStatus === 'failed') {
     return <NotFoundPage />
   } else if (!portalUser) {

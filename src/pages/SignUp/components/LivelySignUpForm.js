@@ -65,14 +65,11 @@ const LivelySignUpForm = () => {
             message: `Another account is using ${email}. Please sign in instead.`,
           })
         } else {
-          console.log(err)
           setError({
             message:
               'There was an error creating your account. Please try again.',
           })
         }
-        console.log('firebase error')
-        console.log(err.message)
 
         setStatus('error')
       }

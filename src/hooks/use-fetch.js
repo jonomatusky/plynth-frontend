@@ -18,7 +18,7 @@ export const useFetch = () => {
     user: storeUser,
     createMeStatus,
     createMe,
-    subscribe
+    subscribe,
   } = useUserStore()
   const { fetchPacks, status: fetchPacksStatus } = usePackStore()
 
@@ -27,7 +27,6 @@ export const useFetch = () => {
       try {
         await fetchUser()
       } catch (err) {
-        console.log('failed to fetch user')
         setError({ message: err.message })
       }
 
@@ -35,9 +34,7 @@ export const useFetch = () => {
         if (user.email) {
           subscribe({ email: user.email, tags: ['user'] })
         }
-      } catch (err) {
-        console.log('failed to subscribe user')
-      }
+      } catch (err) {}
     }
 
     if (!!user && fetchUserStatus === 'idle') {
@@ -51,7 +48,6 @@ export const useFetch = () => {
       !storeUser._id &&
       createMeStatus === 'idle'
     ) {
-      console.log('creating user')
       try {
         createMe({})
       } catch (err) {}

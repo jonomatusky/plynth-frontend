@@ -22,7 +22,6 @@ const Admin = () => {
     //create a pack if one does not exist
 
     const handleCreatePiece = async () => {
-      console.log('creating piece')
       try {
         await createPack({
           name: 'My New Experience',
@@ -48,10 +47,6 @@ const Admin = () => {
       } catch (error) {}
     }
   })
-
-  console.log(packs)
-  console.log(packs[0])
-  console.log(createStatus)
 
   if (userStatus === 'succeeded' && packStatus === 'succeeded') {
     if (isOldUser) {

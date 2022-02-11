@@ -76,7 +76,6 @@ const Preview = () => {
   const isOwner = !!user && !!pack && user.id === (pack || {}).owner._id
 
   const [message, setMessage] = useState()
-  console.log(isOwner)
 
   useEffect(() => {
     if (isOwner) {

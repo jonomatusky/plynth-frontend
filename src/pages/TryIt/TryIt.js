@@ -29,12 +29,6 @@ const TryIt = ({ title, text }) => {
   const [username, setUsername] = useState()
   const [loggedIn, setLoggedIn] = useState()
 
-  email && console.log(email)
-  image && console.log(image)
-  type && console.log(type)
-  link && console.log(link)
-  username && console.log(username)
-
   // const handleSubmit = async ({ email, password }) => {
   //   setStatus('loading')
   //   try {

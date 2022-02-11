@@ -19,8 +19,6 @@ const Portal = () => {
   let { username } = useParams()
   username = username.toLowerCase()
 
-  console.log(portalUser)
-
   useEffect(() => {
     if (!portalUser || portalUser.username !== username) {
       fetchPortal(username)

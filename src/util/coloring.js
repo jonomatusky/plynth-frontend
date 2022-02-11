@@ -41,9 +41,7 @@ export const getFontColor = color => {
     } else {
       textColor = '#ffffff'
     }
-  } catch (err) {
-    console.log(err)
-  }
+  } catch (err) {}
 
   return textColor
 }

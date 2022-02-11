@@ -17,9 +17,6 @@ const QrScan = () => {
 
   usePageTrack()
 
-  console.log(qr)
-  console.log(status)
-
   useEffect(() => {
     const getQR = async () => {
       try {
@@ -58,10 +55,8 @@ const QrScan = () => {
         },
         method: 'POST',
       })
-      console.log(res)
     } catch (err) {
       setStatus('failed')
-      console.log(err)
     }
 
     posthog.people.set({ email, displayName })

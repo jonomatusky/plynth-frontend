@@ -189,7 +189,6 @@ const SignUpWithCodeForm = () => {
       if (!loggedIn) {
         logout()
       } else {
-        console.log('accepting invite')
         await acceptInvite(code)
         try {
           await fetchPacks()

@@ -15,7 +15,6 @@ const ImageUploadForm = ({ onSubmit }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSelect = async image => {
-    console.log(image)
     setShowLoadingSpinner(false)
     setImageSrc(image)
   }

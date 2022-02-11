@@ -27,7 +27,6 @@ const Recover = ({ title, text }) => {
       await firebase.auth().sendPasswordResetEmail(email)
       setIsSent(true)
     } catch (err) {
-      console.log(err)
       if (err.code === 'auth/invalid-email') {
         setError({ message: 'Please enter a valid email address' })
       } else if (err.code !== 'auth/user-not-found') {
