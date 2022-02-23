@@ -71,8 +71,21 @@ export const usePackStore = () => {
 
   const addCard = ({ id: packId, type: cardType }) => {
     const cards = (selectPack(packId) || {}).cards
-    const newCards = [...cards, { type: cardType }]
-    _updatePack({ id: packId, cards: newCards })
+    let newCards
+    if (cardType === 'ar' || cardType === 'ir') {
+      if (
+        cards.length > 0 &&
+        (cards[0].type === 'ar' || cards[0].type === 'ir')
+      ) {
+        return
+      } else {
+        newCards = [{ type: cardType }, ...cards]
+        _updatePack({ id: packId, cards: newCards })
+      }
+    } else {
+      newCards = [...cards, { type: cardType }]
+      _updatePack({ id: packId, cards: newCards })
+    }
   }
 
   return {

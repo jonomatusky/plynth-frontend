@@ -10,6 +10,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Button,
 } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
@@ -18,12 +19,9 @@ import theme from 'theme'
 import useUserStore from 'hooks/store/use-user-store'
 import OnboardingTooltip from 'components/OnboardingTooltip'
 
-import Logo from 'images/plynth_logo_color.svg'
-import Image from 'components/Image'
-import { AccountCircle } from '@mui/icons-material'
+import { AccountCircle, Add } from '@mui/icons-material'
 import { useSession } from 'hooks/use-session'
-
-// const drawerWidth = 70
+import { drawerWidth } from './AdminNav'
 
 const useStyles = makeStyles({
   appBar: {
@@ -56,7 +54,7 @@ const BarAccount = ({ right, left, children }) => {
     !text &&
     !image &&
     portalTooltipIsOpen &&
-    value === '/admin/packs'
+    value === '/admin/exp'
 
   const userType =
     user.tier === 'free' ||
@@ -80,71 +78,73 @@ const BarAccount = ({ right, left, children }) => {
     logout()
   }
 
+  const handleCreateExperience = () => {
+    return
+  }
+
   return (
     <>
-      <AppBar position="fixed" className={classes.appBar} elevation={0}>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{
+          backgroundColor: 'background.paper',
+          width: `calc(100% - ${drawerWidth}px)`,
+          ml: `${drawerWidth}px`,
+        }}
+      >
         <Box width="100%" display="flex" alignItems="center" height="52px">
-          {left || (
+          <Box flexGrow={1} height="100%" alignItems="flex-end">
             <>
-              <Box ml={2}>
-                <RouterLink to="/admin">
-                  <Image src={Logo} height="24px" width="91px" />
-                </RouterLink>
-              </Box>
-              <Box flexGrow={1} height="100%" alignItems="flex-end">
-                {userType !== 'new' && (
-                  <Tabs
-                    value={value}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    sx={{ height: '100%', display: { xs: 'none', md: 'flex' } }}
-                  >
-                    <Tab
-                      label={
-                        <Typography>
-                          <b>Packs</b>
-                        </Typography>
-                      }
-                      component={RouterLink}
-                      to="/admin/packs"
-                      value="/admin/packs"
-                      classes={{ root: classes.tabRoot }}
-                    />
-                    <Tab
-                      label={
-                        <OnboardingTooltip
-                          onClose={() => setPortalTooltipIsOpen(false)}
-                          placement="bottom"
-                          open={showPortalReminder}
-                          title="It looks like you haven't set up your portal yet! Click here to get started."
-                        >
-                          <Typography>
-                            <b>Portal</b>
-                          </Typography>
-                        </OnboardingTooltip>
-                      }
-                      component={RouterLink}
-                      to="/admin/portal/appearance"
-                      onClick={() => setPortalTooltipIsOpen(false)}
-                      value="/admin/portal"
-                      classes={{ root: classes.tabRoot }}
-                    />
-                    <Tab
-                      label={
-                        <Typography>
-                          <b>AR</b>
-                        </Typography>
-                      }
-                      component={RouterLink}
-                      to="/admin/pieces"
-                      value="/admin/pieces"
-                      classes={{ root: classes.tabRoot }}
-                    />
-                  </Tabs>
-                )}
-              </Box>
+              {left || (
+                <>
+                  {userType !== 'new' && (
+                    <Tabs
+                      value={value}
+                      indicatorColor="primary"
+                      textColor="primary"
+                      sx={{
+                        height: '100%',
+                        display: { xs: 'none', md: 'flex' },
+                      }}
+                    >
+                      <Tab
+                        label={<Typography>Packs</Typography>}
+                        component={RouterLink}
+                        to="/admin/experiences"
+                        value="/admin/experiences"
+                        classes={{ root: classes.tabRoot }}
+                      />
+                      <Tab
+                        label={
+                          <OnboardingTooltip
+                            onClose={() => setPortalTooltipIsOpen(false)}
+                            placement="bottom"
+                            open={showPortalReminder}
+                            title="It looks like you haven't set up your portal yet! Click here to get started."
+                          >
+                            <Typography>Portal</Typography>
+                          </OnboardingTooltip>
+                        }
+                        component={RouterLink}
+                        to="/admin/portal/appearance"
+                        onClick={() => setPortalTooltipIsOpen(false)}
+                        value="/admin/portal"
+                        classes={{ root: classes.tabRoot }}
+                      />
+                      <Tab
+                        label={<Typography>AR</Typography>}
+                        component={RouterLink}
+                        to="/admin/pieces"
+                        value="/admin/pieces"
+                        classes={{ root: classes.tabRoot }}
+                      />
+                    </Tabs>
+                  )}
+                </>
+              )}
             </>
-          )}
+          </Box>
           {right || (
             <>
               {/* <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
@@ -158,20 +158,18 @@ const BarAccount = ({ right, left, children }) => {
                   <b>Invite Friends</b>
                 </Button>
               </Box> */}
-              {/* {user.tier !== 'free2' && (
-                <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component={RouterLink}
-                    to="/s/join-the-beta"
-                    disableElevation
-                    sx={{ textTransform: 'none' }}
-                  >
-                    <b>Join the Beta</b>
-                  </Button>
-                </Box>
-              )} */}
+              <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleCreateExperience}
+                  disableElevation
+                  startIcon={<Add />}
+                >
+                  Create
+                </Button>
+              </Box>
+
               <Box pr={1}>
                 <IconButton onClick={handleOpen}>
                   <AccountCircle fontSize="large" />

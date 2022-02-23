@@ -17,7 +17,7 @@ import ReactGA from 'react-ga'
 
 import PrivateRoute from 'routes/PrivateRoute'
 import Login from 'pages/Login/Login'
-import MyPacks from 'pages/PacksView/PacksView'
+import Experiences from 'pages/PacksView/PacksView'
 
 import EditCards from 'pages/EditCards/EditCards'
 import EditAppearance from 'pages/EditAppearance/EditAppearance'
@@ -199,18 +199,23 @@ const App = () => {
         <Pieces />
       </PrivateRoute>
 
-      <PrivateRoute path="/admin/packs/:packId/edit/cards">
+      <PrivateRoute path="/admin/experiences/:packId/edit/elements">
         <EditCards />
       </PrivateRoute>
-      <PrivateRoute path="/admin/packs/:packId/edit/appearance">
+      <PrivateRoute path="/admin/experiences/:packId/edit/appearance">
         <EditAppearance />
       </PrivateRoute>
-      <PrivateRoute path="/admin/packs/:packId/edit/access">
+      <PrivateRoute path="/admin/experiences/:packId/edit/access">
         <EditAccess />
       </PrivateRoute>
-      <PrivateRoute path="/admin/packs/:packId/edit/settings">
+      <PrivateRoute path="/admin/experiences/:packId/edit/settings">
         <EditSettings />
       </PrivateRoute>
+      <Redirect
+        path="/admin/experiences/:packId/edit"
+        exact
+        to="/admin/experiences/:packId/edit/elements"
+      />
       <PrivateRoute path="/admin/portal/appearance">
         <EditPortalAppearance />
       </PrivateRoute>
@@ -222,8 +227,8 @@ const App = () => {
       <PrivateRoute path="/admin/account">
         <MyAccount />
       </PrivateRoute>
-      <PrivateRoute path="/admin/packs">
-        <MyPacks />
+      <PrivateRoute path="/admin/home">
+        <Experiences />
       </PrivateRoute>
 
       <SuperRoute path="/admin/super">

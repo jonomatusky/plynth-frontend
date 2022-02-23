@@ -1,150 +1,94 @@
-import React, { useState } from 'react'
-import { AppBar, Divider, Tabs, Tab, Box, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
+import React from 'react'
+import {
+  AppBar,
+  Divider,
+  Tabs,
+  Tab,
+  Box,
+  Typography,
+  Button,
+} from '@mui/material'
 import { Link, Link as RouterLink, useLocation } from 'react-router-dom'
-import { CameraAlt, Check, Palette, Style } from '@mui/icons-material'
+import { ChevronLeft } from '@mui/icons-material'
 
-import theme from 'theme'
-import Button from 'components/Button'
+const EditBar = () => {
+  // const [isSaving, setIsSaving] = useState(false)
 
-const drawerWidth = 70
-
-const useStyles = makeStyles({
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.secondary,
-  },
-  tabRoot: {
-    minWidth: 120,
-  },
-})
-
-const EditBar = ({ children }) => {
-  const classes = useStyles()
   const location = useLocation()
-
-  const [isSaving, setIsSaving] = useState(false)
-
   const urlElements = location.pathname.split('/')
   const value = urlElements[urlElements.length - 1]
 
-  const handleSave = () => {
-    setIsSaving(true)
-  }
+  // const handleSave = () => {
+  //   setIsSaving(true)
+  // }
 
   return (
     <>
-      <AppBar position="fixed" className={classes.appBar} elevation={0}>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{
+          backgroundColor: 'background.paper',
+        }}
+      >
         <Box
           width="100%"
           display="flex"
           justifyContent="space-between"
           alignItems="center"
         >
-          <Tabs
-            value={value}
-            indicatorColor="primary"
-            textColor="primary"
-            // onChange={handleChange}
-          >
-            <Tab
-              label={
-                <Box display="flex" alignItems="center">
-                  <Box
-                    mr={1}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Style
-                      style={{ transform: 'rotate(180deg)' }}
-                      fontSize="small"
-                    />
-                  </Box>
-                  <Box>
-                    <Typography>Cards</Typography>
-                  </Box>
-                </Box>
-              }
-              component={RouterLink}
-              to="cards"
-              value="cards"
-              classes={{ root: classes.tabRoot }}
-            />
-            <Tab
-              label={
-                <Box display="flex" alignItems="center">
-                  <Box
-                    mr={1}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Palette fontSize="small" />
-                  </Box>
-                  <Box>
-                    <Typography>Style</Typography>
-                  </Box>
-                </Box>
-              }
-              component={RouterLink}
-              to="appearance"
-              value="appearance"
-              classes={{ root: classes.tabRoot }}
-            />
-            <Tab
-              label={
-                <Box display="flex" alignItems="center">
-                  <Box
-                    mr={1}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <CameraAlt fontSize="small" />
-                  </Box>
-                  <Box>
-                    <Typography>Share</Typography>
-                  </Box>
-                </Box>
-              }
-              component={RouterLink}
-              to="access"
-              value="access"
-              classes={{ root: classes.tabRoot }}
-            />
-
-            <Tab
-              component={RouterLink}
-              to="settings"
-              value="settings"
-              classes={{ root: classes.tabRoot }}
-              label={<Typography variant="body2">Settings</Typography>}
-            />
-          </Tabs>
-          <Box mr={1}>
+          <Box mr={1} display="flex" flexWrap="nowrap">
             <Button
-              size="small"
-              endIcon={<Check />}
-              onClick={handleSave}
-              loading={isSaving}
+              startIcon={<ChevronLeft />}
+              // onClick={handleSave}
               disableElevation
               component={Link}
-              to="/admin"
+              to={'/admin/home'}
+              sx={{ minWidth: '120px' }}
+              disableRipple
+              disableFocusRipple
             >
-              <Box paddingLeft={0.5}>
-                <b>{`Done`}</b>
-              </Box>
+              <Typography variant="body2">Home</Typography>
+            </Button>
+
+            <Tabs
+              value={value}
+              indicatorColor="secondary"
+              textColor="secondary"
+              // onChange={handleChange}
+            >
+              <Tab
+                label={<Typography variant="body2">Elements</Typography>}
+                component={RouterLink}
+                to="elements"
+                value="elements"
+                sx={{ minWidth: '120px' }}
+              />
+              <Tab
+                label={<Typography variant="body2">Appearance</Typography>}
+                component={RouterLink}
+                to="appearance"
+                value="appearance"
+                sx={{ minWidth: '120px' }}
+              />
+
+              <Tab
+                component={RouterLink}
+                to="settings"
+                value="settings"
+                sx={{ minWidth: '120px' }}
+                label={<Typography variant="body2">Settings</Typography>}
+              />
+            </Tabs>
+          </Box>
+          <Box pr={1} sx={{ display: { xs: 'none', md: 'block' } }}>
+            <Button variant="contained" color="secondary" disableElevation>
+              Preview
             </Button>
           </Box>
         </Box>
         <Divider />
       </AppBar>
-      <Box height="calc(100vh - 48px)" overflow="hidden" mt="48px">
-        {children}
-      </Box>
     </>
   )
 }

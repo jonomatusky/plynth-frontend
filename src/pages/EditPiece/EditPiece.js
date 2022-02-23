@@ -78,29 +78,9 @@ const EditPiece = () => {
   let imageSrc = image ? REACT_APP_ASSET_URL + '/' + image : null
   let videoSrc = video ? REACT_APP_ASSET_URL + '/' + video : null
 
-  // useEffect(() => {
-  //   const onPackChange = () => {
-  //     const cards = (pack || {}).cards
-  //     const card = (cards || [])[0]
-  //     const newMedia = card || {}
-  //     setMedia(newMedia)
-  //   }
-  //   onPackChange()
-  // }, [pack])
-
   const handleUpdateMedia = newMedia => {
     updatePack({ id: pieceId, cards: [{ ...media, ...newMedia }] })
   }
-
-  // const [removeDialogIsOpen, setRemoveDialogIsOpen] = useState(false)
-
-  // const handleRemoveClose = () => {
-  //   setRemoveDialogIsOpen(false)
-  // }
-
-  // const handleRemoveOpen = () => {
-  //   setRemoveDialogIsOpen(true)
-  // }
 
   const DisplayCard = () => {
     const [hideImage, setHideImage] = useState(false)

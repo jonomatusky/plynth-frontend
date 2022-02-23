@@ -3,11 +3,12 @@ import { createTheme, adaptV4Theme } from '@mui/material'
 const theme = createTheme(
   adaptV4Theme({
     palette: {
-      primary: { main: '#CD0A64' },
-      secondary: { main: '#666666' },
-      website: { main: '#ffffff' },
+      primary: { main: '#666666' },
+      secondary: { main: '#CD0A64' },
+      website: { main: '#fafafa' },
       error: { main: '#FF9516' },
       background: {
+        default: '#fafafa',
         card: '#212421',
       },
     },

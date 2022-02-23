@@ -1,270 +1,122 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import {
-  Container,
-  Box,
-  Grid,
-  Typography,
-  IconButton,
-  Menu,
-  MenuItem,
-  Divider,
-  Button,
-  Card,
-  CardContent,
-} from '@mui/material'
-import { Add, ArrowForwardIos, Person } from '@mui/icons-material'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { Container, Box, Typography, Button } from '@mui/material'
+import { Add } from '@mui/icons-material'
 
 import usePackStore from 'hooks/store/use-pack-store'
-import LivePreview from 'components/LivePreview'
 import AdminNav from 'layouts/AdminNav'
-import PackListItem from './components/PackListItem'
-import Emoji from 'components/Emoji'
-import PackNameForm from 'pages/PacksView/components/PackNameForm'
-import { useHistory } from 'react-router'
-import { useSession } from 'hooks/use-session'
 import BarAccount from 'layouts/BarAccount'
-import PreviewLayout from 'layouts/PreviewLayout'
-import useUserStore from 'hooks/store/use-user-store'
+import ExperienceItem from './components/ExperienceItem'
+// import { isMobile } from 'react-device-detect'
 
-const PacksView = () => {
+const Experiences = () => {
   const history = useHistory()
-  const { logout } = useSession()
-  const { packs, status, createPack } = usePackStore()
-  const { user } = useUserStore()
+  const { packs, createPack } = usePackStore()
 
-  const { username } = user || {}
-
-  const packsFiltered = packs.filter(pack => {
-    if ((pack.cards || []).length > 0 && pack.cards[0].type === 'ar') {
-      return false
-    } else {
+  const experiences = packs.filter(pack => {
+    if ((pack.cards || []).length > 0) {
       return true
+    } else {
+      return false
     }
   })
 
-  const [selectedPackIndex, setSelectedPackIndex] = useState(0)
-  const [newPack, setNewPack] = useState(null)
-
-  const selectedPack = packsFiltered[selectedPackIndex] || {}
-
-  const handleSelectPack = clickedPackIndex => {
-    setSelectedPackIndex(clickedPackIndex)
-  }
-
-  const handleClick = () => {
-    setNewPack({})
-  }
-
-  const handleCancel = () => {
-    setNewPack(null)
-  }
-
-  const [anchorEl, setAnchorEl] = useState(null)
-
-  const handleOpen = event => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = event => {
-    setAnchorEl(null)
-  }
-
-  const handleLogout = async () => {
-    logout()
-  }
-
-  const handleSubmitPackName = async values => {
-    const createdPack = await createPack({
-      name: values.name,
+  const createExperience = async () => {
+    const experience = await createPack({
+      name: `My New Experience`,
       style: { backgroundColor: '#FFF9F0', fontColor: '#333333' },
       isPublic: true,
       shareWithLink: true,
     })
-    if (createdPack.id) {
-      history.push(`packs/${createdPack.id}/edit/cards`)
-    } else {
-      setNewPack(null)
+    if (experience.id) {
+      history.push(`/admin/experiences/${experience.id}/edit`)
     }
   }
 
   return (
     <>
-      <BarAccount />
+      <BarAccount left={<></>} />
       <AdminNav>
-        <Box height="calc(100vh - 48px)" overflow="hidden">
+        <Box height="calc(100vh - 48px)" overflow="scroll">
           <Container disableGutters maxWidth={false}>
-            <Grid container justifyContent="center">
-              <Grid item xs={12} md={7}>
-                <Box height="calc(100vh - 48px)" overflow="auto" pt={3}>
-                  <Grid container justifyContent="center" spacing={3}>
-                    <Grid
-                      item
-                      xs={12}
-                      container
-                      spacing={1}
+            <Box
+              sx={{ display: { xs: 'none', sm: 'flex' } }}
+              width="100%"
+              flexWrap="wrap"
+              padding={6}
+            >
+              <Box display="flex" flexWrap="wrap" width="256px" mr={4}>
+                <Box
+                  height="256px"
+                  width="100%"
+                  borderRadius="6px"
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{ display: { xs: 'none', sm: 'flex' } }}
+                >
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    // color="primary"
+                    sx={{
+                      height: '256px',
+                      width: '100%',
+                      // backgroundColor: '#00000033',
+                      // ':hover': {
+                      //   backgroundColor: '#00000066',
+                      // },
+                    }}
+                    size="large"
+                    // variant="contained"
+                    disableElevation
+                    onClick={createExperience}
+                  >
+                    <Box
+                      display="flex"
+                      flexWrap="wrap"
+                      alignitems="center"
                       justifyContent="center"
+                      width="100%"
                     >
-                      <Grid
-                        item
-                        xs={12}
-                        container
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Grid item xs={false} sm={1}></Grid>
-                        {/* <Grid item xs={false} sm={1} /> */}
-                        <Grid item xs={11} sm={9}>
-                          <Box
-                            mb={1}
-                            mt={1}
-                            sx={{ display: { xs: 'none', md: 'block' } }}
-                          >
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              size="large"
-                              onClick={handleClick}
-                              endIcon={<Add />}
-                              fullWidth
-                            >
-                              <b>Create New Pack</b>
-                            </Button>
-                          </Box>
-                          <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-                            <IconButton onClick={handleOpen} size="large">
-                              <Person />
-                            </IconButton>
-
-                            <Menu
-                              id="simple-menu"
-                              anchorEl={anchorEl}
-                              open={Boolean(anchorEl)}
-                              transitionDuration={0}
-                              onClose={handleClose}
-                            >
-                              <MenuItem component={Link} to="/admin/account">
-                                My account
-                              </MenuItem>
-                              <Divider />
-                              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                            </Menu>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={false} sm={1}></Grid>
-                      </Grid>
-
-                      {status === 'succeeded' && (packs || []).length === 0 && (
-                        <Grid item xs={11} sm={9}>
-                          <Typography
-                            align="center"
-                            sx={{ display: { xs: 'none', md: 'block' } }}
-                          >
-                            You don't have any packs yet! Create a new one to
-                            get started <Emoji symbol="👆" label="up" />
-                          </Typography>
-                          <Typography
-                            align="center"
-                            sx={{ display: { xs: 'block', md: 'none' } }}
-                          >
-                            You don't have any packs yet! Switch over to desktop
-                            to start creating{' '}
-                            <Emoji symbol="💻" label="desktop" />
-                          </Typography>
-                        </Grid>
-                      )}
-                      {newPack && (
-                        <Grid
-                          item
-                          xs={12}
-                          container
-                          justifyContent="center"
-                          alignItems="center"
-                        >
-                          <Grid item xs={false} sm={1}></Grid>
-                          {/* <Grid item xs={false} sm={1} /> */}
-                          <Grid item xs={11} sm={9}>
-                            <Card>
-                              <CardContent>
-                                <Grid
-                                  container
-                                  justifyContent="center"
-                                  spacing={1}
-                                >
-                                  <Grid item xs={12}>
-                                    <Typography variant="h5">
-                                      New Pack
-                                    </Typography>
-                                  </Grid>
-
-                                  <Grid item xs={12}>
-                                    <PackNameForm
-                                      onSubmit={handleSubmitPackName}
-                                      onCancel={handleCancel}
-                                      buttonText="Get started"
-                                    />
-                                  </Grid>
-                                </Grid>
-                              </CardContent>
-                            </Card>
-                          </Grid>
-                          <Grid item xs={false} sm={1}></Grid>
-                        </Grid>
-                      )}
-                      <>
-                        {(packsFiltered || []).map((pack, index) => {
-                          return (
-                            <Grid
-                              item
-                              xs={12}
-                              container
-                              justifyContent="center"
-                              alignItems="center"
-                              key={pack.id}
-                            >
-                              <Grid item xs={false} sm={1} />
-                              <Grid item xs={11} sm={9}>
-                                <PackListItem
-                                  pack={pack}
-                                  isSelected={index === selectedPackIndex}
-                                  onSelectPack={() => handleSelectPack(index)}
-                                />
-                              </Grid>
-                              <Grid item xs={false} sm={1}>
-                                <Box
-                                  textAlign="center"
-                                  sx={{ display: { xs: 'none', md: 'block' } }}
-                                >
-                                  {index === selectedPackIndex && (
-                                    <ArrowForwardIos color="disabled" />
-                                  )}
-                                </Box>
-                              </Grid>
-                            </Grid>
-                          )
-                        })}
-                        <Grid item xs={12}>
-                          <Box height="20px" />
-                        </Grid>
-                      </>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
-                <PreviewLayout username={username}>
-                  <Grid container justifyContent="center" spacing={3}>
-                    <Grid item xs={12} container justifyContent="center">
-                      <Box position="fixed">
-                        {!!selectedPack.id && (
-                          <LivePreview pack={selectedPack} />
-                        )}
+                      <Box width="100%" textAlign="center">
+                        <Add sx={{ fontSize: 48 }} />
                       </Box>
-                    </Grid>
-                  </Grid>
-                </PreviewLayout>
-              </Grid>
-            </Grid>
+
+                      <Typography sx={{ textTransform: 'none' }}>
+                        <b>Create New Experience</b>
+                      </Typography>
+                    </Box>
+                  </Button>
+                </Box>
+              </Box>
+              {experiences.map(experience => {
+                return (
+                  <ExperienceItem experience={experience} key={experience.id} />
+                )
+              })}
+            </Box>
+
+            <Box
+              width="100%"
+              flexWrap="wrap"
+              padding={3}
+              justifyContent="center"
+              sx={{ display: { xs: 'flex', sm: 'none' } }}
+            >
+              <Typography textAlign="center" pb={1}>
+                Switch over to desktop to create a new experience.
+              </Typography>
+
+              {experiences.map(experience => {
+                return (
+                  <ExperienceItem
+                    experience={experience}
+                    key={experience.id}
+                    isMobile
+                  />
+                )
+              })}
+            </Box>
           </Container>
         </Box>
       </AdminNav>
@@ -272,4 +124,4 @@ const PacksView = () => {
   )
 }
 
-export default PacksView
+export default Experiences

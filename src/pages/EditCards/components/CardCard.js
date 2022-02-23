@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
-import { Grid, Box, Card, CardContent, CardActionArea, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import {
+  Grid,
+  Box,
+  Card,
+  CardContent,
+  CardActionArea,
+  Typography,
+} from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import theme from 'theme'
 import {
   GetApp,
@@ -10,9 +17,23 @@ import {
   Headset,
   Photo,
   Link,
+  Visibility,
+  ViewInAr,
 } from '@mui/icons-material'
 
 export const cardTypes = [
+  {
+    type: 'ar',
+    title: 'AR Video',
+    icon: 'view_in_ar',
+    description: 'Bring an image to life in augemented reality',
+  },
+  {
+    type: 'ir',
+    title: 'Image Target',
+    icon: 'visibility',
+    description: 'Open the experience by scanning an image',
+  },
   {
     type: 'highlight',
     title: 'Highlight',
@@ -81,6 +102,10 @@ const MuiIcon = ({ icon, fontSize }) => {
       return <Photo fontSize={fontSize} />
     case 'link':
       return <Link fontSize={fontSize} />
+    case 'visibility':
+      return <Visibility fontSize={fontSize} />
+    case 'view_in_ar':
+      return <ViewInAr fontSize={fontSize} />
     default:
       return <></>
   }

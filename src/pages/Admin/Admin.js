@@ -7,16 +7,10 @@ import usePackStore from 'hooks/store/use-pack-store'
 import { Redirect } from 'react-router'
 
 const Admin = () => {
-  const { user, status: userStatus } = useUserStore()
+  const { status: userStatus } = useUserStore()
   const { packs, status: packStatus, createStatus, createPack } = usePackStore()
 
   useFetch()
-
-  const isOldUser =
-    user.tier === 'free' ||
-    user.tier === 'artist' ||
-    user.tier === 'agency' ||
-    user.tier === 'trial'
 
   useEffect(() => {
     //create a pack if one does not exist
@@ -49,14 +43,12 @@ const Admin = () => {
   })
 
   if (userStatus === 'succeeded' && packStatus === 'succeeded') {
-    if (isOldUser) {
-      return <Redirect push to="/admin/packs" />
-    } else if (packs.length === 1) {
-      return <Redirect push to={`/admin/pieces/${packs[0].id}/edit`} />
+    if (packs.length === 1) {
+      return <Redirect push to={`/admin/experiences/${packs[0].id}/edit`} />
     } else if (packs.length === 0) {
       return <LoadingScreen backgroundColor={'theme.palette.background.card'} />
     } else {
-      return <Redirect push to="/admin/pieces" />
+      return <Redirect push to="/admin/home" />
     }
   } else {
     return <LoadingScreen backgroundColor={'theme.palette.background.card'} />

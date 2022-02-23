@@ -45,7 +45,7 @@ const QrScan = () => {
   const handleSubmit = async ({ url, email, displayName }) => {
     setStatus('pending')
     try {
-      const res = await request({
+      await request({
         url: `/qr`,
         data: {
           qrId: qrId,

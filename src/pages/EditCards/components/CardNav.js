@@ -3,7 +3,6 @@ import { useParams } from 'react-router'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {
   Grid,
-  Typography,
   Card,
   CardActionArea,
   Box,
@@ -32,6 +31,9 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
   //     setCards(cards)
   //   }
   // }, [cards])
+
+  let firstCardIsSpecial =
+    cards.length > 0 && (cards[0].type === 'ar' || cards[0].type === 'ir')
 
   const handleDragEnd = result => {
     if (!result.destination) {
@@ -67,7 +69,8 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
     margin: `0 ${grid}px 0 0`,
 
     borderBottom:
-      index === cardIndex && !isDragging
+      (firstCardIsSpecial ? index + 1 === cardIndex : index === cardIndex) &&
+      !isDragging
         ? `3px solid rgba(0, 0, 0, 0.26)`
         : `3px solid rgba(0, 0, 0, 0)`,
     // styles we need to apply on draggsables
@@ -81,11 +84,41 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
 
   return (
     <Grid container alignItems="center" overflow="hidden">
-      <Grid item xs={1}>
-        <Typography variant="body2">Current Cards:</Typography>
-      </Grid>
-      <Grid item xs={11}>
+      <Grid item xs={12} pl={2}>
         <Box display="flex" alignContent="center" overflow="auto">
+          {firstCardIsSpecial && (
+            <Box
+              paddingBottom={1}
+              paddingTop={1}
+              minWidth="72px"
+              mr={1}
+              borderBottom={
+                cardIndex === 0
+                  ? `3px solid rgba(0, 0, 0, 0.26)`
+                  : `3px solid rgba(0, 0, 0, 0)`
+              }
+            >
+              <Card>
+                <Box height="100%" />
+                <CardActionArea onClick={() => setCardIndex(0)}>
+                  <Box
+                    p={2}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Icon>
+                      {
+                        cardTypes.find(
+                          cardType => cardType.type === cards[0].type
+                        ).icon
+                      }
+                    </Icon>
+                  </Box>
+                </CardActionArea>
+              </Card>
+            </Box>
+          )}
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="droppable" direction="horizontal">
               {(provided, snapshot) => (
@@ -96,64 +129,77 @@ const CardNav = ({ cards, cardIndex, setCardIndex, updatePack }) => {
                 >
                   {cards &&
                     cards.length > 0 &&
-                    cards.map((card, index) => (
-                      <Draggable
-                        key={`navcard` + card.id}
-                        draggableId={card.id}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            style={getItemStyle(
-                              snapshot.isDragging,
-                              provided.draggableProps.style,
-                              index
-                            )}
-                          >
-                            <Box
-                              paddingBottom={1}
-                              paddingTop={1}
-                              minWidth="72px"
+                    cards
+                      .filter(card => card.type !== 'ar' && card.type !== 'ir')
+                      .map((card, index) => (
+                        <Draggable
+                          key={`navcard` + card.id}
+                          draggableId={card.id}
+                          index={index}
+                        >
+                          {(provided, snapshot) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              style={getItemStyle(
+                                snapshot.isDragging,
+                                provided.draggableProps.style,
+                                index
+                              )}
                             >
-                              <Card>
-                                <Grid container alignItems="center">
-                                  <Grid item>
-                                    <CardActionArea
-                                      onClick={() => setCardIndex(index)}
-                                    >
-                                      <Box p={2} pr={1}>
-                                        <Icon>
-                                          {
-                                            cardTypes.find(
-                                              cardType =>
-                                                cardType.type === card.type
-                                            ).icon
-                                          }
-                                        </Icon>
+                              <Box
+                                paddingBottom={1}
+                                paddingTop={1}
+                                minWidth="72px"
+                              >
+                                <Card>
+                                  <Grid container alignItems="center">
+                                    <Grid item>
+                                      <CardActionArea
+                                        onClick={() =>
+                                          setCardIndex(
+                                            firstCardIsSpecial
+                                              ? index + 1
+                                              : index
+                                          )
+                                        }
+                                      >
+                                        <Box
+                                          p={2}
+                                          display="flex"
+                                          justifyContent="center"
+                                          alignItems="center"
+                                        >
+                                          <Icon>
+                                            {
+                                              cardTypes.find(
+                                                cardType =>
+                                                  cardType.type === card.type
+                                              ).icon
+                                            }
+                                          </Icon>
+                                        </Box>
+                                      </CardActionArea>
+                                    </Grid>
+                                    <Grid item {...provided.dragHandleProps}>
+                                      <Box
+                                        display="flex"
+                                        height="100%"
+                                        alignItems="center"
+                                      >
+                                        <DragIndicator
+                                          color="disabled"
+                                          fontSize="small"
+                                        />
                                       </Box>
-                                    </CardActionArea>
+                                    </Grid>
                                   </Grid>
-                                  <Grid item {...provided.dragHandleProps}>
-                                    <Box
-                                      display="flex"
-                                      height="100%"
-                                      alignItems="center"
-                                    >
-                                      <DragIndicator
-                                        color="disabled"
-                                        fontSize="small"
-                                      />
-                                    </Box>
-                                  </Grid>
-                                </Grid>
-                              </Card>
-                            </Box>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                                </Card>
+                              </Box>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
                   {provided.placeholder}
                 </div>
               )}
