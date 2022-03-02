@@ -122,6 +122,7 @@ const LivelySignUp = () => {
             ref={playerRef}
             autoPlay
             muted
+            playsinline
             style={{
               position: 'absolute',
               height: '100%',

@@ -46,7 +46,7 @@ const PacksView = () => {
   const [selectedPackIndex, setSelectedPackIndex] = useState(0)
   const [newPack, setNewPack] = useState(null)
 
-  const selectedPack = packs[selectedPackIndex] || {}
+  const selectedPack = packsFiltered[selectedPackIndex] || {}
 
   const handleSelectPack = clickedPackIndex => {
     setSelectedPackIndex(clickedPackIndex)

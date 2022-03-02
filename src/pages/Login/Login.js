@@ -210,7 +210,10 @@ const NewPortalSignUp = ({ title, text }) => {
               <Grid item container justifyContent="center">
                 <Typography variant="body2">
                   Don't have an account?{' '}
-                  <Link component={RouterLink} to={'/signup'} size="small">
+                  <Link
+                    href="https://airtable.com/shrW23ippm05xPTYg"
+                    size="small"
+                  >
                     <b>Sign Up</b>
                   </Link>
                 </Typography>
