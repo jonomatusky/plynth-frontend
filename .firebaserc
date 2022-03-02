@@ -11,6 +11,9 @@
         ],
         "staging": [
           "plynth-staging"
+        ],
+        "legacy": [
+          "legacy-plynth"
         ]
       }
     },

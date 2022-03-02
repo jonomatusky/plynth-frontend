@@ -61,10 +61,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build-production": "react-scripts build",
+    "build-legacy": "env-cmd -f .env.legacy.local react-scripts build",
     "build-testing": "env-cmd -f .env.testing.local react-scripts build",
     "build": "env-cmd -f .env.staging.local react-scripts build",
     "deploy": "firebase deploy --only hosting:staging",
     "deploy-testing": "firebase deploy --only hosting:staging",
+    "deploy-legacy": "firebase deploy --only hosting:legacy",
     "deploy-production": "firebase deploy --only hosting:production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
