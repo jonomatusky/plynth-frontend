@@ -22,7 +22,7 @@ import Image from 'components/Image'
 import BarAccount from 'layouts/BarAccount'
 // import LoadingScreen from 'components/LoadingScreen'
 import arrow from 'images/arrow.svg'
-import Logo from 'images/plynth_logo_color.svg'
+import Logo from 'images/leaflet_logo_color.svg'
 
 const DemoPreview = () => {
   usePageTrack()
@@ -100,7 +100,7 @@ const DemoPreview = () => {
 
     const handleCopy = () => {
       setIsCopied(true)
-      copy('https://plynth.com/s/demo')
+      copy('https://leaflet.so/s/demo')
     }
 
     return (

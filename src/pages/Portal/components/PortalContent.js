@@ -120,7 +120,7 @@ const PortalContent = ({ portal, onOpenCamera, showHelpDialog }) => {
                     underline="always"
                     target="_blank"
                   >
-                    Powered by Plynth
+                    Powered by Leaflet
                   </Link>
                 </Typography>
               </Box>

@@ -5,7 +5,7 @@ import { Dialog, Grid, Box, Typography, Fade } from '@mui/material'
 import styled from 'styled-components'
 import theme from 'theme'
 
-import foundImage from 'images/plynth_logo_simple.svg'
+import foundImage from 'images/leaflet_logo_color.svg'
 
 const FoundImage = styled.img`
   height: 75px;
@@ -47,7 +47,7 @@ const FoundModal = props => {
         </Grid>
       </FoundScreen>
     </Dialog>
-  );
+  )
 }
 
 export default FoundModal

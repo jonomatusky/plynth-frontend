@@ -69,7 +69,7 @@ const App = () => {
     api_host: 'https://app.posthog.com',
   })
 
-  ReactGA.initialize('UA-136166229-3')
+  ReactGA.initialize('UA-136166229-6')
 
   firebase.analytics()
 
@@ -153,7 +153,7 @@ const App = () => {
         exact
         path="/s/subscribe"
         render={() => {
-          window.location = 'https://site.plynth.com/get-updates'
+          window.location = 'https://plynth.com/get-updates'
 
           return <></>
         }}
@@ -162,7 +162,7 @@ const App = () => {
         exact
         path="/s/contact"
         render={() => {
-          window.location = 'https://site.plynth.com/contact'
+          window.location = 'https://plynth.com/contact'
 
           return <></>
         }}
@@ -249,15 +249,6 @@ const App = () => {
       </Route>
       <Redirect path="/s" exact to="/" />
       <Redirect path="/s" to="/" />
-      <Route
-        exact
-        path="/"
-        render={() => {
-          window.location = 'https://site.plynth.com/'
-
-          return <></>
-        }}
-      />
 
       <Route restricted={false} path="/:username/open" exact>
         <PortalOpen />
@@ -270,6 +261,8 @@ const App = () => {
       <Route restricted={false} path="/:username">
         <Portal />
       </Route>
+
+      <Redirect path="/" to="/login" />
 
       <Route>
         <NotFoundPage />

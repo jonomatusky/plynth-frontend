@@ -7,7 +7,7 @@
     "plynth-2020": {
       "hosting": {
         "production": [
-          "plynth-2020"
+          "leaflet-so"
         ],
         "staging": [
           "plynth-staging"

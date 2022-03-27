@@ -21,7 +21,7 @@ import CardMenu from './components/CardMenu'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 
-import { drawerWidth } from 'layouts/AdminNav'
+// import { drawerWidth } from 'layouts/AdminNav'
 import PreviewLayout from 'layouts/PreviewLayout'
 
 const EditCards = () => {
@@ -113,9 +113,9 @@ const EditCards = () => {
               {cards && cards.length > 0 && (
                 <div
                   style={{
-                    width: `calc(100vw - ${drawerWidth}px`,
+                    width: `100vw`,
                     position: 'absolute',
-                    top: '48px',
+                    // top: '48px',
                     zIndex: '15',
                   }}
                 >
@@ -147,9 +147,7 @@ const EditCards = () => {
                 <Grid item sm={12} md={7}>
                   <Box
                     maxHeight={
-                      cards && cards.length > 0
-                        ? 'calc(100vh - 127px)'
-                        : 'calc(100vh - 48px)'
+                      cards && cards.length > 0 ? 'calc(100vh - 79px)' : '100vh'
                     }
                     marginTop={cards && cards.length > 0 ? '79px' : '0px'}
                     overflow="auto"

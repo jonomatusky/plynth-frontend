@@ -46,12 +46,12 @@ const ButtonSharePortal = ({ url }) => {
         // disablePortal={true}
       >
         {!linkIsCopied && (
-          <MenuItem onClick={handleCopy}>Copy my Plynth portal URL</MenuItem>
+          <MenuItem onClick={handleCopy}>Copy my Leaflet portal URL</MenuItem>
         )}
         {linkIsCopied && <MenuItem>Copied!</MenuItem>}
 
         <DownloadQR qrValue={url}>
-          <MenuItem>Download my Plynth portal QR code</MenuItem>
+          <MenuItem>Download my Leaflet portal QR code</MenuItem>
         </DownloadQR>
       </Menu>
     </>

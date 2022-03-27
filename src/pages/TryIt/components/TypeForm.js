@@ -33,7 +33,7 @@ const TypeForm = ({ type, onSubmit }) => {
       <Grid item xs={12} mb={2}>
         <Typography color="white">
           <b>
-            Plynth can link to videos, music, images, and more. Add one below
+            Leaflet can link to videos, music, images, and more. Add one below
             for the demo.
           </b>
         </Typography>

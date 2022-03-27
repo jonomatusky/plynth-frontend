@@ -112,7 +112,7 @@ const NewPortalUsername = () => {
                   size="small"
                   fullWidth
                   InputProps={{
-                    startAdornment: 'plynth.com/',
+                    startAdornment: 'leaflet.so/',
                   }}
                   {...formik.getFieldProps('username')}
                   error={Boolean(formik.errors.username)}

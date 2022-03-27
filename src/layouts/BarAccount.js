@@ -18,7 +18,7 @@ import theme from 'theme'
 import useUserStore from 'hooks/store/use-user-store'
 import OnboardingTooltip from 'components/OnboardingTooltip'
 
-import Logo from 'images/plynth_logo_color.svg'
+import Logo from 'images/leaflet_logo_color.svg'
 import Image from 'components/Image'
 import { AccountCircle } from '@mui/icons-material'
 import { useSession } from 'hooks/use-session'
@@ -58,13 +58,13 @@ const BarAccount = ({ right, left, children }) => {
     portalTooltipIsOpen &&
     value === '/admin/packs'
 
-  const userType =
-    user.tier === 'free' ||
-    user.tier === 'artist' ||
-    user.tier === 'agency' ||
-    user.tier === 'trial'
-      ? 'old'
-      : 'new'
+  // const userType =
+  //   user.tier === 'free' ||
+  //   user.tier === 'artist' ||
+  //   user.tier === 'agency' ||
+  //   user.tier === 'trial'
+  //     ? 'old'
+  //     : 'new'
 
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -86,13 +86,13 @@ const BarAccount = ({ right, left, children }) => {
         <Box width="100%" display="flex" alignItems="center" height="52px">
           {left || (
             <>
-              <Box ml={2}>
+              <Box ml={1}>
                 <RouterLink to="/admin">
-                  <Image src={Logo} height="24px" width="91px" />
+                  <Image src={Logo} height="36px" width="48px" />
                 </RouterLink>
               </Box>
               <Box flexGrow={1} height="100%" alignItems="flex-end">
-                {userType !== 'new' && (
+                {(user.tier === 'artist' || user.tier === 'agency') && (
                   <Tabs
                     value={value}
                     indicatorColor="primary"
@@ -110,6 +110,7 @@ const BarAccount = ({ right, left, children }) => {
                       value="/admin/packs"
                       classes={{ root: classes.tabRoot }}
                     />
+
                     <Tab
                       label={
                         <OnboardingTooltip
@@ -129,7 +130,8 @@ const BarAccount = ({ right, left, children }) => {
                       value="/admin/portal"
                       classes={{ root: classes.tabRoot }}
                     />
-                    <Tab
+
+                    {/* <Tab
                       label={
                         <Typography>
                           <b>AR</b>
@@ -139,7 +141,7 @@ const BarAccount = ({ right, left, children }) => {
                       to="/admin/pieces"
                       value="/admin/pieces"
                       classes={{ root: classes.tabRoot }}
-                    />
+                    /> */}
                   </Tabs>
                 )}
               </Box>

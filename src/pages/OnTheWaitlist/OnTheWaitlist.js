@@ -5,13 +5,13 @@ import {
   Grid,
   Typography,
   Box,
-  IconButton,
+  // IconButton,
   Button,
   CircularProgress,
 } from '@mui/material'
 import useUserStore from 'hooks/store/use-user-store'
-import { faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSession } from 'hooks/use-session'
 import { Close } from '@mui/icons-material'
 import PublicNav from 'layouts/PublicNav'
@@ -76,7 +76,7 @@ const OnTheWaitlist = () => {
             </Grid>
             <Grid item>
               <Typography variant="h6" align="center" color={'white'}>
-                Your portal at <b>plynth.com/{user.username}</b> has been
+                Your portal at <b>leaflet.so/{user.username}</b> has been
                 reserved.
               </Typography>
             </Grid>
@@ -86,7 +86,7 @@ const OnTheWaitlist = () => {
                 know as soon as one is available.
               </Typography>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <Typography variant="h6" align="center" color={'white'}>
                 In the meantime, follow us for updates:
               </Typography>
@@ -96,7 +96,8 @@ const OnTheWaitlist = () => {
                 <IconButton
                   href={'https://www.instagram.com/plynthplayer/'}
                   target="_blank"
-                  size="large">
+                  size="large"
+                >
                   <FontAwesomeIcon
                     icon={faInstagram}
                     color="white"
@@ -106,7 +107,11 @@ const OnTheWaitlist = () => {
                 </IconButton>
               </Grid>
               <Grid item>
-                <IconButton href={'https://www.tiktok.com/@plynth'} target="_blank" size="large">
+                <IconButton
+                  href={'https://www.tiktok.com/@plynth'}
+                  target="_blank"
+                  size="large"
+                >
                   <FontAwesomeIcon
                     icon={faTiktok}
                     color="white"
@@ -115,12 +120,12 @@ const OnTheWaitlist = () => {
                   />
                 </IconButton>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Container>
       )}
     </PublicNav>
-  );
+  )
 }
 
 export default OnTheWaitlist

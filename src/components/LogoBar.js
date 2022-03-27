@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@mui/material'
 
-import { ReactComponent as PlynthLogo } from 'images/plynth_logo_black.svg'
+import { ReactComponent as LeafletLogo } from 'images/leaflet_logo_black.svg'
 
 const LogoBar = ({ link, color }) => {
   return (
@@ -23,14 +23,14 @@ const LogoBar = ({ link, color }) => {
           // },
         }}
       >
-        <PlynthLogo
+        <LeafletLogo
           fill={color}
           style={{
             width: '80vw',
             maxWidth: '80px',
             maxHeight: '30px',
           }}
-          alt="Plynth Logo"
+          alt="Leaflet Logo"
         />
       </Box>
     </Box>

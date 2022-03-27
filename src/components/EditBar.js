@@ -6,13 +6,12 @@ import { CameraAlt, Check, Palette, Style } from '@mui/icons-material'
 
 import theme from 'theme'
 import Button from 'components/Button'
-
-const drawerWidth = 70
+import Logo from 'images/leaflet_logo_color.svg'
+import Image from 'components/Image'
 
 const useStyles = makeStyles({
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    width: `100%`,
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.secondary,
   },
@@ -43,87 +42,99 @@ const EditBar = ({ children }) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Tabs
-            value={value}
-            indicatorColor="primary"
-            textColor="primary"
-            // onChange={handleChange}
+          <Box
+            display="flex"
+            wrap="no-wrap"
+            justifyContent="center"
+            alignItems="center"
           >
-            <Tab
-              label={
-                <Box display="flex" alignItems="center">
-                  <Box
-                    mr={1}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Style
-                      style={{ transform: 'rotate(180deg)' }}
-                      fontSize="small"
-                    />
+            <Box ml={1}>
+              <RouterLink to="/admin">
+                <Image src={Logo} height="36px" width="48px" />
+              </RouterLink>
+            </Box>
+            <Tabs
+              value={value}
+              indicatorColor="primary"
+              textColor="primary"
+              // onChange={handleChange}
+            >
+              <Tab
+                label={
+                  <Box display="flex" alignItems="center">
+                    <Box
+                      mr={1}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Style
+                        style={{ transform: 'rotate(180deg)' }}
+                        fontSize="small"
+                      />
+                    </Box>
+                    <Box>
+                      <Typography>Cards</Typography>
+                    </Box>
                   </Box>
-                  <Box>
-                    <Typography>Cards</Typography>
+                }
+                component={RouterLink}
+                to="cards"
+                value="cards"
+                classes={{ root: classes.tabRoot }}
+              />
+              <Tab
+                label={
+                  <Box display="flex" alignItems="center">
+                    <Box
+                      mr={1}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Palette fontSize="small" />
+                    </Box>
+                    <Box>
+                      <Typography>Style</Typography>
+                    </Box>
                   </Box>
-                </Box>
-              }
-              component={RouterLink}
-              to="cards"
-              value="cards"
-              classes={{ root: classes.tabRoot }}
-            />
-            <Tab
-              label={
-                <Box display="flex" alignItems="center">
-                  <Box
-                    mr={1}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Palette fontSize="small" />
+                }
+                component={RouterLink}
+                to="appearance"
+                value="appearance"
+                classes={{ root: classes.tabRoot }}
+              />
+              <Tab
+                label={
+                  <Box display="flex" alignItems="center">
+                    <Box
+                      mr={1}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <CameraAlt fontSize="small" />
+                    </Box>
+                    <Box>
+                      <Typography>Share</Typography>
+                    </Box>
                   </Box>
-                  <Box>
-                    <Typography>Style</Typography>
-                  </Box>
-                </Box>
-              }
-              component={RouterLink}
-              to="appearance"
-              value="appearance"
-              classes={{ root: classes.tabRoot }}
-            />
-            <Tab
-              label={
-                <Box display="flex" alignItems="center">
-                  <Box
-                    mr={1}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <CameraAlt fontSize="small" />
-                  </Box>
-                  <Box>
-                    <Typography>Share</Typography>
-                  </Box>
-                </Box>
-              }
-              component={RouterLink}
-              to="access"
-              value="access"
-              classes={{ root: classes.tabRoot }}
-            />
+                }
+                component={RouterLink}
+                to="access"
+                value="access"
+                classes={{ root: classes.tabRoot }}
+              />
 
-            <Tab
-              component={RouterLink}
-              to="settings"
-              value="settings"
-              classes={{ root: classes.tabRoot }}
-              label={<Typography variant="body2">Settings</Typography>}
-            />
-          </Tabs>
+              <Tab
+                component={RouterLink}
+                to="settings"
+                value="settings"
+                classes={{ root: classes.tabRoot }}
+                label={<Typography variant="body2">Settings</Typography>}
+              />
+            </Tabs>
+          </Box>
           <Box mr={1}>
             <Button
               size="small"
@@ -142,7 +153,7 @@ const EditBar = ({ children }) => {
         </Box>
         <Divider />
       </AppBar>
-      <Box height="calc(100vh - 48px)" overflow="hidden" mt="48px">
+      <Box height="calc(100vh - 48px)" overflow="hidden">
         {children}
       </Box>
     </>

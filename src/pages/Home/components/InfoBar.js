@@ -1,16 +1,10 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import {
-  Grid,
-  Typography,
-  IconButton,
-  Tooltip,
-  Button,
-} from '@mui/material'
+import { Grid, Typography, IconButton, Tooltip, Button } from '@mui/material'
 
 import InfoIcon from '@mui/icons-material/Info'
-import withStyles from '@mui/styles/withStyles';
-import plynthLogo from 'images/plynth-logo-white.png'
+import withStyles from '@mui/styles/withStyles'
+import leafletLogo from 'images/leaflet-logo-white.png'
 import styled from 'styled-components'
 import { HashLink } from 'react-router-hash-link'
 
@@ -57,9 +51,7 @@ const InfoBar = () => {
         <StyledTooltip
           title={
             <>
-              <Typography color="inherit">
-                Welcome to Plynth. It's like a QR code, without the QR code.
-              </Typography>
+              <Typography color="inherit">Welcome to Leaflet</Typography>
               <br />
               <Typography color="inherit">Give it a try:</Typography>
               <Typography color="inherit">
@@ -95,7 +87,7 @@ const InfoBar = () => {
             textAlign="center"
             align="center"
           > */}
-            <StyledLogo src={plynthLogo} alt="Plynth Logo" />
+            <StyledLogo src={leafletLogo} alt="Leaflet Logo" />
             {/* </Box> */}
           </Grid>
         </HashLink>
@@ -110,7 +102,7 @@ const InfoBar = () => {
         </Button>
       </Grid>
     </Grid>
-  );
+  )
 }
 
 export default InfoBar

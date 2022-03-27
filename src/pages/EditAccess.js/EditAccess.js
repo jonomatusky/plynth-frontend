@@ -110,51 +110,55 @@ const EditAccess = () => {
                 pb={1}
               >
                 <Grid container justifyContent="center" spacing={2}>
-                  <Grid item xs={9}>
-                    <Paper>
-                      <Box padding={3} pb={1} mt={3}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={12}>
-                            <Typography variant="h4">
-                              Link to Artwork
-                            </Typography>
-                          </Grid>
+                  {(user.tier === 'artist' || user.tier === 'agency') && (
+                    <Grid item xs={9}>
+                      <Paper>
+                        <Box padding={3} pb={1} mt={3}>
+                          <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                              <Typography variant="h4">
+                                Link to Artwork
+                              </Typography>
+                            </Grid>
 
-                          <Grid item xs={12}>
-                            <Typography variant="body2">
-                              Link this pack to physical artwork. Users snap a
-                              photo at <b>www.plynth.com/{user.username}</b> to
-                              access your pack.
-                            </Typography>
+                            <Grid item xs={12}>
+                              <Typography variant="body2">
+                                Link this pack to physical artwork. Users snap a
+                                photo at <b>www.leaflet.so/{user.username}</b>{' '}
+                                to access your pack.
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <b>
+                                Upload photos or art files to link them to this
+                                pack
+                              </b>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Box display="flex">
+                                {(pieces || []).length > 0 &&
+                                  pieces.map(piece => {
+                                    return (
+                                      <PieceImage
+                                        piece={piece}
+                                        key={piece.id}
+                                      />
+                                    )
+                                  })}
+                                <Grid item>
+                                  <Box mb={4}>
+                                    <ImageUpload onSubmit={handleNewImage}>
+                                      <ButtonUpload />
+                                    </ImageUpload>
+                                  </Box>
+                                </Grid>
+                              </Box>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={12}>
-                            <b>
-                              Upload photos or art files to link them to this
-                              pack
-                            </b>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <Box display="flex">
-                              {(pieces || []).length > 0 &&
-                                pieces.map(piece => {
-                                  return (
-                                    <PieceImage piece={piece} key={piece.id} />
-                                  )
-                                })}
-                              <Grid item>
-                                <Box mb={4}>
-                                  <ImageUpload onSubmit={handleNewImage}>
-                                    <ButtonUpload />
-                                  </ImageUpload>
-                                </Box>
-                              </Grid>
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      </Box>
-                    </Paper>
-                  </Grid>
-
+                        </Box>
+                      </Paper>
+                    </Grid>
+                  )}
                   <Grid item xs={9}>
                     <Paper>
                       <Box padding={3}>

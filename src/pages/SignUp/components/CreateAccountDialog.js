@@ -16,7 +16,7 @@ const CreateAccountDialog = ({ open, onClose }) => {
     >
       <Box pt={2} pb={1}>
         <DialogTitle sx={{ fontSize: 28 }}>
-          <b>Sign up for Plynth</b>
+          <b>Sign up for Leaflet</b>
         </DialogTitle>
 
         <DialogContent>

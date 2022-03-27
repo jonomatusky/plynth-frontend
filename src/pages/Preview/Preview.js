@@ -24,7 +24,7 @@ import Image from 'components/Image'
 import BarAccount from 'layouts/BarAccount'
 import LoadingScreen from 'components/LoadingScreen'
 import arrow from 'images/arrow.svg'
-import Logo from 'images/plynth_logo_color.svg'
+import Logo from 'images/leaflet_logo_color.svg'
 import useUserStore from 'hooks/store/use-user-store'
 
 const { REACT_APP_PUBLIC_URL } = process.env

@@ -74,7 +74,7 @@ const TryIt = ({ title, text }) => {
             },
             {
               type: 'text',
-              text: 'Now visit plynth.com on your desktop to customize this piece and add more item.',
+              text: 'Now visit leaflet.so on your desktop to customize this piece and add more item.',
             },
           ],
         })

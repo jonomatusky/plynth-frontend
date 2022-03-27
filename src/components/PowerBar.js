@@ -25,7 +25,7 @@ const PowerBar = ({ style }) => {
       >
         <Typography variant="subtitle2">
           <Link href="/" color="inherit" underline="always" target="_blank">
-            Powered by Plynth
+            Powered by Leaflet
           </Link>
         </Typography>
       </Box>

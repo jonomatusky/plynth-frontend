@@ -15,7 +15,7 @@ import {
 import { Check } from '@mui/icons-material'
 import { isMobile } from 'react-device-detect'
 
-import plynthLogo from 'images/plynth_logo_color.svg'
+import leafletLogo from 'images/leaflet_logo_color.svg'
 
 import ScrollToTopOnMount from 'components/ScrollToTopOnMount'
 
@@ -35,8 +35,8 @@ const JoinTheBeta = () => {
       right={<></>}
       left={
         <img
-          src={plynthLogo}
-          alt="Plynth Logo"
+          src={leafletLogo}
+          alt="Leaflet Logo"
           style={{ width: '100%', maxWidth: '80px' }}
         />
       }
@@ -70,7 +70,7 @@ const JoinTheBeta = () => {
                 overflowWrap: 'break-word',
               }}
             >
-              Become a part of the Plynth community. Get early access to our{' '}
+              Become a part of the Leaflet community. Get early access to our{' '}
               <b>Pro</b> features and help us choose what we develop next.
             </Typography>
             <Typography
@@ -125,7 +125,7 @@ const JoinTheBeta = () => {
                         <ListItemIcon sx={{ minWidth: '36px' }}>
                           <Check color="primary" />
                         </ListItemIcon>
-                        <ListItemText primary="Remove Plynth branding" />
+                        <ListItemText primary="Remove Leaflet branding" />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon sx={{ minWidth: '36px' }}>
@@ -154,7 +154,7 @@ const JoinTheBeta = () => {
                     </List>
                   </Grid>
                   {/* <Grid item xs={12}>
-                    <Typography>Join the Plynth Discord server</Typography>
+                    <Typography>Join the Leaflet Discord server</Typography>
                   </Grid> */}
                   <Grid item xs={12}>
                     <Typography>
@@ -163,7 +163,7 @@ const JoinTheBeta = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Typography>
-                      Get your projects shared on Plynth socials
+                      Get your projects shared on Leaflet socials
                     </Typography>
                   </Grid>
                   <Grid item xs={12} textAlign="center" mt={2} mb={1}>

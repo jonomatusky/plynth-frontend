@@ -39,7 +39,7 @@ const Subscribe = ({ title, text }) => {
           <Grid container spacing={2}>
             <Grid item xs={11}>
               <Typography variant="h5">
-                <b>Bring your work to life with Plynth</b>
+                <b>Bring your work to life with Leaflet</b>
               </Typography>
             </Grid>
             <Grid item xs={11} mb={2}>

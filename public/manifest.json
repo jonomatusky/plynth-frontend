@@ -1,6 +1,6 @@
 {
-  "short_name": "Plynth",
-  "name": "Plynth",
+  "short_name": "Leaflet",
+  "name": "Leaflet",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "plynth192.png",
+      "src": "leaflet192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "plynth512.png",
+      "src": "leaflet512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

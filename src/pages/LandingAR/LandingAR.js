@@ -293,7 +293,7 @@
 //                     textAlign="center"
 //                   >
 //                     To continue the demo, open your desktop and visit{' '}
-//                     <b>plynth.com/ar</b>
+//                     <b>leaflet.so/ar</b>
 //                   </Typography>
 //                   <Typography
 //                     color="white"

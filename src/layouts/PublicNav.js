@@ -5,7 +5,7 @@ import { Box, Grid, IconButton, Typography, Link } from '@mui/material'
 import { use100vh } from 'hooks/use-100-vh'
 import { useFetch } from 'hooks/use-fetch'
 import usePageTrack from 'hooks/use-page-track'
-import { faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
+// import { faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
 import WebsiteNavBar from 'components/WebsiteNavBar'
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 
@@ -35,7 +35,7 @@ const PublicNav = ({
           <Box position="absolute" bottom={0} left={0} width="100%" pb={1}>
             <Grid container justifyContent="center">
               <Grid item xs={12} container justifyContent="center">
-                <Grid item>
+                {/* <Grid item>
                   <IconButton
                     href={'https://www.instagram.com/plynthplayer/'}
                     target="_blank"
@@ -60,7 +60,7 @@ const PublicNav = ({
                       alt="Tiktok"
                     />
                   </IconButton>
-                </Grid>
+                </Grid> */}
                 <Grid item>
                   <IconButton
                     component={RouterLink}

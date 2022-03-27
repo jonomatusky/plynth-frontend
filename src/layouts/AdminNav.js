@@ -16,7 +16,6 @@ import // Grid,
 
 import { useFetch } from 'hooks/use-fetch'
 // import { useSession } from 'hooks/use-session'
-// import logo from 'images/plynth_logo_simple.svg'
 import usePageTrack from 'hooks/use-page-track'
 import useUserStore from 'hooks/store/use-user-store'
 import LoadingScreen from 'components/LoadingScreen'

@@ -45,7 +45,7 @@ const EmailSignupForm = () => {
           status={status}
           onClose={handleClose}
           ps={`By submitting this form you agree to recieve emails from the
-          Plynth team.`}
+          Leaflet team.`}
         >
           <WebsiteTextField
             color="website"

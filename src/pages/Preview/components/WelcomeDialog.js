@@ -17,7 +17,7 @@ const WelcomeDialog = ({ open, onClose }) => {
     <Dialog open={open} onClose={onClose} maxWidth="sm" transitionDuration={0}>
       <DialogTitle>
         <Box width="100%" display="flex" justifyContent="space-between" mt={2}>
-          <Box>Welcome to Plynth</Box>
+          <Box>Welcome to Leaflet</Box>
           <Box>
             <Button
               onClick={onClose}
@@ -33,7 +33,7 @@ const WelcomeDialog = ({ open, onClose }) => {
         <Box p={3} width="100%">
           <Grid container>
             <Grid item xs={12}>
-              <Typography>Plynth makes it easy...</Typography>
+              <Typography>Leaflet makes it easy...</Typography>
             </Grid>
             <Grid item xs={4}>
               <Typography>Step 1</Typography>

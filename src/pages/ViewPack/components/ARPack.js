@@ -149,7 +149,7 @@ const ARPack = ({ pack }) => {
             <p>
               If that doesn't work,
               <a
-                href="https://plynth.com/s/contact"
+                href="https://leaflet.so/s/contact"
                 target="_blank"
                 rel="noreferrer"
               >

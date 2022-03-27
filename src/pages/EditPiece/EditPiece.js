@@ -421,7 +421,7 @@ const EditPiece = () => {
                         </Grid>
                         <Grid item xs={12}>
                           <Typography>
-                            Please visit plynth.com on your computer to create
+                            Please visit leaflet.so on your computer to create
                             your first interactive experience. After you create
                             it, you can return to your mobile device to try it
                             out.

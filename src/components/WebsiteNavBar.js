@@ -15,13 +15,13 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 
 import { HashLink } from 'react-router-hash-link'
-import plynthLogo from 'images/plynth_logo_color.svg'
+import leafletLogo from 'images/leaflet_logo_color.svg'
 import { useSession } from 'hooks/use-session'
 
 const StyledLogo = styled('img')({
   opacity: `${props => props.opacity || 1}`,
   width: '100%',
-  maxWidth: '80px',
+  maxWidth: '30px',
   height: '100%',
   objectFit: 'contain',
   objectPosition: '50% 50%',
@@ -62,8 +62,8 @@ const WebsiteNavBar = ({ left, right, position, opacity }) => {
                     <Grid container direction="column" alignItems="center">
                       <StyledLogo
                         opacity={opacity}
-                        src={plynthLogo}
-                        alt="Plynth Logo"
+                        src={leafletLogo}
+                        alt="Leaflet Logo"
                       />
                     </Grid>
                   </HashLink>
