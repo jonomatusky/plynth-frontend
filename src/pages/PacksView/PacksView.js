@@ -12,6 +12,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
 } from '@mui/material'
 import { Add, ArrowForwardIos, Person } from '@mui/icons-material'
 
@@ -26,14 +27,17 @@ import { useSession } from 'hooks/use-session'
 import BarAccount from 'layouts/BarAccount'
 import PreviewLayout from 'layouts/PreviewLayout'
 import useUserStore from 'hooks/store/use-user-store'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 const PacksView = () => {
   const history = useHistory()
   const { logout } = useSession()
-  const { packs, status, createPack } = usePackStore()
+  const { packs, status, createPack, fetchPacks } = usePackStore()
   const { user } = useUserStore()
 
   const { username } = user || {}
+
+  console.log(packs)
 
   const packsFiltered = packs.filter(pack => {
     if ((pack.cards || []).length > 0 && pack.cards[0].type === 'ar') {
@@ -88,16 +92,42 @@ const PacksView = () => {
     }
   }
 
+  const fetchMorePacks = async () => {
+    console.log('fetching more packs')
+    try {
+      await fetchPacks({ skip: packs.length })
+    } catch (err) {
+      console.error(err)
+    }
+    return
+  }
+
+  console.log(status)
+
   return (
     <>
       <BarAccount />
       <AdminNav>
-        <Box height="calc(100vh - 48px)" overflow="hidden">
+        <Box height="calc(100vh - 52px)" overflow="hidden">
           <Container disableGutters maxWidth={false}>
             <Grid container justifyContent="center">
-              <Grid item xs={12} md={7}>
-                <Box height="calc(100vh - 48px)" overflow="auto" pt={3}>
-                  <Grid container justifyContent="center" spacing={3}>
+              <Grid item xs={12} md={7} textAlign="center">
+                {/* <Box
+                  
+                  overflow="auto"
+                  pt={3}
+                  textAlign="center"
+                  id="scrollable-container"
+                > */}
+                <InfiniteScroll
+                  height="calc(100vh - 52px)"
+                  dataLength={packs.length}
+                  next={fetchMorePacks}
+                  loader={<CircularProgress />}
+                  hasMore={status !== 'complete'}
+                  // scrollableTarget="scrollable-container"
+                >
+                  <Grid container justifyContent="center" spacing={3} pt={1}>
                     <Grid
                       item
                       xs={12}
@@ -233,7 +263,9 @@ const PacksView = () => {
                               <Grid item xs={false} sm={1}>
                                 <Box
                                   textAlign="center"
-                                  sx={{ display: { xs: 'none', md: 'block' } }}
+                                  sx={{
+                                    display: { xs: 'none', md: 'block' },
+                                  }}
                                 >
                                   {index === selectedPackIndex && (
                                     <ArrowForwardIos color="disabled" />
@@ -249,7 +281,8 @@ const PacksView = () => {
                       </>
                     </Grid>
                   </Grid>
-                </Box>
+                </InfiniteScroll>
+                {/* </Box> */}
               </Grid>
               <Grid item md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
                 <PreviewLayout username={username}>

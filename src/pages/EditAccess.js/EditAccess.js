@@ -31,14 +31,47 @@ const EditAccess = () => {
   const { packId } = useParams()
   const { user } = useUserStore()
   const { selectPack, updatePack, updateStatus, fetchPacks } = usePackStore()
-  const { request } = useRequest()
+  const { request, status: requestStatus } = useRequest()
 
-  const pack = selectPack(packId)
   const [cardIndex, setCardIndex] = useState(0)
   const packLink = `${REACT_APP_PUBLIC_URL}/p/${packId}`
 
+  const reduxPack = selectPack(packId)
+  const [pack, setPack] = useState(reduxPack)
+
+  useEffect(() => {
+    const onPackChange = () => {
+      setPack(reduxPack)
+    }
+    onPackChange()
+  }, [reduxPack])
+
   const [isSpinning, setIsSpinning] = useState(false)
   const [pieces, setPieces] = useState([])
+
+  useEffect(() => {
+    const getPack = async () => {
+      try {
+        const response = await request({
+          url: `/packs/${packId}`,
+          method: 'GET',
+        })
+        const { pack } = response || {}
+        setPack(pack)
+
+        const { style } = pack || {}
+
+        if (pack && pack.isPublic && pack.shareWithLink) {
+          if ((style || {}).backgroundColor) {
+            document.body.style.backgroundColor = style.backgroundColor
+          }
+        }
+      } catch (err) {}
+    }
+    if (requestStatus === 'idle' && !pack) {
+      getPack()
+    }
+  }, [packId, request, requestStatus, pack])
 
   useEffect(() => {
     const setSpinning = () => {

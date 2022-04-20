@@ -33,7 +33,7 @@ const PackListItem = ({ pack, onSelectPack, isSelected }) => {
     <Card>
       <CardContent>
         <Grid container justifyContent="flex-start" alignItems="center">
-          <Grid item xs={12}>
+          <Grid item xs={12} textAlign="start">
             <Typography variant="h5">{pack.name}</Typography>
           </Grid>
           <Grid item xs={12}>

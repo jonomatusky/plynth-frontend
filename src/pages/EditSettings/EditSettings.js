@@ -17,16 +17,51 @@ import PackNameForm from 'pages/PacksView/components/PackNameForm'
 import DangerZone from './components/DangerZone'
 import PreviewLayout from 'layouts/PreviewLayout'
 import useUserStore from 'hooks/store/use-user-store'
+import { useRequest } from 'hooks/use-request'
 
 const EditSettings = () => {
   const { packId } = useParams()
   const { selectPack, updatePack, updateStatus } = usePackStore()
   const { user } = useUserStore()
 
-  const pack = selectPack(packId)
+  const reduxPack = selectPack(packId)
+  const [pack, setPack] = useState(reduxPack)
   const [cardIndex, setCardIndex] = useState(0)
 
   const [isSpinning, setIsSpinning] = useState(false)
+
+  const { request, status: requestStatus } = useRequest()
+
+  useEffect(() => {
+    const onPackChange = () => {
+      setPack(reduxPack)
+    }
+    onPackChange()
+  }, [reduxPack])
+
+  useEffect(() => {
+    const getPack = async () => {
+      try {
+        const response = await request({
+          url: `/packs/${packId}`,
+          method: 'GET',
+        })
+        const { pack } = response || {}
+        setPack(pack)
+
+        const { style } = pack || {}
+
+        if (pack && pack.isPublic && pack.shareWithLink) {
+          if ((style || {}).backgroundColor) {
+            document.body.style.backgroundColor = style.backgroundColor
+          }
+        }
+      } catch (err) {}
+    }
+    if (requestStatus === 'idle' && !pack) {
+      getPack()
+    }
+  }, [packId, request, requestStatus, pack])
 
   useEffect(() => {
     const setSpinning = () => {

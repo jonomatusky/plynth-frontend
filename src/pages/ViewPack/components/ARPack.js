@@ -33,7 +33,6 @@ const ARPack = ({ pack }) => {
   const vh100 = use100vh()
 
   const play = () => {
-    console.log('playing')
     const video = document.getElementById('asset')
     if (video) {
       video.play()
@@ -61,13 +60,11 @@ const ARPack = ({ pack }) => {
 
     const target = document.querySelector('#target')
     target.addEventListener('targetFound', event => {
-      console.log('found')
       setIsFound(true)
       play()
     })
 
     target.addEventListener('targetLost', event => {
-      console.log('lost')
       setIsFound(false)
       pause()
     })
@@ -92,7 +89,6 @@ const ARPack = ({ pack }) => {
     })
 
     setIsMuted(!isMuted)
-    console.log(isMuted)
   }
 
   const SoundButton = () => {

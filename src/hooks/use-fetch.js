@@ -18,7 +18,7 @@ export const useFetch = () => {
     user: storeUser,
     createMeStatus,
     createMe,
-    subscribe
+    subscribe,
   } = useUserStore()
   const { fetchPacks, status: fetchPacksStatus } = usePackStore()
 
@@ -51,7 +51,6 @@ export const useFetch = () => {
       !storeUser._id &&
       createMeStatus === 'idle'
     ) {
-      console.log('creating user')
       try {
         createMe({})
       } catch (err) {}
@@ -67,7 +66,7 @@ export const useFetch = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        await fetchPacks()
+        await fetchPacks({ skip: 0 })
       } catch (err) {}
     }
     if (

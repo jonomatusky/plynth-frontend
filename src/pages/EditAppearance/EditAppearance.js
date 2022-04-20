@@ -17,16 +17,51 @@ import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
 import coloring from 'util/coloring'
 import PreviewLayout from 'layouts/PreviewLayout'
+import { useRequest } from 'hooks/use-request'
 
 const EditAppearance = () => {
   const { packId } = useParams()
   const { selectPack, updatePack, updateStatus } = usePackStore()
-
-  const pack = selectPack(packId)
   const [cardIndex, setCardIndex] = useState(0)
+
+  const reduxPack = selectPack(packId)
+  const [pack, setPack] = useState(reduxPack)
 
   const { style } = pack || {}
   const { backgroundColor, buttonColor } = style || {}
+
+  useEffect(() => {
+    const onPackChange = () => {
+      setPack(reduxPack)
+    }
+    onPackChange()
+  }, [reduxPack])
+
+  const { request, status: requestStatus } = useRequest()
+
+  useEffect(() => {
+    const getPack = async () => {
+      try {
+        const response = await request({
+          url: `/packs/${packId}`,
+          method: 'GET',
+        })
+        const { pack } = response || {}
+        setPack(pack)
+
+        const { style } = pack || {}
+
+        if (pack && pack.isPublic && pack.shareWithLink) {
+          if ((style || {}).backgroundColor) {
+            document.body.style.backgroundColor = style.backgroundColor
+          }
+        }
+      } catch (err) {}
+    }
+    if (requestStatus === 'idle' && !pack) {
+      getPack()
+    }
+  }, [packId, request, requestStatus, pack])
 
   const handleColorChange = color => {
     const fontColor = coloring.getFontColor(color)

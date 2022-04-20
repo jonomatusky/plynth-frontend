@@ -174,12 +174,9 @@ const ImageUploadDialog = ({
     const [sliderValue, setSliderValue] = useState(0)
 
     const handleChangeTime = (e, value) => {
-      console.log(value)
       setSliderValue(value)
       onChange(value)
     }
-
-    console.log(videoDuration)
 
     return (
       <>
@@ -377,8 +374,6 @@ const ImageUploadDialog = ({
 
     const [status, setStatus] = useState('idle')
 
-    console.log('status: ' + status)
-
     const [currentCrop, setCurrentCrop] = useState(
       imageToCrop.height >= imageToCrop.width ? 0 : 1
     )
@@ -414,10 +409,6 @@ const ImageUploadDialog = ({
 
           const canvas = document.createElement('canvas')
 
-          console.log(imageToCrop.src)
-          console.log(endWidth)
-          console.log(endHeight)
-
           canvas.width = endWidth
           canvas.height = endHeight
 
@@ -428,7 +419,6 @@ const ImageUploadDialog = ({
 
             ctx.canvas.toBlob(
               blob => {
-                console.log('image cropped')
                 resolve({ imageFile: blob, width: endWidth, height: endHeight })
               },
               'image/jpeg',

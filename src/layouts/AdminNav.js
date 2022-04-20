@@ -87,7 +87,7 @@ const AdminNav = ({ isPublic, children }) => {
             />
           )}
           {(status === 'succeeded' || isPublic) && (
-            <Box height="calc(100vh-48px)" mt="48px" overflow="hidden">
+            <Box height="calc(100vh-52px)" mt="52px" overflow="hidden">
               {children}
             </Box>
           )}

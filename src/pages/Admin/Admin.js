@@ -39,7 +39,7 @@ const Admin = () => {
     }
 
     if (
-      packStatus === 'succeeded' &&
+      (packStatus === 'succeeded' || packStatus === 'complete') &&
       createStatus !== 'loading' &&
       packs.length === 0
     ) {
@@ -49,11 +49,10 @@ const Admin = () => {
     }
   })
 
-  console.log(packs)
-  console.log(packs[0])
-  console.log(createStatus)
-
-  if (userStatus === 'succeeded' && packStatus === 'succeeded') {
+  if (
+    userStatus === 'succeeded' &&
+    (packStatus === 'succeeded' || packStatus === 'complete')
+  ) {
     if (isOldUser) {
       return <Redirect push to="/admin/packs" />
     } else if (packs.length === 1) {

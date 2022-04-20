@@ -5,18 +5,30 @@ let initialState = {
   packs: [],
   status: 'idle',
   error: null,
+  fetchPackStatus: 'idle',
   updateStatus: 'idle',
   createStatus: 'idle',
 }
 
+export const fetchPack = createAsyncThunk(
+  'packs/fetchPack',
+  async ({ headers, id }) => {
+    const { pack } = await client.request({
+      headers,
+      url: `/users/me/packs/${id}`,
+    })
+    return pack
+  }
+)
+
 export const fetchPacks = createAsyncThunk(
   'packs/fetchPacks',
-  async ({ headers }) => {
+  async ({ headers, skip }) => {
     const { packs } = await client.request({
       headers,
-      url: '/users/me/packs',
+      url: '/users/me/packs' + (skip ? `?skip=${skip}` : ''),
     })
-    return packs
+    return { packs, skip }
   }
 )
 
@@ -82,11 +94,36 @@ const packsSlice = createSlice({
       state.status = 'loading'
     },
     [fetchPacks.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      state.packs = action.payload
+      if (action.payload.packs?.length < 20) {
+        state.status = 'complete'
+      } else {
+        state.status = 'succeeded'
+      }
+      const newPacks = [...state.packs, ...action.payload?.packs].filter(
+        (value, index, self) => index === self.findIndex(t => t.id === value.id)
+      )
+      state.packs = newPacks
     },
     [fetchPacks.rejected]: (state, action) => {
       state.status = 'failed'
+      state.error = action.error.message
+    },
+    [fetchPack.pending]: (state, action) => {
+      state.fetchPackStatus = 'loading'
+    },
+    [fetchPack.fulfilled]: (state, action) => {
+      state.fetchPackStatus = 'succeeded'
+
+      const newPacks = [...state.packs, action.payload]
+        .filter(
+          (value, index, self) =>
+            index === self.findIndex(t => t.id === value.id)
+        )
+        .sort((a, b) => a.createdAt - b.createdAt)
+      state.packs = newPacks
+    },
+    [fetchPack.rejected]: (state, action) => {
+      state.fetchPackStatus = 'failed'
       state.error = action.error.message
     },
     [updatePack.pending]: (state, action) => {

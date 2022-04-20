@@ -20,6 +20,7 @@ import CardNav from './components/CardNav'
 import CardMenu from './components/CardMenu'
 import AdminNav from 'layouts/AdminNav'
 import EditBar from 'components/EditBar'
+import { useRequest } from 'hooks/use-request'
 
 // import { drawerWidth } from 'layouts/AdminNav'
 import PreviewLayout from 'layouts/PreviewLayout'
@@ -46,6 +47,32 @@ const EditCards = () => {
     }
     onPackChange()
   }, [reduxPack])
+
+  const { request, status: requestStatus } = useRequest()
+
+  useEffect(() => {
+    const getPack = async () => {
+      try {
+        const response = await request({
+          url: `/packs/${packId}`,
+          method: 'GET',
+        })
+        const { pack } = response || {}
+        setPack(pack)
+
+        const { style } = pack || {}
+
+        if (pack && pack.isPublic && pack.shareWithLink) {
+          if ((style || {}).backgroundColor) {
+            document.body.style.backgroundColor = style.backgroundColor
+          }
+        }
+      } catch (err) {}
+    }
+    if (requestStatus === 'idle' && !pack) {
+      getPack()
+    }
+  }, [packId, request, requestStatus, pack])
 
   const updatePack = updatedPack => {
     setPack({ ...pack, ...updatedPack })

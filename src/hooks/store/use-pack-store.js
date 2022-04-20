@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useThunk } from 'hooks/use-thunk'
 import {
   fetchPacks,
+  fetchPack,
   createPack,
   updatePack,
   deletePack,
@@ -15,9 +16,20 @@ export const usePackStore = () => {
   const dispatch = useDispatch()
   const dispatchThunk = useThunk()
 
-  const _fetchPacks = useCallback(async () => {
-    await dispatchThunk(fetchPacks)
-  }, [dispatchThunk])
+  const _fetchPacks = useCallback(
+    async ({ skip }) => {
+      await dispatchThunk(fetchPacks, { skip })
+    },
+    [dispatchThunk]
+  )
+
+  const _fetchPack = useCallback(
+    async id => {
+      const pack = await dispatchThunk(fetchPack, { id })
+      return pack
+    },
+    [dispatchThunk]
+  )
 
   const _createPack = useCallback(
     async pack => {
@@ -77,6 +89,7 @@ export const usePackStore = () => {
 
   return {
     fetchPacks: _fetchPacks,
+    fetchPack: _fetchPack,
     createPack: _createPack,
     updatePack: _updatePack,
     deletePack: _deletePack,

@@ -262,6 +262,11 @@ const App = () => {
         <Portal />
       </Route>
 
+      {/* 
+      <Route path="/">
+        <Home />
+      </Route> */}
+
       <Redirect path="/" to="/login" />
 
       <Route>
